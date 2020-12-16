@@ -112,5 +112,5 @@ M106 P5 S0 B0 L1 C"Spindle 2" ; Spindle 2 air flow
 
 ; Miscellaneous
 M911 S19 R22 P"M98 P""estop.g"""  ; Run estop.g on power loss during a print
-M575 P1 S1; Set up UART for pendant input
+M575 P1 B115200 S1; Set up UART for pendant input
 ;M750 ; Enable scanner
