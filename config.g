@@ -6,16 +6,16 @@ G90 ; Send absolute coordinates...
 M83 ; ...but relative extruder moves
 
 ; Drive orientation
-M569 P0 S1; Drive 0 goes backwards
-M569 P1 S1; Drive 1 goes backwards
-M569 P2 S0 ; Drive 2 goes forwards
-M569 P3 S0 ; Drive 3 goes backwards
-M569 P4 S0 ; Drive 4 goes backwards
-M569 P5 S1 ; Drive 5 goes forwards
-M569 P6 S0 ; Drive 6 goes forwards
-M569 P7 S1 ; Drive 7 goes backwards
-M569 P8 S1 ; Drive 8 goes backwards
-M569 P9 S0 ; Drive 9 goes backwards
+M569 P0 S1 ; Set motor driver direction. Motor driver number 0 goes forwards (S1). (Line 21: X)
+M569 P1 S0 ; Set motor driver direction. Motor driver number 1 goes backwards (S0). (Line 21: Y)
+M569 P2 S0 ; Set motor driver direction. Motor driver number 2 goes backwards (S0). (Line 21: Z)
+M569 P3 S0 ; Set motor driver direction. Motor driver number 3 goes backwards (S0). (Line21: U)
+M569 P4 S0 ; Set motor driver direction. Motor driver number 4 goes backwards (S0). (Line21: A)
+M569 P5 S1 ; Set motor driver direction. Motor driver number 5 goes forwards (S1). (Line21: C)
+M569 P6 S0 ; Set motor driver direction. Motor driver number 6 goes backwards (S0). (Line21: E.1-3)
+M569 P7 S1 ; Set motor driver direction. Motor driver number 7 goes forwards (S1). (Line21: W)
+M569 P8 S1 ; Set motor driver direction. Motor driver number 8 goes forwards (S1).  (Line21: V)
+M569 P9 S0 ; Set motor driver direction. Motor driver number 9 goes backwards (S0).  (Line21: Undefined?)
 
 ; Drive settings
 M584 X0 Y1 Z2 U3 V8 W7 E6:6:6:9 A4 C5  ; Set driver mapping, E drive is multiplexed. Hide the extra axes
@@ -27,7 +27,7 @@ M566 X300 Y300 Z300 U120 V500 W500 A1000 C1000 E1200:1200:1200:1200 ; Set maximu
 M203 X12000 Y12000 Z3000 U8900 V10000 W20000 A20000 C20000 E6000:6000:6000:6000 ; Set maximum speeds (mm/min)
 M201 X600 Y600 Z450 U600 V500 W500 A600 C600 E250:250:250:250 ; Set accelerations (mm/s^2)
 M906 X1800 Y2100 Z1800 U1200 V800 W800 A1600 C1600 E1500:1500:1500:500 I30 ; Set motor currents (mA) and motor idle factor in per cent
-M84 S5 ; Set idle timeout
+M84 S5 ; Stop idle hold after 5 (seconds?)
 
 ; Endstops
 M574 X1 S1 P"xstop"
@@ -50,7 +50,7 @@ M308 S0 P"bedtemp"      Y"thermistor" T100000 B3950 C0 A"Bed" ; Bed thermistor
 ;other sensors defined in tcreate#.g files
 
 ; Heaters
-M950 H0 C"bedheat" T0  
+M950 H0 C"bedheat" T0                                    
 ;other heaters defined in tcreate#.g files
 
 ;Bed Heater
@@ -62,9 +62,11 @@ M302 S150 ; Set minimum extrude temp
 
 ; Fan definition
 ;M950 F0 C"nil"         ; free up fan
+M950 F0 C"duex.fan3"	; Layer fan - RT changed duex.fan3 from F3 on H4027 on 12/17/2020
 M950 F1 C"fan1"
 M950 F2 C"nil"         ; free up fan
-M950 F3 C"duex.fan3"
+;M950 F3 C"duex.fan3"
+M950 F3 C"nil"
 M950 F4 C"duex.fan4"
 M950 F5 C"duex.fan5"
 ;M950 F6 C"duex.fan6"
@@ -100,7 +102,7 @@ G4 P100
 M98 P"drycabinet.g"
 
 ; Network
-M550 P"H4CHANGE" ; Set machine name
+M550 P"H4027" ; Set machine name
 M552 S1 ; Enable network
 
 ; Fan configuration

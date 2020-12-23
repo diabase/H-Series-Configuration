@@ -6,13 +6,15 @@ G1 X0 Y-45 Z3 F8000
 G30
 
 ;Use with Flat Print Bed
-M557 X-180:180 Y-80:80 S180:80
+;M557 X-180:180 Y-80:80 S180:80
 
 ;Use with Dovetail Bed
-;M557 X-180:180 Y-45:45 S90
+M557 X-180:180 Y-75:75 S40
 
 ;Rotary Axis level
 ;M557 X-100:100 Y-180:180 S50:40
 
 G29 
 
+;Restore motor currents to X and Y axes
+M913 X100 Y100
