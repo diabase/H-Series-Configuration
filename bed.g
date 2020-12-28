@@ -14,5 +14,7 @@ M557 X-180:180 Y-80:80 S180:80
 ;Rotary Axis level
 ;M557 X-100:100 Y-180:180 S50:40
 
-G29 
+G29
 
+;Restore motor currents to X and Y axes
+M913 X100 Y100

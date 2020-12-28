@@ -1,28 +1,28 @@
-; Disable E motor and select first E motor for multiplexing
-; MOT 1 - LLL
-; MOT 2 (5) - LLH
-; MOT 3 (4) - HHL
-; MOT 4 (3) - LHL
-; MOT 5 (2) - HLL
-M84 E0
-M42 P2 S1
-M42 P3 S0
-M42 P4 S0
+; Disable all (?) E motors and enable E motor for this tool
+; MOT 1 (Tool 1) - LLL
+; MOT 2 (Tool 5) - LLH
+; MOT 3 (Tool 4) - HHL
+; MOT 4 (Tool 3) - LHL
+; MOT 5 (Tool 2) - HLL
+M84 E0 ; Stop idle hold on all(?) extruder motors
+M42 P2 S1 ; Set GPIO pin 2 high
+M42 P3 S0 ; Set GPIO pin 3 low
+M42 P4 S0 ; Set GPIO pin 4 low
 
-; Switch to FFF mode
-M453
+; M451 ; Switch to FFF mode (Uncomment if and only if this tool is an extruder.)
+M453 ; Switch to CNC mode (Uncomment if and only if this tool is a spindle.)
 
-; Move Z up and unlock the turret
-G91
-G1 Z40 F6000 H1
-G90
-M98 P"unlock_turret.g"
+G91 ; Set to Relative Positioning
+G1 Z40 F6000 H1 ; Move Z up by 40 mm at 6000mm/min. Terminate the move if endstop switch is triggered and set axis position to axis limit.
+G90 ; Set to Absolute Positioning
+M98 P"unlock_turret.g" ; Call unlock_turret.g
 
-; Move turret
-G1 U102 F16000
-G4 P20
+G1 U102 F16000 ; Rotate turret (U) to 102 at 16000 mm/min
+G4 P20 ; Dwell for 20 ms
 
-; Lock the turret again
-M98 P"lock_turret.g"
+M98 P"lock_turret.g" ; Call lock_turret.g
 
-;G92 U102
+G1 R2 X0 Y0 F6000 ; Return to X and Y coordinates stored in restore point 2 at a speed of 6000 mm/min
+G1 R2 Z0 ; Return to Z coordinate stored in restore point 2
+
+M140 S0 ; Ensure bed heater is off to protect power supply. (Uncomment if and only if this tool is a spindle using the 48V power supply.)
