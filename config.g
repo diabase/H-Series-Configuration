@@ -30,13 +30,13 @@ M906 X1800 Y2100 Z1800 U1200 V800 W800 A1600 C1600 E1500:1500:1500:500 I30 ; Set
 M84 S5 ; Stop idle hold after 5 (seconds?)
 
 ; Endstops
-M574 X1 S1 P"xstop"
-M574 Y1 S1 P"ystop"
-M574 Z1 S1 P"zstop"
-M574 U1 S1 P"e0stop"
-M574 V0 S1 P"e1stop"
-M574 A1 S1 P"duex.e2stop"
-M574 C1 S1 P"duex.e3stop"
+M574 X1 S1 P"xstop" ; Configure X endstop position at low end, it's a microswitch on pin "xstop"
+M574 Y1 S1 P"ystop" ; Configure Y endstop position at low end, it's a microswitch on pin "ystop"
+M574 Z1 S1 P"zstop" ; Configure Z endstop position at low end, it's a microswitch on pin "zstop"
+M574 U1 S1 P"e0stop" ; Configure U endstop position at low end, it's a microswitch on pin "e0stop"
+M574 V0 S1 P"e1stop" ; Configure V endstop position at high end, it's a microswitch on pin "e1stop"
+M574 A1 S1 P"duex.e2stop" ; Configure A endstop position at high end, it's a microswitch on pin "duex.e2stop"
+M574 C1 S1 P"duex.e3stop" ; Configure C endstop position at high end, it's a microswitch on pin "duex.e3stop"
 
 ;M574 V2 S0 ; Define active low microswitches
 M558 K0 P5 C"^zprobe.in" H2 F150 T12000 ; Set Z probe type to switch, probing height and the probe + travel speeds
@@ -44,17 +44,15 @@ M558 K1 P8 C"duex.e4stop" I0 F200 T12000 ; Additional Z probe used for touchoff
 G31 Z0 ; Set Z probe trigger height
 
 ; Temperature sensors
-M308 S0 P"bedtemp"      Y"thermistor" T100000 B3950 C0 A"Bed" ; Bed thermistor
+M308 S0 P"bedtemp"      Y"thermistor" T100000 B3950 C0 A"Bed" ; Create Sensor 0 assigned to bedtemp pin, thermistor type with resistance of 100Kohms at 25C, reciprocal of Steinhart-Hart B coefficient 3950, Steinhart-Hart C coefficient 0, and call it "Bed"
 ;M308 S1 P"e0temp"       Y"thermistor" T100000 B3950 C0         ; E0_HEATER is unused
 ;M308 S2 P"e1temp"       Y"thermistor" T100000 B3950 C0         ; E1_HEATER is used for the dry cabinet, see below
 ;other sensors defined in tcreate#.g files
 
 ; Heaters
-M950 H0 C"bedheat" T0                                    
+M950 H0 C"bedheat" T0 ; Create Heater 0, call it "bedheat", and use temperature sensor 0
+M140 H0 ; Define heater 0 as a bed heater
 ;other heaters defined in tcreate#.g files
-
-;Bed Heater
-M140 H0
 
 ; Temperature limits
 M143 H0 S120 ; Limit Bed temperature to 120C
@@ -91,12 +89,11 @@ M98 P"tcreate5.g"
 
 M563 P10 S"Probe"
 
-; Load config-override.g after the tools have been created
-M501
-M453 ;toggle CNC mode
-G4 P100
-M451 ;return to FFF mode
-G4 P100
+M501 ; Set active parameters to those stored in config-override.g
+M453 ; Switch to CNC mode
+G4 P100 ; Dwell for 100 ms
+M451 ; Switch to FFF mode
+G4 P100 ; Dwell for 100 ms
 
 ;Dry Cabinet
 M98 P"drycabinet.g"
