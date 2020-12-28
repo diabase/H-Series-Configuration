@@ -1,0 +1,3 @@
+# Force G-code language identification for *.g and *.gcode extensions
+*.g linguist-language=G-code
+*.gode linguist-language=G-code
