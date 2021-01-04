@@ -1,5 +1,6 @@
 ; H4 Configuration File
 ; written by Diabase Engineering
+M929 P"eventlog.txt" S3 ; start logging to file eventlog.txt (S0 = stop logging, S1 = log level WARN, S2 = log level INFO, S3 = log level DEBUG)
 
 ; General preferences
 G90 ; Send absolute coordinates...
@@ -45,35 +46,32 @@ G31 Z0 ; Set Z probe trigger height
 
 ; Temperature sensors
 M308 S0 P"bedtemp"      Y"thermistor" T100000 B3950 C0 A"Bed" ; Create Sensor 0 assigned to bedtemp pin, thermistor type with resistance of 100Kohms at 25C, reciprocal of Steinhart-Hart B coefficient 3950, Steinhart-Hart C coefficient 0, and call it "Bed"
-;M308 S1 P"e0temp"       Y"thermistor" T100000 B3950 C0         ; E0_HEATER is unused
-;M308 S2 P"e1temp"       Y"thermistor" T100000 B3950 C0         ; E1_HEATER is used for the dry cabinet, see below
-;other sensors defined in tcreate#.g files
+; Other sensors defined in drycabinet.g and tcreate#.g files
 
 ; Heaters
 M950 H0 C"bedheat" T0 ; Create Heater 0, call it "bedheat", and use temperature sensor 0
 M140 H0 ; Define heater 0 as a bed heater
-;other heaters defined in tcreate#.g files
+; Other heaters defined in drycabinet.g and tcreate#.g files
 
 ; Temperature limits
 M143 H0 S120 ; Limit Bed temperature to 120C
 M302 S150 ; Set minimum extrude temp
 
 ; Fan definition
-;M950 F0 C"nil"         ; free up fan
-M950 F0 C"duex.fan3"	; Layer fan - RT changed duex.fan3 from F3 on H4027 on 12/17/2020
+M950 F0 C"duex.fan3"    ; Layer fan
 M950 F1 C"fan1"
-M950 F2 C"nil"         ; free up fan
-;M950 F3 C"duex.fan3"
-M950 F3 C"nil"
-M950 F4 C"duex.fan4"
-M950 F5 C"duex.fan5"
-;M950 F6 C"duex.fan6"
-;M950 F7 C"duex.fan7"
-;M950 F8 C"duex.fan8"
+; M950 F2 C"nil"       ; Free Fan 2 - Unused? Commented out by Ron Thomas on 1/3/2021 for testing with H4027
+; M950 F3 C"nil"       ; Free Fan 3 - Unused? Commented out by Ron Thomas on 1/3/2021 for testing with H4027
+M950 F4 C"duex.fan4"   ; Spindle 1 Air Flow - Define Fan 4 to use pin duex.fan4
+M950 F5 C"duex.fan5"   ; Spindle 2 Air Flow - Define Fan 5 to use pin duex.fan5
 
+; Fan configuration
+M106 P1 H3:4:5 T50 ; Extruder Fans - Configure Fan 1: Turn on when heater 3, 4, or 5 reach the trigger temperature of 50C
+; M106 P3 C"Print Fan" - Unused? Commented out by Ron Thomas on 1/3/2021 for testing with H4027
+M106 P4 S0 B0 L1 C"Spindle 1" ; Spindle 1 air flow
+M106 P5 S0 B0 L1 C"Spindle 2" ; Spindle 2 air flow
 
 ; Servo pins (for M42)
-;M950 P0 C"fan0" ; Was M42 P20
 M950 P1 C"fan2" ; Was M42 P22
 M950 P2 C"duex.gp1" ; Was M42 P100
 M950 P3 C"duex.gp2" ; Was M42 P101
@@ -95,21 +93,15 @@ G4 P100 ; Dwell for 100 ms
 M451 ; Switch to FFF mode
 G4 P100 ; Dwell for 100 ms
 
-;Dry Cabinet
+; Dry Cabinet configured in separate file
 M98 P"drycabinet.g"
 
 ; Network
 M550 P"H4027" ; Set machine name
 M552 S1 ; Enable network
 
-; Fan configuration
-M106 P1 H3:4:5 T50 ; Nozzle fans
-M106 P3 C"Print Fan"
-M106 P4 S0 B0 L1 C"Spindle 1" ; Spindle 1 air flow
-M106 P5 S0 B0 L1 C"Spindle 2" ; Spindle 2 air flow
-
-
 ; Miscellaneous
 M911 S19 R22 P"M98 P""estop.g"""  ; Run estop.g on power loss during a print
 M575 P1 B115200 S1; Set up UART for pendant input
-;M750 ; Enable scanner
+; M750 ; Enable scanner
+; M141 P1 S5 ; Set target RH for drying cabinet to 5%
