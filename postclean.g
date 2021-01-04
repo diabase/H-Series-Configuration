@@ -1,8 +1,9 @@
-M42 P1 S1 ; Close pliers
-G4 P125 ; Dwell for 125 ms
-M42 P1 S0 ; Open pliers
-G4 P125 ; Dwell for 125 ms
-M42 P1 S1 ; Close pliers
-G4 P125 ; Dwell for 125 ms
-M42 P1 S0 ; Open pliers
-G4 P125 ; Dwell for 125 ms
+M42 P22 S1
+G4 P100
+M42 P22 S0
+G4 P100
+M42 P22 S1
+G4 P100
+M42 P22 S0
+
+

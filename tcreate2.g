@@ -1,3 +1,4 @@
-; Macro file to enable CNC mode on spindle 2 and to disable FFF mode
-M563 P2 F5 S"Spindle 2" ; Create tool 2 with fan 5 and call it "Spindle 2"
-M453 S1 T2 C"!exp.heater4" R12000 ; Assign tool 2 to spindle index 1, with PWM pin on heater 4 and 12000 RPM achieved at full PWM
+; Macro file to create tool 2 in FFF mode
+M307 H4 A400 C140 D5.5 S1 B0 ; Configure heater 4
+M563 P2 D1 H4 ; Define tool 2
+;M567 P2 E1:1.1 ; Configure filament assist

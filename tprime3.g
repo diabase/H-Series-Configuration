@@ -1,66 +1,66 @@
-; Disable all (?) E motors and enable E motor for this tool
-; MOT 1 (Tool 1) - LLL
-; MOT 2 (Tool 5) - LLH
-; MOT 3 (Tool 4) - HHL
-; MOT 4 (Tool 3) - LHL
-; MOT 5 (Tool 2) - HLL
-M84 E0:1:2:3 ; Stop idle hold on all(?) E motors
-M42 P2 S0 ; Set GPIO pin 2 low
-M42 P3 S1 ; Set GPIO pin 3 high
-M42 P4 S0 ; Set GPIO pin 4 low
+; Disable E motor and select first E motor for multiplexing
 
-M453 ; Switch to CNC mode
+M84 E0
+M42 P100 S0
+M42 P101 S1
+M42 P102 S0
+
+; Switch to FFF mode
+M451
 
 ; Select tool and save the current position
-T3 P0 ; Select tool 3 but don't run any tool change macro files
-G91 ; Set to Relative Positioning
-G1 Z40 F6000 H1 ; Move Z up 40 mm at 6000 mm/min. Terminate the move if endstop switch is triggered and set axis position to axis limit.
-G60 S1 ; Save current position to slot 1
+T3 P0
+G91
+G1 Z15 F6000
+G60 S1
 
-G90 ; Set to Absolute Positioning
-G1 Y85 F30000 ; Move Y to 85 mm at 30000 mm/min
+; Move up and get the bed out of the way
+
+G90
+G1 Y85 F30000
 
 ; Move nozzle to cleaning station
-M98 P"unlock_turret.g" ; Call unlock_turret.g
-G1 U74.5 F9900; Rotate turret (U) to 74.5 at 9900 mm/min (*** Inherits G91 relative positioning from unlock_turret.g? ***)
-; G4 P20 ; Dwell for 20 ms
-M451 ; FFF mode
+M98 P"unlock_turret.g"
+G1 U74.5 F9900
 
-M116 P3 S5 ; Wait until Tool 3 reaches +/-5C of its set value
-G1 W23 F15000 ; Move W +23 at 15000 mm/min (*** Inherits G91 relative positioning from unlock_turret.g? ***)
-; M42 P0 S1 ; Set GPIO pin 0 high
-M83 ; Set Extruder to Relative Mode
-G1 E20 F6000 ; Extrude 20 mm at 6000 mm/min
-; M42 P0 S0.75 ; Set GPIO pin 0 to 75%
-G1 E8 F200 ; Extrude 8 mm at 200 mm/min
-M400 ; Wait for current moves to finish
-; M42 P0 S0 ; Set GPIO pin 0 to low
-G1 W20 F15000 ; Move W +20 at 15000 mm/min (*** Inherits G91 relative positioning from unlock_turret.g? ***)
-G1 E-12 F6000 ; Retract 12 mm at 6000 mm/min
-G4 P20 ; Dwell for 20 ms
+
+; Heat up the nozzle and extrude some filament
+M116 P3 S10
+M42 P20 S1
+M83
+G1 E18 F6000
+M42 P20 S0.75
+G1 E6 F300
+M400
+M42 P20 S0
+G1 E-17 F3000
+G4 P20
 
 ; Move nozzle so that it faces the pliers
-G1 U84 F9900 ; Rotate turret (U) to 84 at 9900 mm/min (*** Inherits G91 relative positioning from unlock_turret.g? ***)
-; G4 P20 ; Dwell for 20 ms
+G1 U84.9 F9900
 
-; M106 P8 S1 ; Turn on vacuum
+; Turn on vacuum
+M106 P8 S1
 
-; M106 P7 S1 ; Set Fan 7 to 100%
-M98 P"clean.g" ; Call clean.g
+; Perform cleaning cycle
+M98 P"clean.g"
 
-M42 P1 S1 ; Close pliers
-G4 P20 ; Dwell for 20 ms
-M42 P1 S0.4 ; Reduce pliers solenoid current to 40%
+;Leave blades closed
+M42 P22 S1
+G4 P20
+M42 P22 S0.4
 
 ; Move the nozzle so that if faces the bed
-G1 U174 F9900 ; Rotate turret (U) to 174 at 9900 mm/min (*** Inherits G91 relative positioning from unlock_turret.g? ***)
-G4 P20 ; Dwell for 20 ms
-M98 P"lock_turret.g" ; Call lock_turret.g
+G1 U174 F9900
+G4 P20
+M98 P"lock_turret.g"
 
 ; Perform post-cleaning of the pliers
-M98 P"postclean.g" ; Call postclean.g
+M98 P"postclean.g"
 
-; M106 P8 S0 ; Turn off vacuum
+;turn off vacuum
+M106 P8 S0
 
-G1 R1 Y0 F30000 ; Return to Y coordinate saved in restore point 1 at 30000 mm/min
-G1 R1 Z0 F6000 ; Return to Z coordinate saved in restore point 1 at 6000 mm/min
+; Go back to the saved coordinates
+G1 R1 Y0 F30000
+G1 R1 Z0 F6000
