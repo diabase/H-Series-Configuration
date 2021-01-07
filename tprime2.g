@@ -22,7 +22,7 @@ G1 Y85 F30000 ; Move Y to 85 mm at 30000 mm/min
 
 ; Move nozzle to cleaning station
 M98 P"unlock_turret.g" ; Call unlock_turret.g
-G1 U1     F9900; Rotate turret (U) to 1     at 9900 mm/min
+G1 U1 F9900; Rotate turret (U) to 1     at 9900 mm/min
 G4 P20 ; Dwell for 20 ms
 M451 ; FFF mode
 

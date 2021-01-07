@@ -22,7 +22,7 @@ G1 Y85 F30000 ; Move Y to 85 mm at 30000 mm/min
 
 ; Move nozzle to cleaning station
 M98 P"unlock_turret.g" ; Call unlock_turret.g
-G1 U145   F9900; Rotate turret (U) to 145   at 9900 mm/min
+G1 U145 F9900; Rotate turret (U) to 145   at 9900 mm/min
 G4 P20 ; Dwell for 20 ms
 M451 ; FFF mode
 
@@ -36,7 +36,7 @@ G1 E6 F300 ; Extrude 6 mm at 300 mm/min
 M400 ; Wait for current moves to finish
 M42 P0 S0 ; Set GPIO pin 0 to low
 ; G1 W20 F6000 ; Move W +20 at 6000 mm/min
-G1 E-16 F6000 ; Retract 16 mm at 6000 mm/min
+G1 E-7 F6000 ; Retract 16 mm at 6000 mm/min
 G4 P20 ; Dwell for 20 ms
 
 ; Move nozzle so that it faces the pliers

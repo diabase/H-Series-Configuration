@@ -24,9 +24,11 @@ M350 X16 Y16 Z16 U16 V16 E16:16:16:16:16:16 I1 ; Configure microstepping with in
 M92 X66.405 Y80 Z640 U322.31 V1600 E96:96:96:96:96:96 ; Set steps per mm
 M566 X600 Y600 Z300 U120 V500 E1200:1200:1200:1200:1200:1200 ; Set maximum instantaneous speed changes (mm/min)
 M203 X20000 Y20000 Z3000 U9900 V10000 E6000:6000:6000:6000:6000:6000 ; Set maximum speeds (mm/min)
-M201 X1200 Y1000 Z450 U600 V500 E250:250:250:250:250:250 ; Set accelerations (mm/s^2)
+;M201 X1200 Y1000 Z450 U600 V500 E250:250:250:250:250:250 ; Set accelerations (mm/s^2)
+M201 X500 Y750 Z450 U600 V500 E250:250:250:250:250:250 ; Set accelerations (mm/s^2)
 M906 X1600 Y1600 Z1800 U1400 V800 E1500:1500:1500:1500:1500:500 I30 ; Set motor currents (mA) and motor idle factor in per cent
 M84 S5 ; Set idle timeout
+
 
 ; Endstops
 M574 X1 S1 P"xstop" ; Configure X endstop position at low end, it's a microswitch on pin "xstop"

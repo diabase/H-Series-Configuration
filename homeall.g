@@ -6,7 +6,7 @@ M574 Y1 S1 P"ystop"
 
 ; Deselect the current tool (if any) and enter FFF mode
 M84 E0
-T-1
+;T-1
 M451
 ; G92 A C
 ; M98 p"homew.g"
@@ -46,6 +46,6 @@ T10 P0
 
 
 M451 ;back to FFF mode
-
+G1 Z180
 ;Restore motor currents to X and Y axes
 M913 X100 Y100
