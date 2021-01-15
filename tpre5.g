@@ -12,7 +12,8 @@ M42 P4 S1 ; Set GPIO pin 4 high
 M453 ; Switch to CNC mode
 
 G91 ; Set to Relative Positioning
-G1 Z40 F6000 H1 ; Move Z up by 40 mm at 6000mm/min. Terminate the move if endstop switch is triggered and set axis position to axis limit.
+G1 Z40 F6000 H3 ; Move Z up by 40 mm at 6000mm/min. Terminate the move if endstop switch is triggered and set axis limit to position at trigger.
+; G60 S0 ; Save current position to slot 0
 
 M98 P"unlock_turret.g" ; Call unlock_turret.g
 G90 ; Set to Absolute Positioning

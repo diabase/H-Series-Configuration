@@ -15,8 +15,8 @@ M453 ; Switch to CNC mode (Motor-driven cleaning station only)
 ; Select tool and save the current position
 T1 P0 ; Select tool 1 but don't run any tool change macro files
 G91 ; Set to Relative Positioning
-G1 Z40 F6000 H1 ; Move Z up 40 mm at 6000 mm/min. Terminate the move if endstop switch is triggered and set axis position to axis limit.
-G60 S1 ; Save current position to slot 1
+G1 Z40 F6000 H3 ; Move Z up 40 mm at 6000 mm/min. Terminate the move if endstop switch is triggered and set axis limit to position at trigger.
+G60 S0 ; Save current position to slot 0
 
 G90 ; Set to Absolute Positioning
 G1 Y85 F30000 ; Move Y to 85 mm at 30000 mm/min
@@ -64,5 +64,5 @@ M98 P"postclean.g" ; Call postclean.g
 
 ; M106 P8 S0 ; Turn off vacuum
 
-G1 R1 Y0 F30000 ; Return to Y coordinate saved in restore point 1 at 30000 mm/min
-G1 R1 Z0 F6000 ; Return to Z coordinate saved in restore point 1 at 6000 mm/min
+G1 R0 Y0 F30000 ; Return to Y coordinate saved in restore point 0 at 30000 mm/min
+G1 R0 Z0 F6000 ; Return to Z coordinate saved in restore point 0 at 6000 mm/min
