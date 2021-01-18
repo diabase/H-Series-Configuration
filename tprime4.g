@@ -1,14 +1,3 @@
-; Disable all (?) E motors and enable E motor for this tool
-; MOT 1 (Tool 1) - LLL
-; MOT 2 (Tool 5) - LLH
-; MOT 3 (Tool 4) - HHL
-; MOT 4 (Tool 3) - LHL
-; MOT 5 (Tool 2) - HLL
-M84 E0:1:2:3 ; Stop idle hold on all(?) E motors
-M42 P2 S1 ; Set GPIO pin 2 high
-M42 P3 S1 ; Set GPIO pin 3 high
-M42 P4 S0 ; Set GPIO pin 4 low
-
 M453 ; Switch to CNC mode
 
 ; Select tool and save the current position
