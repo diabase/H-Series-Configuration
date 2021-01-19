@@ -21,7 +21,7 @@ M569 P9 S0 ; Set motor driver direction. Motor driver number 9 goes backwards (S
 ; Drive settings
 M584 X0 Y1 Z2 U3 V8 W7 E6:6:6:9 A4 C5  ; Set driver mapping, E drive is multiplexed. Hide the extra axes
 M208 X-208 Y-93 Z-10 U-9.2 V-100 W0 A-365 C-1000 S1 ; Set axis minima
-M208 X208 Y93 Z202.64 U360 V200 W35 A365 C10000 S0 ; Set axis maxima
+M208 X208 Y93 Z211.82 U360 V200 W35 A365 C10000 S0 ; Set axis maxima
 M350 X16 Y16 Z16 U16 V16 W16 A16 C16 E16:16:16:16 I1 ; Configure microstepping with interpolation
 M92 X320 Y320 Z640 U322.31 V1600 W800 A53.33 C53.33 E96:96:96:96 ; Set steps per mm
 M566 X300 Y300 Z300 U120 V500 W500 A1000 C1000 E1200:1200:1200:1200 ; Set maximum instantaneous speed changes (mm/min)
@@ -66,8 +66,8 @@ M950 F4 C"duex.fan4"   ; Spindle 1 Air Flow - Define Fan 4 to use pin duex.fan4
 M950 F5 C"duex.fan5"   ; Spindle 2 Air Flow - Define Fan 5 to use pin duex.fan5
 
 ; Fan configuration
+M106 P0 C"Layer Fan" ; Extruder layer fans
 M106 P1 H3:4:5 T50 ; Extruder Fans - Configure Fan 1: Turn on when heater 3, 4, or 5 reach the trigger temperature of 50C
-; M106 P3 C"Print Fan" - Unused? Commented out by Ron Thomas on 1/3/2021 for testing with H4027
 M106 P4 S0 B0 L1 C"Spindle 1" ; Spindle 1 air flow
 M106 P5 S0 B0 L1 C"Spindle 2" ; Spindle 2 air flow
 
