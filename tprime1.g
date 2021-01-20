@@ -1,75 +1,73 @@
-; Disable E motor and select first E motor for multiplexing
-; MOT 1 - LLL
-; MOT 2 (5) - LLH
-; MOT 3 (4) - HHL
-; MOT 4 (3) - LHL
-; MOT 5 (2) - HLL
-M84 E0
-M42 P2 S0
-M42 P3 S0
-M42 P4 S0
+; Idle all E motors and switch extruder multiplexer to Tool 1
+; MOT 1 (Tool 1) - LLL
+; MOT 2 (Tool 5) - LLH
+; MOT 3 (Tool 4) - HHL
+; MOT 4 (Tool 3) - LHL
+; MOT 5 (Tool 2) - HLL
+M84 E0:1:2:3 ; Idle all extruder motors
+M42 P2 S0 ; Set GPIO pin 2 low
+M42 P3 S0 ; Set GPIO pin 3 low
+M42 P4 S0 ; Set GPIO pin 4 low
 
-; Switch to FFF mode
-M451
+;M451 ; Switch to FFF mode (Solenoid-driven cleaning station only)
+M453 ; Switch to CNC mode (Motor-driven cleaning station only)
 
 ; Select tool and save the current position
-T1 P0
+T1 P0 ; Select tool 1 but don't run any tool change macro files
+G91 ; Set to Relative Positioning
 
+if move.axes[2].machinePosition + 40 <= move.axes[2].max
+    G1 Z40 F6000 ; Move Z +40mm at 6000 mm/min
+elif move.axes[2].machinePosition + 40 > move.axes[2].max
+    G1 Z40 F6000 H3 ; Attempt to move Z +40mm at 6000 mm/min, but halt when endstop triggered and set axis limit current position, overriding value set by M208 in config.g
 
-; Move up and get the bed out of the way
-G91
-G1 Z15 F6000
-G60 S1
+G60 S0 ; Save current position to slot 0
 
-G90
-G1 Y85 F30000
+G90 ; Set to Absolute Positioning
+G1 Y85 F30000 ; Move Y to 85 mm at 30000 mm/min
 
 ; Move nozzle to cleaning station
-M98 P"unlock_turret.g"
-G1 U289.3 F9900
-G4 P20
+M98 P"unlock_turret.g" ; Call unlock_turret.g
+G90 ; Set to Absolute Positioning
+G1 U289.3 F9900; Rotate turret (U) to 289.3 at 9900 mm/min
+G4 P20 ; Dwell for 20 ms
+M451 ; FFF mode
 
-
-
-; Heat up the nozzle and extrude some filament
-M116 P1 S10
-M42 P0 S1
-M83
-G1 E18 F6000
-M42 P0 S0.75
-G1 E6 F300
-M400
-M42 P0 S0
-G1 E-9.9 F6000
-G4 P20
+M116 P1 S5 ; Wait until Tool 1 reaches +/-5C of its set value
+; M42 P0 S1 ; Set GPIO pin 0 high (Solenoid-driven cleaning station only)
+G1 W23 F15000 ; Move W +23 at 15000 mm/min (Motor-driven cleaning station only)
+M83 ; Set Extruder to Relative Mode
+G1 E20 F6000 ; Extrude 20 mm at 6000 mm/min
+; M42 P0 S0.75 ; Set GPIO pin 0 to 75% (Solenoid-driven cleaning station only)
+G1 E8 F200 ; Extrude 6 mm at 300 mm/min
+M400 ; Wait for current moves to finish
+; M42 P0 S0 ; Set GPIO pin 0 to low (Solenoid-driven cleaning station only)
+G1 W20 F6000 ; Move W +20 at 6000 mm/min (Motor-driven cleaning station only)
+G1 E-16 F6000 ; Retract 16 mm at 6000 mm/min
+G4 P20 ; Dwell for 20 ms
 
 ; Move nozzle so that it faces the pliers
+G1 U300.7 F9900 ; Rotate turret (U) to 300.7 at 9900 mm/min
+G4 P20 ; Dwell for 20 ms
 
-G1 U300.7 F9900
-G4 P20
+; M106 P8 S1 ; Turn on vacuum
 
-; Turn on vacuum
-M106 P8 S1
+; M106 P7 S1 ; Set Fan 7 to 100%
+M98 P"clean.g" ; Call clean.g
 
-; Perform cleaning cycle
-M98 P"clean.g"
+M42 P1 S1 ; Close pliers
+G4 P20 ; Dwell for 20 ms
+M42 P1 S0.4 ; Reduce pliers solenoid current to 40%
 
-;Leave blades closed
-M42 P1 S1
-G4 P20
-M42 P1 S0.4
-
-; Move the nozzle so that if faces the bed
-G1 U30 F9900
-G4 P20
-M98 P"lock_turret.g"
+G90 ; Set to Absolute Positioning
+G1 U30    F9900 ; Rotate turret (U) to 30    (pointing nozzle 1 at the bed) at 9900 mm/min
+G4 P20 ; Dwell for 20 ms
+M98 P"lock_turret.g" ; Call lock_turret.g
 
 ; Perform post-cleaning of the pliers
-M98 P"postclean.g"
+M98 P"postclean.g" ; Call postclean.g
 
-; Turn off vacuum
-M106 P8 S0
+; M106 P8 S0 ; Turn off vacuum
 
-; Go back to the saved coordinates
-G1 R1 Y0 F30000
-G1 R1 Z0 F6000
+G1 R0 Y0 F30000 ; Return to Y coordinate saved in restore point 0 at 30000 mm/min
+G1 R0 Z0 F6000 ; Return to Z coordinate saved in restore point 0 at 6000 mm/min

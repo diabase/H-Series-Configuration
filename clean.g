@@ -1,12 +1,16 @@
-G90
-M400
-G1 W30 F15000
-M400
-M42 P1 S1
-G4 P125
-
-G1 W10 F15000
-M42 P1 S0.5
-G4 P175
-M42 P1 S0
-M400
+G90 ; Set to Absolute Positioning (Motor-driven cleaning station only)
+M400 ; Wait for current moves to finish
+; M42 P0 S1 ; Extend Pliers (Solenoid-driven cleaning station only)
+G1 W21 F15000 ; Move W to 21 at 15000 mm/min (Motor-driven cleaning station only)
+G4 P125 ; Dwell for 125 ms
+M400 ; Wait for current moves to finish (Motor-driven cleaning station only)
+M42 P1 S1 ; Close pliers
+G4 P125 ; Dwell for 125 ms
+G28 W ; Home W (Motor-driven cleaning station only)
+M42 P1 S0.75 ; Reduce pliers-closing solenoid current to 75%
+G4 P125 ; Dwell for 125 ms
+; M42 P0 S0 ; Retract cleaning station (Solenoid-driven cleaning station only)
+M42 P1 S0.5 ; Reduce pliers-closing solenoid current to 50%
+G4 P175 ; Dwell for 175 ms
+M42 P1 S0 ; Open Pliers
+M400 ; Wait for current moves to finish

@@ -1,8 +1,8 @@
-; Go back to the saved position
-G1 R2 X0 Y0 F6000
-G1 R2 Z0
+M453 ; Switch to CNC mode
 
-; Switch to CNC mode
-M453
+G90 ; Set to Absolute Positioning
+G1 R2 X0 Y0 F6000 ; Return to X and Y coordinates stored in restore point 2 at a speed of 6000 mm/min
+G1 R2 Z2 ; Return to 2mm above Z coordinate stored in restore point 2
 
-M140 S0 ;turn bed heater off to protect power supply
+; M451 ; Switch to FFF Mode (Extruder only)
+M140 S0 ; Ensure bed heater is off to protect power supply. (Spindle only)
