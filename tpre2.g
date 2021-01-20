@@ -1,13 +1,3 @@
-; Disable all (?) E motors and enable E motor for this tool
-; MOT 1 (Tool 1) - LLL
-; MOT 2 (Tool 5) - LLH
-; MOT 3 (Tool 4) - HHL
-; MOT 4 (Tool 3) - LHL
-; MOT 5 (Tool 2) - HLL
-M84 E0 ; Stop idle hold on all(?) extruder motors
-M42 P2 S1 ; Set GPIO pin 2 high
-M42 P3 S0 ; Set GPIO pin 3 low
-M42 P4 S0 ; Set GPIO pin 4 low
 
 ; M451 ; Switch to FFF mode (Uncomment if and only if this tool is an extruder.)
 M453 ; Switch to CNC mode (Uncomment if and only if this tool is a spindle.)

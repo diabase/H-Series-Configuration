@@ -85,11 +85,11 @@ M950 F1 C"2.out6"		;FDM cooling fan
 ;M950 F7 C"duex.fan7"
 
 ; Tools
-M98 P"tcreate1.g"
-;M98 P"tcreate2.g"
+;M98 P"tcreate1.g"
+M98 P"tcreate2.g"
 M98 P"tcreate3.g"
 M98 P"tcreate4.g"
-;M98 P"tcreate5.g"
+M98 P"tcreate5.g"
 ;M563 P8 S"Camera"
 M563 P10 S"Probe"
 
