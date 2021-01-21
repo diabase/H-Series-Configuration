@@ -50,9 +50,8 @@ G4 P20 ; Dwell for 20 ms
 G1 U300.7 F9900 ; Rotate turret (U) to 300.7 at 9900 mm/min
 G4 P20 ; Dwell for 20 ms
 
-; M106 P8 S1 ; Turn on vacuum
+M106 P8 S1 ; Turn on vacuum
 
-; M106 P7 S1 ; Set Fan 7 to 100%
 M98 P"clean.g" ; Call clean.g
 
 M42 P1 S1 ; Close pliers
@@ -67,7 +66,7 @@ M98 P"lock_turret.g" ; Call lock_turret.g
 ; Perform post-cleaning of the pliers
 M98 P"postclean.g" ; Call postclean.g
 
-; M106 P8 S0 ; Turn off vacuum
+M106 P8 S0 ; Turn off vacuum
 
 G1 R0 Y0 F30000 ; Return to Y coordinate saved in restore point 0 at 30000 mm/min
 G1 R0 Z0 F6000 ; Return to Z coordinate saved in restore point 0 at 6000 mm/min
