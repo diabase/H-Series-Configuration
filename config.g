@@ -1,6 +1,6 @@
 ; H4 Configuration File
 ; written by Diabase Engineering
-M929 P"eventlog.txt" S3 ; start logging to file eventlog.txt (S0 = stop logging, S1 = log level WARN, S2 = log level INFO, S3 = log level DEBUG)
+; M929 P"eventlog.txt" S3 ; start logging to file eventlog.txt (S0 = stop logging, S1 = log level WARN, S2 = log level INFO, S3 = log level DEBUG)
 
 ; General preferences
 G90 ; Send absolute coordinates...
@@ -8,7 +8,7 @@ M83 ; ...but relative extruder moves
 
 ; Drive orientation
 M569 P0 S1 ; Set motor driver direction. Motor driver number 0 goes forwards  (S1). (Line 21: X)
-M569 P1 S0 ; Set motor driver direction. Motor driver number 1 goes backwards (S0). (Line 21: Y)
+M569 P0 S0 ; Set motor driver direction. Motor driver number 1 goes backwards (S1). (Line 21: Y)
 M569 P2 S0 ; Set motor driver direction. Motor driver number 2 goes backwards (S0). (Line 21: Z)
 M569 P3 S0 ; Set motor driver direction. Motor driver number 3 goes backwards (S0). (Line21: U)
 M569 P4 S0 ; Set motor driver direction. Motor driver number 4 goes backwards (S0). (Line21: A)
@@ -20,12 +20,12 @@ M569 P9 S0 ; Set motor driver direction. Motor driver number 9 goes backwards (S
 
 ; Drive settings
 M584 X0 Y1 Z2 U3 V8 W7 E6:6:6:9 A4 C5  ; Set driver mapping, E drive is multiplexed. Hide the extra axes
-M208 X-208 Y-93 Z-10 U-9.2 V-100 W0 A-365 C-1000 S1 ; Set axis minima
-M208 X208 Y93 Z211.82 U360 V200 W35 A365 C10000 S0 ; Set axis maxima
+M208 X-208 Y-90 Z-10 U-9.2 V-100 W0 A-365 C-1000 S1 ; Set axis minima
+M208 X208 Y90 Z210 U360 V200 W35 A365 C10000 S0 ; Set axis maxima
 M350 X16 Y16 Z16 U16 V16 W16 A16 C16 E16:16:16:16 I1 ; Configure microstepping with interpolation
 M92 X320 Y320 Z640 U322.31 V1600 W800 A53.33 C53.33 E96:96:96:96 ; Set steps per mm
 M566 X300 Y300 Z300 U120 V500 W500 A1000 C1000 E1200:1200:1200:1200 ; Set maximum instantaneous speed changes (mm/min)
-M203 X8500 Y12000 Z3000 U8900 V10000 W20000 A20000 C20000 E6000:6000:6000:6000 ; Set maximum speeds (mm/min)
+M203 X12000 Y12000 Z3000 U8900 V10000 W20000 A20000 C20000 E6000:6000:6000:6000 ; Set maximum speeds (mm/min)
 M201 X600 Y600 Z450 U600 V500 W500 A600 C600 E250:250:250:250 ; Set accelerations (mm/s^2)
 M906 X1800 Y2100 Z1800 U1200 V800 W800 A1600 C1600 E1500:1500:1500:500 I30 ; Set motor currents (mA) and motor idle factor percent
 M84 S5 ; Allow all motors to drop hold current to idle after 5 seconds
@@ -60,8 +60,6 @@ M302 S150 ; Set minimum extrude temp
 ; Fan definition
 M950 F0 C"duex.fan3"    ; Layer fan
 M950 F1 C"fan1"
-; M950 F2 C"nil"       ; Free Fan 2 - Unused? Commented out by Ron Thomas on 1/3/2021 for testing with H4027
-; M950 F3 C"nil"       ; Free Fan 3 - Unused? Commented out by Ron Thomas on 1/3/2021 for testing with H4027
 M950 F4 C"duex.fan4"   ; Spindle 1 Air Flow - Define Fan 4 to use pin duex.fan4
 M950 F5 C"duex.fan5"   ; Spindle 2 Air Flow - Define Fan 5 to use pin duex.fan5
 M950 F8 C"duex.fan8"   ; Define I/O Pin for Priming Vacuum
@@ -99,11 +97,11 @@ G4 P100 ; Dwell for 100 ms
 M98 P"drycabinet.g"
 
 ; Network
-M550 P"H4027" ; Set machine name
+M550 P"H4XXX" ; Set machine name
 M552 S1 ; Enable network
 
 ; Miscellaneous
 M911 S19 R22 P"M98 P""estop.g"""  ; Run estop.g on power loss during a print
 M575 P1 B115200 S1; Set up UART for pendant input
 ; M750 ; Enable scanner
-M141 P1 S5 ; Set target RH for drying cabinet to 5%
+; M141 P1 S5 ; Set target RH for drying cabinet to 5%
