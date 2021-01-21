@@ -64,12 +64,14 @@ M950 F1 C"fan1"
 ; M950 F3 C"nil"       ; Free Fan 3 - Unused? Commented out by Ron Thomas on 1/3/2021 for testing with H4027
 M950 F4 C"duex.fan4"   ; Spindle 1 Air Flow - Define Fan 4 to use pin duex.fan4
 M950 F5 C"duex.fan5"   ; Spindle 2 Air Flow - Define Fan 5 to use pin duex.fan5
+M950 F8 C"duex.fan8"   ; Define I/O Pin for Priming Vacuum
 
 ; Fan configuration
 M106 P0 C"Layer Fan" ; Extruder layer fans
 M106 P1 H3:4:5 T50 ; Extruder Fans - Configure Fan 1: Turn on when heater 3, 4, or 5 reach the trigger temperature of 50C
 M106 P4 S0 B0 L1 C"Spindle 1" ; Spindle 1 air flow
 M106 P5 S0 B0 L1 C"Spindle 2" ; Spindle 2 air flow
+M106 P8 S0 B0 L1 C"Cleaning Station Vacuum" ; I/O Pin for Cleaning Station Vacuum Relay
 
 ; Servo pins (for M42)
 M950 P1 C"fan2" ; Was M42 P22
