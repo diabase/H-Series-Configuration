@@ -8,7 +8,7 @@ M83 ; ...but relative extruder moves
 
 ; Drive orientation
 M569 P0 S1 ; Set motor driver direction. Motor driver number 0 goes forwards  (S1). (Line 21: X)
-M569 P0 S0 ; Set motor driver direction. Motor driver number 1 goes backwards (S1). (Line 21: Y)
+M569 P1 S1 ; Set motor driver direction. Motor driver number 1 goes backwards (S1). (Line 21: Y)
 M569 P2 S0 ; Set motor driver direction. Motor driver number 2 goes backwards (S0). (Line 21: Z)
 M569 P3 S0 ; Set motor driver direction. Motor driver number 3 goes backwards (S0). (Line21: U)
 M569 P4 S0 ; Set motor driver direction. Motor driver number 4 goes backwards (S0). (Line21: A)
