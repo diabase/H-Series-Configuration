@@ -6,7 +6,7 @@ M574 Y1 S1 P"ystop" ; Configure Y endstop position at low end, it's a microswitc
 M574 Z2 S1 P"zstop" ; Configure Z endstop position at high end, it's a microswitch on pin "zstop"
 
 M84 E0:1:2:3 ; Idle all extruder motors
-T-1 ; Deselect current tool
+T-1 P0; Deselect current tool
 M451 ; Switch to FFF Mode
 ; G92 A C - Does nothing? RT commented out on 1/14/2021
 
