@@ -11,7 +11,7 @@ M451
 G92 A B
 M98 p"homew.g"
 ; Enable upper Z endstop and move away from the base plane
-M574 Z2 H1 P"!io4.in"
+M574 Z2 S1 P"!io4.in"
 G91
 G1 H1 Z60 F6000
 
@@ -44,8 +44,4 @@ T4 P0
 T5 P0
 T10 P0
 
-
 M451 ;back to FFF mode
-
-;Restore motor currents to X and Y axes
-M913 X100 Y100
