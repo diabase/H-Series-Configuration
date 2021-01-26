@@ -8,7 +8,7 @@ M83 ; ...but relative extruder moves
 
 ; Drive orientation
 M569 P0 S1 ; Set motor driver direction. Motor driver number 0 goes forwards  (S1). (Line 21: X)
-M569 P1 S1 ; Set motor driver direction. Motor driver number 1 goes backwards (S1). (Line 21: Y)
+M569 P1 S1 ; Set motor driver direction. Motor driver number 1 goes forwards  (S1). (Line 21: Y)
 M569 P2 S0 ; Set motor driver direction. Motor driver number 2 goes backwards (S0). (Line 21: Z)
 M569 P3 S0 ; Set motor driver direction. Motor driver number 3 goes backwards (S0). (Line21: U)
 M569 P4 S0 ; Set motor driver direction. Motor driver number 4 goes backwards (S0). (Line21: A)
@@ -19,7 +19,7 @@ M569 P8 S1 ; Set motor driver direction. Motor driver number 8 goes forwards  (S
 M569 P9 S0 ; Set motor driver direction. Motor driver number 9 goes backwards (S0). (Line21: Filament Assist)
 
 ; Drive settings
-M584 X0 Y1 Z2 U3 V8 W7 E6:6:6:9 A4 C5  ; Set driver mapping, E drive is multiplexed. Hide the extra axes
+M584 X0 Y1 Z2 U3 V8 W7 E6:6:6:9 A4 C5 ; Set driver mapping, E drive is multiplexed. Hide the extra axes
 M208 X-208 Y-90 Z-10 U-9.2 V-100 W0 A-365 C-1000 S1 ; Set axis minima
 M208 X208 Y90 Z210 U360 V200 W35 A365 C10000 S0 ; Set axis maxima
 M350 X16 Y16 Z16 U16 V16 W16 A16 C16 E16:16:16:16 I1 ; Configure microstepping with interpolation
@@ -45,7 +45,7 @@ M558 K1 P8 C"duex.e4stop" I0 F200 T12000 ; Set Z probe type for Probe 1 (touchof
 G31 Z0 ; Set Z probe trigger height to 0mm
 
 ; Temperature sensors
-M308 S0 P"bedtemp"      Y"thermistor" T100000 B3950 C0 A"Bed" ; Create Sensor 0 assigned to bedtemp pin, thermistor type with resistance of 100Kohms at 25C, reciprocal of Steinhart-Hart B coefficient 3950, Steinhart-Hart C coefficient 0, and call it "Bed"
+M308 S0 P"bedtemp" Y"thermistor" T100000 B3950 C0 A"Bed" ; Create Sensor 0 assigned to bedtemp pin, thermistor type with resistance of 100Kohms at 25C, reciprocal of Steinhart-Hart B coefficient 3950, Steinhart-Hart C coefficient 0, and call it "Bed"
 ; Other sensors defined in drycabinet.g and tcreate#.g files
 
 ; Heaters
