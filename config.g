@@ -65,7 +65,7 @@ M950 F5 C"duex.fan5"   ; Spindle 2 Air Flow - Define Fan 5 to use pin duex.fan5
 M950 F8 C"duex.fan8"   ; Define I/O Pin for Priming Vacuum
 
 ; Fan configuration
-M106 P0 C"Layer Fan" ; Extruder layer fans
+M106 P0 C"Tool Fan" ; Nozzle fans
 M106 P1 H3:4:5 T50 ; Extruder Fans - Configure Fan 1: Turn on when heater 3, 4, or 5 reach the trigger temperature of 50C
 M106 P4 S0 B0 L1 C"Spindle 1" ; Spindle 1 air flow
 M106 P5 S0 B0 L1 C"Spindle 2" ; Spindle 2 air flow
