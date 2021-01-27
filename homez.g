@@ -1,7 +1,7 @@
 ; called to home only the Z axis
 
 M84 E0:1:2:3 ; Idle all extruder motors
-T-1 ; Deselect current tool
+T-1 P0 ; Deselect current tool
 M451 ; Switch to FFF Mode
 
 G91 ; Relative Positioning
