@@ -1,9 +1,7 @@
 ; called to home the X axis
-M574 X1 S1 P"xstop"
-
 
 ; Deselect the current tool (if any) and enter FFF mode
-T-1 P0
+T-1
 M451
 M913 X50
 ; Lift Z relative to current position

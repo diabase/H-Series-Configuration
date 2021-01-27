@@ -1,12 +1,46 @@
-; called to home only the Z axis
+; called to home the Z axis
 
-M84 E0:1:2:3 ; Idle all extruder motors
-T-1 P0 ; Deselect current tool
-M451 ; Switch to FFF Mode
+; Deselect the current tool (if any) and enter FFF mode
+T-1
+M451
 
-G91 ; Relative Positioning
-M574 Z2 S1 P"zstop" ; Configure Z endstop position at high end, it's a microswitch on pin "zstop"
+; Enable upper Z endstop and move away from the base plane
+G91
+M574 Z2 H1 P"zstop"
+G1 H1 Z15 F4000
 
-G1 H1 Z260 F6000 ; Attempt to move Z +260mm at 6000 mm/min, but halt when endstop triggered and set axis position to axis limit as defined with M208 in config.g
-G1 H2 Z-2 F6000 ; Move Z -2mm at 6000 mm/min, ignoring endstop while moving
-G1 H1 Z5 F1000 ; Attempt to move Z +5mm at 1000 mm/min, but halt when endstop triggered and set axis position to axis maximum as defined in config.g
+; Move the turret to the Z probe index
+M98 P"unlock_turret.g"
+G90
+G1 U0 F9900
+M98 P"lock_turret.g"
+G92 U0
+
+; Select the Z probe and disable the Z axis once so that we can move outside the limits again
+T10 P0
+M574 Z1 H2 P"zstop"
+M84 Z
+G90
+
+; Go to first bed probe point and coarse home Z
+M558 F1200
+G30 X0 Y0
+
+; Fine home Z
+M558 F150
+G30
+
+; Measure Z axis length
+M574 Z2 H1 P"zstop"
+M208 Z220 S0
+G91
+G1 H3 Z230 F6000
+G90
+
+; Save axis length to config-override.g
+M500
+
+;Move z down
+G91
+G1 Z-20
+G90
