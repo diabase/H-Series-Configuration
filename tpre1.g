@@ -4,8 +4,11 @@
 ; MOT 3 (Tool 4) - HHL
 ; MOT 4 (Tool 3) - LHL
 ; MOT 5 (Tool 2) - HLL
+; Spindle 1 Forward/Reverse is High/Low on GPIO Pin 2 - Special wiring on H4207
+; Spindle 2 Forward/Reverse is High/Low on GPIO Pin 3 - Special wiring on H4207
 M84 E0:1:2:3 ; Idle all extruder motors
-M42 P2 S0 ; Set GPIO pin 2 low
+; M42 P2 S0 ; Set GPIO pin 2 low
+M42 P2 S1 ; Set GPIO pin 2 high - Special wiring on H4027
 M42 P3 S0 ; Set GPIO pin 3 low
 M42 P4 S0 ; Set GPIO pin 4 low
 
