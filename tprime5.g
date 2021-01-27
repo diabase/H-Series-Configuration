@@ -52,7 +52,6 @@ G4 P20 ; Dwell for 20 ms
 
 ; M106 P8 S1 ; Turn on vacuum
 
-; M106 P7 S1 ; Set Fan 7 to 100%
 M98 P"clean.g" ; Call clean.g
 
 M42 P1 S1 ; Close pliers

@@ -8,7 +8,7 @@ M83 ; ...but relative extruder moves
 
 ; Drive orientation
 M569 P0 S1 ; Set motor driver direction. Motor driver number 0 goes forwards  (S1). (Line 21: X)
-M569 P1 S1 ; Set motor driver direction. Motor driver number 1 goes forwards  (S0). (Line 21: Y)
+M569 P1 S1 ; Set motor driver direction. Motor driver number 1 goes forwards  (S1). (Line 21: Y)
 M569 P2 S0 ; Set motor driver direction. Motor driver number 2 goes backwards (S0). (Line 21: Z)
 M569 P3 S0 ; Set motor driver direction. Motor driver number 3 goes backwards (S0). (Line21: U)
 M569 P4 S0 ; Set motor driver direction. Motor driver number 4 goes backwards (S0). (Line21: A)
@@ -19,7 +19,7 @@ M569 P8 S1 ; Set motor driver direction. Motor driver number 8 goes forwards  (S
 M569 P9 S0 ; Set motor driver direction. Motor driver number 9 goes backwards (S0). (Line21: Filament Assist)
 
 ; Drive settings
-M584 X0 Y1 Z2 U3 V8 W7 E6:6:6:9 A4 C5  ; Set driver mapping, E drive is multiplexed. Hide the extra axes
+M584 X0 Y1 Z2 U3 V8 W7 E6:6:6:9 A4 C5 ; Set driver mapping, E drive is multiplexed. Hide the extra axes
 M208 X-210 Y-93 Z-10 U-9.2 V-100 W0 A-365 C-1000 S1 ; Set axis minima
 M208 X210 Y93 Z202.64 U360 V200 W35 A365 C10000 S0 ; Set axis maxima
 M350 X16 Y16 Z16 U16 V16 W16 A16 C16 E16:16:16:16 I1 ; Configure microstepping with interpolation
@@ -40,12 +40,12 @@ M574 A1 S1 P"duex.e2stop" ; Configure A endstop position at high end, it's a mic
 M574 C1 S1 P"duex.e3stop" ; Configure C endstop position at high end, it's a microswitch on pin "duex.e3stop"
 
 ;M574 V2 S0 ; Define active low microswitches
-M558 K0 P5 C"^zprobe.in" H2 F150 T12000 ; Set Z probe type to switch, probing height and the probe + travel speeds
-M558 K1 P8 C"duex.e4stop" I0 F200 T12000 ; Additional Z probe used for touchoff
-G31 Z0 ; Set Z probe trigger height
+M558 K0 P5 C"^zprobe.in" H2 F150 T12000 ; Set Z probe type for Probe 0 (Tool 10). It's a normally closed switch between the "zprobe.in" pin and ground using the internal pullup resistor, 2mm dive height, 150mm/min probing speed, and 12000 mm/min travel speed between probe points
+M558 K1 P8 C"duex.e4stop" I0 F200 T12000 ; Set Z probe type for Probe 1 (touchoff plate). It's an unfiltered normally closed switch between the "duex.e4stop" pin and ground, non-inverted probe reading, 200mm/min probing speed, and 12000 mm/min travel speed between probe points
+G31 Z0 ; Set Z probe trigger height to 0mm
 
 ; Temperature sensors
-M308 S0 P"bedtemp"      Y"thermistor" T100000 B3950 C0 A"Bed" ; Create Sensor 0 assigned to bedtemp pin, thermistor type with resistance of 100Kohms at 25C, reciprocal of Steinhart-Hart B coefficient 3950, Steinhart-Hart C coefficient 0, and call it "Bed"
+M308 S0 P"bedtemp" Y"thermistor" T100000 B3950 C0 A"Bed" ; Create Sensor 0 assigned to bedtemp pin, thermistor type with resistance of 100Kohms at 25C, reciprocal of Steinhart-Hart B coefficient 3950, Steinhart-Hart C coefficient 0, and call it "Bed"
 ; Other sensors defined in drycabinet.g and tcreate#.g files
 
 ; Heaters
@@ -62,15 +62,16 @@ M950 F0 C"duex.fan3"    ; Layer fan
 M950 F1 C"fan1"
 M950 F4 C"duex.fan4"   ; Spindle 1 Air Flow - Define Fan 4 to use pin duex.fan4
 M950 F5 C"duex.fan5"   ; Spindle 2 Air Flow - Define Fan 5 to use pin duex.fan5
-M950 F7 C"duex.fan7"   ; Define I/O Pin for Priming Vacuum
+M950 F8 C"duex.fan8"   ; Define I/O Pin for Priming Vacuum
 
 ; Fan configuration
+M106 P0 C"Tool Fan" ; Nozzle fans
 M106 P1 H3:4:5 T50 ; Extruder Fans - Configure Fan 1: Turn on when heater 3, 4, or 5 reach the trigger temperature of 50C
 M106 P4 S0 B0 L1 C"Spindle 1" ; Spindle 1 air flow
 M106 P5 S0 B0 L1 C"Spindle 2" ; Spindle 2 air flow
+M106 P8 S0 B0 L1 C"Cleaning Station Vacuum" ; I/O Pin for Cleaning Station Vacuum Relay
 
 ; Servo pins (for M42)
-M950 P0 C"fan0" ; Was M42 P20
 M950 P1 C"fan2" ; Was M42 P22
 M950 P2 C"duex.gp1" ; Was M42 P100
 M950 P3 C"duex.gp2" ; Was M42 P101
@@ -103,4 +104,4 @@ M552 S1 ; Enable network
 M911 S19 R22 P"M98 P""estop.g"""  ; Run estop.g on power loss during a print
 M575 P1 B115200 S1; Set up UART for pendant input
 ; M750 ; Enable scanner
-
+; M141 P1 S5 ; Set target RH for drying cabinet to 5%
