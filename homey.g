@@ -2,7 +2,7 @@
 M574 Y1 S1 P"ystop"
 
 ; Deselect the current tool (if any) and enter FFF mode
-T-1
+T-1 P0
 M451
 
 ; Lift Z relative to current position
