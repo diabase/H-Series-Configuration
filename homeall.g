@@ -6,12 +6,12 @@ M574 Y1 S1 P"!io3.in"
 
 ; Deselect the current tool (if any) and enter FFF mode
 ;M84 E0
-T-1
+T-1 P0
 M451
 G92 A B
 M98 p"homew.g"
 ; Enable upper Z endstop and move away from the base plane
-M574 Z2 H1 P"!io4.in"
+M574 Z2 S1 P"!io4.in"
 G91
 G1 H1 Z60 F6000
 
@@ -44,8 +44,7 @@ T4 P0
 T5 P0
 T10 P0
 
+M574 Z1 S2 ; Set Z endstop position to low end and configure as Z probe
+
 
 M451 ;back to FFF mode
-
-;Restore motor currents to X and Y axes
-M913 X100 Y100

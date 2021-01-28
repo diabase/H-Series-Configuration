@@ -24,5 +24,7 @@ G1 U0
 M98 P"lock_turret.g"
 
 G92 U0
+T10 P0
+M574 Z1 S2 ; Set Z endstop position to low end and configure as Z probe
 
 ;
