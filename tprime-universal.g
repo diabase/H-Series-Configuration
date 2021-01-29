@@ -29,8 +29,7 @@ G4 P20 ; Dwell for 20 ms
 
 M116 P{state.currentTool} S5 ; Wait until tool reaches +/-5C of its set value
 
-;if move.axes[5].letter == "W" ; Motor-driven cleaning station TODO -- This expression returns "Error: meta command: cannot convert operands to same type"
-if true ; Placeholder while previous TODO is investigated - RT 1/28/2021
+if {(move.axes[5].letter ^ "") == "W"} ; Motor-driven cleaning station
     G1 W23 F15000 ; Move W to 23mm at 15000 mm/min to extend cleaning station to priming location
     M83 ; Set Extruder to Relative Mode
     G1 E20 F6000 ; Extrude 20 mm at 6000 mm/min
