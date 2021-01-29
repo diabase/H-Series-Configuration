@@ -3,20 +3,20 @@
 M929 P"eventlog.txt" S3 ; start logging to file eventlog.txt (S0 = stop logging, S1 = log level WARN, S2 = log level INFO, S3 = log level DEBUG)
 
 ; General preferences
-G90 ; Send absolute coordinates...
-M83 ; ...but relative extruder moves
+G90 ; Absolute Positioning
+M83 ; Relative Extrusions
 
 ; Drive orientation
-M569 P0 S1 ; Set motor driver direction. Motor driver number 0 goes forwards  (S1). (Line 21: X)
-M569 P1 S0 ; Set motor driver direction. Motor driver number 1 goes backwards (S0). (Line 21: Y)
-M569 P2 S0 ; Set motor driver direction. Motor driver number 2 goes backwards (S0). (Line 21: Z)
-M569 P3 S0 ; Set motor driver direction. Motor driver number 3 goes backwards (S0). (Line21: U)
-M569 P4 S0 ; Set motor driver direction. Motor driver number 4 goes backwards (S0). (Line21: A)
-M569 P5 S1 ; Set motor driver direction. Motor driver number 5 goes forwards  (S1). (Line21: C)
-M569 P6 S0 ; Set motor driver direction. Motor driver number 6 goes backwards (S0). (Line21: E:1-3)
-M569 P7 S1 ; Set motor driver direction. Motor driver number 7 goes forwards  (S1). (Line21: W)
-M569 P8 S1 ; Set motor driver direction. Motor driver number 8 goes forwards  (S1). (Line21: V)
-M569 P9 S0 ; Set motor driver direction. Motor driver number 9 goes backwards (S0). (Line21: Filament Assist)
+M569 P0 S1 ; Set motor driver direction. Motor driver number 0 goes forwards  (S1). Line 22: X (Linear)
+M569 P1 S0 ; Set motor driver direction. Motor driver number 1 goes backwards (S0). Line 22: Y (Linear)
+M569 P2 S0 ; Set motor driver direction. Motor driver number 2 goes backwards (S0). Line 22: Z (Linear)
+M569 P3 S0 ; Set motor driver direction. Motor driver number 3 goes backwards (S0). Line 22: U (Turret)
+M569 P4 S0 ; Set motor driver direction. Motor driver number 4 goes backwards (S0). Line 22: A (Rotary)
+M569 P5 S1 ; Set motor driver direction. Motor driver number 5 goes forwards  (S1). Line 22: C (Rotary)
+M569 P6 S0 ; Set motor driver direction. Motor driver number 6 goes backwards (S0). Line 22: E:1-3 (Extruders)
+M569 P7 S1 ; Set motor driver direction. Motor driver number 7 goes forwards  (S1). Line 22: W (Cleaning Station)
+M569 P8 S1 ; Set motor driver direction. Motor driver number 8 goes forwards  (S1). Line 22: V (Turret Lock)
+M569 P9 S0 ; Set motor driver direction. Motor driver number 9 goes backwards (S0). Line 22: E4 (Filament Assist)
 
 ; Drive settings
 M584 X0 Y1 Z2 U3 V8 W7 E6:6:6:9 A4 C5 ; Set driver mapping, E drive is multiplexed. Hide the extra axes
@@ -35,9 +35,9 @@ M574 X1 S1 P"xstop" ; Configure X endstop position at low end, it's a microswitc
 M574 Y1 S1 P"ystop" ; Configure Y endstop position at low end, it's a microswitch on pin "ystop"
 M574 Z2 S1 P"zstop" ; Configure Z endstop position at high end, it's a microswitch on pin "zstop"
 M574 U1 S1 P"e0stop" ; Configure U endstop position at low end, it's a microswitch on pin "e0stop"
-M574 V0 S1 P"e1stop" ; Configure V endstop position at high end, it's a microswitch on pin "e1stop"
-M574 A1 S1 P"duex.e2stop" ; Configure A endstop position at high end, it's a microswitch on pin "duex.e2stop"
-M574 C1 S1 P"duex.e3stop" ; Configure C endstop position at high end, it's a microswitch on pin "duex.e3stop"
+M574 V0 S1 P"e1stop" ; Configure V endstop position at low end, it's a microswitch on pin "e1stop"
+M574 A1 S1 P"duex.e2stop" ; Configure A endstop position at low end, it's a microswitch on pin "duex.e2stop"
+M574 C1 S1 P"duex.e3stop" ; Configure C endstop position at low end, it's a microswitch on pin "duex.e3stop"
 
 ;M574 V2 S0 ; Define active low microswitches
 M558 K0 P5 C"^zprobe.in" H2 F150 T12000 ; Set Z probe type for Probe 0 (Tool 10). It's a normally closed switch between the "zprobe.in" pin and ground using the internal pullup resistor, 2mm dive height, 150mm/min probing speed, and 12000 mm/min travel speed between probe points
