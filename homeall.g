@@ -12,7 +12,7 @@ G92 A0 C0 ; Set current A and C positions as 0 mm
 M98 p"homew.g" ; Call homew.g
 
 M400 ; Wait for all moves to finish
-M913 X50 Y50 Z50 ; Reduce X-, Y-, and Z-axis motor currents to 50%
+M913 X50 Y50 ; Reduce X-, Y-, and Z-axis motor currents to 50%
 G91 ; Relative Positioning
 G1 H1 Z40 F6000 ; Attempt to move Z +40mm at 6000 mm/min, but halt if endstop triggered and set axis position to axis limit as defined by previous M208 or G1 H3 special move
 
@@ -36,7 +36,7 @@ G92 U0 ; Set current U position as 0 mm
 M574 Z1 S2 ; Set Z endstop position to low end and configure as Z probe
 
 G1 X0 Y0 F10000 ; Move to X=0, Y=0 at 10000 mm/min
-G1 Z{move.axes[2].max + min(tools[1].offsets[2], tools[2].offsets[2], tools[3].offsets[2], tools[4].offsets[2], tools[5].offsets[2], tools[10].offsets[2])} F10000 ; Move to Z = ZMax + Longest Z Offset at 10000 mm/min
+G1 Z{move.axes[2].max + min(tools[2].offsets[2], tools[3].offsets[2], tools[4].offsets[2], tools[5].offsets[2], tools[10].offsets[2])} F10000 ; Move to Z = ZMax + Longest Z Offset at 10000 mm/min
 
 G60 S1 ; Save current position in slot 1 (the slot used when pausing)
 
