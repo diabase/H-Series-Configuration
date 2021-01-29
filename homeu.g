@@ -1,30 +1,44 @@
-; called to home the U axis
+; Called to home only the U axis
 
-; Deselect the current tool (if any) and enter FFF mode
-T-1
-M451
+M453 ; Switch to CNC Mode
 
-; Unlock the turret and disable stall detection
+; Ensure appropriate axis endstops are used
+M574 Z2 S1 P"!io4.in" ; Configure Z endstop position at high end, it's a microswitch on pin "zstop"
 
-M98 P"unlock_turret.g"
+M84 E0:1:2:3 ; Idle all extruder motors
 
-M400
+T-1 P0 ; Deselect current tool (if any)
 
-; Home U
-G91
-G1 H1 U-380 F1000
-G1 H2 U2
-G1 H1 U-20 F900
-G90
+G91 ; Relative Positioning
 
-; Go to the Z probe offset and select the corresponding tool
-G1 U0
+G60 S0 ; Save current position to Slot 0
+M400 ; Wait for all moves to finish
+M913 Z50 ; Reduce Z-axis motor currents to 50%
+G1 H1 Z40 F6000 ; Attempt to move Z +40mm at 6000 mm/min, but halt if endstop triggered and set axis position to axis limit as defined by previous M208 or G1 H3 special move
+M400 ; Wait for all moves to finish
+M913 Z100 ; Restore Z-axis motor current to 100%
 
-; Lock the turret again
-M98 P"lock_turret.g"
+M98 P"unlock_turret.g" ; Call unlock_turret.g
 
-G92 U0
-T10 P0
+M915 U R0 ; Configure stall detection for U axis to take no action when a stall is detected
+G1 H1 U-380 F6000 ; Attempt to move U -380mm at 6000 mm/min, but halt if endstop triggered and set axis position to axis limit as defined by previous M208 or G1 H3 special move
+G1 H2 U2 F6000 ; Move U +2mm at 6000 mm/min, ignoring endstop while moving
+G1 H1 U-20 F1000 ; Attempt to move U -20mm at 1000 mm/min, but halt if endstop triggered and set axis position to axis limit as defined by previous M208 or G1 H3 special move
+
+G90 ; Absolute Positioning
+
+G1 U0 F16000 ; Rotate Turret to 0 mm at 16000 mm/min
+M98 P"lock_turret.g" ; Call lock_turret.g
+G92 U0 ; Set current U position as 0 mm
+
 M574 Z1 S2 ; Set Z endstop position to low end and configure as Z probe
 
-;
+; Put all the tools into standby mode and leave the Z probe tool active
+T1 P0
+T2 P0
+T3 P0
+T4 P0
+T5 P0
+T10 P0
+
+G1 R0 Z0 ; Return to Z-axis position stored in Slot 0

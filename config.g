@@ -1,9 +1,10 @@
 ; H4 Configuration File
 ; written by Diabase Engineering
+M929 P"eventlog.txt" S3 ; start logging to file eventlog.txt (S0 = stop logging, S1 = log level WARN, S2 = log level INFO, S3 = log level DEBUG)
 
 ; General preferences
-G90 ; Send absolute coordinates...
-M83 ; ...but relative extruder moves
+G90 ; Absolute Positioning
+M83 ; Relative Extrusions
 
 ; Drive orientation
 M569 P0 S0; Drive 0 goes backwards
@@ -55,7 +56,7 @@ G31 Z0 K0; Set Z probe trigger height
 ;M950 H0 C"bedheat" T0                                    ; Bed heater
 M950 P1 C"out1"                ; P1 - cleaning station 1
 ;M950 P2 C"io1.out" 				; P2 - motor direction
-;M950 P8 C"out8"               ; P2 - cleaning station 2
+
 
 
 ; Temperature limits
@@ -64,13 +65,10 @@ M950 P1 C"out1"                ; P1 - cleaning station 1
 M302 S150 ; Set minimum extrude temp
 
 ; Fan definition
-;;M950 F0 C"nil"         ; free up fan
+;M950 F0 C"nil"         ; free up fan
 M950 F1 C"2.out3"		;FDM cooling fan
 M950 F2 C"2.out6"         ; free up fan
-;M950 F4 C"duex.fan4"
-;M950 F5 C"duex.fan5"
-;M950 F6 C"duex.fan6"
-;M950 F7 C"duex.fan7"
+
 
 ; Tools
 ;M98 P"tcreate1.g"
@@ -104,6 +102,8 @@ M106 P2 H3 T50 ; 12V cooling fans
 ;M106 P7 S0 B0 C"Spindle 4" ; Spindle 4 air flow
 
 ; Miscellaneous
-M911 S22 R23 P"M98 P""estop.g"""  ; Run estop.g on power loss during a print
-M575 P1 S1 B57600
+M911 S19 R22 P"M98 P""estop.g"""  ; Run estop.g on power loss during a print
+M575 P1 B115200 S1; Set up UART for pendant input
+; M750 ; Enable scanner
+M141 P1 S5 ; Set target RH for drying cabinet to 5%
 
