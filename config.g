@@ -33,7 +33,7 @@ M84 S5 ; Set idle timeout
 ; Endstops
 M574 X1 S1 P"io2.in"
 M574 Y1 S1 P"!io3.in"
-M574 Z2 S1 P"!io4.in"
+M574 Z1 S1 P"!io4.in"
 M574 U1 S1 P"io5.in"
 M574 V2 S1 P"io6.in"
 M574 W1 S1 p"!2.io1.in"
