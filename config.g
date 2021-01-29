@@ -7,16 +7,16 @@ G90 ; Absolute Positioning
 M83 ; Relative Extrusions
 
 ; Drive orientation
-M569 P0 S1 ; Set motor driver direction. Motor driver number 0 goes forwards  (S1). (Line 21: X)
-M569 P1 S0 ; Set motor driver direction. Motor driver number 1 goes backwards (S0). (Line 21: Y)
-M569 P2 S0 ; Set motor driver direction. Motor driver number 2 goes backwards (S0). (Line 21: Z)
-M569 P3 S0 ; Set motor driver direction. Motor driver number 3 goes backwards (S0). (Line21: U)
-M569 P4 S0 ; Set motor driver direction. Motor driver number 4 goes backwards (S0). (Line21: A)
-M569 P5 S1 ; Set motor driver direction. Motor driver number 5 goes forwards  (S1). (Line21: C)
-M569 P6 S0 ; Set motor driver direction. Motor driver number 6 goes backwards (S0). (Line21: E:1-3)
-M569 P7 S1 ; Set motor driver direction. Motor driver number 7 goes forwards  (S1). (Line21: W)
-M569 P8 S1 ; Set motor driver direction. Motor driver number 8 goes forwards  (S1). (Line21: V)
-M569 P9 S0 ; Set motor driver direction. Motor driver number 9 goes backwards (S0). (Line21: Filament Assist)
+M569 P0 S1 ; Set motor driver direction. Motor driver number 0 goes forwards  (S1). Line 22: X (Linear)
+M569 P1 S0 ; Set motor driver direction. Motor driver number 1 goes backwards (S0). Line 22: Y (Linear)
+M569 P2 S0 ; Set motor driver direction. Motor driver number 2 goes backwards (S0). Line 22: Z (Linear)
+M569 P3 S0 ; Set motor driver direction. Motor driver number 3 goes backwards (S0). Line 22: U (Turret)
+M569 P4 S0 ; Set motor driver direction. Motor driver number 4 goes backwards (S0). Line 22: A (Rotary)
+M569 P5 S1 ; Set motor driver direction. Motor driver number 5 goes forwards  (S1). Line 22: C (Rotary)
+M569 P6 S0 ; Set motor driver direction. Motor driver number 6 goes backwards (S0). Line 22: E:1-3 (Extruders)
+M569 P7 S1 ; Set motor driver direction. Motor driver number 7 goes forwards  (S1). Line 22: W (Cleaning Station)
+M569 P8 S1 ; Set motor driver direction. Motor driver number 8 goes forwards  (S1). Line 22: V (Turret Lock)
+M569 P9 S0 ; Set motor driver direction. Motor driver number 9 goes backwards (S0). Line 22: E4 (Filament Assist)
 
 ; Drive settings
 M584 X0 Y1 Z2 U3 V8 W7 E6:6:6:9 A4 C5 ; Set driver mapping, E drive is multiplexed. Hide the extra axes
