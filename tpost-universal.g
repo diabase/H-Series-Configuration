@@ -9,8 +9,9 @@ elif #tools[{state.nextTool}].name == 8 ; If this tool is an extruder...
 
 elif #tools[{state.nextTool}].name == 9 ; If this tool is a spindle...
     M453 ; Switch to CNC mode
-    if heat.heaters[0].state != "fault"
-        M140 S0 ; Ensure bed heater is off to protect power supply.
+    if heat.heaters[0] != null
+        if heat.heaters[0].state != "fault"
+            M140 S0 ; Ensure bed heater is off to protect power supply.
 
 if state.previousTool != -1 ; If we changed to this tool from another tool...
     G90 ; Set to Absolute Positioning
