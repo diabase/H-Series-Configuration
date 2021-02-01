@@ -49,7 +49,8 @@ else
     abort "Tool "^state.nextTool^" has not been configured. Tool change aborted."
 
 ; Only perform machine moves if we need to change the turret position
-if move.axes[3].machinePosition != tools[{state.nextTool}].offsets[3]
+if move.axes[3].machinePosition != -tools[{state.nextTool}].offsets[3]
+    echo "The turret is currently at "^move.axes[3].machinePosition^". Tool "^state.nextTool^" is located at "^-tools[{state.nextTool}].offsets[3]^"."
     G91 ; Relative Positioning
 
     if move.axes[2].machinePosition + 40 <= move.axes[2].max ; If we have enough room for a normal tool change Z-hop, do it.
