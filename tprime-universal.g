@@ -33,10 +33,10 @@ if {(move.axes[5].letter ^ "") == "W"} ; Motor-driven cleaning station
     G1 W23 F15000 ; Move W to 23mm at 15000 mm/min to extend cleaning station to priming location
     M83 ; Set Extruder to Relative Mode
     G1 E20 F6000 ; Extrude 20 mm at 6000 mm/min
-    G1 E8 F200 ; Extrude 6 mm at 300 mm/min
+    G11 ; Extrude per M207 P#
     M400 ; Wait for current moves to finish
+    G10 ; Retract per M207 P#
     G1 W20 F6000 ; Move W  to 20mm at 6000 mm/min to retract cleaning station to cleaning location
-    G1 E-16 F6000 ; Retract 16 mm at 6000 mm/min
     G4 P20 ; Dwell for 20 ms
 
 else ; Solenoid-driven cleaning station
@@ -44,10 +44,10 @@ else ; Solenoid-driven cleaning station
     M83 ; Set Extruder to Relative Mode
     G1 E20 F6000 ; Extrude 20 mm at 6000 mm/min
     M42 P0 S0.75 ; Set GPIO pin 0 to 75%
-    G1 E8 F200 ; Extrude 6 mm at 300 mm/min
+    G11 ; Extrude 6 mm at 300 mm/min
     M400 ; Wait for current moves to finish
     M42 P0 S0 ; Set GPIO pin 0 to low (Solenoid-driven cleaning station only)
-    G1 E-16 F6000 ; Retract 16 mm at 6000 mm/min
+    G10 ; Retract 16 mm at 6000 mm/min
     G4 P20 ; Dwell for 20 ms
 
 if tools[{state.currentTool}].offsets[3] - 89.62 <= 0
@@ -56,7 +56,7 @@ elif tools[{state.currentTool}].offsets[3] - 89.62 > 0
     G1 U270.38 F9900; Rotate turret (U) to point extruder at pliers 270.38 (-89.62 mod 360) at 9900 mm/min
 
 G4 P20 ; Dwell for 20 ms
-M106 P8 S1 ; Turn on vacuum
+;M106 P8 S1 ; Turn on vacuum
 
 M98 P"clean.g" ; Call clean.g
 
@@ -73,7 +73,7 @@ M98 P"lock_turret.g" ; Call lock_turret.g
 ; Perform post-cleaning of the pliers
 M98 P"postclean.g" ; Call postclean.g
 
-M106 P8 S0 ; Turn off vacuum
+;M106 P8 S0 ; Turn off vacuum
 
 G1 R0 Y0 F6000 ; Return to Y coordinate saved in restore point 0 at 6000 mm/min
 

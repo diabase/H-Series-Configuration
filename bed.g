@@ -1,5 +1,7 @@
 ; Bed.g sets up and then runs a Mesh bed probing routine (G29)
-T10 ; Select Tool 10 (Probe)
+if state.nextTool!=10
+	T10
+    
 M561 ; Set Identity Transform (Clears any existing bed-plane fitting)
 
 G90 ; Set to Absolute Positioning
