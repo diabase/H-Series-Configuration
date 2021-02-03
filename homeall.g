@@ -33,8 +33,8 @@ G4 P100 ; Dwell for 100 ms
 M400 ; Wait for all moves to finish
 M913 X50 Y50 Z50 ; Reduce X-, Y-, and Z-axis motor currents to 50%
 G1 H1 X-420 Y-180 Z220 U-380 F6000 ; Attempt to move X -420mm, Y -180mm, Z +220mm, and U -380mm at 6000 mm/min, but halt when endstop triggered and set axis position to axis limit as defined by previous M208 or G1 H3 special move
-G1 H2 X5 Y5 Z-5 U5 F6000 ; Move X +2mm, Y -2mm, Z -2mm, and U +2mm at 6000 mm/min, ignoring endstop while moving
-G1 H1 X-20 Y-20 Z20 U-30 F200 ; Attempt to move X -20mm, Y -20mm, Z +20mm, and U -30mm at 1000 mm/min, but halt when endstop triggered and set axis position to axis limit as defined by previous M208 or G1 H3 special move
+G1 H2 X2 Y2 Z-2 U2 F6000 ; Move X +2mm, Y +2mm, Z -2mm, and U +2mm at 6000 mm/min, ignoring endstops and axis limits while moving
+G1 H1 X-4 Y-4 Z4 U-4 F1000 ; Attempt to move X -4mm, Y -4mm, Z +4mm, and U -4mm at 1000 mm/min, but halt when endstop triggered and set axis position to axis limit as defined by previous M208 or G1 H3 special move
 M400 ; Wait for all moves to finish
 M913 X100 Y100 Z100 ; Restore X-, Y-, and Z-axis motor currents to 100%
 
