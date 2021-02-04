@@ -17,9 +17,8 @@ elif move.axes[2].machinePosition + 40 > move.axes[2].max ; If we don't have eno
 G90 ; Set to Absolute Positioning
 G1 Y85 F6000 ; Move Y to 85 mm at 6000 mm/min
 
-if {state.currentTool} != -1 ; If we have a tool selected...
-    if #tools[{state.nextTool}].name == 9 ; ...and it's a spindle...
-        M3 P{state.currentTool - 1} S0 ; ...set spindle speed to 0 rpm.
+if state.machineMode="CNC"
+    M5 ; Turn off all spindles
 
 M400 ; Wait for current moves to finish
 
@@ -41,4 +40,4 @@ T-1 P0
 
 if heat.heaters[0] != null ; If we have defined a bed heater...
     if heat.heaters[0].state != "fault" ; ...and it's not in a fault state...
-        M140 S0 ; ...turn it off.
+        M140 H0 S-273.15 ; ...turn it off.
