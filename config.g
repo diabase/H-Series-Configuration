@@ -3,8 +3,8 @@
 ; M929 P"eventlog.txt" S3 ; start logging to file eventlog.txt (S0 = stop logging, S1 = log level WARN, S2 = log level INFO, S3 = log level DEBUG)
 
 ; General preferences
-G90 ; Send absolute coordinates...
-M83 ; ...but relative extruder moves
+G90 ; Absolute Positioning
+M83 ; Relative Extrusions
 
 ; Drive orientation
 M569 P0 S1 ; Set motor driver direction. Motor driver number 0 goes forwards  (S1). (Line 21: X)
@@ -35,9 +35,9 @@ M574 X1 S1 P"xstop" ; Configure X endstop position at low end, it's a microswitc
 M574 Y1 S1 P"ystop" ; Configure Y endstop position at low end, it's a microswitch on pin "ystop"
 M574 Z2 S1 P"zstop" ; Configure Z endstop position at high end, it's a microswitch on pin "zstop"
 M574 U1 S1 P"e0stop" ; Configure U endstop position at low end, it's a microswitch on pin "e0stop"
-M574 V0 S1 P"e1stop" ; Configure V endstop position at high end, it's a microswitch on pin "e1stop"
-M574 A1 S1 P"duex.e2stop" ; Configure A endstop position at high end, it's a microswitch on pin "duex.e2stop"
-M574 C1 S1 P"duex.e3stop" ; Configure C endstop position at high end, it's a microswitch on pin "duex.e3stop"
+M574 V0 S1 P"e1stop" ; Configure V endstop position at low end, it's a microswitch on pin "e1stop"
+M574 A1 S1 P"duex.e2stop" ; Configure A endstop position at low end, it's a microswitch on pin "duex.e2stop"
+M574 C1 S1 P"duex.e3stop" ; Configure C endstop position at low end, it's a microswitch on pin "duex.e3stop"
 
 ;M574 V2 S0 ; Define active low microswitches
 M558 K0 P5 C"^zprobe.in" H2 F150 T12000 ; Set Z probe type for Probe 0 (Tool 10). It's a normally closed switch between the "zprobe.in" pin and ground using the internal pullup resistor, 2mm dive height, 150mm/min probing speed, and 12000 mm/min travel speed between probe points
@@ -49,7 +49,7 @@ M308 S0 P"bedtemp" Y"thermistor" T100000 B3950 C0 A"Bed" ; Create Sensor 0 assig
 ; Other sensors defined in drycabinet.g and tcreate#.g files
 
 ; Heaters
-M950 H0 C"bedheat" T0 ; Create Heater 0, call it "bedheat", and use temperature sensor 0
+M950 H0 C"bedheat" T0 ; Create Heater 0 using pin "bedheat" and temperature sensor 0
 M140 H0 ; Define heater 0 as a bed heater
 ; Other heaters defined in drycabinet.g and tcreate#.g files
 
@@ -58,26 +58,30 @@ M143 H0 S120 ; Limit Bed temperature to 120C
 M302 S150 ; Set minimum extrude temp
 
 ; Fan definition
-M950 F0 C"duex.fan3"    ; Layer fan
-M950 F1 C"fan1"
-M950 F4 C"duex.fan4"   ; Spindle 1 Air Flow - Define Fan 4 to use pin duex.fan4
-M950 F5 C"duex.fan5"   ; Spindle 2 Air Flow - Define Fan 5 to use pin duex.fan5
-M950 F8 C"duex.fan8"   ; Define I/O Pin for Priming Vacuum
+M950 F1 C"fan1"         ; Extruder Cooling Fans - Define Fan 1 to use pin fan1
+M950 F3 C"duex.fan3"    ; Tool/Layer Fans - Define Fan 3 to use pin duex.fan3
+M950 F4 C"duex.fan4"    ; Spindle 1 Air Flow - Define Fan 4 to use pin duex.fan4
+M950 F5 C"duex.fan5"    ; Spindle 2 Air Flow - Define Fan 5 to use pin duex.fan5
+; M950 F6 C"duex.fan6"    ; Spindle 3 Air Flow - Define Fan 6 to use pin duex.fan6
+; M950 F7 C"duex.fan7"    ; Spindle 4 Air Flow - Define Fan 7 to use pin duex.fan7
+M950 F8 C"duex.fan8"    ; Cleaning Station Vacuum - Define Fan 8 to use pin duex.fan8
 
 ; Fan configuration
-M106 P0 C"Tool Fan" ; Nozzle fans
 M106 P1 H3:4:5 T50 ; Extruder Fans - Configure Fan 1: Turn on when heater 3, 4, or 5 reach the trigger temperature of 50C
-M106 P4 S0 B0 L1 C"Spindle 1" ; Spindle 1 air flow
-M106 P5 S0 B0 L1 C"Spindle 2" ; Spindle 2 air flow
-M106 P8 S0 B0 L1 C"Cleaning Station Vacuum" ; I/O Pin for Cleaning Station Vacuum Relay
+M106 P3 C"Tool Fan" ; Tool/Layer Fans - Configure Fan 3
+M106 P4 S0 B0 L1.0 C"Spindle 1" ; Spindle 1 air flow
+M106 P5 S0 B0 L1.0 C"Spindle 2" ; Spindle 2 air flow
+; M106 P6 S0 B0 L1.0 C"Spindle 3" ; Spindle 3 air flow
+; M106 P7 S0 B0 L1.0 C"Spindle 4" ; Spindle 4 air flow
+M106 P8 S0 B0 L1 C"Cleaning Station Vacuum" ; I/O Pin for Cleaning Station Vacuum Relay - Configure Fan 8: Speed 0, Blip Time 0, Minimum Fan Speed 1, and call it "Cleaning Station Vacuum"
 
-; Servo pins (for M42)
-M950 P1 C"fan2" ; Was M42 P22
-M950 P2 C"duex.gp1" ; Was M42 P100
-M950 P3 C"duex.gp2" ; Was M42 P101
-M950 P4 C"duex.gp3" ; Was M42 P102
-M950 P5 C"duex.gp4" ; Was M42 P103
-
+; GPIO pins (for M42)
+M950 P0 C"fan0" ; Cleaning Station, Station Extension Solenoid (if equipped) - Define GPIO Pin 0 to use pin "fan0"
+M950 P1 C"fan2" ; Cleaning Station, Pliers-Closing Solenoid - Define GPIO Pin 1 to use pin "fan2"
+M950 P2 C"duex.gp1" ; Extruder Multiplexer and Spindle Enable - Define GPIO Pin 2 to use pin "duex.gp1"
+M950 P3 C"duex.gp2" ; Extruder Multiplexer and Spindle Enable - Define GPIO Pin 3 to use pin "duex.gp2" 
+M950 P4 C"duex.gp3" ; Extruder Multiplexer and Spindle Enable - Define GPIO Pin 4 to use pin "duex.gp3" 
+M950 P5 C"duex.gp4" ; Extruder Multiplexer and Spindle Enable - Define GPIO Pin 5 to use pin "duex.gp4" 
 ; Tools
 M98 P"tcreate1.g"
 M98 P"tcreate2.g"
