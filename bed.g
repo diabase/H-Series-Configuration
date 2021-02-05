@@ -1,22 +1,18 @@
-; probe the bed at 9 points
-T10
-M561
+; Bed.g sets up and then runs a Mesh bed probing routine (G29)
+T10 ; Select Tool 10 (Probe)
+M561 ; Set Identity Transform (Clears any existing bed-plane fitting)
 
-;Reduce motor currents to X and Y axes
-;M913 X75 Y75
+G90 ; Set to Absolute Positioning
+G1 X0 Y-45 Z3 F8000 ; Move to X=0, Y=-45, and Z=3 at 8000 mm/min
+G30 ; Probe the bed at the current XY position. When the probe is triggered, set the Z coordinate to the probe trigger height.
 
-G1 X0 Y0 Z3 F8000
 ;Use with Flat Print Bed
-G30
-M557 X-180:180 Y-80:80 S180:80
-;M557 X-60:60 Y-60:60 S60:60
+M557 X-180:180 Y-80:80 S40 ; Define a probing grid bounded for X between -180 and 180 and Y between -80 and 80 with X and Y probe point spacings of 40 mm
 
 ;Use with Dovetail Bed
-;G1 X0 Y-45 Z3 F8000
-;G30
-;M557 X-50:50 Y-50:50 S50:50
+;M557 X-180:180 Y-45:45 S90
 
-G29
+;Rotary Axis level
+;M557 X-100:100 Y-180:180 S50:40
 
-;Restore motor currents to X and Y axes
-M913 X100 Y100
+G29 ; Probe the bed using the grid defined by M557, save the height map in /sys/heightmap.csv, and activate bed compensation

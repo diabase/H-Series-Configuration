@@ -1,18 +1,28 @@
-; called to home the X axis
+; homey.g
+; Called to home only the Y axis
 
-; Deselect the current tool (if any) and enter FFF mode
-T-1
-M451
+; Ensure appropriate axis endstops are used
+M574 Y1 S1 P"ystop" ; Configure Y endstop position at low end, it's a microswitch on pin "ystop"
+M574 Z2 S1 P"zstop" ; Configure Z endstop position at high end, it's a microswitch on pin "zstop"
 
-; Lift Z relative to current position
-G91
-M574 Z2 H1 P"zstop"
-G1 H1 Z5 F6000
-M574 Z1 H2 P"zstop"
+G91 ; Relative Positioning
 
-; Home Y
-G1 H1 Y-235 F1800
-G1 H2 Y5 F6000
-G1 H1 Y-235 F360
-G1 H2 Z-5 F6000
-G90
+G60 S0 ; Save current position to Slot 0
+M400 ; Wait for all moves to finish
+M913 Y50 Z50 ; Reduce Y-, and Z-axis motor currents to 50%
+
+G1 H1 Z2 F200 ; Attempt to move Z +2mm at 200 mm/min, but halt if endstop triggered and set axis position to axis limit as defined by previous M208 or G1 H3 special move
+G1 H1 Y-180 F6000 ; Attempt to move Y -180mm at 6000 mm/min, but halt if endstop triggered and set axis position to axis limit as defined by previous M208 or G1 H3 special move
+G1 H2 Y2 F6000 ; Move Y 2mm at 6000 mm/min, ignoring endstop while moving
+G1 H1 Y-20 F200 ; Attempt to move Y -20mm at 200 mm/min, but halt if endstop triggered and set axis position to axis limit as defined by previous M208 or G1 H3 special move
+M400 ; Wait for all moves to finish
+M913 Y100 Z100 ; Restore Y-, and Z-axis motor currents to 100%
+
+G90 ; Absolute Positioning
+G1 Y0 F10000 ; Move to Y=0 at 10000 mm/min
+
+if {state.currentTool} != -1 ; If we have a tool selected...
+    if #tools[{state.currentTool}].name == 5 ; If the probe is the current tool...
+        M574 Z1 S2 ; Set Z endstop position to low end and configure as Z probe
+
+G1 R0 Z0 ; Return to Z-axis position stored in Slot 0
