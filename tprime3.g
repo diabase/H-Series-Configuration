@@ -1,72 +1,16 @@
-; Idle all E motors and switch extruder multiplexer to Tool 3
-; MOT 1 (Tool 1) - LLL
-; MOT 2 (Tool 5) - LLH
-; MOT 3 (Tool 4) - HHL
-; MOT 4 (Tool 3) - LHL
-; MOT 5 (Tool 2) - HLL
-M84 E0:1:2:3 ; Idle all extruder motors
-M42 P2 S0 ; Set GPIO pin 2 low
-M42 P3 S1 ; Set GPIO pin 3 high
-M42 P4 S0 ; Set GPIO pin 4 low
+; tprime3.g
+; Called to prime and clean tool 3
+if state.currentTool == -1
+    G60 S0 ; Save current position in the slot reserved for user-stored positions
+    G92 U{-tools[3].offsets[3]}
+else
+    G92 U{tools[{state.currentTool}].offsets[3]-tools[3].offsets[3]} ; We don't want to move the turret before the first priming rotation, so we falsely set the current turret position to the expected position for Tool 1 which causes tpre-universal.g to skip the Z-hop and turret rotation.
 
-;M451 ; Switch to FFF mode (Solenoid-driven cleaning station only)
-M453 ; Switch to CNC mode (Motor-driven cleaning station only)
+T3 ; Select Tool
 
-; Select tool and save the current position
-T3 P0 ; Select tool 3 but don't run any tool change macro files
-G91 ; Set to Relative Positioning
+if state.previousTool == -1
+    G92 U{state.restorePoints[0].coords[3]} ; Return the logical U-axis position to the actual position stored above.
+else
+    G92 U{-(tools[{state.previousTool}].offsets[3]-tools[3].offsets[3])} ; Return the logical U-axis position to the actual position
 
-if move.axes[2].machinePosition + 40 <= move.axes[2].max
-    G1 Z40 F6000 ; Move Z +40mm at 6000 mm/min
-elif move.axes[2].machinePosition + 40 > move.axes[2].max
-    G1 Z40 F6000 H3 ; Attempt to move Z +40mm at 6000 mm/min, but halt when endstop triggered and set axis limit current position, overriding value set by M208 in config.g
-
-G60 S0 ; Save current position to slot 0
-
-G90 ; Set to Absolute Positioning
-G1 Y85 F30000 ; Move Y to 85 mm at 30000 mm/min
-
-; Move nozzle to cleaning station
-M98 P"unlock_turret.g" ; Call unlock_turret.g
-G90 ; Set to Absolute Positioning
-G1 U74.5  F9900; Rotate turret (U) to 74.5  at 9900 mm/min
-G4 P20 ; Dwell for 20 ms
-M451 ; FFF mode
-
-M116 P3 S5 ; Wait until Tool 3 reaches +/-5C of its set value
-; M42 P0 S1 ; Set GPIO pin 0 high (Solenoid-driven cleaning station only)
-G1 W23 F15000 ; Move W +23 at 15000 mm/min (Motor-driven cleaning station only)
-M83 ; Set Extruder to Relative Mode
-G1 E20 F6000 ; Extrude 20 mm at 6000 mm/min
-; M42 P0 S0.75 ; Set GPIO pin 0 to 75% (Solenoid-driven cleaning station only)
-G1 E8 F200 ; Extrude 8 mm at 200 mm/min
-M400 ; Wait for current moves to finish
-; M42 P0 S0 ; Set GPIO pin 0 to low (Solenoid-driven cleaning station only)
-G1 W20 F6000 ; Move W +20 at 6000 mm/min (Motor-driven cleaning station only)
-G1 E-16 F6000 ; Retract 16 mm at 6000 mm/min
-G4 P20 ; Dwell for 20 ms
-
-; Move nozzle so that it faces the pliers
-G1 U84    F9900 ; Rotate turret (U) to 84    at 9900 mm/min
-G4 P20 ; Dwell for 20 ms
-
-M106 P8 S1 ; Turn on vacuum
-
-M98 P"clean.g" ; Call clean.g
-
-M42 P1 S1 ; Close pliers
-G4 P20 ; Dwell for 20 ms
-M42 P1 S0.4 ; Reduce pliers solenoid current to 40%
-
-G90 ; Set to Absolute Positioning
-G1 U174   F9900 ; Rotate turret (U) to 174   (pointing nozzle 3 at the bed) at 9900 mm/min
-G4 P20 ; Dwell for 20 ms
-M98 P"lock_turret.g" ; Call lock_turret.g
-
-; Perform post-cleaning of the pliers
-M98 P"postclean.g" ; Call postclean.g
-
-M106 P8 S0 ; Turn off vacuum
-
-G1 R0 Y0 F30000 ; Return to Y coordinate saved in restore point 0 at 30000 mm/min
-G1 R0 Z0 F6000 ; Return to Z coordinate saved in restore point 0 at 6000 mm/min
+M98 P"tprime-universal.g" ; Call tprime-universal.g
