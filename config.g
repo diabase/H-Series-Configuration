@@ -108,4 +108,3 @@ M552 S1 ; Enable network
 M911 S19 R22 P"M98 P""estop.g"""  ; Run estop.g on power loss during a print
 M575 P1 B115200 S1; Set up UART for pendant input
 ; M750 ; Enable scanner
-; M141 P1 S5 ; Set target RH for drying cabinet to 5%
