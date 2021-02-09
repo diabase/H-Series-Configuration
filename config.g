@@ -73,7 +73,7 @@ M106 P4 S0 B0 L1.0 C"Spindle 1" ; Spindle 1 air flow
 M106 P5 S0 B0 L1.0 C"Spindle 2" ; Spindle 2 air flow
 ; M106 P6 S0 B0 L1.0 C"Spindle 3" ; Spindle 3 air flow
 ; M106 P7 S0 B0 L1.0 C"Spindle 4" ; Spindle 4 air flow
-M106 P8 S0 B0 L1 C"Cleaning Station Vacuum" ; I/O Pin for Cleaning Station Vacuum Relay - Configure Fan 8: Speed 0, Blip Time 0, Minimum Fan Speed 1, and call it "Cleaning Station Vacuum"
+M106 P8 S0 B0 L1 C"Vacuum" ; I/O Pin for Cleaning Station Vacuum Relay - Configure Fan 8: Speed 0, Blip Time 0, Minimum Fan Speed 1, and call it "Cleaning Station Vacuum"
 
 ; GPIO pins (for M42)
 M950 P0 C"fan0" ; Cleaning Station, Station Extension Solenoid (if equipped) - Define GPIO Pin 0 to use pin "fan0"
@@ -82,6 +82,9 @@ M950 P2 C"duex.gp1" ; Extruder Multiplexer and Spindle Enable - Define GPIO Pin 
 M950 P3 C"duex.gp2" ; Extruder Multiplexer and Spindle Enable - Define GPIO Pin 3 to use pin "duex.gp2" 
 M950 P4 C"duex.gp3" ; Extruder Multiplexer and Spindle Enable - Define GPIO Pin 4 to use pin "duex.gp3" 
 M950 P5 C"duex.gp4" ; Extruder Multiplexer and Spindle Enable - Define GPIO Pin 5 to use pin "duex.gp4" 
+
+; Dry Cabinet configured in separate file
+M98 P"drycabinet.g"
 
 ; Tools
 M98 P"tcreate1.g"
@@ -98,9 +101,6 @@ G4 P100 ; Dwell for 100 ms
 M451 ; Switch to FFF mode
 G4 P100 ; Dwell for 100 ms
 
-; Dry Cabinet configured in separate file
-M98 P"drycabinet.g"
-
 ; Network
 M550 P"H4027" ; Set machine name
 M552 S1 ; Enable network
@@ -109,4 +109,3 @@ M552 S1 ; Enable network
 M911 S19 R22 P"M98 P""estop.g"""  ; Run estop.g on power loss during a print
 M575 P1 B115200 S1; Set up UART for pendant input
 ; M750 ; Enable scanner
-M141 P1 S5 ; Set target RH for drying cabinet to 5%
