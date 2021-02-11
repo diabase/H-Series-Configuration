@@ -47,5 +47,5 @@ G38.2 X{move.axes[0].userPosition - 6} P1 ; Ajust the - n amount to the travel l
 G53 G0 X{move.axes[0].machinePosition + ((state.restorePoints[4].coords[0] - move.axes[0].machinePosition) / 2.0)} F300; Move to very good X-value of hole center
 M558 K1 F200
 
-M574 X1 S1 P"xstop" ; This is new added on 12/30/2020
-M574 Y1 S1 P"ystop" ; This is new added on 12/30/2020
+M574 X1 S1 P"xstop"
+M574 Y1 S1 P"ystop"
