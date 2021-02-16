@@ -8,7 +8,7 @@ M83 ; Relative Extrusions
 
 ; Drive orientation
 M569 P0 S1 ; Set motor driver direction. Motor driver number 0 goes forwards  (S1). Line 22: X (Linear)
-M569 P0 S0 ; Set motor driver direction. Motor driver number 1 goes forwards  (S1). Line 22: Y (Linear)
+M569 P1 S0 ; Set motor driver direction. Motor driver number 1 goes forwards  (S1). Line 22: Y (Linear)
 M569 P2 S0 ; Set motor driver direction. Motor driver number 2 goes backwards (S0). Line 22: Z (Linear)
 M569 P3 S0 ; Set motor driver direction. Motor driver number 3 goes backwards (S0). Line 22: U (Turret)
 M569 P4 S0 ; Set motor driver direction. Motor driver number 4 goes backwards (S0). Line 22: A (Rotary)
