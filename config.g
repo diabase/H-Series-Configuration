@@ -18,28 +18,28 @@ M569 P1.1 S1 ; Drive 7 goes backwards
 M569 P1.2 S0 ; Drive 8 goes backwards
 M569 P2.0 S1 ; Drive 9 goes backwards
 M569 P2.1 S1 ; Drive 9 goes backwards
-
+M569 P2.2 S1
 ; Drive settings
-M584 Z0 X1 Y2 U3 V4 W5 E2.0:2.1:1.0:1.1 ; Set driver mapping, E drive is multiplexed. Hide the extra axes
-M208 X-200 Y-93 Z-10 U-10 V-100 W0 A0 B-0 C0 S1; Set axis minima
-M208 X200 Y93 Z360 U360 V200 W35 A120 B580 C500 S0 ; Set axis maxima
+M584 Z0 X1 Y2 U3 V4 W5 A2.2 E2.0:2.1:1.0:1.1 ; Set driver mapping, E drive is multiplexed. Hide the extra axes
+M208 X-200 Y-93 Z-10 U-10 V-100 W0 A-360 B-0 C0 S1; Set axis minima
+M208 X200 Y93 Z360 U360 V200 W35 A360 B580 C500 S0 ; Set axis maxima
 M350 X16 Y16 Z16 U16 B16 V16 W16 A16 C16 E16 I1 ; Configure microstepping with interpolation
-M92 X320 Y320 Z320 U230.22 V1600 W800 B79.97 A1600 C400 E96 ; Set steps per mm - U axis 200steps/rev, 16 steps/step microstepping, 360mm/rev, 5.18 motor gear ration, 5 drive gear ratio
+M92 X320 Y320 Z320 U230.22 V1600 W800 B79.97 A53.3 C400 E96 ; Set steps per mm - U axis 200steps/rev, 16 steps/step microstepping, 360mm/rev, 5.18 motor gear ration, 5 drive gear ratio
 M566 X300 Y300 Z300 U120 V1200 W500 B1200 A1200 C1200 E1200 ; Set maximum instantaneous speed changes (mm/min)
-M203 X12000 Y12000 Z4000 U5900 V10000 W20000 B8000 A1500 C2000 E6000 ; Set maximum speeds (mm/min)
+M203 X12000 Y12000 Z4000 U5900 V10000 W20000 A15000 C2000 E6000 ; Set maximum speeds (mm/min)
 M201 X600 Y600 Z450 U300 B600 V500 W500 A500 C600 E250 ; Set accelerations (mm/s^2)
-M906 X1800 Y2100 Z1800 U1200 V800 W800 B1800 A1200 C1800 E1500:1500:500:500 I30 ; Set motor currents (mA) and motor idle factor in per cent
+M906 X1800 Y2100 Z1800 U1200 V800 W800 B1800 A2000 C1800 E1500:1500:500:500 I30 ; Set motor currents (mA) and motor idle factor in per cent
 M84 S5 ; Set idle timeout
 
 ; Endstops
 M574 X1 S1 P"io2.in"
 M574 Y1 S1 P"!io3.in"
 M574 Z1 S1 P"!io4.in"
-M574 U1 S1 P"io5.in"
-M574 V2 S1 P"io6.in"
+M574 U1 S1 P"2.io1.in"
+M574 V2 S1 P"2.io2.in"
 M574 W1 S1 p"!2.io1.in"
 ;M574 B1 S1 P"!1.io1.in"
-;M574 A1 S1 P"!1.io2.in"
+M574 A1 S1 P"2.io3.in"
 ;M574 C1 S1 P"!1.io3.in"
 
 ;M574 V2 S0 ; Define active low microswitches
