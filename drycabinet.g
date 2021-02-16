@@ -9,3 +9,5 @@ M307 H6 B1 I1           ; Configure heating process parameters for Heater 6: sel
 M141 P1 H6              ; Configure Chamber Heater: Assign Heater 6 to Chamber Heater 1
 M143 P0 H6 T10 A2 S50   ; Configure Temperature Monitor 0 on Heater 6: Temporarily switch off heater 6 if sensor 10 (Cabinet Temp) exceeds 50C
 M143 P1 H6 T12 A0 S70   ; Configure Temperature Monitor 1 on Heater 6: Generate heater fault if sensor 12 (Cabinet Safety Temp) exceeds 70C
+
+M141 P1 S0 ; Set target RH for drying cabinet to 0%

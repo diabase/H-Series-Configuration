@@ -1,6 +1,6 @@
 ; H4 Configuration File
 ; written by Diabase Engineering
-M929 P"eventlog.txt" S3 ; start logging to file eventlog.txt (S0 = stop logging, S1 = log level WARN, S2 = log level INFO, S3 = log level DEBUG)
+; M929 P"eventlog.txt" S3 ; start logging to file eventlog.txt (S0 = stop logging, S1 = log level WARN, S2 = log level INFO, S3 = log level DEBUG)
 
 ; General preferences
 G90 ; Absolute Positioning
@@ -53,11 +53,9 @@ G31 Z0 K0; Set Z probe trigger height
 
 
 ; Heaters
-;M950 H0 C"bedheat" T0                                    ; Bed heater
-M950 P1 C"out1"                ; P1 - cleaning station 1
-;M950 P2 C"io1.out" 				; P2 - motor direction
-
-
+;M950 H0 C"bedheat" T0 ; Create Heater 0 using pin "bedheat" and temperature sensor 0
+;M140 H0 ; Define heater 0 as a bed heater
+; Other heaters defined in drycabinet.g and tcreate#.g files
 
 ; Temperature limits
 ;M143 H0 S120 ; Limit Bed temperature to 120C
@@ -65,10 +63,27 @@ M950 P1 C"out1"                ; P1 - cleaning station 1
 M302 S150 ; Set minimum extrude temp
 
 ; Fan definition
-;M950 F0 C"nil"         ; free up fan
-M950 F1 C"2.out3"		;FDM cooling fan
-M950 F2 C"2.out6"         ; free up fan
+M950 F1 C"2.out3"         ; Extruder Cooling Fans - Define Fan 1 to use pin fan1
+M950 F2 C"2.out6"         ; 12V cooling fan
+;M950 F3 C"duex.fan3"    ; Tool/Layer Fans - Define Fan 3 to use pin duex.fan3
+;M950 F4 C"duex.fan4"    ; Spindle 1 Air Flow - Define Fan 4 to use pin duex.fan4
+;M950 F5 C"duex.fan5"    ; Spindle 2 Air Flow - Define Fan 5 to use pin duex.fan5
+;M950 F6 C"duex.fan6"    ; Spindle 3 Air Flow - Define Fan 6 to use pin duex.fan6
+;M950 F7 C"duex.fan7"    ; Spindle 4 Air Flow - Define Fan 7 to use pin duex.fan7
+;M950 F8 C"duex.fan8"    ; Cleaning Station Vacuum - Define Fan 8 to use pin duex.fan8
 
+; Fan configuration
+M106 P1 H5 T50 ; 24V cooling fans
+M106 P2 H3 T50 ; 12V cooling fans
+;M106 P3 C"Tool Fan" ; Tool/Layer Fans - Configure Fan 3
+;M106 P4 S0 B0 L1.0 C"Spindle 1" ; Spindle 1 air flow
+;M106 P5 S0 B0 L1.0 C"Spindle 2" ; Spindle 2 air flow
+; M106 P6 S0 B0 L1.0 C"Spindle 3" ; Spindle 3 air flow
+; M106 P7 S0 B0 L1.0 C"Spindle 4" ; Spindle 4 air flow
+;M106 P8 S0 B0 L1 C"Vacuum" ; I/O Pin for Cleaning Station Vacuum Relay - Configure Fan 8: Speed 0, Blip Time 0, Minimum Fan Speed 1, and call it "Cleaning Station Vacuum"
+
+; Dry Cabinet configured in separate file
+;M98 P"drycabinet.g"
 
 ; Tools
 ;M98 P"tcreate1.g"
@@ -105,5 +120,3 @@ M106 P2 H3 T50 ; 12V cooling fans
 M911 S19 R22 P"M98 P""estop.g"""  ; Run estop.g on power loss during a print
 M575 P1 B115200 S1; Set up UART for pendant input
 ; M750 ; Enable scanner
-M141 P1 S5 ; Set target RH for drying cabinet to 5%
-

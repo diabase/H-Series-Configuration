@@ -4,7 +4,8 @@ M453 ; Switch to CNC mode
 M84 E0:1:2:3 ; Idle all extruder motors
 
 ; Only perform machine moves if we need to change the turret position
-if move.axes[3].machinePosition != tools[{state.nextTool}].offsets[3]
+if move.axes[3].machinePosition != -tools[{state.nextTool}].offsets[3]
+    ; echo "The turret is currently at "^move.axes[3].machinePosition^". Tool "^state.nextTool^" is located at "^-tools[{state.nextTool}].offsets[3]^"."
     G91 ; Relative Positioning
 
     if move.axes[2].machinePosition + 40 <= move.axes[2].max ; If we have enough room for a normal tool change Z-hop, do it.
@@ -20,7 +21,7 @@ if move.axes[3].machinePosition != tools[{state.nextTool}].offsets[3]
     M98 P"unlock_turret.g" ; Call unlock_turret.g
     G90 ; Absolute Positioning
 
-    echo "Rotating turret to "^{-tools[{state.nextTool}].offsets[3]}
+    ; echo "Rotating turret to "^{-tools[{state.nextTool}].offsets[3]}
     G1 U{-tools[{state.nextTool}].offsets[3]} F16000 ; Rotate turret to new tool
     G4 P20 ; Dwell for 20 ms
 
