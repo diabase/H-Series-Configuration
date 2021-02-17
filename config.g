@@ -54,6 +54,7 @@ G31 Z0 K0; Set Z probe trigger height
 
 ; Heaters
 ;M950 H0 C"bedheat" T0 ; Create Heater 0 using pin "bedheat" and temperature sensor 0
+M950 P1 C"out1"                ; P1 - cleaning station 1
 ;M140 H0 ; Define heater 0 as a bed heater
 ; Other heaters defined in drycabinet.g and tcreate#.g files
 
