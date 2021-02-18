@@ -87,37 +87,26 @@ M106 P2 H3 T50 ; 12V cooling fans
 ;M98 P"drycabinet.g"
 
 ; Tools
-;M98 P"tcreate1.g"
+M98 P"tcreate1.g"
 M98 P"tcreate2.g"
 M98 P"tcreate3.g"
 M98 P"tcreate4.g"
 M98 P"tcreate5.g"
-;M563 P8 S"Camera"
+
 M563 P10 S"Probe"
 
-; Load config-override.g after the tools have been created
-M501
-M453 ;toggle CNC mode
-G4 P100
-M451 ;return to FFF mode
-G4 P100
-
-;Dry Cabinet
-;M98 P"drycabinet.g"
+M501 ; Set active parameters to those stored in config-override.g
+M453 ; Switch to CNC mode
+G4 P100 ; Dwell for 100 ms
+M451 ; Switch to FFF mode
+G4 P100 ; Dwell for 100 ms
 
 ; Network
 M550 P"H5" ; Set machine name
 M552 S1 ; Enable network
 
-; Fan configuration
-
-M106 P1 H5 T50 ; 24V cooling fans
-M106 P2 H3 T50 ; 12V cooling fans
-;M106 P5 S0 B0 C"Spindle 2" ; Spindle 2 air flow
-;M106 P6 S0 B0 C"Spindle 3" ; Spindle 3 air flow
-;M106 P7 S0 B0 C"Spindle 4" ; Spindle 4 air flow
-
 ; Miscellaneous
 M911 S19 R22 P"M98 P""estop.g"""  ; Run estop.g on power loss during a print
 M575 P1 B115200 S1; Set up UART for pendant input
+M98 P"toolpriming.g" ;load tool priming parameters
 ; M750 ; Enable scanner
