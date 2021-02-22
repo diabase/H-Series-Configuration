@@ -1,7 +1,7 @@
 ; config.g
 ; H4 Configuration File
 ; Written by Diabase Engineering
-; Last Updated: February 19, 2021
+; Last Updated: February 22, 2021
 
 ; Logging
 M929 P"eventlog.txt" S3 ; start logging to file eventlog.txt (S0 = stop logging, S1 = log level WARN, S2 = log level INFO, S3 = log level DEBUG)
@@ -21,22 +21,22 @@ M569 P2 S0 ; Set motor driver direction. Motor driver number 2 goes backwards (S
 M569 P3 S0 ; Set motor driver direction. Motor driver number 3 goes backwards (S0). Line 22: U (Turret)
 M569 P4 S0 ; Set motor driver direction. Motor driver number 4 goes backwards (S0). Line 22: A (Rotary)
 M569 P5 S1 ; Set motor driver direction. Motor driver number 5 goes forwards  (S1). Line 22: C (Rotary)
-M569 P6 S0 ; Set motor driver direction. Motor driver number 6 goes backwards (S0). Line 22: E0-4 (Extruders)
+M569 P6 S0 ; Set motor driver direction. Motor driver number 6 goes backwards (S0). Line 22: E0-2 (Extruders)
 M569 P7 S1 ; Set motor driver direction. Motor driver number 7 goes forwards  (S1). Line 22: W (Cleaning Station)
 M569 P8 S1 ; Set motor driver direction. Motor driver number 8 goes forwards  (S1). Line 22: V (Turret Lock)
-M569 P9 S0 ; Set motor driver direction. Motor driver number 9 goes backwards (S0). Line 22: E5 (Filament Assist)
+M569 P9 S0 ; Set motor driver direction. Motor driver number 9 goes backwards (S0). Line 22: E3 (Filament Assist)
 
 ; Drive settings
-M584 X0 Y1 Z2 U3 W7 V8 E6:6:6:6:6:9 A4 C5                                                   ; Set driver mapping, E drive is multiplexed.
-M208 X-208 Y-93 Z-10 U-9.2 V-100 W0 A-365 C-1000 S1                                         ; Set axis minima
-M208 X208 Y93 Z211.82 U360 V200 W35 A365 C10000 S0                                          ; Set axis maxima
-M350 X16 Y16 Z16 U16 V16 W16 A16 C16 E16:16:16:16:16:16 I1                                  ; Configure microstepping with interpolation
-M92 X320 Y320 Z640 U322.31 V1600 W800 A53.33 C53.33 E96:96:96:96:96:96                      ; Set steps per mm
-M566 X300 Y300 Z300 U120 V500 W500 A1000 C1000 E1200:1200:1200:1200:1200:1200               ; Set maximum instantaneous speed changes (mm/min)
-M203 X8500 Y12000 Z3000 U8900 V10000 W20000 A20000 C20000 E6000:6000:6000:6000:6000:6000    ; Set maximum speeds (mm/min)
-M201 X600 Y600 Z450 U600 V500 W500 A600 C600 E250:250:250:250:250:250                       ; Set accelerations (mm/s^2)
-M906 X1800 Y2100 Z1800 U1200 V800 W800 A1600 C1600 E1500:1500:1500:1500:1500:500 I30        ; Set motor currents (mA) and motor idle factor percent
-M84 S5                                                                                      ; Allow all motors to drop hold current to idle after 5 seconds
+M584 X0 Y1 Z2 U3 W7 V8 E6:6:6:9 A4 C5                                           ; Set driver mapping, E drive is multiplexed.
+M208 X-208 Y-93 Z-10 U-9.2 V-100 W0 A-365 C-1000 S1                             ; Set axis minima
+M208 X208 Y93 Z211.82 U360 V200 W35 A365 C10000 S0                              ; Set axis maxima
+M350 X16 Y16 Z16 U16 V16 W16 A16 C16 E16:16:16:16 I1                            ; Configure microstepping with interpolation
+M92 X320 Y320 Z640 U322.31 V1600 W800 A53.33 C53.33 E96:96:96:96                ; Set steps per mm
+M566 X300 Y300 Z300 U120 V500 W500 A1000 C1000 E1200:1200:1200:1200             ; Set maximum instantaneous speed changes (mm/min)
+M203 X8500 Y12000 Z3000 U8900 V10000 W20000 A20000 C20000 E6000:6000:6000:6000  ; Set maximum speeds (mm/min)
+M201 X600 Y600 Z450 U600 V500 W500 A600 C600 E250:250:250:250                   ; Set accelerations (mm/s^2)
+M906 X1800 Y2100 Z1800 U1200 V800 W800 A1600 C1600 E1500:1500:1500:500 I30      ; Set motor currents (mA) and motor idle factor percent
+M84 S5                                                                          ; Allow all motors to drop hold current to idle after 5 seconds
 
 ; Endstops
 M574 X1 S1 P"xstop"         ; Configure X endstop position at low end, it's a microswitch on pin "xstop"
