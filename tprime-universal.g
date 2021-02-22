@@ -39,6 +39,7 @@ while iterations < #move.axes ; Loop over all axes
         G1 W20 F6000 ; Move W to 20mm at 6000 mm/min to retract cleaning station to cleaning location
         G1 E{-{tools[{state.currentTool}].retraction.length}} F{tools[{state.currentTool}].retraction.speed*60} ; Anti-Ooze Retraction - Retract Filament at After Prime Retraction Amount and Feedrate
         G4 P20 ; Dwell for 20 ms
+        break
 
     elif iterations == {#move.axes - 1} ; We're on the last loop and none were W, so assume we have a solenoid cleaning station.
         M42 P0 S1 ; Set GPIO pin 0 high to fully extend cleaning station to priming location
