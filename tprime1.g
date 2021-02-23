@@ -1,5 +1,6 @@
 ; tprime1.g
 ; Called to prime and clean tool 1
+if state.currentTool != 1
 if state.currentTool == -1
     G60 S0 ; Save current position in the slot reserved for user-stored positions
     G92 U{-tools[1].offsets[3]}

@@ -1,29 +1,36 @@
-if {(move.axes[5].letter ^ "") == "W"} ; Motor-driven cleaning station
-    G90 ; Set to Absolute Positioning
-    M400 ; Wait for current moves to finish
-    G1 W21 F15000 ; Move W to 21 at 15000 mm/min
-    G4 P125 ; Dwell for 125 ms
-    M400 ; Wait for current moves to finish
-    M42 P1 S1 ; Close pliers
-    G4 P125 ; Dwell for 125 ms
-    G28 W ; Home W
-    M42 P1 S0.75 ; Reduce pliers-closing solenoid current to 75%
-    G4 P125 ; Dwell for 125 ms
-    M42 P1 S0.5 ; Reduce pliers-closing solenoid current to 50%
-    G4 P175 ; Dwell for 175 ms
-    M42 P1 S0 ; Open Pliers
-    M400 ; Wait for current moves to finish
+; clean.g
+; Extend, close, retract, and open the cleaning station pliers
+; Written by Diabase Engineering
+; Last Updated: February 19, 2021
 
-else ; Solenoid-driven cleaning station
-    M400 ; Wait for current moves to finish
-    M42 P0 S1 ; Extend Pliers
-    G4 P125 ; Dwell for 125 ms
-    M42 P1 S1 ; Close pliers
-    G4 P125 ; Dwell for 125 ms
-    M42 P1 S0.75 ; Reduce pliers-closing solenoid current to 75%
-    G4 P125 ; Dwell for 125 ms
-    M42 P0 S0 ; Retract cleaning station
-    M42 P1 S0.5 ; Reduce pliers-closing solenoid current to 50%
-    G4 P175 ; Dwell for 175 ms
-    M42 P1 S0 ; Open Pliers
-    M400 ; Wait for current moves to finish
+while iterations < #move.axes ; Loop over all axes
+    if {(move.axes[iterations].letter ^ "") == "W"} ; A W-axis is defined, so we have a motor-driven cleaning station.
+        G90 ; Set to Absolute Positioning
+        M400 ; Wait for current moves to finish
+        G1 W21 F15000 ; Move W to 21 at 15000 mm/min
+        G4 P125 ; Dwell for 125 ms
+        M400 ; Wait for current moves to finish
+        M42 P1 S1 ; Close pliers
+        G4 P125 ; Dwell for 125 ms
+        G28 W ; Home W
+        M42 P1 S0.75 ; Reduce pliers-closing solenoid current to 75%
+        G4 P125 ; Dwell for 125 ms
+        M42 P1 S0.5 ; Reduce pliers-closing solenoid current to 50%
+        G4 P175 ; Dwell for 175 ms
+        M42 P1 S0 ; Open Pliers
+        M400 ; Wait for current moves to finish
+        break ; Stop Looping
+
+    elif iterations == {#move.axes - 1} ; We're on the last loop and none were W, so assume we have a solenoid cleaning station.
+        M400 ; Wait for current moves to finish
+        M42 P0 S1 ; Extend Pliers
+        G4 P125 ; Dwell for 125 ms
+        M42 P1 S1 ; Close pliers
+        G4 P125 ; Dwell for 125 ms
+        M42 P1 S0.75 ; Reduce pliers-closing solenoid current to 75%
+        G4 P125 ; Dwell for 125 ms
+        M42 P0 S0 ; Retract cleaning station
+        M42 P1 S0.5 ; Reduce pliers-closing solenoid current to 50%
+        G4 P175 ; Dwell for 175 ms
+        M42 P1 S0 ; Open Pliers
+        M400 ; Wait for current moves to finish
