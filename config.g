@@ -4,7 +4,7 @@
 ; Last Updated: February 22, 2021
 
 ; Logging
-M929 P"eventlog.txt" S3 ; start logging to file eventlog.txt (S0 = stop logging, S1 = log level WARN, S2 = log level INFO, S3 = log level DEBUG)
+; M929 P"eventlog.txt" S3 ; start logging to file eventlog.txt (S0 = stop logging, S1 = log level WARN, S2 = log level INFO, S3 = log level DEBUG)
 
 ; Network
 M550 P"HXXXX" ; Set machine name
