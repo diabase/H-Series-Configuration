@@ -52,8 +52,54 @@ M558 K0 P5 C"^zprobe.in" H2 F150 T12000 ; Set Z probe type for Probe 0 (Tool 10)
 M558 K1 P8 C"duex.e4stop" I0 F200 T12000 ; Set Z probe type for Probe 1 (touchoff plate). It's an unfiltered normally closed switch between the "duex.e4stop" pin and ground, non-inverted probe reading, 200mm/min probing speed, and 12000 mm/min travel speed between probe points
 G31 Z0 ; Set Z probe trigger height to 0mm
 
+; Temperature sensors
+M308 S0 P"bedtemp" Y"thermistor" T100000 B3950 C0 A"Bed" ; Create Sensor 0 assigned to bedtemp pin, thermistor type with resistance of 100Kohms at 25C, reciprocal of Steinhart-Hart B coefficient 3950, Steinhart-Hart C coefficient 0, and call it "Bed"
+; Other sensors defined in drycabinet.g and tcreate#.g files
+
+; Heaters
+M950 H0 C"bedheat" T0 ; Create Heater 0 using pin "bedheat" and temperature sensor 0
+M140 H0 ; Define heater 0 as a bed heater
+; Other heaters defined in drycabinet.g and tcreate#.g files
+
+; Temperature limits
+M143 H0 S120 ; Limit Bed temperature to 120C
+M302 S150 ; Set minimum extrude temp
+
+; Fan definition
+M950 F1 C"fan1"         ; Extruder Cooling Fans - Define Fan 1 to use pin fan1
+M950 F3 C"duex.fan3"    ; Tool/Layer Fans - Define Fan 3 to use pin duex.fan3
+M950 F4 C"duex.fan4"    ; Spindle 1 Air Flow - Define Fan 4 to use pin duex.fan4
+M950 F5 C"duex.fan5"    ; Spindle 2 Air Flow - Define Fan 5 to use pin duex.fan5
+; M950 F6 C"duex.fan6"    ; Spindle 3 Air Flow - Define Fan 6 to use pin duex.fan6
+; M950 F7 C"duex.fan7"    ; Spindle 4 Air Flow - Define Fan 7 to use pin duex.fan7
+M950 F8 C"duex.fan8"    ; Cleaning Station Vacuum - Define Fan 8 to use pin duex.fan8
+
+; Fan configuration
+M106 P1 H3:4:5 T50 ; Extruder Fans - Configure Fan 1: Turn on when heater 3, 4, or 5 reach the trigger temperature of 50C
+M106 P3 C"Tool Fan" ; Tool/Layer Fans - Configure Fan 3
+M106 P4 S0 B0 L1.0 C"Spindle 1" ; Spindle 1 air flow
+M106 P5 S0 B0 L1.0 C"Spindle 2" ; Spindle 2 air flow
+; M106 P6 S0 B0 L1.0 C"Spindle 3" ; Spindle 3 air flow
+; M106 P7 S0 B0 L1.0 C"Spindle 4" ; Spindle 4 air flow
+M106 P8 S0 B0 L1 C"Vacuum" ; I/O Pin for Cleaning Station Vacuum Relay - Configure Fan 8: Speed 0, Blip Time 0, Minimum Fan Speed 1, and call it "Cleaning Station Vacuum"
+
+; GPIO pins (for M42)
+M950 P0 C"fan0" ; Cleaning Station, Station Extension Solenoid (if equipped) - Define GPIO Pin 0 to use pin "fan0"
+M950 P1 C"fan2" ; Cleaning Station, Pliers-Closing Solenoid - Define GPIO Pin 1 to use pin "fan2"
+M950 P2 C"duex.gp1" ; Extruder Multiplexer and Spindle Enable - Define GPIO Pin 2 to use pin "duex.gp1"
+M950 P3 C"duex.gp2" ; Extruder Multiplexer and Spindle Enable - Define GPIO Pin 3 to use pin "duex.gp2" 
+M950 P4 C"duex.gp3" ; Extruder Multiplexer and Spindle Enable - Define GPIO Pin 4 to use pin "duex.gp3" 
+M950 P5 C"duex.gp4" ; Extruder Multiplexer and Spindle Enable - Define GPIO Pin 5 to use pin "duex.gp4" 
+
+; Dry Cabinet configured in separate file
+M98 P"drycabinet.g"
+
 ; Tools
 M98 P"tcreate-universal.g"
+
+; Network
+M550 P"H4XXX" ; Set machine name
+M552 S1 ; Enable network
 
 ; Miscellaneous
 M98 P"cleaningstation.g" ; Configure cleaning station

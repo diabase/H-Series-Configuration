@@ -31,26 +31,26 @@ M116 P{state.currentTool} S5 ; Wait until tool reaches +/-5C of its set value
 
 while iterations < #move.axes ; Loop over all axes
     if {(move.axes[iterations].letter ^ "") == "W"} ; A W-axis is defined, so we have a motor-driven cleaning station.
-        G1 W23 F15000 ; Move W to 23mm at 15000 mm/min to extend cleaning station to priming location
-        M83 ; Set Extruder to Relative Mode
+    G1 W23 F15000 ; Move W to 23mm at 15000 mm/min to extend cleaning station to priming location
+    M83 ; Set Extruder to Relative Mode
         G1 E{tools[{state.currentTool}].retraction.length} F{tools[{state.currentTool}].retraction.speed*60} ; Anti-Ooze Makeup Extrusion - Extrude Filament at After Prime Retraction Amount and Feedrate
         G1 E{tools[{state.currentTool}].retraction.length + tools[{state.currentTool}].retraction.extraRestart} F{tools[{state.currentTool}].retraction.unretractSpeed*60} ; Extrude Filament at Prime Extrusion Amount and Feedrate
-        M400 ; Wait for current moves to finish
+    M400 ; Wait for current moves to finish
         G1 W20 F6000 ; Move W to 20mm at 6000 mm/min to retract cleaning station to cleaning location
         G1 E{-{tools[{state.currentTool}].retraction.length}} F{tools[{state.currentTool}].retraction.speed*60} ; Anti-Ooze Retraction - Retract Filament at After Prime Retraction Amount and Feedrate
-        G4 P20 ; Dwell for 20 ms
+    G4 P20 ; Dwell for 20 ms
         break
 
     elif iterations == {#move.axes - 1} ; We're on the last loop and none were W, so assume we have a solenoid cleaning station.
         M42 P0 S1 ; Set GPIO pin 0 high to fully extend cleaning station to priming location
-        M83 ; Set Extruder to Relative Mode
+    M83 ; Set Extruder to Relative Mode
         G1 E{tools[{state.currentTool}].retraction.length} F{tools[{state.currentTool}].retraction.speed*60} ; Anti-Ooze Makeup Extrusion - Extrude Filament at After Prime Retraction Amount and Feedrate
-        M42 P0 S0.75 ; Set GPIO pin 0 to 75%
+    M42 P0 S0.75 ; Set GPIO pin 0 to 75%
         G1 E{tools[{state.currentTool}].retraction.length + tools[{state.currentTool}].retraction.extraRestart} F{tools[{state.currentTool}].retraction.unretractSpeed*60} ; Button Extrusion - Extrude Filament at Prime Extrusion Amount and Feedrate
-        M400 ; Wait for current moves to finish
+    M400 ; Wait for current moves to finish
         M42 P0 S0 ; Set GPIO pin 0 to low 
         G1 E{-{tools[{state.currentTool}].retraction.length}} F{tools[{state.currentTool}].retraction.speed*60} ; Anti-Ooze Retraction - Retract Filament at After Prime Retraction Amount and Feedrate
-        G4 P20 ; Dwell for 20 ms
+    G4 P20 ; Dwell for 20 ms
 
 if tools[{state.currentTool}].offsets[3] - 89.62 <= 0
     G1 U-89.62 F9900; Rotate turret (U) to point extruder at pliers 270.38 (-89.62 mod 360) at 9900 mm/min
@@ -61,6 +61,12 @@ G4 P20 ; Dwell for 20 ms
 M106 P8 S1 ; Turn on vacuum
 
 M98 P"clean.g" ; Call clean.g
+
+M42 P1 S1 ; Close pliers
+G4 P20 ; Dwell for 20 ms
+M42 P1 S0.4 ; Reduce pliers solenoid current to 40%
+
+G90 ; Set to Absolute Positioning
 
 G1 U0 F9900 ; Rotate turret (U) to point extruder at the bed at 9900 mm/min
 G4 P20 ; Dwell for 20 ms
