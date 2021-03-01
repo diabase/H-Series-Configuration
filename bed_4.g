@@ -1,3 +1,0 @@
-M291 P"Edit bed_4.g to define mesh area for 4th axis bed" R"First open" S3
-;WARNING - BE CAREFUL OF CRASHES. USE OTHER BED LEVELLING FILES AS A GUIDE AND CONTACT SUPPORT IF UNSURE
-

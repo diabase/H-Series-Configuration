@@ -1,1 +1,1 @@
-M98 P"tfree-universal.g" ; Call tfree-universal.g
+M3 P2 S0;
