@@ -56,9 +56,9 @@ while iterations < #move.axes ; Loop over all axes
         G4 P20 ; Dwell for 20 ms
 
 if tools[{state.currentTool}].offsets[3] - 90.00 <= 0
-    G1 U-90.00 F9900; Rotate turret (U) to point extruder at pliers (270.00mm == (-90.00mm mod 360)) at 9900 mm/min
+    G1 U-88.8 F9900; Rotate turret (U) to point extruder at pliers (270.00mm == (-90.00mm mod 360)) at 9900 mm/min
 elif tools[{state.currentTool}].offsets[3] - 90.00 > 0
-    G1 U270.00 F9900; Rotate turret (U) to point extruder at pliers (270.00mm == (-90.00mm mod 360)) at 9900 mm/min
+    G1 U271.2 F9900; Rotate turret (U) to point extruder at pliers (270.00mm == (-90.00mm mod 360)) at 9900 mm/min
 
 G4 P20 ; Dwell for 20 ms
 M106 P8 S1 ; Turn on vacuum
