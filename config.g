@@ -22,12 +22,12 @@ M569 P3 S0 ; Set motor driver direction. Motor driver number 3 goes backwards (S
 M569 P4 S0 ; Set motor driver direction. Motor driver number 4 goes backwards (S0). Line 22: A (Rotary)
 M569 P5 S1 ; Set motor driver direction. Motor driver number 5 goes forwards  (S1). Line 22: C (Rotary)
 M569 P6 S0 ; Set motor driver direction. Motor driver number 6 goes backwards (S0). Line 22: E:1-3 (Extruders)
-M569 P7 S1 ; Set motor driver direction. Motor driver number 7 goes forwards  (S1). Line 22: W (Cleaning Station)
+;M569 P7 S1 ; Set motor driver direction. Motor driver number 7 goes forwards  (S1). Line 22: W (Cleaning Station)
 M569 P8 S0 ; Set motor driver direction. Motor driver number 8 goes backwards  (S0). Line 22: V (Turret Lock)
 M569 P9 S0 ; Set motor driver direction. Motor driver number 9 goes backwards (S0). Line 22: E4 (Filament Assist)
 
 ; Drive settings
-M584 X0 Y1 Z2 U3 V8 W7 E6:6:6:9 A4 C5 ; Set driver mapping, E drive is multiplexed. Hide the extra axes
+M584 X0 Y1 Z2 U3 V8 E6:6:6:9 A4 C5 ; Set driver mapping, E drive is multiplexed. Hide the extra axes
 M208 X-208 Y-90 Z-10 U-10.1 V-100 W0 A-365 C-1000 S1 ; Set axis minima
 M208 X208 Y90 Z210 U360 V200 W35 A365 C10000 S0 ; Set axis maxima
 M350 X16 Y16 Z16 U16 V16 W16 A16 C16 E16:16:16:16 I1 ; Configure microstepping with interpolation
