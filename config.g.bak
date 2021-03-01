@@ -37,7 +37,7 @@ G31 Z0; Set Z probe trigger height
 
 ; Heaters
 M140 H0 ; Turn on bed
-M143 H0 S110 ; Limit Bed temperature to 120C
+M143 H0 S120 ; Limit Bed temperature to 120C
 M143 H3 S290 ; Limit H3/E2 temperature to 290C
 M143 H4 S290 ; Limit H4/E3 temperature to 290C
 M143 H5 S290 ; Limit H5/E4 temperature to 290C
