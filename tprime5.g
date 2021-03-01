@@ -1,71 +1,17 @@
-; Disable E motor and select first E motor for multiplexing
-; MOT 1 - LLL
-; MOT 2 (5) - LLH
-; MOT 3 (4) - HHL
-; MOT 4 (3) - LHL
-; MOT 5 (2) - HLL
-M84 E0:1:2:3
-M42 P2 S0
-M42 P3 S0
-M42 P4 S1
+; tprime5.g
+; Called to prime and clean tool 5
+if state.currentTool != 5
+    if state.currentTool == -1
+        G60 S0 ; Save current position in the slot reserved for user-stored positions
+        G92 U{-tools[5].offsets[3]}
+    else
+        G92 U{tools[{state.currentTool}].offsets[3]-tools[5].offsets[3]} ; We don't want to move the turret before the first priming rotation, so we falsely set the current turret position to the expected position for Tool 5 which causes tpre-universal.g to skip the Z-hop and turret rotation.
 
-; Switch to CNC mode
-M453
+    T5 ; Select Tool
 
-; Select tool and save the current position
-T5 P0
-G91
-G1 Z40 F6000 H1
-G60 S1
+    if state.previousTool == -1
+        G92 U{state.restorePoints[0].coords[3]} ; Return the logical U-axis position to the actual position stored above.
+    else
+        G92 U{-(tools[{state.previousTool}].offsets[3]-tools[5].offsets[3])} ; Return the logical U-axis position to the actual position
 
-; Move up and get the bed out of the way
-
-G90
-G1 Y85 F30000
-M451 ; FFF mode
-; Move nozzle to cleaning station
-M98 P"unlock_turret.g"
-G1 U217.3 F9900
-G4 P20
-
-; Heat up the nozzle and extrude some filament
-M116 P5 S10
-G1 W27 F15000
-M83
-G1 E20 F6000
-
-G1 E6 F250
-M400
-G1 W20 F6000
-G1 E-16 F6000
-G4 P20
-
-; Move nozzle so that it faces the pliers
-G1 U228.7 F9900
-
-
-; Turn on vacuum
-;M106 P7 S1
-
-; Perform cleaning cycle
-M98 P"clean.g"
-
-;Leave blades closed
-M42 P1 S1
-G4 P20
-M42 P1 S0.4
-
-; Move the nozzle so that if faces the bed
-G1 U318.3 F9900
-G4 P20
-M98 P"lock_turret.g"
-
-; Perform post-cleaning of the pliers
-M98 P"postclean.g"
-
-;Turn off vacuum
-;M106 P7 S0
-
-; Go back to the saved coordinates
-G1 R1 Y0 F30000
-G1 R1 Z0 F6000
+M98 P"tprime-universal.g" ; Call tprime-universal.g
