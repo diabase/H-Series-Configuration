@@ -27,7 +27,7 @@ M569 P8 S1 ; Set motor driver direction. Motor driver number 8 goes forwards  (S
 M569 P9 S0 ; Set motor driver direction. Motor driver number 9 goes backwards (S0). Line 22: E4 (Filament Assist)
 
 ; Drive settings
-M584 X0 Y1 Z2 U3 V8 W7 E6:6:6:9 A4 C5 ; Set driver mapping, E drive is multiplexed. Hide the extra axes
+M584 X0 Y1 Z2 U3 V8 E6:6:6:9 A4 C5 ; Set driver mapping, E drive is multiplexed. Hide the extra axes
 M208 X-208 Y-90 Z-10 U-9.6 V-100 W0 A-365 C-1000 S1 ; Set axis minima
 M208 X208 Y90 Z210 U360 V200 W35 A365 C10000 S0 ; Set axis maxima
 M350 X16 Y16 Z16 U16 V16 W16 A16 C16 E16:16:16:16 I1 ; Configure microstepping with interpolation
