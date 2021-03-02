@@ -57,7 +57,7 @@ M98 P"tcreate-universal.g"
 
 ; Miscellaneous
 M98 P"cleaningstation.g" ; Configure cleaning station
-M98 P"drycabinet.g" ; Configure filament drying cabinet
+;M98 P"drycabinet.g" ; Configure filament drying cabinet
 M98 P"heatedbed.g" ; Configure heated bed
 M98 P"toolpriming.g" ; Configure tool priming parameters
 M911 S19 R22 P"M98 P""estop.g"""  ; Run estop.g on power loss during a print
