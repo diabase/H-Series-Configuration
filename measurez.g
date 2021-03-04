@@ -9,7 +9,7 @@ M208 Z-10:400 ; Set z axis minimum and maximum travel
 
 ; Go to first bed probe point and coarse probe Z
 M558 F1200 ; Set Z probe feed rate to 1200 mm/min.
-G30 X0 Y0 ; Probe the bed at X=0, Y=0 and set the Z coordinate to the probe trigger height.
+G30; Probe the bed at X=0, Y=0 and set the Z coordinate to the probe trigger height.
 
 ; Fine probe Z
 M558 F150 ; Set Z probe feed rate to 150 mm/min
@@ -20,9 +20,10 @@ M208 Z220 S0 ; Set Z-axis maximum to 220 mm
 M400 ; Wait for all moves to finish
 M913 Z50 ; Reduce Z-axis motor current to 50%
 G91 ; Relative Positioning
-G1 H3 Z220 F6000 ; Attempt to move Z +220mm at 6000 mm/min, but halt if endstop triggered and set axis limit to current position, overriding value set by previous M208 or G1 H3 special move
+G1 H3 Z180 F6000 ; Attempt to move Z +180mm at 6000 mm/min, but halt if endstop triggered and set axis limit to current position, overriding value set by previous M208 or G1 H3 special move
+G1 H3 Z40 F150 ; Attempt to move Z +40mm at 200 mm/min (expecting to find endstop here)
 G1 H2 Z-2 F6000 ; Move Z -2mm at 6000 mm/min, ignoring endstop while moving
-G1 H3 Z4 F200 ; Attempt to move Z +4mm at 200 mm/min, but halt if endstop triggered and set axis limit to current position, overriding value set by previous M208 or G1 H3 special move
+G1 H3 Z4 F150 ; Attempt to move Z +4mm at 200 mm/min, but halt if endstop triggered and set axis limit to current position, overriding value set by previous M208 or G1 H3 special move
 M400 ; Wait for all moves to finish
 M913 Z100 ; Restore Z-axis motor current to 100%
 
