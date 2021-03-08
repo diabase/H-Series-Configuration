@@ -58,26 +58,17 @@ G31 Z0; Set Z probe trigger height to 0mm
 M98 P"tcreate-universal.g"
 
 ; Miscellaneous
-M950 P1 C"out1"             ; P1 - cleaning station 1
-M950 P2 C"out2"				;Z axis brake
+;M950 P1 C"out1"             ;   P1 - cleaning station 1
+M950 P2 C"out2"				;   Z axis brake
 
 M98 P"cleaningstation.g" ; Configure cleaning station
-M98 P"drycabinet.g" ; Configure filament drying cabinet
-M98 P"heatedbed.g" ; Configure heated bed
+;M98 P"drycabinet.g" ; Configure filament drying cabinet
+;M98 P"heatedbed.g" ; Configure heated bed
 M98 P"toolpriming.g" ; Configure tool priming parameters
 M911 S19 R22 P"M98 P""estop.g"""  ; Run estop.g on power loss during a print
 M575 P1 B115200 S1; Set up UART for pendant input
 M98 P"toolpriming.g" ;load tool priming parameters
 ; M750 ; Enable scanner
-
-;Fans
-M950 F1 C"2.out3"         ; Extruder Cooling Fans - Define Fan 1 to use pin fan1
-M950 F2 C"2.out6"         ; 12V cooling fan
-
-; Fan configuration
-M106 P1 H5 T50 ; 24V cooling fans
-M106 P2 H3 T50 ; 12V cooling fans
-
 
 ; Post Config.g Commands
 M501 ; Set active parameters to those stored in config-override.g
