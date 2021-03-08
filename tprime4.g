@@ -5,7 +5,7 @@ if state.currentTool != 4
         G60 S0 ; Save current position in the slot reserved for user-stored positions
         G92 U{-tools[4].offsets[3]}
     else
-       G92 U{tools[{state.currentTool}].offsets[3]-tools[4].offsets[3]} ; We don't want to move the turret before the first priming rotation, so we falsely set the current turret position to the expected position for Tool 4 which causes tpre-universal.g to skip the Z-hop and turret rotation.
+        G92 U{tools[{state.currentTool}].offsets[3]-tools[4].offsets[3]} ; We don't want to move the turret before the first priming rotation, so we falsely set the current turret position to the expected position for Tool 4 which causes tpre-universal.g to skip the Z-hop and turret rotation.
 
     T4 ; Select Tool
 

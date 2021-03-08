@@ -1,5 +1,7 @@
 ; pause.g
 ; Called when a job is paused.
+; Written by Diabase Engineering
+; Last Updated: February 24, 2021
 
 if state.machineMode="FFF"
     M83 ; Set extruder to relative mode
@@ -38,5 +40,5 @@ T10 P0
 T-1 P0
 
 if heat.heaters[0] != null ; ...and we have defined a bed heater...
-    if heat.heaters[0].state != "fault" ; ...and it's not in a fault state...
+    if {heat.heaters[0].state != "fault" && heat.heaters[0].current != -273.15} ; ...and it's not in a fault state...
         M144 S0 ; Set bed to standby
