@@ -22,7 +22,7 @@ if state.machineMode="CNC"
     while iterations < #fans
         if fans[iterations] != null
             if #fans[iterations].name == 9
-                M106 P[iterations] S0
+                M106 P{iterations} S0
 
 M400 ; Wait for current moves to finish
 
