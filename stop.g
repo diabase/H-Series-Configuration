@@ -20,7 +20,6 @@ G1 Y85 F6000 ; Move Y to 85 mm at 6000 mm/min
 if state.machineMode="CNC"
     M5 ; Turn off all spindles
     while iterations < #fans
-        echo {fans[iterations]}
         if fans[iterations] != null
             if #fans[iterations].name == 9
                 M106 P[iterations] S0
