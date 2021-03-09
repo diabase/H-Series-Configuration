@@ -13,11 +13,12 @@ G92 A0 C0 ; Set current A and C positions as 0 mm
 if {(move.axes[5].letter ^ "") == "W"} ; Motor-driven cleaning station
 M98 p"homew.g" ; Call homew.g
 
+G91 ; Relative Positioning
 G1 H1 Z.5 F6000 ; Move Z +0.5mm at 6000 mm/min
 M42 P2 S1       ;unlatch Z brake
 G4 P300         ;wait 300 ms
 M42 P2 S0.2     ;set Z brake to holding current
-G91 ; Relative Positioning
+
 M400 ; Wait for all moves to finish
 ;M913 Z50; Reduce Z-axis motor current to 50%
 G1 H1 Z40 F6000 ; Move Z +40mm at 6000 mm/min

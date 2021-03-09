@@ -5,6 +5,12 @@
 M574 Z2 H1 P"!io4.in" ; Configure Z endstop position at high end, it's a microswitch on pin "zstop"
 
 G91 ; Relative Positioning
+G1 H1 Z.5 F6000 ; Move Z +0.5mm at 6000 mm/min
+M42 P2 S1       ;unlatch Z brake
+G4 P300         ;wait 300 ms
+M42 P2 S0.2     ;set Z brake to holding current
+
+
 M400 ; Wait for all moves to finish
 M913 Z50; Reduce Z-axis motor current to 50%
 G1 H1 Z360 F6000 ; Attempt to move Z +260mm at 6000 mm/min, but halt if endstop triggered and set axis position to axis limit as defined by previous M208 or G1 H3 special move
