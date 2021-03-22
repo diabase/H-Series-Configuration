@@ -72,11 +72,11 @@ M140 H0
 
 ; Temperature limits
 M143 H0 S120 ; Limit Bed temperature to 120C
-M143 H1 S250 ; Limit H3/E2 temperature to 290C
+M143 H1 S290 ; Limit H3/E2 temperature to 290C
 M143 H2 S250 ; Limit H4/E3 temperature to 290C
 M143 H3 S250 ; Limit H3/E2 temperature to 290C
 M143 H4 S250 ; Limit H4/E3 temperature to 290C
-M143 H5 S290 ; Limit H5/E4 temperature to 290C
+M143 H5 S250 ; Limit H5/E4 temperature to 290C
 M302 S150 ; Set minimum extrude temp
 
 ; Fan definition
@@ -119,7 +119,7 @@ M98 P"drycabinet.g"
 
 ; Network
 M550 P"H4052" ; Set machine name
-M552 S1 ; Enable network
+M552 S1 P192.168.1.52; Enable network
 
 ; Fan configuration
 M106 P1 H1:2:3:4:5 T50 ; Nozzle fans

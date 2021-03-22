@@ -20,13 +20,13 @@ M569 P9 S0 ; Drive 9 goes backwards
 ; Drive settings
 M584 X0 Y1 Z2 U3 V8 W7 E6:6:6:6:6:9  ; Set driver mapping, E drive is multiplexed. Hide the extra axes
 M208 X-210 Y-93 Z-10 U-9.42 V-100 W0 S1 ; Set axis minima
-M208 X210 Y93 Z202.64 U360 V200 W35 S0 ; Set axis maxima
+M208 X210 Y93 Z202.64 U350 V200 W35 S0 ; Set axis maxima
 M350 X16 Y16 Z16 U16 V16 W16 E16:16:16:16:16:16 I1 ; Configure microstepping with interpolation
 M92 X320 Y320 Z640 U322.31 V1600 W800 E96:96:96:96:96:96 ; Set steps per mm
 M566 X300 Y300 Z300 U120 V500 W500 E1200:1200:1200:1200:1200:1200 ; Set maximum instantaneous speed changes (mm/min)
 M203 X12000 Y12000 Z3000 U8900 V10000 W20000 E6000:6000:6000:6000:6000:6000 ; Set maximum speeds (mm/min)
 M201 X600 Y600 Z450 U600 V500 W500 E250:250:250:250:250:250 ; Set accelerations (mm/s^2)
-M906 X1800 Y2100 Z1800 U1200 V800 W800 E1500:1500:1500:1500:1500:500 I30 ; Set motor currents (mA) and motor idle factor in per cent
+M906 X1800 Y2100 Z1800 U1200 V800 W800 E1500:1500:1500:1500:1500:1000 I30 ; Set motor currents (mA) and motor idle factor in per cent
 M84 S5 ; Set idle timeout
 
 ; Endstops
@@ -72,11 +72,11 @@ M140 H0
 
 ; Temperature limits
 M143 H0 S120 ; Limit Bed temperature to 120C
-M143 H1 S250 ; Limit H3/E2 temperature to 290C
+M143 H1 S290 ; Limit H3/E2 temperature to 290C
 M143 H2 S250 ; Limit H4/E3 temperature to 290C
 M143 H3 S250 ; Limit H3/E2 temperature to 290C
 M143 H4 S250 ; Limit H4/E3 temperature to 290C
-M143 H5 S290 ; Limit H5/E4 temperature to 290C
+M143 H5 S250 ; Limit H5/E4 temperature to 290C
 M302 S150 ; Set minimum extrude temp
 
 ; Fan definition
@@ -119,7 +119,7 @@ M98 P"drycabinet.g"
 
 ; Network
 M550 P"H4052" ; Set machine name
-M552 S1 ; Enable network
+M552 S1 P192.168.1.52; Enable network
 
 ; Fan configuration
 M106 P1 H1:2:3:4:5 T50 ; Nozzle fans

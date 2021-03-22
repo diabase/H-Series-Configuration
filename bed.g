@@ -2,11 +2,14 @@
 T10
 M561
 
-G1 X0 Y-45 Z3 F8000
+G1 X0 Y-45 Z10 F8000
 G30
 
 ;Use with Flat Print Bed
-M557 X-80:80 Y-80:80 S40:40
+;M557 X-80:80 Y-80:80 S40:40
+
+;For printing the test pattern
+M557 X-80:80 Y-50:50 S40:25
 
 ;Use with Dovetail Bed
 ;M557 X-180:180 Y-45:45 S90

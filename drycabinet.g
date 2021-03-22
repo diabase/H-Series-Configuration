@@ -8,3 +8,5 @@ M307 H6 B1 I1; Configure inverted bang-bang control
 M141 P1 H6 ; Configure dry cabinet on heater
 M143 P0 H6 X10 A2 S50 ; Configure heater protection to turn off heater E1 temporarily when the DHT temperature exceeds 50C
 M143 P1 H6 X12 A0 S70 ; Configure heater protection to generate a heater fault when the safety temperature exceeds 70C
+
+M141 S10 P1
