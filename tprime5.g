@@ -4,7 +4,7 @@
 ; MOT 3 (4) - HHL
 ; MOT 4 (3) - LHL
 ; MOT 5 (2) - HLL
-M84 E0:1:2:3
+M84 E0:1:2:3:4:5
 M42 P2 S0
 M42 P3 S0
 M42 P4 S1
@@ -37,7 +37,7 @@ G1 E20 F6000
 G1 E6 F250
 M400
 G1 W20 F6000
-G1 E-16 F6000
+G1 E-14 F6000
 G4 P20
 
 ; Move nozzle so that it faces the pliers
@@ -45,7 +45,7 @@ G1 U228.1 F9900
 
 
 ; Turn on vacuum
-;M106 P7 S1
+;M106 P8 S1
 
 ; Perform cleaning cycle
 M98 P"clean.g"
@@ -64,7 +64,7 @@ M98 P"lock_turret.g"
 M98 P"postclean.g"
 
 ;Turn off vacuum
-;M106 P7 S0
+;M106 P8 S0
 
 ; Go back to the saved coordinates
 G1 R1 Y0 F30000

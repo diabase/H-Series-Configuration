@@ -4,7 +4,7 @@
 ; MOT 3 (4) - HHL
 ; MOT 4 (3) - LHL
 ; MOT 5 (2) - HLL
-M84 E0
+M84 E0:1:2:3:4:5
 M42 P2 S1
 M42 P3 S1
 M42 P4 S0

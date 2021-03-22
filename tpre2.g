@@ -4,12 +4,12 @@
 ; MOT 3 (4) - HHL
 ; MOT 4 (3) - LHL
 ; MOT 5 (2) - HLL
-M84 E0
+M84 E0:1:2:3:4:5
 M42 P2 S1
 M42 P3 S0
 M42 P4 S0
 
-; Switch to FFF mode
+; Switch to CNC mode
 M453
 
 ; Move Z up and unlock the turret

@@ -8,7 +8,6 @@ M574 Y1 S1 P"ystop"
 M84 E0
 T-1
 M451
-G92 A C
 M98 p"homew.g"
 ; Enable upper Z endstop and move away from the base plane
 M574 Z2 H1 P"zstop"
@@ -18,8 +17,8 @@ G1 H1 Z60 F6000
 
 ; Unlock the turret and disable stall detection for it
 M98 P"unlock_turret.g"
-M915 U R0
 G4 P100
+
 ; Home X Y Z U
 G1 H1 X-420 Y-180 Z220 U-380
 G1 H2 X2 Y2 Z-2 U2 F6000
@@ -47,5 +46,3 @@ T10 P0
 
 M451 ;back to FFF mode
 
-;Restore motor currents to X and Y axes
-M913 X100 Y100
