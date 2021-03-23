@@ -7,8 +7,8 @@
 ; M929 P"eventlog.txt" S3 ; start logging to file eventlog.txt (S0 = stop logging, S1 = log level WARN, S2 = log level INFO, S3 = log level DEBUG)
 
 ; Network
-M550 P"HXXXX" ; Set machine name
-M552 S1 ; Enable network
+M550 P"H4051" ; Set machine name
+M552 S1 P192.168.1.52 ; Enable network
 
 ; General preferences
 G90 ; Absolute Positioning
@@ -36,7 +36,7 @@ M566 X300 Y300 Z300 U120 V500 W500 E1200:1200:1200:1200:1200:1200 ; Set maximum 
 M203 X12000 Y12000 Z3000 U8900 V10000 W20000 E6000:6000:6000:6000:6000:6000 ; Set maximum speeds (mm/min)
 M201 X600 Y600 Z450 U600 V500 W500 E250:250:250:250:250:250 ; Set accelerations (mm/s^2)
 M906 X1800 Y2100 Z1800 U1200 V800 W800 E1500:1500:1500:1500:1500:500 I30 ; Set motor currents (mA) and motor idle factor in per cent
-M84 S5 ; Set idle timeout
+M84 S5 ; Allow all motors to drop hold current to idle after 5 seconds
 
 ; Endstops
 M574 X1 S1 P"xstop" ; Configure X endstop position at low end, it's a microswitch on pin "xstop"
