@@ -13,7 +13,7 @@ T-1 ; Deselect current tool (if any)
 G92 A0 C0 ; Set current A and C positions as 0 mm
 
 if {(move.axes[5].letter ^ "") == "W"} ; Motor-driven cleaning station
-M98 p"homew.g" ; Call homew.g
+  M98 p"homew.g" ; Call homew.g
 
 G91 ; Relative Positioning
 M400 ; Wait for all moves to finish
