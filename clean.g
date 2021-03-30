@@ -1,11 +1,12 @@
 if {(move.axes[5].letter ^ "") == "W"} ; Motor-driven cleaning station
     G90 ; Set to Absolute Positioning
     M400 ; Wait for current moves to finish
-    G1 W21 F15000 ; Move W to 21 at 15000 mm/min
+    G1 W30 F15000 ; Move W to 21 at 15000 mm/min
     G4 P125 ; Dwell for 125 ms
     M400 ; Wait for current moves to finish
     M42 P1 S1 ; Close pliers
     G4 P125 ; Dwell for 125 ms
+	G1 W20
     G28 W ; Home W
     M42 P1 S0.75 ; Reduce pliers-closing solenoid current to 75%
     G4 P125 ; Dwell for 125 ms
