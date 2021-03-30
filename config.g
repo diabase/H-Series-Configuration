@@ -101,6 +101,10 @@ G4 P100 ; Dwell for 100 ms
 M98 P"drycabinet.g"
 
 ; Network
+M552 P132.250.138.94
+M554 P132.250.138.1
+M553 P255.255.254.0
+
 M550 P"H4061" ; Set machine name
 M552 S1 ; Enable network
 
