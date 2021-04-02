@@ -7,7 +7,7 @@
 ; M929 P"eventlog.txt" S3 ; start logging to file eventlog.txt (S0 = stop logging, S1 = log level WARN, S2 = log level INFO, S3 = log level DEBUG)
 
 ; Network
-M550 P"H4051" ; Set machine name
+M550 P"H4052" ; Set machine name
 M552 S1 P192.168.1.52 ; Enable network
 
 ; General preferences
@@ -16,7 +16,7 @@ M83 ; Relative Extrusions
 
 ; Drive orientation
 M569 P0 S1 ; Set motor driver direction. Motor driver number 0 goes forwards  (S1). Line 22: X (Linear)
-M569 P1 S0 ; Set motor driver direction. Motor driver number 1 goes forwards  (S1). Line 22: Y (Linear)
+M569 P1 S1 ; Set motor driver direction. Motor driver number 1 goes forwards  (S1). Line 22: Y (Linear)
 M569 P2 S0 ; Set motor driver direction. Motor driver number 2 goes backwards (S0). Line 22: Z (Linear)
 M569 P3 S0 ; Set motor driver direction. Motor driver number 3 goes backwards (S0). Line 22: U (Turret)
 M569 P4 S0 ; Set motor driver direction. Motor driver number 4 goes backwards (S0). Line 22: A (Rotary)
