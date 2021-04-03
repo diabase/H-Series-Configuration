@@ -2,8 +2,8 @@
 ; Called to home only the X axis
 
 ; Ensure appropriate axis endstops are used
-M574 X1 S1 P"xstop" ; Configure X endstop position at low end, it's a microswitch on pin "xstop"
-M574 Z2 S1 P"zstop" ; Configure Z endstop position at high end, it's a microswitch on pin "zstop"
+M574 X1 S1 P"!io2.in" ; Configure X endstop position at low end, it's an optical interrupt on pin "io2.in"
+M574 Z1 S1 P"!io4.in" ; Configure Z endstop position at high end, it's an optical interrupt on pin "io4.in"
 
 G91 ; Relative Positioning
 

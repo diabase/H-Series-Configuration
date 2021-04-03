@@ -2,7 +2,7 @@
 ; Called to home only the Z axis
 
 ; Ensure appropriate axis endstops are used
-M574 Z2 H1 P"!io4.in" ; Configure Z endstop position at high end, it's a microswitch on pin "zstop"
+M574 Z1 S1 P"!io4.in" ; Configure Z endstop position at high end, it's an optical interrupt on pin "io4.in"
 
 G91 ; Relative Positioning
 G1 H1 Z.5 F6000 ; Move Z +0.5mm at 6000 mm/min
