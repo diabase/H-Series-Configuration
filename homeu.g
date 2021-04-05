@@ -1,5 +1,7 @@
 ; homeu.g
 ; Called to home only the U axis
+; Written by Diabase Engineering
+; Last Updated: April 5, 2021
 
 M453 ; Switch to CNC Mode
 
@@ -13,13 +15,9 @@ T-1 ; Deselect current tool (if any)
 G91 ; Relative Positioning
 if move.axes[2].machinePosition + 40 <= move.axes[2].max ; If we have enough room for a normal tool change Z-hop, do it.
     G1 Z40 F6000 ; Move Z +40mm at 6000 mm/min
-elif move.axes[2].machinePosition + 40 > move.axes[2].max ; If we don't have enough room, move as high as we can.
-    M574 Z2 S1 P"zstop" ; Configure Z endstop position at high end, it's a microswitch on pin "zstop"
-    M400 ; Wait for all moves to finish
-    M913 Z50; Reduce Z-axis motor current to 50%
-    G1 Z40 F1000 H1 ; Attempt to move Z +40mm at 1000 mm/min, but halt if endstop triggered and set current position to axis limit set by previous M208 or G1 H3 special move
-    M400 ; Wait for all moves to finish
-    M913 Z100 ; Restore Z-axis motor current to 100%
+elif move.axes[2].machinePosition + 40 > move.axes[2].max ; If we don't have enough room...
+    G90 ; Absolute Positioning
+    G1 Z{move.axes[2].max} ; Move as high as we can.
 
 M98 P"unlock_turret.g" ; Call unlock_turret.g
 M915 U R0 ; Configure stall detection for U axis to take no action when a stall is detected
