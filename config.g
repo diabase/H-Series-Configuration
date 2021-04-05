@@ -1,7 +1,7 @@
 ; config.g
 ; H4 Configuration File
 ; Written by Diabase Engineering
-; Last Updated: February 22, 2021
+; Last Updated: April 5, 2021
 
 ; Logging
 M929 P"eventlog.txt" S3 ; start logging to file eventlog.txt (S0 = stop logging, S1 = log level WARN, S2 = log level INFO, S3 = log level DEBUG)
@@ -15,16 +15,16 @@ G90 ; Absolute Positioning
 M83 ; Relative Extrusions
 
 ; Drive orientation
-M569 P0 S1 ; Set motor driver direction. Motor driver number 0 goes forwards  (S1). Line 22: X (Linear)
-M569 P1 S0 ; Set motor driver direction. Motor driver number 1 goes backwards (S0). Line 22: Y (Linear)
-M569 P2 S0 ; Set motor driver direction. Motor driver number 2 goes backwards (S0). Line 22: Z (Linear)
-M569 P3 S0 ; Set motor driver direction. Motor driver number 3 goes backwards (S0). Line 22: U (Turret)
-M569 P4 S0 ; Set motor driver direction. Motor driver number 4 goes backwards (S0). Line 22: A (Rotary)
-M569 P5 S1 ; Set motor driver direction. Motor driver number 5 goes forwards  (S1). Line 22: C (Rotary)
-M569 P6 S0 ; Set motor driver direction. Motor driver number 6 goes backwards (S0). Line 22: E0-2 (Extruders)
-M569 P7 S1 ; Set motor driver direction. Motor driver number 7 goes forwards  (S1). Line 22: W (Cleaning Station)
-M569 P8 S1 ; Set motor driver direction. Motor driver number 8 goes forwards  (S1). Line 22: V (Turret Lock)
-M569 P9 S0 ; Set motor driver direction. Motor driver number 9 goes backwards (S0). Line 22: E3 (Filament Assist)
+M569 P0 S1 ; Set motor driver direction. Motor driver number 0 goes forwards  (S1). Line 30: X (Linear)
+M569 P1 S0 ; Set motor driver direction. Motor driver number 1 goes backwards (S0). Line 30: Y (Linear)
+M569 P2 S0 ; Set motor driver direction. Motor driver number 2 goes backwards (S0). Line 30: Z (Linear)
+M569 P3 S0 ; Set motor driver direction. Motor driver number 3 goes backwards (S0). Line 30: U (Turret)
+M569 P4 S0 ; Set motor driver direction. Motor driver number 4 goes backwards (S0). Line 30: A (Rotary)
+M569 P5 S1 ; Set motor driver direction. Motor driver number 5 goes forwards  (S1). Line 30: C (Rotary)
+M569 P6 S0 ; Set motor driver direction. Motor driver number 6 goes backwards (S0). Line 30: E0-2 (Extruders)
+M569 P7 S1 ; Set motor driver direction. Motor driver number 7 goes forwards  (S1). Line 30: W (Cleaning Station)
+M569 P8 S1 ; Set motor driver direction. Motor driver number 8 goes forwards  (S1). Line 30: V (Turret Lock)
+M569 P9 S0 ; Set motor driver direction. Motor driver number 9 goes backwards (S0). Line 30: E3 (Filament Assist)
 
 ; Drive settings
 M584 X0 Y1 Z2 U3 W7 V8 E6:6:6:9 A4 C5                                           ; Set driver mapping, E drive is multiplexed.
@@ -43,7 +43,7 @@ M574 X1 S1 P"xstop"         ; Configure X endstop position at low end, it's a mi
 M574 Y1 S1 P"ystop"         ; Configure Y endstop position at low end, it's a microswitch on pin "ystop"
 M574 Z2 S1 P"zstop"         ; Configure Z endstop position at high end, it's a microswitch on pin "zstop"
 M574 U1 S1 P"e0stop"        ; Configure U endstop position at low end, it's a microswitch on pin "e0stop"
-M574 V0 S1 P"e1stop"        ; Configure V endstop position at low end, it's a microswitch on pin "e1stop"
+M574 V0 S1 P"e1stop"        ; Configure V endstop position at no end, it's a microswitch on pin "e1stop"
 M574 A1 S1 P"duex.e2stop"   ; Configure A endstop position at low end, it's a microswitch on pin "duex.e2stop"
 M574 C1 S1 P"duex.e3stop"   ; Configure C endstop position at low end, it's a microswitch on pin "duex.e3stop"
 
