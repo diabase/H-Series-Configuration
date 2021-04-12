@@ -60,6 +60,10 @@ M98 P"tcreate-universal.g"
 ; Miscellaneous
 ;M950 P1 C"out1"             ;   P1 - cleaning station 1
 M950 P2 C"out2"				;   Z axis brake
+M950 F3 C"out3"				;LEDs
+M106 P3 C"TOP LIGHTS" L1    ;LEDs defined as Fan with toggle (no dimming control)
+M950 F4 C"3.out6"			;12V LEDs
+M106 P4 C"FC LIGHTS" L1    ;LEDs defined as Fan with toggle (no dimming control)
 
 ;M98 P"cleaningstation.g" ; Configure cleaning station
 ;M98 P"drycabinet.g" ; Configure filament drying cabinet

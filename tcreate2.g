@@ -12,7 +12,7 @@
 ; M567 P2 E1:1 ; Drive Tool 2 with a 1:1 ratio between the extruder and filament assist
 
 ; Spindle Configurations
-M563 P2 F5 S"Spindle 2" ; Create tool 2 with fan 5 and call it "Spindle 2"
-M453 T2 S0 C"io7.out+io8.out+io1.out" R12000 ; Assign tool 2 to spindle index 1, with PWM control on inverted pin "exp.heater4" and 12000 RPM achieved at full PWM
-;M950 F5 C"duex.fan5" ; Spindle 2 Air Flow - Define Fan 5 to use pin duex.fan5
-;M106 P5 S0 B0 L1 C"Spindle 2" ; Spindle 2 air flow
+M563 P2 F2 S"Spindle 2" ; Create tool 2 with fan 5 and call it "Spindle 2"
+M453 T2 S0 C"io7.out+nil+io8.out" R12000 ; Assign tool 2 to spindle index 1, with PWM control on inverted pin "exp.heater4" and 12000 RPM achieved at full PWM
+M950 F2 C"out8" ; Spindle 2 Air Flow - Define Fan 5 to use pin duex.fan5
+M106 P2 S0 B0 L1 C"T2 Air" ; Spindle 2 air flow
