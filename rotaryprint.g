@@ -16,6 +16,10 @@ G1 P100					; wait
 M574 A1 S1 P"ystop"	;enable new pin on A endstop
 M574 Y1 S1 P"duex.e2stop"	;enable new pin on Y endstop
 
+while iterations < 5
+    G10 P{iterations+1} A{tools[(iterations+1)].offsets[1]}
+    G10 P{iterations+1} Y0
+
 G92 A Y
 
 echo "Rotary axis configuration complete"
