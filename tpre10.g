@@ -1,9 +1,14 @@
 ; Switch to FFF mode
 M451
 M84 E0
+
+; disable air pressure valve
+m106 P7 s0
+
+
 ; Move Z up and unlock the turret
 G91
-G1 Z5 F6000
+G1 Z40 F6000
 G90
 M98 P"unlock_turret.g"
 

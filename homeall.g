@@ -19,6 +19,9 @@ G1 S1 X-420 Y-180 Z220 U-380
 G1 S2 X2 Y2 Z-2 U2 F6000
 G1 S1 X-20 Y-20 Z20 U-29.7 F3000
 
+; disable air pressure valve
+m106 P7 s0
+
 ; Move to the Z probe offset and lock the turret again
 G90
 G1 U0 F9900

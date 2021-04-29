@@ -18,8 +18,9 @@ T1 P0
 
 ; Move up and get the bed out of the way
 G91
-G1 Z15 F6000
+G1 Z40 F6000
 G60 S1
+
 
 G90
 G1 Y85 F30000
@@ -32,14 +33,17 @@ G4 P20
 ; Heat up the nozzle and extrude some filament
 M116 P1 S15
 M42 P20 S1
-M83
+M83 ; Change extruder to relative mode
 G1 E15 F6000
 M42 P20 S0.75
-G1 E6 F300
+G1 E15 F600 ; Gerjan 29/05/2019  changed from E6 to E15 and F6000 to F600
 M400
+G4 P3000 ;  Gerjan 29/05/2019 pause for 3 seconds to let the filament blob cool
 M42 P20 S0
-G1 E-9.9 F6000
+G1 E-15 F6000 ; Gerjan 29/05/2019  changed from E-9.9 to E-15
 G4 P20
+
+
 
 ; Move nozzle so that it faces the pliers
 
@@ -51,6 +55,7 @@ M106 P5 S1
 
 ; Perform cleaning cycle
 M98 P"clean.g"
+M98 P"clean.g"  ; Gerjan 29/05/2019 double cleaning
 
 ;keep blades closed
 M42 P22 S1

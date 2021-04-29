@@ -11,8 +11,10 @@ M451
 ; Select tool and save the current position
 T3 P0
 G91
-G1 Z15 F6000
+G1 Z40 F6000
 G60 S1
+
+
 
 ; Move up and get the bed out of the way
 
@@ -24,15 +26,16 @@ M98 P"unlock_turret.g"
 G1 U73.5 F9900
 
 ; Heat up the nozzle and extrude some filament
-M116 P3 S15
+M116 P2 S15
 M42 P20 S1
 M83
-G1 E10 F6000
+G1 E15 F6000
 M42 P20 S0.75
-G1 E6 F300
+G1 E14 F300 ; Gerjan 12/05/2019 changed for TPU,  29/05/2019 changed from E6 to E15 and F300 to F600
 M400
+G4 P3000 ;  Gerjan 29/05/2019 pause for 3 seconds to let the filament blob cool
 M42 P20 S0
-G1 E-9.9 F6000
+G1 E-17 F6000 ; Gerjan12/05/2019 changed for TPU,  29/05/2019 changed from E-9.7 to E-15
 G4 P20
 
 ; Move nozzle so that it faces the pliers
@@ -43,6 +46,7 @@ M106 P7 S1
 
 ; Perform cleaning cycle
 M98 P"clean.g"
+M98 P"clean.g"  ; Gerjan 29/05/2019 double cleaning
 
 ;keep blades closed
 M42 P22 S1

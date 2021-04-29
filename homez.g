@@ -27,7 +27,7 @@ M558 F1200
 G30 X0 Y0
 
 ; Fine home Z
-M558 F150
+M558 F150 
 G30
 
 ; Measure Z axis length
