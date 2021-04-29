@@ -1,3 +1,5 @@
-; Macro file to enable CNC mode on spindle 1 and to disable FFF mode
-M563 P2 F5 S"Spindle 2" ; Define tool 2
-M453 S1 T2 C"!exp.heater4" R12000 ; Assign tool 2 and PWM channel of heater 1 to spindle 2
+; Macro file to disable CNC mode on slot 2 and to enable FFF mode on it
+M451 ; Switch back to FFF mode
+M307 H4 A400 C140 D5.5 S1 B0 ; Configure heater 4
+M563 P2 D1:5 H4 L-1 ; Define tool 2
+M567 P2 E1:1.1

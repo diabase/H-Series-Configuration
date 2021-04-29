@@ -5,9 +5,9 @@
 ; MOT 4 (3) - LHL
 ; MOT 5 (2) - HLL
 M84 E0
-M42 P2 S1
-M42 P3 S0
-M42 P4 S0
+M42 P100 S1
+M42 P101 S0
+M42 P102 S0
 
 ; Switch to FFF mode
 ;M451
@@ -28,35 +28,34 @@ M98 P"unlock_turret.g"
 G1 U1 F9900
 
 ; Heat up the nozzle and extrude some filament
-M116 P2 S10
-M42 P0 S1
+M116 P2 S15
+M42 P20 S1
 M83
-G1 E18 F6000
-M42 P0 S0.75
+G1 E15 F6000
+M42 P20 S0.75
 G1 E6 F300
 M400
-M42 P0 S0
-G1 E-9.9 F6000
+M42 P20 S0
+G1 E-9.7 F6000
 G4 P20
 
 ; Move nozzle so that it faces the pliers
 
-G1 U12.6 F9900
+G1 U11.8 F9900
 
 ; Turn on vacuum
-;M106 P5 S1
+M106 P7 S1
 
 ; Perform cleaning cycle
-M106 P7 S1
 M98 P"clean.g"
 
-;Leave blades closed
-M42 P1 S1
+;keep blades closed
+M42 P22 S1
 G4 P20
-M42 P1 S0.4
+M42 P22 S0.4
 
 ; Move the nozzle so that if faces the bed
-G1 U102 F9900
+G1 U102.3 F9900
 G4 P20
 M98 P"lock_turret.g"
 
@@ -65,6 +64,7 @@ M98 P"postclean.g"
 
 ;Turn off vacuum
 M106 P7 S0
+
 
 ; Go back to the saved coordinates
 G1 R1 Y0 F30000

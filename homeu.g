@@ -12,9 +12,9 @@ M915 U R0
 
 ; Home U
 G91
-G1 H1 U-380 F3000
-G1 H2 U2
-G1 H1 U-20 F1800
+G1 S1 U-380 F3000
+G1 S2 U2
+G1 S1 U-20 F1800
 G90
 
 ; Go to the Z probe offset and select the corresponding tool

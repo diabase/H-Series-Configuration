@@ -5,25 +5,22 @@
 ; MOT 4 (3) - LHL
 ; MOT 5 (2) - HLL
 M84 E0
-M42 P2 S0
-M42 P3 S1
-M42 P4 S0
+M42 P100 S0
+M42 P101 S1
+M42 P102 S0
 
 ; Switch to FFF mode
-M453
+M451
 
 ; Move Z up and unlock the turret
 G91
-G1 Z25 F6000 H1
+G1 Z25 F6000
 G90
 M98 P"unlock_turret.g"
 
 ; Move turret
-G1 U174 F16000
+G1 U174.3 F9900
 G4 P20
 
 ; Lock the turret again
 M98 P"lock_turret.g"
-
-
-;G92 U174
