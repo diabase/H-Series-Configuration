@@ -18,7 +18,10 @@ M574 Y1 S1 P"ystop"
 M574 A1 S1 P"duex.e2stop"
 
 while iterations < 5
-    G10 P{iterations+1} Y{tools[(iterations+1)].offsets[6]}
-    G10 P{iterations+1} A0
+ G10 P{iterations+1} Y{tools[(iterations+1)].offsets[6]}
+ G10 P{iterations+1} A0
+
+G92 Y{move.axes[6].machinePosition}
+G92 A0
 
 echo "Machine configured to standard 3-axis mode"
