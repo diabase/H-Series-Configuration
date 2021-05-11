@@ -1,7 +1,7 @@
 ; Drive settings
 M584 Y4 A1  ; Set driver mapping, A becomes Y, Y becomes A
-M208 Y-365 A-93 S1 ; Set axis minima
-M208 Y365 A93 S0 ; Set axis maxima
+M208 Y-365 A-90 S1 ; Set axis minima
+M208 Y365 A90 S0 ; Set axis maxima
 M350 Y16 A16  I1 ; Configure microstepping with interpolation
 M92  Y53.33 A320 ; Set steps per mm
 M566 Y1000 A600 ; Set maximum instantaneous speed changes (mm/min)
