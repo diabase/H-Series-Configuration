@@ -1,7 +1,7 @@
 ; config.g
 ; H4 Configuration File
 ; Written by Diabase Engineering
-; Last Updated: February 22, 2021
+; Last Updated: May 12, 2021
 
 ; Logging
 ; M929 P"eventlog.txt" S3 ; start logging to file eventlog.txt (S0 = stop logging, S1 = log level WARN, S2 = log level INFO, S3 = log level DEBUG)
@@ -15,21 +15,27 @@ G90 ; Absolute Positioning
 M83 ; Relative Extrusions
 
 ; Drive orientation
-M569 P0 S0;     Set motor driver direction. Line 22: X (Linear)
-M569 P1 S1;     Set motor driver direction. Line 22: Y (Linear)
-M569 P2 S0 ;    Set motor driver direction. Line 22: Z (Linear)
-M569 P3 S0 ;    Set motor driver direction. Line 22: U (Turret)
-M569 P4 S0 ;    Set motor driver direction. Line 22: V (Turret Lock)
-M569 P5 S1 ;    Set motor driver direction. Line 22: W (Cleaing Station)
-M569 P1.0 S1 ;  Set motor driver direction. Line 22: E (Filament Assist)
-M569 P1.1 S1 ;  Set motor driver direction. Line 22: E (Filament Assist)
-M569 P1.2 S0 ;  Set motor driver direction. Line 22: C (Rotary)
-M569 P2.0 S1 ;  Set motor driver direction. Line 22: E (Extruder)
-M569 P2.1 S1 ;  Set motor driver direction. Line 22: E (Extruder)
-M569 P2.2 S1 ;  Set motor driver direction. Line 22: A (Rotary)
+M569 P0 S0;     Set motor driver direction. Line 38: X (Linear)
+M569 P1 S1;     Set motor driver direction. Line 38: Y (Linear)
+M569 P2 S0 ;    Set motor driver direction. Line 38: Z (Linear)
+M569 P3 S0 ;    Set motor driver direction. Line 38: U (Turret)
+M569 P4 S0 ;    Set motor driver direction. Line 38: V (Turret Lock)
+M569 P5 S1 ;    Set motor driver direction. Line 38: W (Cleaing Station)
+M569 P1.0 S1 ;  Set motor driver direction. Line 38: E (Extruder)
+M569 P1.1 S1 ;  Set motor driver direction. Line 38: E (Extruder)
+M569 P1.2 S1 ;  Set motor driver direction. Line 38: E (Extruder)
+;M569 P1.3 S0 ;  Placeholder for 6HC expansion board
+;M569 P1.4 S0 ;  Placeholder for 6HC expansion board
+;M569 P1.5 S0 ;  Placeholder for 6HC expansion board
+M569 P2.0 S1 ;  Set motor driver direction. Line 38: E (Filament Assist)
+M569 P2.1 S1 ;  Set motor driver direction. Line 38: E (Filament Assist)
+M569 P2.2 S1 ;  Set motor driver direction. Line 38: E (Filament Assist)
+M569 P3.0 S0 ;  Set motor driver direction. Line 38: Normally A, B for test
+M569 P3.1 S0 ;  Set motor driver direction. Line 38: A (Rotary Axis)
+M569 P3.2 S0 ;  Set motor driver direction. Line 38: Normally C, D for test (to be replaced with air cylinder)
 
 ; Drive settings
-M584 X0 Y1 Z2 U3 V4 W5 E1.0:1.1:1.2:2.0:2.1:2.2; Set driver mapping, E drive is multiplexed. Hide the extra axes
+M584 X0 Y1 Z2 U3 V4 W5 B3.0 D3.2 E1.0:1.1:1.2:2.0:2.1:2.2; Set driver mapping
 M208 X-208 Y-90 Z-10 U-10 V-100 W0 A-365 C-1000 S1 ; Set axis minima
 M208 X208 Y90 Z410 U360 V200 W35 A365 C10000 S0 ; Set axis maxima
 M350 X16 Y16 Z16 U16 V16 W16 A16 C16 E16 I1 ; Configure microstepping with interpolation
@@ -58,12 +64,12 @@ G31 Z0; Set Z probe trigger height to 0mm
 M98 P"tcreate-universal.g"
 
 ; Miscellaneous
-;M950 P1 C"out1"             ;   P1 - cleaning station 1
-M950 P2 C"out2"				;   Z axis brake
-M950 F3 C"out3"				;LEDs
-M106 P3 C"TOP LIGHTS" L1    ;LEDs defined as Fan with toggle (no dimming control)
-M950 F4 C"3.out6"			;12V LEDs
-M106 P4 C"FC LIGHTS" L1    ;LEDs defined as Fan with toggle (no dimming control)
+M950 P1 C"out1"             ; P1 - cleaning station 1
+M950 P2 C"out2"			    ; Z axis brake
+M950 F5 C"out3"				;LED in build enclosure
+M106 P5 C"TOP LIGHTS" L1    ;LEDs defined as Fan with toggle (no dimming control)
+M950 F6 C"3.out6"			;Filament Cabinet LEDs
+M106 P6 C"FC LIGHTS" L1    ;LEDs defined as Fan with toggle (no dimming control)
 
 ;M98 P"cleaningstation.g" ; Configure cleaning station
 ;M98 P"drycabinet.g" ; Configure filament drying cabinet
