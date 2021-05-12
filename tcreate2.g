@@ -1,7 +1,7 @@
 ; tcreate2.g
 ; Creates Tool 2
 ; Written by Diabase Engineering
-; Last Updated: February 22, 2021
+;; Last Updated: May 12, 2021
 
 ; Extruder Configurations
 ; M451 ; Switch to FFF mode - Possibly unnecessary. RT commented out for testing on 2/19/2021
@@ -12,7 +12,8 @@
 ; M567 P2 E1:1 ; Drive Tool 2 with a 1:1 ratio between the extruder and filament assist
 
 ; Spindle Configurations
-M563 P2 F2 S"Spindle 2" ; Create tool 2 with fan 5 and call it "Spindle 2"
-M453 T2 S0 C"io7.out+nil+io8.out" R12000 ; Assign tool 2 to spindle index 1, with PWM control on inverted pin "exp.heater4" and 12000 RPM achieved at full PWM
-M950 F2 C"out8" ; Spindle 2 Air Flow - Define Fan 5 to use pin duex.fan5
-M106 P2 S0 B0 L1 C"T2 Air" ; Spindle 2 air flow
+M950 F3 C"out5" ; Spindle 2 Air Flow - Define Fan 3 to use pin out5
+M106 P3 S0 B0 L1 C"T2 Air" ; Spindle 2 air flow
+M563 P2 F3 S"Spindle 2" ; Create tool 2 with fan 3 and call it "Spindle 2"
+M453 T2 S0 C"io7.out+nil+io8.out" R12000 ; Assign tool 2 to spindle index 0, with PWM control "io7" and direction on "io8" and 12000 RPM achieved at full PWM
+

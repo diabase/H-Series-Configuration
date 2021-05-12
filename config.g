@@ -1,13 +1,13 @@
 ; config.g
-; H4 Configuration File
+; H5A Configuration File
 ; Written by Diabase Engineering
-; Last Updated: February 22, 2021
+; Last Updated: May 12, 2021
 
 ; Logging
 ; M929 P"eventlog.txt" S3 ; start logging to file eventlog.txt (S0 = stop logging, S1 = log level WARN, S2 = log level INFO, S3 = log level DEBUG)
 
 ; Network
-M550 P"H5001" ; Set machine name
+M550 P"H5002" ; Set machine name
 M552 S1 ; Enable network
 
 ; General preferences
@@ -15,21 +15,26 @@ G90 ; Absolute Positioning
 M83 ; Relative Extrusions
 
 ; Drive orientation
-M569 P0 S0;     Set motor driver direction. Line 22: X (Linear)
-M569 P1 S1;     Set motor driver direction. Line 22: Y (Linear)
-M569 P2 S0 ;    Set motor driver direction. Line 22: Z (Linear)
-M569 P3 S0 ;    Set motor driver direction. Line 22: U (Turret)
-M569 P4 S0 ;    Set motor driver direction. Line 22: V (Turret Lock)
-M569 P5 S1 ;    Set motor driver direction. Line 22: W (Cleaing Station)
-M569 P1.0 S1 ;  Set motor driver direction. Line 22: E (Filament Assist)
-M569 P1.1 S1 ;  Set motor driver direction. Line 22: E (Filament Assist)
-M569 P1.2 S0 ;  Set motor driver direction. Line 22: C (Rotary)
-M569 P2.0 S1 ;  Set motor driver direction. Line 22: E (Extruder)
-M569 P2.1 S1 ;  Set motor driver direction. Line 22: E (Extruder)
-M569 P2.2 S1 ;  Set motor driver direction. Line 22: A (Rotary)
+M569 P0 S0;     Set motor driver direction. Line 37: X (Linear)
+M569 P1 S1;     Set motor driver direction. Line 37: Y (Linear)
+M569 P2 S0 ;    Set motor driver direction. Line 37: Z (Linear)
+M569 P3 S0 ;    Set motor driver direction. Line 37: U (Turret)
+M569 P4 S0 ;    Set motor driver direction. Line 37: V (Turret Lock)
+M569 P5 S1 ;    Set motor driver direction. Line 37: W (Cleaing Station)
+M569 P1.0 S1 ;  Set motor driver direction. Line 37: E (Extruder)
+M569 P1.1 S1 ;  Set motor driver direction. Line 37: E (Extruder)
+M569 P1.2 S0 ;  Set motor driver direction. Line 37: E (Extruder)
+M569 P2.0 S1 ;  Set motor driver direction. Line 37: E (Filament Assist)
+M569 P2.1 S1 ;  Set motor driver direction. Line 37: E (Filament Assist)
+M569 P2.2 S1 ;  Set motor driver direction. Line 37: E (Filament Assist)
+M569 P3.0 S1 ;  Set motor driver direction. Line 37: A (Rotary)
+M569 P3.1 S0 ;  Set motor driver direction. Line 37: A' (Rotary)
+M569 P3.2 S1 ;  Set motor driver direction. Line 37: C (Rotary)
+
+
 
 ; Drive settings
-M584 X0 Y1 Z2 U3 V4 W5 E1.0:1.1:1.2:2.0:2.1:2.2; Set driver mapping, E drive is multiplexed. Hide the extra axes
+M584 X0 Y1 Z2 U3 V4 W5 A3.0:3.1 C3.2 E1.0:1.1:1.2:2.0:2.1:2.2; Set driver mapping, E drive is multiplexed. Hide the extra axes
 M208 X-208 Y-90 Z-10 U-10 V-100 W0 A-365 C-1000 S1 ; Set axis minima
 M208 X208 Y90 Z410 U360 V200 W35 A365 C10000 S0 ; Set axis maxima
 M350 X16 Y16 Z16 U16 V16 W16 A16 C16 E16 I1 ; Configure microstepping with interpolation
@@ -47,7 +52,8 @@ M574 Z2 S1 P"!io4.in"
 M574 U1 S1 P"1.io1.in"
 M574 V2 S1 P"1.io2.in"
 ;M574 W1 S1 p"!2.io1.in"
-;M574 A1 S1 P"2.io3.in" MOVE TO 
+M574 A1 S1 P"3.io1.in"
+M574 C1 S1 P"3.io2.in"
 
 ; Probes
 M558 P8 C"2.io0.in" H2 F150 T12000; ; Set Z probe type for Probe 0 (Tool 10). It's a normally closed switch between the "zprobe.in" pin and ground using the internal pullup resistor, 2mm dive height, 150mm/min probing speed, and 12000 mm/min travel speed between probe points
