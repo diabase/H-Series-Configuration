@@ -4,6 +4,8 @@
 ; Written by Diabase Engineering
 ; Last Updated: April 5, 2021
 
+G60 S0  ;   save current tool information
+
 G91 ; Relative Positioning
 M574 Z2 S1 P"zstop" ; Configure Z endstop position at high end, it's a microswitch on pin "zstop"
 if move.axes[2].machinePosition + 40 <= move.axes[2].max ; If we have enough room for a normal tool change Z-hop, do it.
@@ -38,7 +40,7 @@ T3 P0
 T4 P0
 T5 P0
 T10 P0
-T-1 P0
+T{state.restorePoints[0].toolNumber}
 
 if heat.heaters[0] != null ; ...and we have defined a bed heater...
     if {heat.heaters[0].state != "fault" && heat.heaters[0].current != -273.15} ; ...and it's not in a fault state...
