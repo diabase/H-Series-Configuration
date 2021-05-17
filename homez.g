@@ -21,7 +21,7 @@ M913 Z100 ; Restore Z-axis motor current to 100%
 
 G90 ; Absolute Positioning
 
-G1 Z{move.axes[2].max + min(tools[1].offsets[2], tools[2].offsets[2], tools[3].offsets[2], tools[4].offsets[2], tools[5].offsets[2], tools[10].offsets[2])} F10000 ; Move to Z = ZMax + Longest Z Offset at 10000 mm/min
+G1 Z{move.axes[2].max -global.TClength} F10000; Move to Z = ZMax + Longest Z Offset at 10000 mm/min
 
 if {state.currentTool} != -1 ; If we have a tool selected...
     if #tools[{state.currentTool}].name == 5 ; If the probe is the current tool...

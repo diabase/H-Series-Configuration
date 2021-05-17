@@ -30,6 +30,6 @@ G90 ; Absolute Positioning
 if move.axes[2].machinePosition > move.axes[2].max ; If we're now above the new Z-axis limit...
     G1 H2 Z{move.axes[2].max} F200 ; ...move to it at 200 mm/min while ignoring endstops and limits.
 
-G1 Z{move.axes[2].max + min(tools[1].offsets[2], tools[2].offsets[2], tools[3].offsets[2], tools[4].offsets[2], tools[5].offsets[2], tools[10].offsets[2])} F10000 ; Move to Z = ZMax + Longest Z Offset at 10000 mm/min
+G1 Z{move.axes[2].max - global.TClength} F10000 ; Move to Z = ZMax + Longest Z Offset at 10000 mm/min
 
 M574 Z1 S2 ; Set Z endstop position to low end and configure as Z probe
