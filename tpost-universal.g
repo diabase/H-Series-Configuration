@@ -3,40 +3,25 @@
 ;ORIGINALLY FROM TPRE:
 
 M453 ; Switch to CNC mode
-
+G90
 ; Only perform machine moves if we need to change the turret position
-if move.axes[3].machinePosition != -tools[{state.nextTool}].offsets[3] ;SHOULD STILL WORK AS NEXTTOOL=CURRENTTOOL
-    ; echo "The turret is currently at "^move.axes[3].machinePosition^". Tool "^state.nextTool^" is located at "^-tools[{state.nextTool}].offsets[3]^"."
-    G91 ; Relative Positioning
-
-    if move.axes[2].machinePosition + 40 <= move.axes[2].max ; If we have enough room for a normal tool change Z-hop, do it. NEED TO CHECK MACHINE POSITIONS IN POST VS PRE
-        G1 Z40 F6000 ; Move Z +40mm at 6000 mm/min
-    elif move.axes[2].machinePosition + 40 > move.axes[2].max ; If we don't have enough room, move as high as we can.
-        M574 Z2 S1 P"!io4.in" ; Configure Z endstop position at high end, it's a microswitch on pin "zstop"
-        M400 ; Wait for all moves to finish
-        ;M913 Z50; Reduce Z-axis motor current to 50%
-        G1 Z40 F6000 H3 ; Attempt to move Z +40mm at 6000 mm/min, but halt if endstop triggered and set axis limit current position, overriding value set by previous M208 or G1 H3 special move
-        M400 ; Wait for all moves to finish
-        M913 Z100 ; Restore Z-axis motor current to 100%
-
-    M98 P"unlock_turret.g" ; Call unlock_turret.g
+if move.axes[3].userPosition != 0 ;
     G90 ; Absolute Positioning
-
-    ; echo "Rotating turret to "^{-tools[{state.nextTool}].offsets[3]}
-    G1 U{-tools[{state.nextTool}].offsets[3]} F16000 ; Rotate turret to new tool
+    G1 Z{min(move.axes[2].userPosition+40,move.axes[2].max+2*tools[state.currentTool].offsets[2])} ; move the lesser of either 40mm up, or to the maximum possible height
+    M98 P"unlock_turret.g" ; Call unlock_turret.g
+    G1 U0 F16000 ; Rotate turret to new tool
     G4 P20 ; Dwell for 20 ms
-
     M98 P"lock_turret.g" ; Call lock_turret.g
 
 ;ORIGINAL TPOST:
 
-if tools[{state.nextTool}].spindle>-1       ; If this tool is a spindle...
+if tools[{state.currentTool}].spindle>-1       ; If this tool is a spindle...
     M453 ; Switch to CNC mode
-    if heat.heaters[0] != null ; If we have defined a bed heater...
-        if heat.heaters[0].state != "fault" ; ...and it's not in a fault state...
+    if heat.bedHeaters[0] != null ; If we have defined a bed heater...
+        if heat.bedHeaters[0].state != "fault" ; ...and it's not in a fault state...
             M140 H0 S-273.15 ; ...turn it off to protect power supply.
 
-elif #tools[{state.nextTool}].extruders > 0 ; If this tool is an extruder
+elif #tools[{state.currentTool}].extruders > 0 ; If this tool is an extruder
     M451 ; Switch to FFF Mode
 
 else                                        ;defaults to probe

@@ -3,8 +3,8 @@ if tools[{state.currentTool}].spindle>-1
   G1 B0 F8000						    ;move to original position
   M400							        ;wait for movement to complete
   G1 D40							      ;open tool cradle clamp
-  M208 S0 Z{move.axes[2].max+16} ; add extra movement above limit switch, defined as 12mm above toolsetter stud location
-  T-1                       ;release tool in firmware to remove Z offset
+  M208 S0 Z{move.axes[2].max+(global.TCZ-move.axes[2].max+12)} ;; add extra movement above limit switch, defined as 12mm above toolsetter stud location
+  T-1 P0                       ;release tool in firmware to remove Z offset
   M98 P"unlock_turret.g"    ;unlock turret before movement
   M400
   G1 U344                   ;rotate to near gripper position (no tool selected)
@@ -21,6 +21,7 @@ if tools[{state.currentTool}].spindle>-1
   M400
   M106 P4 S0                ;close tool collet
   M501                      ;recover machine Zmax
+  set global.TCin=0         ;set tool loaded variable to 0
   
 else								        ;no spindle tool selected when this was called
 	M291 P"No valid tool selected" R"TC Error 1" T-1

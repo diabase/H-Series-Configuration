@@ -63,7 +63,7 @@ G31 K0 Z0; Set Z probe trigger height to 0mm
 M98 P"tcreate-universal.g"
 
 ; Miscellaneous
-M950 P1 C"out1"             ;   P1 - cleaning station 1
+;M950 P1 C"out1"             ;   P1 - cleaning station 1
 M950 P2 C"out7"				;   Z axis brake
 M950 F5 C"out3"				;LEDs
 M106 P5 C"TOP LIGHTS" L1
@@ -82,6 +82,7 @@ M575 P1 B115200 S1; Set up UART for pendant input
 global TCZ=0
 global TClength=0
 global TCload=-1
+global TCin=0
 
 
 ; Post Config.g Commands
