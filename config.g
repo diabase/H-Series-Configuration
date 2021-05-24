@@ -49,14 +49,13 @@ M574 Y1 S1 P"!io3.in"
 M574 Z2 S1 P"!io4.in"
 M574 U1 S1 P"1.io1.in"
 M574 V2 S1 P"1.io2.in"
-;M574 W1 S1 p"!2.io1.in"
 M574 B1 S1 P"!3.io1.in"
 M574 D1 S1 P"!3.io2.in"
 
 ; Probes
 M558 K0 P8 C"1.io0.in" H2 F150 T12000; ; Set Z probe type for Probe 0 (Tool 10). It's a normally closed switch between the "zprobe.in" pin and ground using the internal pullup resistor, 2mm dive height, 150mm/min probing speed, and 12000 mm/min travel speed between probe points
 M558 K1 P8 C"1.io5.in" F200 T12000 ; Set Z probe type for Probe 1 (touchoff plate). It's an unfiltered normally closed switch between the "1.io5.in" pin and ground, 200mm/min probing speed, and 12000 mm/min travel speed between probe points
-M558 K2 P8 C"1.io4.in" F200 T12000 ; Set Z probe type for Probe 1 (touchoff plate). It's an unfiltered normally closed switch between the "1.io5.in" pin and ground, 200mm/min probing speed, and 12000 mm/min travel speed between probe points
+M558 K2 P8 C"3.io0.in" F200 T12000 ; Set Z probe type for Probe 1 (touchoff plate). It's an unfiltered normally closed switch between the "3.io0.in" pin and ground, 200mm/min probing speed, and 12000 mm/min travel speed between probe points
 G31 K0 Z0; Set Z probe trigger height to 0mm
 
 ; Tools
@@ -79,10 +78,11 @@ M911 S19 R22 P"M98 P""estop.g"""  ; Run estop.g on power loss during a print
 M575 P1 B115200 S1; Set up UART for pendant input
 
 ;define variables
-global TCZ=0
+global TCZ=367
 global TClength=0
 global TCload=-1
 global TCin=0
+global TCactive=0
 
 
 ; Post Config.g Commands

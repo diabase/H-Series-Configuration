@@ -6,7 +6,8 @@ G90
 ;Only perform machine moves if we need to change the turret position
 if move.axes[3].userPosition != 0 ;
     G90 ; Absolute Positioning
-    G1 Z{min(move.axes[2].userPosition+40,move.axes[2].max-2*abs(tools[state.currentTool].offsets[2]))} ; move the lesser of either 40mm up, or to the maximum possible height
+    if global.TCactive=0
+        G1 Z{min(move.axes[2].userPosition+40,move.axes[2].max-2*abs(tools[state.currentTool].offsets[2]))} ; move the lesser of either 40mm up, or to the maximum possible height
     M98 P"unlock_turret.g" ; Call unlock_turret.g
     G1 U0 F16000 ; Rotate turret to new tool
     G4 P20 ; Dwell for 20 ms
@@ -25,6 +26,8 @@ if move.axes[3].userPosition != 0 ;
 ;else                                        ;defaults to probe
 ;    M453 ; Switch to CNC mode
 ;    M574 Z1 S2 ; Set Z endstop position to low end and configure as Z probe    
+
+set global.TCactive=0   ;   toolchange is no longer active
 
 ;MOVE DOWN TO PREVIOUS LOCATION + 2
 if state.previousTool != -1 ; If we changed to this tool from another tool...

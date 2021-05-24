@@ -25,10 +25,15 @@ M106 P2 C"Cooling" ; 12V cooling fans
 M106 P3 S0 B0 L1 C"T2 Air" ; Spindle 2 air flow
 M106 P4 S0 B0 L1 C"Spin Collet"
 
-M950 R0 C"io5.out+nil+!io6.out" L12000
+M950 R0 C"io5.out+!io8.out+!io6.out" L12000
 M563 P11 R0 S"TC11" ; Create toolchanger tool 11 
 M563 P12 R0 S"TC12" ; Create toolchanger tool 12 
 M563 P13 R0 S"TC13" ; Create toolchanger tool 13
+M563 P11 R0 S"TC14" ; Create toolchanger tool 14 
+M563 P12 R0 S"TC15" ; Create toolchanger tool 15 
+M563 P13 R0 S"TC16" ; Create toolchanger tool 16
+M563 P13 R0 S"TC17" ; Create toolchanger tool 17
+
 M453
 T11 P0;
 M3 P0 S0;				Set spindle to 0 on startup (temporary - need to add enable pin
