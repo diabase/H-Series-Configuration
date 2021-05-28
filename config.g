@@ -32,8 +32,8 @@ M569 P3.1 S1
 M569 P3.2 S1
 
 ; Drive settings
-M584 X0 Y1 Z2 U3 V4 W5 B3.0 D3.2 E1.0:1.1:1.2:2.0:2.1:2.2; Set driver mapping
-M208 X-208 Y-90 Z-10 U-10 V-100 W0 B-213.5 D0 S1 ; Set axis minima
+M584 X0 Y1 Z2 U3 W5 B3.0 D3.2 E1.0:1.1:1.2:2.0:2.1:2.2; Set driver mapping
+M208 X-208 Y-90 Z-10 U0 V-100 W0 B-213.5 D0 S1 ; Set axis minima
 M208 X208 Y90 U360 V200 W35 B212.5 D40 S0 ; Set axis maxima
 M350 X16 Y16 Z16 U16 V16 W16 B16 D16 E16 I1 ; Configure microstepping with interpolation
 M92 X320 Y320 Z320 U230.22 V1600 W800 B80 D1000 E96 ; Set steps per mm
@@ -73,7 +73,8 @@ M106 P6 C"FC LIGHTS" L1
 ; Pneumatic Turret Lock
 M950 P5 C"out5"             ; Define pin 5 on the main board as GPIO pin (Turret Lock).
 M950 P6 C"out6"             ; Define pin 6 on the main board as GPIO pin (Turret Unlock).
-global TLockType=0      ; Turret Lock Type - 0 = Stepper on V-Axis, 1 = Pneumatic
+global TLockType=1      ; Turret Lock Type - 0 = Stepper on V-Axis, 1 = Pneumatic
+global Uoffset=-4       ; Set distance between endstop and position 0
 
 ;M98 P"cleaningstation.g" ; Configure cleaning station
 ;M98 P"drycabinet.g" ; Configure filament drying cabinet

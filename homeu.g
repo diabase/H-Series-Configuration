@@ -27,20 +27,19 @@ elif move.axes[2].machinePosition + 40 > move.axes[2].max ; If we don't have eno
     M913 Z100 ; Restore Z-axis motor current to 100%
 
 M98 P"unlock_turret.g" ; Call unlock_turret.g
-M915 U R0 ; Configure stall detection for U axis to take no action when a stall is detected
-G4 P100 ; Dwell for 100 ms
+G1 H2 U30
 G1 H1 U-380 F6000 ; Attempt to move U -380mm at 6000 mm/min, but halt if endstop triggered and set axis position to axis limit as defined by previous M208 or G1 H3 special move
 G1 H2 U2 F6000 ; Move U +2mm at 6000 mm/min, ignoring endstop while moving
 G1 H1 U-20 F200 ; Attempt to move U -20mm at 200 mm/min, but halt if endstop triggered and set axis position to axis limit as defined by previous M208 or G1 H3 special move
-
+G92 U{-global.Uoffset}
 G90 ; Absolute Positioning
-G1 U0 F16000 ; Rotate Turret to 0 mm at 16000 mm/min
+G1 U0
+
 M98 P"lock_turret.g" ; Call lock_turret.g
-G92 U0 ; Set current U position as 0 mm
 
-M574 Z1 S2 ; Set Z endstop position to low end and configure as Z probe
+;M574 Z1 S2 ; Set Z endstop position to low end and configure as Z probe
 
-G1 R0 Z0 ; Return to Z-axis position stored in Slot 0
+G1 R0 Z0 F6000; Return to Z-axis position stored in Slot 0
 
 ; Put all the tools into standby mode and leave the Z probe tool active
 T1 P0

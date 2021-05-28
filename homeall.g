@@ -10,34 +10,26 @@ T-1 ; Deselect current tool (if any)
 G92 A0 C0 ; Set current A and C positions as 0 mm
 M98 P"homeb.g"  ; Home B axis
 M98 P"homez.g" ; Call homez.g
-;M98 P"homew.g" ; Call homew.g
 
 M400 ; Wait for all moves to finish
 
-M98 P"unlock_turret.g" ; Call unlock_turret.g
-M915 U R0 ; Configure stall detection for U axis to take no action when a stall is detected
-G4 P100 ; Dwell for 100 ms
-
-; Home X Y U
+; Home X Y W
 M400 ; Wait for all moves to finish
 M913 X50 Y50 ; Reduce X-, Y- motor currents to 50%
 G91
-G1 H1 X-420 Y-180 U-380 F6000 ; Attempt to move X -420mm, Y -180mm, and U -380mm at 6000 mm/min, but halt when endstop triggered and set axis position to axis limit as defined by previous M208 or G1 H3 special move
-G1 H2 X2 Y2 U2 W-40 F6000 ; Move X +2mm, Y +2mm, and U +2mm at 6000 mm/min, ignoring endstops and axis limits while moving
-G1 H1 X-4 Y-4 U-4 F1000 ; Attempt to move X -4mm, Y -4mm, and U -4mm at 1000 mm/min, but halt when endstop triggered and set axis position to axis limit as defined by previous M208 or G1 H3 special move
+G1 H1 X-420 Y-180 F6000 ; Attempt to move X -420mm, Y -180mm, and U -380mm at 6000 mm/min, but halt when endstop triggered and set axis position to axis limit as defined by previous M208 or G1 H3 special move
+G1 H2 X2 Y2 W-40 F6000 ; Move X +2mm, Y +2mm, and U +2mm at 6000 mm/min, ignoring endstops and axis limits while moving
+G1 H1 X-4 Y-4 F1000 ; Attempt to move X -4mm, Y -4mm, and U -4mm at 1000 mm/min, but halt when endstop triggered and set axis position to axis limit as defined by previous M208 or G1 H3 special move
 M400 ; Wait for all moves to finish
 M913 X100 Y100 Z100 ; Restore X-, Y-, and Z-axis motor currents to 100%
 G92 W0
-; Rotate turret to the Z probe location and lock it
-G90 ; Absolute Positioning
-G1 U0 F16000 ; Rotate Turret to 0 mm at 16000 mm/min
-M98 P"lock_turret.g" ; Call lock_turret.g
-G92 U0 ; Set current U position as 0 mm IS THIS NECESSARY?
 
-M574 Z1 S2 ; Set Z endstop position to low end and configure as Z probe
-
+; Home U
+G90
 G1 X0 Y0 F10000 ; Move to X=0, Y=0 at 10000 mm/min
 G1 Z{move.axes[2].max - global.TClength} F10000 ; Move to Z = ZMax + Longest Z Offset at 10000 mm/min
+M98 P"homeu.g"
+M574 Z1 S2 ; Set Z endstop position to low end and configure as Z probe
 
 G60 S1 ; Save current position in slot 1 (the slot used when pausing)
 
