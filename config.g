@@ -4,7 +4,7 @@
 ; Last Updated: May 15, 2021
 
 ; Logging
-; M929 P"eventlog.txt" S3 ; start logging to file eventlog.txt (S0 = stop logging, S1 = log level WARN, S2 = log level INFO, S3 = log level DEBUG)
+M929 P"eventlog.txt" S3 ; start logging to file eventlog.txt (S0 = stop logging, S1 = log level WARN, S2 = log level INFO, S3 = log level DEBUG)
 
 ; Network
 M550 P"H5001" ; Set machine name
@@ -49,26 +49,31 @@ M574 Y1 S1 P"!io3.in"
 M574 Z2 S1 P"!io4.in"
 M574 U1 S1 P"1.io1.in"
 M574 V2 S1 P"1.io2.in"
+;M574 W1 S1 p"!2.io1.in"
 M574 B1 S1 P"!3.io1.in"
 M574 D1 S1 P"!3.io2.in"
 
 ; Probes
 M558 K0 P8 C"1.io0.in" H2 F150 T12000; ; Set Z probe type for Probe 0 (Tool 10). It's a normally closed switch between the "zprobe.in" pin and ground using the internal pullup resistor, 2mm dive height, 150mm/min probing speed, and 12000 mm/min travel speed between probe points
 M558 K1 P8 C"1.io5.in" F200 T12000 ; Set Z probe type for Probe 1 (touchoff plate). It's an unfiltered normally closed switch between the "1.io5.in" pin and ground, 200mm/min probing speed, and 12000 mm/min travel speed between probe points
-M558 K2 P8 C"3.io0.in" F200 T12000 ; Set Z probe type for Probe 1 (touchoff plate). It's an unfiltered normally closed switch between the "3.io0.in" pin and ground, 200mm/min probing speed, and 12000 mm/min travel speed between probe points
+M558 K2 P8 C"3.io0.in" F800:200 T12000 ; Set Z probe type for Probe 1 (touchoff plate). It's an unfiltered normally closed switch between the "1.io5.in" pin and ground, 200mm/min probing speed, and 12000 mm/min travel speed between probe points
 G31 K0 Z0; Set Z probe trigger height to 0mm
 
 ; Tools
 M98 P"tcreate-universal.g"
 
 ; Miscellaneous
-;M950 P1 C"out1"             ;   P1 - cleaning station 1
-M950 P2 C"out7"				;   Z axis brake
-M950 F5 C"out3"				;LEDs
+;M950 P1 C"out1"            ;   P1 - cleaning station 1
+M950 P2 C"out7"             ;   Z axis brake
+M950 F5 C"out3"             ;LEDs
 M106 P5 C"TOP LIGHTS" L1
-M950 F6 C"3.out6"				;LEDs
+M950 F6 C"3.out6"           ;LEDs
 M106 P6 C"FC LIGHTS" L1
- 
+
+; Pneumatic Turret Lock
+M950 P5 C"out5"             ; Define pin 5 on the main board as GPIO pin (Turret Lock).
+M950 P6 C"out6"             ; Define pin 6 on the main board as GPIO pin (Turret Unlock).
+global TLockType=0      ; Turret Lock Type - 0 = Stepper on V-Axis, 1 = Pneumatic
 
 ;M98 P"cleaningstation.g" ; Configure cleaning station
 ;M98 P"drycabinet.g" ; Configure filament drying cabinet
@@ -78,11 +83,12 @@ M911 S19 R22 P"M98 P""estop.g"""  ; Run estop.g on power loss during a print
 M575 P1 B115200 S1; Set up UART for pendant input
 
 ;define variables
-global TCZ=367
+global TCZ=367.956
 global TClength=0
 global TCload=-1
 global TCin=0
 global TCactive=0
+
 
 
 ; Post Config.g Commands
