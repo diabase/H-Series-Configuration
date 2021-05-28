@@ -73,7 +73,7 @@ M106 P6 C"FC LIGHTS" L1
 ; Pneumatic Turret Lock
 M950 P5 C"out5"             ; Define pin 5 on the main board as GPIO pin (Turret Lock).
 M950 P6 C"out6"             ; Define pin 6 on the main board as GPIO pin (Turret Unlock).
-global TLockType=0      ; Turret Lock Type - 0 = Stepper on V-Axis, 1 = Pneumatic
+global TLockType=1      ; Turret Lock Type - 0 = Stepper on V-Axis, 1 = Pneumatic
 
 ;M98 P"cleaningstation.g" ; Configure cleaning station
 ;M98 P"drycabinet.g" ; Configure filament drying cabinet
