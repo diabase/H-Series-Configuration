@@ -4,7 +4,7 @@
 ;ensure axis endstops are used
 M574 X1 S1 P"!io2.in" ; Configure X endstop position at low end, it's an optical interrupt on pin "io2.in"
 M574 Y1 S1 P"!io3.in" ; Configure Y endstop position at low end, it's an optical interrupt on pin "io3.in"
-M574 Z1 S1 P"!io4.in" ; Configure Z endstop position at high end, it's an optical interrupt on pin "io4.in"
+M574 Z2 S1 P"!io4.in" ; Configure Z endstop position at high end, it's an optical interrupt on pin "io4.in"
 
 M84 E0:1:2:3 ; Idle all extruder motors
 T-1 ; Deselect current tool (if any)
