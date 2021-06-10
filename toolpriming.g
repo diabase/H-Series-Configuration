@@ -1,6 +1,2 @@
-M207 P3 S20 F3000 T198 R0
-M207 P4 S20 F3000 T198 R0
-M207 P5 S20 F3000 T198 R0
-set global.T1primeextra=0
-set global.T3primeextra=0
-set global.T4primeextra=0
+M207 P1 S15 F3600 T1002 R-7
+M207 P3 S15 F3600 T300 R-7

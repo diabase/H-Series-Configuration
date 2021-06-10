@@ -12,7 +12,7 @@ G91 ; Relative Positioning
 if move.axes[2].machinePosition + 40 <= move.axes[2].max ; If we have enough room for a normal tool change Z-hop, do it.
     G1 Z40 F6000 ; Move Z +40mm at 6000 mm/min
 elif move.axes[2].machinePosition + 40 > move.axes[2].max ; If we don't have enough room, move as high as we can.
-    M574 Z2 S1 P"!io4.in" ; Configure Z endstop position at high end, it's a microswitch on pin "zstop"
+    M574 Z2 S1 P"io4.in" ; Configure Z endstop position at high end, it's a microswitch on pin "zstop"
     M400 ; Wait for all moves to finish
     ;M913 Z50; Reduce Z-axis motor current to 50%
     G1 Z40 F6000 H3 ; Attempt to move Z +40mm at 6000 mm/min, but halt if endstop triggered and set axis limit current position, overriding value set by previous M208 or G1 H3 special move
@@ -82,7 +82,7 @@ M98 P"postclean.g" ; Call postclean.g
 
 G1 R0 Y0 F6000 ; Return to Y coordinate saved in restore point 0 at 6000 mm/min
 
-if state.restorePoints[0].coords[2] + 2 <= {move.axes[2].max + min(tools[1].offsets[2], tools[2].offsets[2], tools[3].offsets[2], tools[4].offsets[2], tools[5].offsets[2], tools[10].offsets[2])}
+if state.restorePoints[0].coords[2] + 2 <= {move.axes[2].max - global.maxoffset}
     G1 R0 Z2 F6000 ; Return to 2mm above Z coordinate stored in restore point 2 at 6000 mm/min
 else
-    G1 Z{move.axes[2].max + min(tools[1].offsets[2], tools[2].offsets[2], tools[3].offsets[2], tools[4].offsets[2], tools[5].offsets[2], tools[10].offsets[2])} F6000 ; Move to Z = ZMax + Longest Z Offset at 6000 mm/min
+    G1 Z{move.axes[2].max - global.maxoffset} F6000 ; Move to Z = ZMax + Longest Z Offset at 6000 mm/min

@@ -2,8 +2,8 @@
 ; Called to home only the Y axis
 
 ; Ensure appropriate axis endstops are used
-M574 Y1 S1 P"!io3.in" ; Configure Y endstop position at low end, it's an optical interrupt on pin "io3.in"
-M574 Z2 S1 P"!io4.in" ; Configure Z endstop position at high end, it's an optical interrupt on pin "io4.in"
+M574 Y1 S1 P"io3.in" ; Configure Y endstop position at low end, it's an optical interrupt on pin "io3.in"
+M574 Z2 S1 P"io4.in" ; Configure Z endstop position at high end, it's an optical interrupt on pin "io4.in"
 
 G91 ; Relative Positioning
 

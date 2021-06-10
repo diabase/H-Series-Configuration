@@ -19,3 +19,8 @@ M106 P1 H1:3:5 T50         ; thermostatic control of cooling fan on heaters 1, 3
 M106 P2 C"Cooling"             ; manual control of layer cooling fans
 
 M302 S150 ; Set minimum extrude temp
+
+;turn off spindles
+M453 ;
+M3 P0 S0;
+M3 P1 S0;

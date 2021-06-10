@@ -2,9 +2,9 @@
 ; Called to home all axes
 
 ;ensure axis endstops are used
-M574 X1 S1 P"!io2.in" ; Configure X endstop position at low end, it's an optical interrupt on pin "io2.in"
-M574 Y1 S1 P"!io3.in" ; Configure Y endstop position at low end, it's an optical interrupt on pin "io3.in"
-M574 Z2 S1 P"!io4.in" ; Configure Z endstop position at high end, it's an optical interrupt on pin "io4.in"
+M574 X1 S1 P"io2.in" ; Configure X endstop position at low end, it's an optical interrupt on pin "io2.in"
+M574 Y1 S1 P"io3.in" ; Configure Y endstop position at low end, it's an optical interrupt on pin "io3.in"
+M574 Z2 S1 P"io4.in" ; Configure Z endstop position at high end, it's an optical interrupt on pin "io4.in"
 
 M84 E0:1:2:3 ; Idle all extruder motors
 T-1 ; Deselect current tool (if any)
@@ -31,7 +31,7 @@ G4 P100 ; Dwell for 100 ms
 
 ; Home X Y Z U
 M400 ; Wait for all moves to finish
-M913 X50 Y50 ; Reduce X-, Y-, and Z-axis motor currents to 50%
+;M913 X50 Y50 ; Reduce X-, Y-, and Z-axis motor currents to 50% NOT ENOUGH CURRENT
 G1 H1 X-420 Y-180 Z320 U-380 F6000 ; Attempt to move X -420mm, Y -180mm, Z +220mm, and U -380mm at 6000 mm/min, but halt when endstop triggered and set axis position to axis limit as defined by previous M208 or G1 H3 special move
 G1 H2 X2 Y2 Z-2 U2 F6000 ; Move X +2mm, Y +2mm, Z -2mm, and U +2mm at 6000 mm/min, ignoring endstops and axis limits while moving
 G1 H1 X-4 Y-4 Z4 U-4 F1000 ; Attempt to move X -4mm, Y -4mm, Z +4mm, and U -4mm at 1000 mm/min, but halt when endstop triggered and set axis position to axis limit as defined by previous M208 or G1 H3 special move
@@ -48,7 +48,7 @@ G92 U0 ; Set current U position as 0 mm
 M574 Z1 S2 ; Set Z endstop position to low end and configure as Z probe
 
 G1 X0 Y0 F10000 ; Move to X=0, Y=0 at 10000 mm/min
-G1 Z{move.axes[2].max + min(tools[1].offsets[2], tools[2].offsets[2], tools[3].offsets[2], tools[4].offsets[2], tools[5].offsets[2], tools[10].offsets[2])} F10000 ; Move to Z = ZMax + Longest Z Offset at 10000 mm/min
+G1 Z{move.axes[2].max - global.maxoffset} F10000 ; Move to Z = ZMax + Longest Z Offset at 10000 mm/min
 
 G60 S1 ; Save current position in slot 1 (the slot used when pausing)
 

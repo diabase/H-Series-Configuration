@@ -15,7 +15,7 @@ G30 ; Probe the bed at the current XY position and set the Z coordinate to the p
 M558 F150 ; Set Z probe feed rate to 150 mm/min
 G30 ; Probe the bed at the current XY position and set the Z coordinate to the probe trigger height.
 
-M574 Z2 S1 P"!io4.in" ; Configure Z endstop position at high end, it's a microswitch on pin "zstop"
+M574 Z2 S1 P"io4.in" ; Configure Z endstop position at high end, it's a microswitch on pin "zstop"
 M208 Z380 S0 ; Set Z-axis maximum to 380 mm
 G91 ; Relative Positioning
 G1 Z370 F6000 H3 ; Attempt to move Z +370mm at 6000 mm/min, but halt when endstop triggered and set axis limit current position, overriding value set by M208 in config.g
