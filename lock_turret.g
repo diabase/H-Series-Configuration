@@ -15,6 +15,15 @@ if global.TLockType == 0
     G4 P20 ; Dwell for 20 ms
 
 if global.TLockType == 1
-    M42 P6 S0
     M42 P5 S1
-    
+    M42 P6 S0
+    G4 P100
+    var Upos={move.axes[4].machinePosition}
+    M18 U
+    G92 U{var.Upos}
+    G91
+    G1 U0.01
+    G1 U-0.01	;jitter U to activate motor
+    G90
+
+	

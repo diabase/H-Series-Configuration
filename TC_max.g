@@ -5,7 +5,6 @@
 
 set global.TClength=0
 while iterations<#tools
-	if tools[iterations] !=null
-		set global.TClength={max(-tools[iterations].offsets[2],global.TClength)}
-echo global.TClength
+    if tools[iterations] !=null
+        set global.TClength={max(-tools[iterations].offsets[2],global.TClength)}
   

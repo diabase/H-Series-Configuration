@@ -4,10 +4,10 @@
 ;ensure axis endstops are used
 M574 X1 S1 P"!io2.in" ; Configure X endstop position at low end, it's an optical interrupt on pin "io2.in"
 M574 Y1 S1 P"!io3.in" ; Configure Y endstop position at low end, it's an optical interrupt on pin "io3.in"
-M574 Z1 S1 P"!io4.in" ; Configure Z endstop position at high end, it's an optical interrupt on pin "io4.in"
+M574 Z2 S1 P"io4.in" ; Configure Z endstop position at high end, it's an optical interrupt on pin "io4.in"
 
 T-1 ; Deselect current tool (if any)
-G92 A0 C0 ; Set current A and C positions as 0 mm
+G92 V0 W0 A0 C0 ; Set current A and C positions as 0 mm
 M98 P"homeb.g"  ; Home B axis
 M98 P"homez.g" ; Call homez.g
 
@@ -24,10 +24,11 @@ M400 ; Wait for all moves to finish
 M913 X100 Y100 Z100 ; Restore X-, Y-, and Z-axis motor currents to 100%
 G92 W0
 
+
 ; Home U
 G90
 G1 X0 Y0 F10000 ; Move to X=0, Y=0 at 10000 mm/min
-G1 Z{move.axes[2].max - global.TClength} F10000 ; Move to Z = ZMax + Longest Z Offset at 10000 mm/min
+G1 Z{move.axes[2].max - global.TClength-50} F10000 ; Move to Z = ZMax + Longest Z Offset at 10000 mm/min
 M98 P"homeu.g"
 M574 Z1 S2 ; Set Z endstop position to low end and configure as Z probe
 

@@ -16,5 +16,12 @@ if global.TLockType == 0
     ;M915 U S10 H20 R2 ; Configure U-axis stall detection. Threshold 10, Minimum motor steps 20, and Pause Print if detected
 
 if global.TLockType == 1
+    G91
+    G1 U0.01 H2
+    G1 U-0.01 H2	;jitter U to activate motor
+    G90    
     M42 P5 S0
-    M42 P6 S1
+    G4 P50
+    M42 P6 S1	
+
+
