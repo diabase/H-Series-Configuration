@@ -86,12 +86,13 @@ M911 S19 R22 P"M98 P""estop.g"""  ; Run estop.g on power loss during a print
 M575 P1 B115200 S1; Set up UART for pendant input
 
 ;define variables
-global TCZ=367.956
+global TCZ=3.947	;distance from optical Zsw to TC toolsetter stud, with probe pointing up.
 global TClength=0
 global TCload=-1
 global TCin=0
 global TCactive=0
 global TCUpos=179.4
+global TCgetpos=8
 
 
 

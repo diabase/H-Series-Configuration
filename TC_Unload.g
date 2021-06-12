@@ -13,7 +13,7 @@ if global.TCload>-1
     G1 U{global.TCUpos}							      ;move to vertical position (into tool cradle)
     M106 P4 S1						    ;release tool collet
     M400
-    M208 S0 Z{move.axes[2].max+(global.TCZ+10)} ; add extra movement above limit switch, defined as 12mm above toolsetter stud location
+    M208 S0 Z{move.axes[2].max+(global.TCZ+global.TCgetpos)} ; add extra movement above limit switch, defined as 12mm above toolsetter stud location
     var Zoffset=tools[state.currentTool].offsets[2] ;save tool offset
     G10 P{state.currentTool} Z0  ;set tool offset to 0
     G1 Z{move.axes[2].max} 		;move to Zmax

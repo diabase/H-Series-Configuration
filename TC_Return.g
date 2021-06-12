@@ -1,8 +1,10 @@
+G54
 if tools[{state.currentTool}].spindle>-1
-    G90
+    M5
+	G90
     G1 B0 F8000						    ;move to original position
     M400							        ;wait for movement to complete
-    M208 S0 Z{move.axes[2].max+(global.TCZ+10)} ;; add extra movement above limit switch, defined as 12mm above toolsetter stud location
+    M208 S0 Z{move.axes[2].max+(global.TCZ+global.TCgetpos)} ;; add extra movement above limit switch, defined as 12mm above toolsetter stud location
     G10 P{state.currentTool} Z0   ; set Z offset to 0 for toolchange operation
     M98 P"unlock_turret.g"    ;unlock turret before movement
     M400

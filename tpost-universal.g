@@ -6,10 +6,15 @@ G90
 ;Only perform machine moves if we need to change the turret position
 if move.axes[3].userPosition != 0 ;
     G90 ; Absolute Positioning
-    if global.TCactive=0
-        G1 Z{min(move.axes[2].userPosition+40,move.axes[2].max-2*abs(tools[state.currentTool].offsets[2]))} ; move the lesser of either 40mm up, or to the maximum possible height
-    M98 P"unlock_turret.g" ; Call unlock_turret.g
-    G1 U0 F16000 ; Rotate turret to new tool
+    if move.axes[2].machinePosition + 10 <= move.axes[2].max ; If we have enough room for a normal tool change Z-hop, do it.
+        G91
+		G1 Z10 F6000 ; Move Z +40mm at 6000 mm/min
+		G90
+    elif move.axes[2].machinePosition + 10 > move.axes[2].max ; If we don't have enough room...
+        ;G90 ; Absolute Positioning
+        ;G1 Z{move.axes[2].max} ; Move as high as we can.    M98 P"unlock_turret.g" ; Call unlock_turret.g
+    M98 P"unlock_turret.g" ; Call lock_turret.g
+	G1 U0 F16000 ; Rotate turret to new tool
     G4 P20 ; Dwell for 20 ms
     M98 P"lock_turret.g" ; Call lock_turret.g
 

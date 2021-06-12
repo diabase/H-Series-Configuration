@@ -8,7 +8,7 @@ M574 Z2 S1 P"io4.in" ; Configure Z endstop position at high end, it's a microswi
 
 G60 S0 ; Save current position to Slot 0
 ;M84 E0:1:2:3 ; Idle all extruder motors
-T-1 ; Deselect current tool (if any)
+T-1 P0; Deselect current tool (if any)
 
 G91 ; Relative Positioning
 G1 H1 Z.5 F6000 ; Move Z +0.5mm at 6000 mm/min

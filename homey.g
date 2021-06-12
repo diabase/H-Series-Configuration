@@ -3,13 +3,13 @@
 
 ; Ensure appropriate axis endstops are used
 M574 Y1 S1 P"!io3.in" ; Configure Y endstop position at low end, it's an optical interrupt on pin "io3.in"
-M574 Z1 S1 P"!io4.in" ; Configure Z endstop position at high end, it's an optical interrupt on pin "io4.in"
+M574 Z1 S1 P"io4.in" ; Configure Z endstop position at high end, it's an optical interrupt on pin "io4.in"
 
 G91 ; Relative Positioning
 
 G60 S0 ; Save current position to Slot 0
 M400 ; Wait for all moves to finish
-M913 Y50 Z50 ; Reduce Y-, and Z-axis motor currents to 50%
+
 
 G1 H1 Z2 F200 ; Attempt to move Z +2mm at 200 mm/min, but halt if endstop triggered and set axis position to axis limit as defined by previous M208 or G1 H3 special move
 G1 H1 Y-180 F6000 ; Attempt to move Y -180mm at 6000 mm/min, but halt if endstop triggered and set axis position to axis limit as defined by previous M208 or G1 H3 special move

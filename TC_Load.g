@@ -1,7 +1,7 @@
 ; TC_load.g
 ; Written by Diabase Engineering
 ; Last Updated: May, 2021
-
+G54
 if global.TCload>0
     M291 P"Tool loading will begin" R"Tool Load Confirmation" S3 ;blocking confirmation window
     T{global.TCload} P0       ;activate desired tool, do not move turret
@@ -17,7 +17,7 @@ if global.TCload>0
     M400
     G1 B0 F8000						    ;move to original position
     M400							        ;wait for movement to complete
-    M208 S0 Z{move.axes[2].max+(global.TCZ+10)} ;; add extra movement above limit switch, defined as 12mm above toolsetter stud location
+    M208 S0 Z{move.axes[2].max+(global.TCZ+global.TCgetpos)} ;; add extra movement above limit switch, defined as 12mm above toolsetter stud location
     G10 P{state.currentTool} Z0   ; set Z offset to 0 for toolchange operation
     G1 U170                   ;rotate to near gripper position
     G1 D40							      ;open tool cradle clamp
