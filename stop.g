@@ -2,6 +2,8 @@
 ; If the axes are homed and if a print is being cancelled (M25), cancel.g is called when M0 is sent. 
 ; If M0 is sent at any other time, stop.g is called.
 
+G60 S0  ;   save current tool information
+
 G91 ; Relative Positioning
 M574 Z2 S1 P"!io4.in" ; Configure Z endstop position at high end, it's a microswitch on pin "zstop"
 if move.axes[2].machinePosition + 40 <= move.axes[2].max ; If we have enough room for a normal tool change Z-hop, do it.
@@ -36,7 +38,7 @@ T3 P0
 T4 P0
 T5 P0
 T10 P0
-T-1 P0
+T{state.restorePoints[0].toolNumber} P0
 
 if heat.heaters[0] != null ; If we have defined a bed heater...
     if heat.heaters[0].state != "fault" ; ...and it's not in a fault state...

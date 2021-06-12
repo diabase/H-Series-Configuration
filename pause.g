@@ -3,6 +3,8 @@
 ; Written by Diabase Engineering
 ; Last Updated: February 24, 2021
 
+G60 S0  ;   save current tool information
+
 if state.machineMode="FFF"
     M83 ; Set extruder to relative mode
     G1 E-10 F6000 ; Retract 10mm of filament at 6000 mm/min
@@ -37,7 +39,7 @@ T3 P0
 T4 P0
 T5 P0
 T10 P0
-T-1 P0
+T{state.restorePoints[0].toolNumber} P0
 
 if heat.heaters[0] != null ; ...and we have defined a bed heater...
     if {heat.heaters[0].state != "fault" && heat.heaters[0].current != -273.15} ; ...and it's not in a fault state...
