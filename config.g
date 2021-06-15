@@ -57,7 +57,7 @@ M574 D1 S1 P"!3.io2.in"
 
 ; Probes
 M558 K0 P8 C"3.io4.in" H2 F150 T12000; ; Set Z probe type for Probe 0 (Tool 10). It's a normally closed switch between the "zprobe.in" pin and ground using the internal pullup resistor, 2mm dive height, 150mm/min probing speed, and 12000 mm/min travel speed between probe points
-;M558 K1 P8 C"1.io5.in" F200 T12000 ; Set Z probe type for Probe 1 (touchoff plate). It's an unfiltered normally closed switch between the "1.io5.in" pin and ground, 200mm/min probing speed, and 12000 mm/min travel speed between probe points
+M558 K1 P8 C"io1.in" F200 T12000 ; Set Z probe type for Probe 1 (touchoff plate). It's an unfiltered normally closed switch between the "1.io5.in" pin and ground, 200mm/min probing speed, and 12000 mm/min travel speed between probe points
 M558 K2 P8 C"3.io0.in" F800:200 T12000 ; Set Z probe type for Probe 1 (touchoff plate). It's an unfiltered normally closed switch between the "1.io5.in" pin and ground, 200mm/min probing speed, and 12000 mm/min travel speed between probe points
 G31 K0 Z0; Set Z probe trigger height to 0mm
 
