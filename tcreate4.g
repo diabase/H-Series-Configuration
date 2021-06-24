@@ -14,6 +14,7 @@
 ; Spindle Configurations
 M950 F4 C"out6" ; Spindle 4 Air Flow - Define Fan 4 to use pin out6
 M106 P4 S0 B0 L1 C"T4 Air" ; Spindle 4 air flow
-M563 P4 F4 S"Spindle 4" ; Create tool 4 with fan 7 and call it "Spindle 4"
-M453 T4 S1 C"io5.out+nil+io6.out" F100 R12000 ; Assign tool 4 to spindle index 1, with PWM control on pin "io5" direction on "io6" and 12000 RPM achieved at full PWM
+M950 R1 C"io7.out+nil+io8.out" L12000 ; Define Spindle 0, with PWM control "io7" and direction on "io8" and 12000 RPM achieved at full PWM
+M563 P4 F4 R1 S"Spindle 4" ; Create tool 2 with fan 3 and call it "Spindle 2"
+
 

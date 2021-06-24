@@ -8,7 +8,7 @@ G91 ; Relative Positioning
 G1 H1 Z.5 F6000 ; Move Z +0.5mm at 6000 mm/min
 M42 P2 S1       ;unlatch Z brake
 G4 P300         ;wait 300 ms
-M42 P2 S0.2     ;set Z brake to holding current
+;M42 P2 S0.2     ;set Z brake to holding current
 
 
 M400 ; Wait for all moves to finish

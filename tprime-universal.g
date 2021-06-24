@@ -34,12 +34,14 @@ M116 P{state.currentTool} S5 ; Wait until tool reaches +/-5C of its set value
 
 while iterations < #move.axes ; Loop over all axes
     if {(move.axes[iterations].letter ^ "") == "W"} ; A W-axis is defined, so we have a motor-driven cleaning station.
-        G1 W31 F15000 ; Move W to 31mm at 15000 mm/min to extend cleaning station to priming location (Wprimesurface)
+        ;G1 W31 F15000 ; Move W to 31mm at 15000 mm/min to extend cleaning station to priming location (Wprimesurface)
+		G1 W23.5 F15000 ; Changed to 23.5mm for H5 crash detect extruder (SFH)
         M83 ; Set Extruder to Relative Mode
         G1 E{tools[{state.currentTool}].retraction.length} F{tools[{state.currentTool}].retraction.speed*60} ; Anti-Ooze Makeup Extrusion - Extrude Filament at After Prime Retraction Amount and Feedrate
         G1 E{tools[{state.currentTool}].retraction.length + tools[{state.currentTool}].retraction.extraRestart} F{tools[{state.currentTool}].retraction.unretractSpeed*60} ; Extrude Filament at Prime Extrusion Amount and Feedrate
         M400 ; Wait for current moves to finish
-        G1 W26 F6000 ; Move W to 26mm at 6000 mm/min to retract cleaning station to the clearance location for a turret rotation (Wclearance)
+        ;G1 W26 F6000 ; Move W to 26mm at 6000 mm/min to retract cleaning station to the clearance location for a turret rotation (Wclearance)
+		G1 W18.5 F6000 ; Changed to 21.5mm for H5 crash detect extruder (SFH)
         G1 E{-{tools[{state.currentTool}].retraction.length}} F{tools[{state.currentTool}].retraction.speed*60} ; Anti-Ooze Retraction - Retract Filament at After Prime Retraction Amount and Feedrate
         G4 P20 ; Dwell for 20 ms
         break
@@ -85,4 +87,4 @@ G1 R0 Y0 F6000 ; Return to Y coordinate saved in restore point 0 at 6000 mm/min
 if state.restorePoints[0].coords[2] + 2 <= {move.axes[2].max - global.maxoffset}
     G1 R0 Z2 F6000 ; Return to 2mm above Z coordinate stored in restore point 2 at 6000 mm/min
 else
-    G1 Z{move.axes[2].max - global.maxoffset} F6000 ; Move to Z = ZMax + Longest Z Offset at 6000 mm/min
+    G1 Z{move.axes[2].max + global.maxoffset} F6000 ; Move to Z = ZMax + Longest Z Offset at 6000 mm/min
