@@ -18,6 +18,11 @@ M950 F2 C"1.out8"         ; Layer cooling fans - jumpered to 12V
 M106 P1 H3 T50         ; thermostatic control of cooling fan on heaters 1, 3, and 5. Turns on at 50C
 M106 P2 C"Cooling"             ; manual control of layer cooling fans
 
+;crash detection
+M950 J1 C"1.io4.in" ;define pin for crash detection
+M581 T2 P1 S1 R0    ;triggers any time (printing or jogging), runs "trigger2.g"
+M669 S100 T0.1      ;break up movements into smaller bits - this is necessary for the machine to be able to pause if a crash is detected
+
 M302 S150 ; Set minimum extrude temp
 
 ;turn off spindles

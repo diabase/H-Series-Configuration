@@ -9,14 +9,12 @@ G91 ; Relative Positioning
 
 G60 S0 ; Save current position to Slot 0
 M400 ; Wait for all moves to finish
-M913 Y50 Z50 ; Reduce Y-, and Z-axis motor currents to 50%
 
 G1 H1 Z2 F200 ; Attempt to move Z +2mm at 200 mm/min, but halt if endstop triggered and set axis position to axis limit as defined by previous M208 or G1 H3 special move
 G1 H1 Y-180 F6000 ; Attempt to move Y -180mm at 6000 mm/min, but halt if endstop triggered and set axis position to axis limit as defined by previous M208 or G1 H3 special move
 G1 H2 Y2 F6000 ; Move Y 2mm at 6000 mm/min, ignoring endstop while moving
 G1 H1 Y-20 F200 ; Attempt to move Y -20mm at 200 mm/min, but halt if endstop triggered and set axis position to axis limit as defined by previous M208 or G1 H3 special move
 M400 ; Wait for all moves to finish
-M913 Y100 Z100 ; Restore Y-, and Z-axis motor currents to 100%
 
 G90 ; Absolute Positioning
 G1 Y0 F10000 ; Move to Y=0 at 10000 mm/min

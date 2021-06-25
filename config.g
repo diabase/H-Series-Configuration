@@ -30,12 +30,12 @@ M569 P1.2 S0 ;  Set motor driver direction. Line 37: E (Extruder)
 M569 P3.0 S0 ;  Set motor driver direction. Line 37: E (Filament Assist)
 M569 P3.1 S0 ;  Set motor driver direction. Line 37: E (Filament Assist)
 M569 P3.2 S0 ;  Set motor driver direction. Line 37: E (Filament Assist)
-M569 P3.0 S1 ;  Set motor driver direction. Line 37: A (Rotary)
-M569 P3.1 S0 ;  Set motor driver direction. Line 37: A' (Rotary)
-M569 P3.2 S1 ;  Set motor driver direction. Line 37: C (Rotary)
+M569 P2.0 S1 ;  Set motor driver direction. Line 37: A (Rotary)
+M569 P2.1 S0 ;  Set motor driver direction. Line 37: A' (Rotary)
+M569 P2.2 S1 ;  Set motor driver direction. Line 37: C (Rotary)
 
 ; Drive settings
-M584 X0 Y1 Z2 U3 V4 W5 A3.0:3.1 C3.2 E1.0:1.1:1.2:3.0:3.1:3.2; Set driver mapping, E drive is multiplexed. Hide the extra axes
+M584 X0 Y1 Z2 U3 V4 W5 A2.0:2.1 C2.2 E1.0:1.1:1.2:3.0:3.1:3.2; Set driver mapping, E drive is multiplexed. Hide the extra axes
 M208 X-208 Y-90 Z-10 U{global.Umin} V-100 W0 A-365 C-1000 S1 ; Set axis minima
 M208 X208 Y90 Z410 U360 V200 W35 A365 C10000 S0 ; Set axis maxima
 M350 X16 Y16 Z16 U16 V16 W400 A16 C16 E16 I1 ; Configure microstepping with interpolation - high lead cleaning station motor
