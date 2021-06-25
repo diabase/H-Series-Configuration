@@ -8,7 +8,7 @@ while iterations < #move.axes ; Loop over all axes
         G90 ; Set to Absolute Positioning
         M400 ; Wait for current moves to finish
         G1 W22 F15000 ; Move W to 26mm at 15000 mm/min to extend the cleaning station pliers to surround the nozzle (Wclean)
-		G4 P125 ; Dwell for 125 ms
+        G4 P125 ; Dwell for 125 ms
         M400 ; Wait for current moves to finish
         M42 P1 S1 ; Close pliers
         G4 P125 ; Dwell for 125 ms
