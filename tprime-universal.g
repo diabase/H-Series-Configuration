@@ -57,9 +57,9 @@ while iterations < #move.axes ; Loop over all axes
         G1 E{-{tools[{state.currentTool}].retraction.length}} F{tools[{state.currentTool}].retraction.speed*60} ; Anti-Ooze Retraction - Retract Filament at After Prime Retraction Amount and Feedrate
         G4 P20 ; Dwell for 20 ms
 
-if tools[{state.currentTool}].offsets[3] - 90.00 <= 0
+if tools[{state.currentTool}].offsets[3] + 90.00 <= 0
     G1 U-90.00 F9900; Rotate turret (U) to point extruder at pliers (270.00mm == (-90.00mm mod 360)) at 9900 mm/min
-elif tools[{state.currentTool}].offsets[3] - 90.00 > 0
+elif tools[{state.currentTool}].offsets[3] + 90.00 > 0
     G1 U270.00 F9900; Rotate turret (U) to point extruder at pliers (270.00mm == (-90.00mm mod 360)) at 9900 mm/min
 
 G4 P20 ; Dwell for 20 ms
