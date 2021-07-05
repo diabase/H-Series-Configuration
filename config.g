@@ -73,8 +73,8 @@ M950 F4 C"3.out6"			;12V LEDs
 M106 P4 C"FC LIGHTS" L1    ;LEDs defined as Fan with toggle (no dimming control)
 
 M98 P"cleaningstation.g" ; Configure cleaning station
-;M98 P"drycabinet.g" ; Configure filament drying cabinet
-;M98 P"heatedbed.g" ; Configure heated bed
+M98 P"drycabinet.g" ; Configure filament drying cabinet
+M98 P"heatedbed.g" ; Configure heated bed
 M98 P"toolpriming.g" ; Configure tool priming parameters
 M911 S19 R22 P"M98 P""estop.g"""  ; Run estop.g on power loss during a print
 M575 P1 B115200 S1; Set up UART for pendant input
@@ -86,4 +86,3 @@ global diameterProbeHole = 0    ;diameter to probe cavity
 ; Post Config.g Commands
 M501 ; Set active parameters to those stored in config-override.g
 M98 P"Maxoffset.g"     ;set maxoffset to maximum tool length
-M307 H6 I1 ; A bug exists in RRF 3.2.2 and before that prevents M500 from saving the inversion parameter for heater models. RT added this line as a temporary workaround on 2/18/2021
