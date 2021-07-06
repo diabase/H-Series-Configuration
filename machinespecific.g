@@ -5,7 +5,7 @@
 ; Last Updated: July 1, 2021
 
 
-global NetworkName = "H5000" ; Machine name for web interface and local network discovery.
+global NetworkName = "H5006" ; Machine name for web interface and local network discovery.
 global UMin = -10 ; Physical u-axis position when USwitchPin triggers.
 global CSType = "Motor" ; Cleaning station type. Options are "None", "Solenoid", or "Motor"
 global WCleanPosition = 22 ; W-axis position for forming filament button during priming cycle.
@@ -57,8 +57,6 @@ global FA2Direction = 0
 global FA3Direction = 0
 global FA4Direction = 0
 global FA5Direction = 0
-global ProbePin = "1.io0.in"
-global TOPlatePin = "1.io5.in"
 global CSPinchPin = "out1"
 global ZBrakePin = "out2"
 global BELedPin = "out3"
