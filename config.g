@@ -66,6 +66,9 @@ M98 P"tcreate-universal.g"
 
 ; Miscellaneous
 M950 P2 C"out2"             ; Z axis brake
+M950 J2 C"^io1.in"          ; Z Brake Switch Definition
+M581 P2 T3 S1 R0            ; Z Brake Switch Behavior
+M581 P2 T4 S0 R0            ; Z Brake Switch Behavior
 M950 F3 C"out3"             ; LEDs
 M106 P3 C"TOP LIGHTS" L1    ; LEDs defined as Fan with toggle (no dimming control)
 M950 F4 C"3.out6"           ; 12V LEDs
