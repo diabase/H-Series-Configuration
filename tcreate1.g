@@ -3,6 +3,8 @@
 ; Written by Diabase Engineering
 ; Last Updated: May 12, 2021
 
+M118 S"tcreate1.g Start" L2
+
 ; Extruder Configurations
 M451 ; Switch to FFF mode - Possibly unnecessary. RT commented out for testing on 2/19/2021
 M308 S1 P"1.temp0" Y"thermistor" T100000 B3950 C0 A"Nozzle 1" ; Create Sensor 1 assigned to temp0 of extruder board, thermistor type with resistance of 100Kohms at 25C, reciprocal of Steinhart-Hart B coefficient 3950, Steinhart-Hart C coefficient 0, and call it "Nozzle 1"
@@ -16,3 +18,5 @@ M567 P1 E1:1 ; Drive Tool 1 with a 1:1 ratio between the extruder and filament a
 ;M453 T1 S0 C"!exp.heater3" R12000 ; Assign tool 1 to spindle index 0, with PWM control on inverted pin "exp.heater3" and 12000 RPM achieved at full PWM
 ;M950 F4 C"duex.fan4" ; Spindle 1 Air Flow - Define Fan 4 to use pin duex.fan4
 ;M106 P4 S0 B0 L1 C"Spindle 1" ; Spindle 1 air flow
+
+M118 S"tcreate1.g End" L2

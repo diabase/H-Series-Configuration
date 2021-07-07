@@ -3,6 +3,8 @@
 ; Written by Diabase Engineering
 ; Last Updated: May 12, 2021
 
+M118 S"tcreate5.g Start" L2
+
 ; Extruder Configurations
 M451 ; Switch to FFF mode 
 M308 S5 P"1.temp2" Y"thermistor" T100000 B3950 C0 A"Nozzle 5" ; Create Sensor 5 assigned to "temp2" pin of extruder board, thermistor type with resistance of 100Kohms at 25C, reciprocal of Steinhart-Hart B coefficient 3950, Steinhart-Hart C coefficient 0, and call it "Nozzle 5"
@@ -13,3 +15,5 @@ M567 P5 E1:1 ; Drive Tool 5 with a 1:1 ratio between the extruder and filament a
 
 ; Spindle Configurations
 ; Tool 5 cannot be a spindle.
+
+M118 S"tcreate5.g End" L2
