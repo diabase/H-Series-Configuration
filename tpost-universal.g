@@ -19,7 +19,7 @@ elif #tools[{state.nextTool}].name == 9 ; If this tool is a spindle...
 if state.previousTool != -1 ; If we changed to this tool from another tool...
     G90 ; Set to Absolute Positioning
     G1 R2 X0 Y0 F6000 ; Return to X and Y coordinates stored in restore point 2 at a speed of 6000 mm/min
-    if state.restorePoints[2].coords[2] + 2 <= {move.axes[2].max - global.maxoffset}
+    if state.restorePoints[2].coords[2] + 2 <= {move.axes[2].max - global.MaxOffset}
         G1 R2 Z2 ; Return to 2mm above Z coordinate stored in restore point 2
     else
-        G1 Z{move.axes[2].max - global.maxoffset} F10000 ; Move to Z = ZMax + Longest Z Offset at 10000 mm/min
+        G1 Z{move.axes[2].max - global.MaxOffset} F10000 ; Move to Z = ZMax + Longest Z Offset at 10000 mm/min
