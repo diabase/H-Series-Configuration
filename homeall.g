@@ -1,22 +1,28 @@
 ; homeall.g
 ; Called to home all axes
+; Written by Diabase Engineering
+; Last Updated: July 6, 2021
 
-;ensure axis endstops are used
-M574 X1 S1 P"io2.in" ; Configure X endstop position at low end, it's an optical interrupt on pin "io2.in"
-M574 Y1 S1 P"io3.in" ; Configure Y endstop position at low end, it's an optical interrupt on pin "io3.in"
-M574 Z2 S1 P"io4.in" ; Configure Z endstop position at high end, it's an optical interrupt on pin "io4.in"
+M118 S"Begin homeall.g" L2
 
-M84 E0:1:2:3 ; Idle all extruder motors
+; Ensure axis endstops are used
+M574 X1 S1 P{global.XSwitchPin} ; Configure X endstop position at low end, it's an optical interrupt on pin defined in machinespecific.g
+M574 Y1 S1 P{global.YSwitchPin} ; Configure Y endstop position at low end, it's an optical interrupt on pin defined in machinespecific.g
+M574 Z2 S1 P{global.ZSwitchPin} ; Configure Z endstop position at high end, it's an optical interrupt on pin defined in machinespecific.g
+
+if {global.MachineModel} == "H4"
+    M84 E0:1:2:3 ; Idle all extruder motors
+
 T-1 ; Deselect current tool (if any)
 G92 A0 C0 ; Set current A and C positions as 0 mm
 
-if {(move.axes[5].letter ^ "") == "W"} ; Motor-driven cleaning station
-M98 p"homew.g" ; Call homew.g
+if {global.CSType} == "Motor"
+    M98 p"homew.g" ; Call homew.g
 
 G91 ; Relative Positioning
-G1 H1 Z.5 F6000 ; Move Z +0.5mm at 6000 mm/min
-M42 P2 S1       ;unlatch Z brake
-G4 P300         ;wait 300 ms
+G1 H1 Z0.5 F6000 ; Move Z +0.5mm at 6000 mm/min
+M42 P2 S0       ; Release Z brake
+G4 P300         ; Wait 300 ms
 
 M400 ; Wait for all moves to finish
 G1 H1 Z40 F6000 ; Move Z +40mm at 6000 mm/min
@@ -44,7 +50,7 @@ G92 U0 ; Set current U position as 0 mm
 M574 Z1 S2 ; Set Z endstop position to low end and configure as Z probe
 
 G1 X0 Y0 F10000 ; Move to X=0, Y=0 at 10000 mm/min
-G1 Z{move.axes[2].max - global.maxoffset} F10000 ; Move to Z = ZMax + Longest Z Offset at 10000 mm/min
+G1 Z{move.axes[2].max - global.MaxOffset} F10000 ; Move to Z = ZMax + Longest Z Offset at 10000 mm/min
 
 G60 S1 ; Save current position in slot 1 (the slot used when pausing)
 
@@ -55,3 +61,5 @@ T3 P0
 T4 P0
 T5 P0
 T10 P0
+
+M118 S"End homeall.g" L2
