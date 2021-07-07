@@ -84,7 +84,7 @@ M98 P"postclean.g" ; Call postclean.g
 
 G1 R0 Y0 F6000 ; Return to Y coordinate saved in restore point 0 at 6000 mm/min
 
-if state.restorePoints[0].coords[2] + 2 <= {move.axes[2].max - global.maxoffset}
+if state.restorePoints[0].coords[2] + 2 <= {move.axes[2].max - global.MaxOffset}
     G1 R0 Z2 F6000 ; Return to 2mm above Z coordinate stored in restore point 2 at 6000 mm/min
 else
-    G1 Z{move.axes[2].max + global.maxoffset} F6000 ; Move to Z = ZMax + Longest Z Offset at 6000 mm/min
+    G1 Z{move.axes[2].max + global.MaxOffset} F6000 ; Move to Z = ZMax + Longest Z Offset at 6000 mm/min
