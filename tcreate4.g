@@ -12,9 +12,9 @@
 ;M567 P4 E1:1 ; Drive Tool 4 with a 1:1 ratio between the extruder and filament assist
 
 ; Spindle Configurations
-M950 F4 C"out6" ; Spindle 4 Air Flow - Define Fan 4 to use pin out6
-M106 P4 S0 B0 L1 C"T4 Air" ; Spindle 4 air flow
-M950 R1 C"io7.out+nil+io8.out" L12000 ; Define Spindle 0, with PWM control "io7" and direction on "io8" and 12000 RPM achieved at full PWM
-M563 P4 F4 R1 S"Spindle 4" ; Create tool 2 with fan 3 and call it "Spindle 2"
+M950 F6 C"out6" ; Spindle 4 Air Flow - Define Fan 4 to use pin out6
+M106 P6 S0 B0 L1 C"T4 Air" ; Spindle 4 air flow
+M950 R1 C"io7.out+nil+!io8.out" L12000 ; Define Spindle 0, with PWM control "io7" and direction on "io8" and 12000 RPM achieved at full PWM
+M563 P4 F6 R1 S"Spindle 4" ; Create tool 2 with fan 3 and call it "Spindle 2"
 
 

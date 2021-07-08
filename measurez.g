@@ -4,8 +4,8 @@
 M291 P"Turret will now move. Is Probe above the surface to measure?" R"Crash Check" S3 ; Warn the user about the imminent probing move.
 
 T10 ; Select Tool 10 (probe)
-M18 Z ; Idle z axis to unhome the Z axis
 M208 Z-10:400 ; Set z axis minimum and maximum travel
+G92 Z400
 
 ; Go to first bed probe point and coarse probe Z
 M558 F1200 ; Set Z probe feed rate to 1200 mm/min.

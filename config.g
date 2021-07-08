@@ -52,25 +52,23 @@ M574 Y1 S1 P"io3.in"
 M574 Z2 S1 P"io4.in"
 M574 U1 S1 P"1.io1.in"
 M574 V2 S1 P"1.io2.in"
-;M574 W1 S1 p"!2.io1.in"
-M574 A1 S1 P"3.io1.in"
-M574 C1 S1 P"3.io2.in"
+M574 A1 S1 P"2.io1.in"
+M574 C1 S1 P"2.io2.in"
 
 ; Probes
 M558 P8 C"1.io0.in" H2 F150 T12000; ; Set Z probe type for Probe 0 (Tool 10). It's a normally closed switch between the "zprobe.in" pin and ground using the internal pullup resistor, 2mm dive height, 150mm/min probing speed, and 12000 mm/min travel speed between probe points
-M558 K1 P8 C"1.io5.in" I0 F200 T12000 ; Set Z probe type for Probe 1 (touchoff plate). It's an unfiltered normally closed switch between the "1.io5.in" pin and ground, non-inverted probe reading, 200mm/min probing speed, and 12000 mm/min travel speed between probe points
+M558 K1 P8 C"1.io3.in" I0 F200 T12000 ; Set Z probe type for Probe 1 (touchoff plate). It's an unfiltered normally closed switch between the "1.io5.in" pin and ground, non-inverted probe reading, 200mm/min probing speed, and 12000 mm/min travel speed between probe points
 G31 Z0; Set Z probe trigger height to 0mm
 
 ; Tools
 M98 P"tcreate-universal.g"
 
 ; Miscellaneous
-;M950 P1 C"out1"             ;   P1 - cleaning station 1
-M950 P2 C"out2"				;   Z axis brake
-M950 F3 C"out3"				;LEDs
-M106 P3 C"TOP LIGHTS" L1    ;LEDs defined as Fan with toggle (no dimming control)
-M950 F4 C"3.out6"			;12V LEDs
-M106 P4 C"FC LIGHTS" L1    ;LEDs defined as Fan with toggle (no dimming control)
+M950 P2 C"out2"				    ;Z axis brake
+M950 F3 C"3.out4"				;define pin for LEDs
+M106 P3 C"TOP LIGHTS" L1 S1     ;LEDs defined as Fan with toggle (no dimming control). On at startup
+M950 F4 C"3.out5"			    ;define pin for LEDs
+M106 P4 C"FC LIGHTS" L1 S1      ;LEDs defined as Fan with toggle (no dimming control). On at startup.
 
 M98 P"cleaningstation.g" ; Configure cleaning station
 M98 P"drycabinet.g" ; Configure filament drying cabinet
@@ -81,7 +79,7 @@ M575 P1 B115200 S1; Set up UART for pendant input
 
 ;define variables
 global maxoffset=0              ;maximum tool offset
-global diameterProbeHole = 0    ;diameter to probe cavity
+global diameterProbeHole = 14    ;diameter to probe cavity, initialize to 7mm radius.
 
 ; Post Config.g Commands
 M501 ; Set active parameters to those stored in config-override.g
