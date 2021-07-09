@@ -62,22 +62,11 @@ M558 K1 P8 C{global.TouchOffPlatePin} I0 F200 T10000 ; Set Z probe type for Prob
 G31 Z0; Set Z probe trigger height to 0mm
 
 ; Tools
-M98 P"tcreate-universal.g"
-
-; Miscellaneous
-M950 P2 C{global.ZBrakePin}            ; Z axis brake
-M950 J2 C{global.EStopSwitchPin}       ; E-Stop Switch Definition
-M581 P2 T3 S1 R0                       ; E-Stop Switch Engage Behavior
-M581 P2 T4 S0 R0                       ; E-Stop Switch Release Behavior
-M950 F3 C{global.BELedPin}             ; Define fan for build enclosure LEDs
-M106 P3 C"Build Enclosure LEDs" L1   ; Configure "fan" for build enclosure LEDs as toggle-able without dimming
-M950 F4 C{global.FCLedPin}             ; Define fan for filament cabinet LEDs
-M106 P4 C"Filament LEDs" L1  ;  Configure "fan" for filament cabinet LEDs as toggle-able without dimming
-
+M98 P"tcreate-universal.g"  ; Create Tools, Fans, GPIO
 M98 P"cleaningstation.g" ; Configure cleaning station
-M98 P"drycabinet.g" ; Configure filament drying cabinet
 M98 P"heatedbed.g" ; Configure heated bed
 M98 P"toolpriming.g" ; Configure tool priming parameters
+M98 P"drycabinet.g" ; Configure filament drying cabinet
 M911 S19 R22 P"M98 P""estop.g"""  ; Run estop.g on power loss during a print
 M575 P1 B115200 S1; Set up UART for pendant input
 

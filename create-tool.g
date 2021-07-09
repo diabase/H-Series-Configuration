@@ -46,7 +46,7 @@ if param.T == "Extruder"
 ; Spindle
 if param.T == "Spindle"
     M950 F{var.NewFanNum} C{param.F} ; Define a new "fan" for spindle air assist using the inbound parameters
-    M106 P{var.NewFanNum} S0 B0 L1.0 C"T"^{var.NewToolNum}^" Air" ; Configure the "fan" for spindle air assist.
+    M106 P{var.NewFanNum} S0 B0 L1.0 C{"T"^{var.NewToolNum}^" Air"} ; Configure the "fan" for spindle air assist.
     M950 R{param.S} C{param.H}^"+nil+"^{param.E} L12000 ; Define a new spindle with inbound parameters and 12000 RPM achieved at full PWM
     M563 P{var.NewToolNum} F{var.NewFanNum} R{param.S} S{"Spindle "^{var.NewToolNum}} ; Create a new tool with the newly created fan and spindle and call it "Spindle #"
     G10 P{var.NewToolNum} X6 Y7.5 Z-2 U{var.NewUOffset} V0.00 W0.00 A0.00 C0.00
