@@ -1,7 +1,7 @@
 ; config.g
 ; H5A Configuration File
 ; Written by Diabase Engineering
-; Last Updated: July 5, 2021
+; Last Updated: July 9, 2021
 
 ; Logging
 M929 P"eventlog.txt" S3 ; start logging to file eventlog.txt (S0 = stop logging, S1 = log level WARN, S2 = log level INFO, S3 = log level DEBUG)
@@ -70,9 +70,9 @@ M950 J2 C{global.EStopSwitchPin}       ; E-Stop Switch Definition
 M581 P2 T3 S1 R0                       ; E-Stop Switch Engage Behavior
 M581 P2 T4 S0 R0                       ; E-Stop Switch Release Behavior
 M950 F3 C{global.BELedPin}             ; Define fan for build enclosure LEDs
-M106 P3 C"Build Enclosure Lights" L1   ; Configure "fan" for build enclosure LEDs as toggle-able without dimming
+M106 P3 C"Build Enclosure LEDs" L1   ; Configure "fan" for build enclosure LEDs as toggle-able without dimming
 M950 F4 C{global.FCLedPin}             ; Define fan for filament cabinet LEDs
-M106 P4 C"Filament Cabinet Lights" L1  ;  Configure "fan" for filament cabinet LEDs as toggle-able without dimming
+M106 P4 C"Filament LEDs" L1  ;  Configure "fan" for filament cabinet LEDs as toggle-able without dimming
 
 M98 P"cleaningstation.g" ; Configure cleaning station
 M98 P"drycabinet.g" ; Configure filament drying cabinet

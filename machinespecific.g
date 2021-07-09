@@ -2,7 +2,7 @@
 ; Configuration parameters specific to this individual H-Series machine.
 ; Produced by Diabase H-Series Configurizer
 ; Written by Diabase Engineering
-; Last Updated: July 6, 2021
+; Last Updated: July 9, 2021
 M118 S"Begin machinespecific.g" L2
 
 if !{exists(global.MachineName)}
@@ -71,14 +71,14 @@ else
 ;     set global.WSwitchPin = ""
 
 if !{exists(global.ASwitchPin)}
-    global ASwitchPin = "3.io1.in"
+    global ASwitchPin = "2.io1.in"
 else
-    set global.ASwitchPin = "3.io1.in"
+    set global.ASwitchPin = "2.io1.in"
 
 if !{exists(global.CSwitchPin)}
-    global CSwitchPin = "3.io2.in"
+    global CSwitchPin = "2.io2.in"
 else
-    set global.CSwitchPin = "3.io2.in"
+    set global.CSwitchPin = "2.io2.in"
 
 if !{exists(global.XDrive)}
     global XDrive = 0
@@ -331,9 +331,9 @@ else
 ;     set global.Spindle1DirectionPin = ""
 
 if !{exists(global.Spindle2DirectionPin)}
-    global Spindle2DirectionPin = "io6.out"
+    global Spindle2DirectionPin = "!io6.out"
 else
-    set global.Spindle2DirectionPin = "io6.out"
+    set global.Spindle2DirectionPin = "!io6.out"
 
 ; if !{exists(global.Spindle3DirectionPin)}
 ;     global Spindle3DirectionPin = ""
@@ -341,9 +341,9 @@ else
 ;     set global.Spindle3DirectionPin = ""
 
 if !{exists(global.Spindle4DirectionPin)}
-    global Spindle4DirectionPin = "io8.out"
+    global Spindle4DirectionPin = "!io8.out"
 else
-    set global.Spindle4DirectionPin = "io8.out"
+    set global.Spindle4DirectionPin = "!io8.out"
 
 ; if !{exists(global.Spindle5DirectionPin)}
 ;     global Spindle5DirectionPin = ""
@@ -380,15 +380,20 @@ if !{exists(global.MaxOffset)}
 else
     set global.MaxOffset = 0
 
-; if !{exists(global.DiameterProbeHole)}
-;     global DiameterProbeHole = 
-; else
-;     set global.DiameterProbeHole = 
+if !{exists(global.DiameterProbeHole)}
+    global DiameterProbeHole = 14
+else
+    set global.DiameterProbeHole = 14
 
 if !{exists(global.BedHeatPin)}
     global BedHeatPin = "out7"
 else
     set global.BedHeatPin = "out7"
+
+if !{exists(global.BedTempPin)}
+    global BedTempPin = "temp0"
+else
+    set global.BedTempPin = "temp0"
 
 if !{exists(global.BEDoorPin)}
     global BEDoorPin = "io1.in"
@@ -441,9 +446,9 @@ else
     set global.ExtruderCrashDetectPin = "1.io4.in"
 
 if !{exists(global.DhtPin)}
-    global DhtPin = "3.io1.in"
+    global DhtPin = "0.spi.cs1"
 else
-    set global.DhtPin = "3.io1.in"
+    set global.DhtPin = "0.spi.cs1"
 
 if !{exists(global.FSense1Pin)}
     global FSense1Pin = "3.io2.in"
@@ -499,5 +504,30 @@ if !{exists(global.ToolType5)}
     global ToolType5 = "Extruder"
 else
     set global.ToolType5 = "Extruder"
+
+if !{exists(global.E1TempPin)}
+    global E1TempPin = "1.temp0"
+else
+    set global.E1TempPin = "1.temp0"
+
+; if !{exists(global.E2TempPin)}
+;     global E2TempPin = ""
+; else
+;     set global.E2TempPin = ""
+
+if !{exists(global.E3TempPin)}
+    global E3TempPin = "1.temp1"
+else
+    set global.E3TempPin = "1.temp1"
+
+; if !{exists(global.E4TempPin)}
+;     global E4TempPin = ""
+; else
+;     set global.E4TempPin = ""
+
+if !{exists(global.E5TempPin)}
+    global E5TempPin = "1.temp2"
+else
+    set global.E5TempPin = "1.temp2"
 
 M118 S"End machinespecific.g" L2
