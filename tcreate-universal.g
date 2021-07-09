@@ -15,7 +15,7 @@ M950 F1 C"1.out7"         ; Extruder cooling fans - jumpered to 12V
 M950 F2 C"1.out8"         ; Layer cooling fans - jumpered to 12V
 
 ; Fan configuration
-M106 P1 H3 T50         ; thermostatic control of cooling fan on heaters 1, 3, and 5. Turns on at 50C
+M106 P1 H1:3:5 T50         ; thermostatic control of cooling fan on heaters 1, 3, and 5. Turns on at 50C
 M106 P2 C"Cooling"             ; manual control of layer cooling fans
 
 ;crash detection
