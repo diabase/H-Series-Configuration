@@ -4,9 +4,7 @@
 ; Last Updated: July 9, 2021
 
 var NewSensorNum = #sensors.analog
-;echo "NewSensorNum is "^var.NewSensorNum
 var NewHeatNum = #heat.heaters
-;echo "NewHeatNum is"^var.NewHeatNum
 
 M308 S{var.NewSensorNum} P{global.BedTempPin} Y"thermistor" T100000 B3950 C0 A"Bed" ; Create Sensor 0 assigned to temp0 pin, thermistor type with resistance of 100Kohms at 25C, reciprocal of Steinhart-Hart B coefficient 3950, Steinhart-Hart C coefficient 0, and call it "Bed"
 M950 H{var.NewHeatNum} C{global.BedHeatPin} T{var.NewSensorNum} ; Create Heater 0 using pin "out7p" and temperature sensor 0

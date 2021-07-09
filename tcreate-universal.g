@@ -15,7 +15,7 @@
 
 M118 S"Begin tcreate-universal.g" L2
 
-M291 P"Ready to create tools?" S3
+; M291 P"Ready to create tools?" S3
 
 ; Tool 1
 M118 S"Creating Tool 1" L2
@@ -43,13 +43,30 @@ M563 P10 S"Probe"
 G10 P10 X0.00 Y0.00 Z0.00 U0.00 V0.00 W0.00 A0.00 C0.00
 
 ; Fans
-M118 S"Creating/Configuring Fans" L2
+M118 S"Begin Creating/Configuring Fans" L2
 var NewFanIndex = #fans
 M950 F{var.NewFanIndex} C{global.FffFanPin}                                                                 ; Extruder cooling fans
 M106 P{var.NewFanIndex} H{tools[1].heaters[0]}:{tools[3].heaters[0]}:{tools[5].heaters[0]} T50 C"FFF Fans"  ; thermostatic control of cooling fan on heaters 1, 3, and 5. Turns on at 50C
-M950 F{{var.NewFanIndex} + 1} C{global.LayerFanPin}                                                         ; Layer cooling fans
-M106 P{{var.NewFanIndex} + 1} C"Layer Fans"                                                                 ; Enable manual control of layer cooling fans
+set var.NewFanIndex={var.NewFanIndex+1}                                                                     ; Increment NewFanIndex
 
+M950 F{var.NewFanIndex} C{global.LayerFanPin}   ; Layer cooling fans
+M106 P{var.NewFanIndex} C"Layer Fans"           ; Enable manual control of layer cooling fans
+set var.NewFanIndex={var.NewFanIndex+1}         ; Increment NewFanIndex
+
+M950 F{var.NewFanIndex} C{global.BELedPin}          ; Define fan for build enclosure LEDs
+M106 P{var.NewFanIndex} C"Build Enclosure LEDs" L1  ; Configure "fan" for build enclosure LEDs as toggle-able without dimming
+set var.NewFanIndex={var.NewFanIndex+1}             ; Increment NewFanIndex
+
+M950 F{var.NewFanIndex} C{global.FCLedPin}          ; Define fan for filament cabinet LEDs
+M106 P{var.NewFanIndex} C"Filament LEDs" L1         ; Configure "fan" for filament cabinet LEDs as toggle-able without dimming
+set var.NewFanIndex={var.NewFanIndex+1}             ; Increment NewFanIndex
+M118 S"End Creating/Configuring Fans" L2
+
+; I/O pins and Associated Behavior
+M950 P2 C{global.ZBrakePin}            ; Z axis brake
+M950 J2 C{global.EStopSwitchPin}       ; E-Stop Switch Definition
+M581 P2 T3 S1 R0                       ; E-Stop Switch Engage Behavior
+M581 P2 T4 S0 R0                       ; E-Stop Switch Release Behavior
 
 ; Extruder crash detection
 M118 S"Configuring Extruder Crash Detection" L2
