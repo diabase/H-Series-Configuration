@@ -2,7 +2,7 @@
 ; Configuration parameters specific to this individual H-Series machine.
 ; Produced by Diabase H-Series Configurizer
 ; Written by Diabase Engineering
-; Last Updated: July 9, 2021
+; Last Updated: July 11, 2021
 M118 S"Begin machinespecific.g" L2
 
 if !{exists(global.MachineName)}
@@ -281,14 +281,14 @@ else
     set global.ZBrakePin = "!out2"
 
 if !{exists(global.BELedPin)}
-    global BELedPin = "3.out3"
+    global BELedPin = "3.out4"
 else
-    set global.BELedPin = "3.out3"
+    set global.BELedPin = "3.out4"
 
 if !{exists(global.FCLedPin)}
-    global FCLedPin = "3.out4"
+    global FCLedPin = "3.out5"
 else
-    set global.FCLedPin = "3.out4"
+    set global.FCLedPin = "3.out5"
 
 if !{exists(global.FffFanPin)}
     global FffFanPin = "1.out7"
@@ -529,5 +529,10 @@ if !{exists(global.E5TempPin)}
     global E5TempPin = "1.temp2"
 else
     set global.E5TempPin = "1.temp2"
+
+if !{exists(global.FCFanPin)}
+    global FCFanPin = "3.out3"
+else
+    set global.FCFanPin = "3.out3"
 
 M118 S"End machinespecific.g" L2
