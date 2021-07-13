@@ -13,38 +13,34 @@
 ; Written by Diabase Engineering
 ; Last Updated: July 9, 2021
 
-M118 S"Begin tcreate-universal.g" L2
+M118 S{"Info: Begin tcreate-universal.g"} L2
 
 ; M291 P"Ready to create tools?" S3
 
 ; Tool 1
-M118 S"Creating Tool 1" L2
 M98 P"create-tool.g" T{global.ToolType1} S{global.E1TempPin} H{global.EHeat1Pin} E{global.E1Drive} F{global.FA1Drive}
 
 ; Tool 2
-M118 S"Creating Tool 2" L2
 M98 P"create-tool.g" T{global.ToolType2} S0 H{global.Spindle2SpeedPin} E{global.Spindle2DirectionPin} F{global.Spindle2AirPin}
 
 ; Tool 3
-M118 S"Creating Tool 3" L2
 M98 P"create-tool.g" T{global.ToolType3} S{global.E3TempPin} H{global.EHeat3Pin} E{global.E3Drive} F{global.FA3Drive}
 
 ; Tool 4
-M118 S"Creating Tool 4" L2
 M98 P"create-tool.g" T{global.ToolType4} S1 H{global.Spindle4SpeedPin} E{global.Spindle4DirectionPin} F{global.Spindle4AirPin}
 
 ; Tool 5
-M118 S"Creating Tool 5" L2
 M98 P"create-tool.g" T{global.ToolType5} S{global.E5TempPin} H{global.EHeat5Pin} E{global.E5Drive} F{global.FA5Drive}
 
 ; Tool 10
-M118 S"Creating Probe" L2
+M118 S{"Info: Creating Probe"} L2
 M563 P10 S"Probe"
 G10 P10 X0.00 Y0.00 Z0.00 U0.00 V0.00 W0.00 A0.00 C0.00
 
 ; Fans
-M118 S"Begin Creating/Configuring Fans" L2
+M118 S{"Info: Creating/Configuring Fans"} L2
 var NewFanIndex = #fans
+
 M950 F{var.NewFanIndex} C{global.FffFanPin}                                                                 ; Extruder cooling fans
 M106 P{var.NewFanIndex} H{tools[1].heaters[0]}:{tools[3].heaters[0]}:{tools[5].heaters[0]} T50 C"FFF Fans"  ; thermostatic control of cooling fan on heaters 1, 3, and 5. Turns on at 50C
 set var.NewFanIndex={var.NewFanIndex+1}                                                                     ; Increment NewFanIndex
@@ -60,7 +56,6 @@ set var.NewFanIndex={var.NewFanIndex+1}             ; Increment NewFanIndex
 M950 F{var.NewFanIndex} C{global.FCLedPin}          ; Define fan for filament cabinet LEDs
 M106 P{var.NewFanIndex} C"Filament LEDs" L1         ; Configure "fan" for filament cabinet LEDs as toggle-able without dimming
 set var.NewFanIndex={var.NewFanIndex+1}             ; Increment NewFanIndex
-M118 S"End Creating/Configuring Fans" L2
 
 ; I/O pins and Associated Behavior
 M950 P2 C{global.ZBrakePin}            ; Z axis brake
@@ -76,4 +71,4 @@ M669 S100 T0.1      ;break up movements into smaller bits - this is necessary fo
 
 M302 S150 ; Set minimum extrude temp
 
-M118 S"End tcreate-universal.g" L2
+M118 S{"Info: End tcreate-universal.g"} L2
