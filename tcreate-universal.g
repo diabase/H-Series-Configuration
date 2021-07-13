@@ -59,9 +59,15 @@ set var.NewFanIndex={var.NewFanIndex+1}             ; Increment NewFanIndex
 
 ; I/O pins and Associated Behavior
 M950 P2 C{global.ZBrakePin}            ; Z axis brake
-M950 J2 C{global.EStopSwitchPin}       ; E-Stop Switch Definition
-M581 P2 T3 S1 R0                       ; E-Stop Switch Engage Behavior
-M581 P2 T4 S0 R0                       ; E-Stop Switch Release Behavior
+
+var NewInputIndex = #sensors.gpIn
+M118 S{"Info: Creating E-Stop Detect Switch as sensors.gpIn["^var.NewInputIndex^"] using pin "^global.EStopSwitchPin} L2    ; Log informational event
+M950 J{var.NewInputIndex} C{global.EStopSwitchPin}       ; E-Stop Switch Definition
+M118 S{"Info: Activation of Input"^{var.NewInputIndex}^" will run trigger"^global.EStopOnTrigger^".g"} L2    ; Log informational event
+M581 P{var.NewInputIndex} T{global.EStopOnTrigger} S1 R0                       ; E-Stop Switch Engage Behavior
+M118 S{"Info: Deactivation of Input"^{var.NewInputIndex}^" will run trigger"^global.EStopOffTrigger^".g"} L2    ; Log informational event
+M581 P{var.NewInputIndex} T{global.EStopOffTrigger} S0 R0                       ; E-Stop Switch Release Behavior
+set var.NewInputIndex = {var.NewInputIndex+1}                   ; Increment NewInputIndex
 
 ; Extruder crash detection
 M118 S"Configuring Extruder Crash Detection" L2
