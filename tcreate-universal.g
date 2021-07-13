@@ -50,11 +50,11 @@ M106 P{var.NewFanIndex} C"Layer Fans"           ; Enable manual control of layer
 set var.NewFanIndex={var.NewFanIndex+1}         ; Increment NewFanIndex
 
 M950 F{var.NewFanIndex} C{global.BELedPin}          ; Define fan for build enclosure LEDs
-M106 P{var.NewFanIndex} C"Build Enclosure LEDs" L1  ; Configure "fan" for build enclosure LEDs as toggle-able without dimming
+M106 P{var.NewFanIndex} C"Build Enclosure LEDs" S1.0 L1.0  ; Configure "fan" for build enclosure LEDs as toggle-able without dimming
 set var.NewFanIndex={var.NewFanIndex+1}             ; Increment NewFanIndex
 
 M950 F{var.NewFanIndex} C{global.FCLedPin}          ; Define fan for filament cabinet LEDs
-M106 P{var.NewFanIndex} C"Filament LEDs" L1         ; Configure "fan" for filament cabinet LEDs as toggle-able without dimming
+M106 P{var.NewFanIndex} C"Filament LEDs" S1.0 L1.0         ; Configure "fan" for filament cabinet LEDs as toggle-able without dimming
 set var.NewFanIndex={var.NewFanIndex+1}             ; Increment NewFanIndex
 
 ; I/O pins and Associated Behavior
