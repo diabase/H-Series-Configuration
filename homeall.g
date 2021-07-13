@@ -50,7 +50,7 @@ G92 U0 ; Set current U position as 0 mm
 M574 Z1 S2 ; Set Z endstop position to low end and configure as Z probe
 
 G1 X0 Y0 F10000 ; Move to X=0, Y=0 at 10000 mm/min
-G1 Z{move.axes[2].max - global.MaxOffset} F10000 ; Move to Z = ZMax + Longest Z Offset at 10000 mm/min
+G1 Z{move.axes[2].max + global.MaxOffset} F10000 ; Move to Z = ZMax + Longest Z Offset at 10000 mm/min
 
 G60 S1 ; Save current position in slot 1 (the slot used when pausing)
 
