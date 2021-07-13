@@ -7,9 +7,9 @@
 ;   E: Variable name containing Extruder Drive Number / Spindle Direction Pin
 ;   F: Variable name containing Filament Assist Drive Number / Spindle Air Pin
 ; Written by Diabase Engineering
-; Last Updated: July 7, 2021
+; Last Updated: July 12, 2021
 
-M118 S"Begin create-tool.g" L2
+M118 S{"Info: Begin create-tool.g."} L2
 
 var NewToolNum = {#tools==0?1:#tools}
 var NewSensorNum = #sensors.analog
@@ -35,6 +35,7 @@ if param.T == "Extruder"
 
 ; Extruder
 if param.T == "Extruder"
+    M118 S{"Info: Creating Nozzle "^var.NewToolNum^" using Heater "^var.NewHeatNum^", Sensor "^var.NewSensorNum^", Extruder "^var.ExtruderIndex^", FA "^var.FAIndex} L2
     M308 S{var.NewSensorNum} P{param.S} Y"thermistor" T100000 B3950 C0 A{"Nozzle "^{var.NewToolNum}} ; Create a new sensor assigned to the temp sense pin parameter, thermistor type with resistance of 100Kohms at 25C, reciprocal of Steinhart-Hart B coefficient 3950, Steinhart-Hart C coefficient 0, and call it "Nozzle #"
     M950 H{var.NewHeatNum} C{param.H} T{var.NewSensorNum} ; Create a new heater using the heater pin parameter and the newly created sensor
     M143 H{var.NewHeatNum} S250 ; Monitor this new heater and throw an error if it exceeds 250C
@@ -45,6 +46,7 @@ if param.T == "Extruder"
 
 ; Spindle
 if param.T == "Spindle"
+    M118 S{"Info: Creating Spindle "^var.NewToolNum^" using Spindle "^param.S^"and air assist on Fan "^var.NewFanNum} L2
     M950 F{var.NewFanNum} C{param.F} ; Define a new "fan" for spindle air assist using the inbound parameters
     M106 P{var.NewFanNum} S0 B0 L1.0 C{"T"^{var.NewToolNum}^" Air"} ; Configure the "fan" for spindle air assist.
     M950 R{param.S} C{param.H}^"+nil+"^{param.E} L12000 ; Define a new spindle with inbound parameters and 12000 RPM achieved at full PWM
@@ -53,4 +55,4 @@ if param.T == "Spindle"
     M453
     M3 P{param.S} S0 ; Ensure new spindle is off
 
-M118 S"End create-tool.g" L2
+M118 S{"Info: End create-tool.g"} L2
