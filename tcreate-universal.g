@@ -70,9 +70,11 @@ M581 P{var.NewInputIndex} T{global.EStopOffTrigger} S0 R0                       
 set var.NewInputIndex = {var.NewInputIndex+1}                   ; Increment NewInputIndex
 
 ; Extruder crash detection
-M118 S"Configuring Extruder Crash Detection" L2
-M950 J1 C{global.ExtruderCrashDetectPin} ;define pin for crash detection
-M581 T2 P1 S1 R0    ;triggers any time (printing or jogging), runs "trigger2.g"
+M118 S{"Info: Creating Extruder Crash Detect Switch as sensors.gpIn["^var.NewInputIndex^"] using pin "^global.ExtruderCrashDetectPin} L2    ; Log informational event
+M950 J{var.NewInputIndex} C{global.ExtruderCrashDetectPin} ;define pin for crash detection
+M118 S{"Info: Activation of Input"^{var.NewInputIndex}^" will run trigger"^global.CDOnTrigger^".g"} L2    ; Log informational event
+M581 P{var.NewInputIndex} T{global.CDOnTrigger} S1 R0    ;triggers any time (printing or jogging), runs "trigger2.g"
+M118 S{"Info: Deactivation of Input"^{var.NewInputIndex}^" will be ignored"} L2    ; Log informational event
 M669 S100 T0.1      ;break up movements into smaller bits - this is necessary for the machine to be able to pause if a crash is detected
 
 M302 S150 ; Set minimum extrude temp
