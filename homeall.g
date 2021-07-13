@@ -3,7 +3,9 @@
 ; Written by Diabase Engineering
 ; Last Updated: July 6, 2021
 
-M118 S"Begin homeall.g" L2
+M118 S"Info: Begin homeall.g" L2
+
+G54 ; Assert WCS
 
 ; Ensure axis endstops are used
 M574 X1 S1 P{global.XSwitchPin} ; Configure X endstop position at low end, it's an optical interrupt on pin defined in machinespecific.g
@@ -62,4 +64,4 @@ T4 P0
 T5 P0
 T10 P0
 
-M118 S"End homeall.g" L2
+M118 S"Info: End homeall.g" L2
