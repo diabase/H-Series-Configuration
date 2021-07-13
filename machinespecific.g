@@ -2,7 +2,7 @@
 ; Configuration parameters specific to this individual H-Series machine.
 ; Produced by Diabase H-Series Configurizer
 ; Written by Diabase Engineering
-; Last Updated: July 11, 2021
+; Last Updated: July 12, 2021
 M118 S"Begin machinespecific.g" L2
 
 if !{exists(global.MachineName)}
@@ -111,19 +111,19 @@ else
     set global.WDrive = 5
 
 if !{exists(global.ADrive)}
-    global ADrive = 3.0
+    global ADrive = 2.0
 else
-    set global.ADrive = 3.0
+    set global.ADrive = 2.0
 
 if !{exists(global.APrimeDrive)}
-    global APrimeDrive = 3.1
+    global APrimeDrive = 2.1
 else
-    set global.APrimeDrive = 3.1
+    set global.APrimeDrive = 2.1
 
 if !{exists(global.CDrive)}
-    global CDrive = 3.2
+    global CDrive = 2.2
 else
-    set global.CDrive = 3.2
+    set global.CDrive = 2.2
 
 if !{exists(global.E1Drive)}
     global E1Drive = 1.0
@@ -411,9 +411,9 @@ else
 ;     set global.EHeat2Pin = ""
 
 if !{exists(global.EHeat3Pin)}
-    global EHeat3Pin = "1.out2"
+    global EHeat3Pin = "1.out1"
 else
-    set global.EHeat3Pin = "1.out2"
+    set global.EHeat3Pin = "1.out1"
 
 ; if !{exists(global.EHeat4Pin)}
 ;     global EHeat4Pin = ""
@@ -421,9 +421,9 @@ else
 ;     set global.EHeat4Pin = ""
 
 if !{exists(global.EHeat5Pin)}
-    global EHeat5Pin = "1.out5"
+    global EHeat5Pin = "1.out2"
 else
-    set global.EHeat5Pin = "1.out5"
+    set global.EHeat5Pin = "1.out2"
 
 if !{exists(global.ProbeRetractPin)}
     global ProbeRetractPin = "1.out3"
@@ -476,9 +476,9 @@ else
     set global.FSense5Pin = "3.io4.in"
 
 if !{exists(global.EStopSwitchPin)}
-    global EStopSwitchPin = "^io1.in"
+    global EStopSwitchPin = "1.io5.in"
 else
-    set global.EStopSwitchPin = "^io1.in"
+    set global.EStopSwitchPin = "1.io5.in"
 
 if !{exists(global.ToolType1)}
     global ToolType1 = "Extruder"
@@ -534,5 +534,55 @@ if !{exists(global.FCFanPin)}
     global FCFanPin = "3.out3"
 else
     set global.FCFanPin = "3.out3"
+
+if !{exists(global.FCSwitchPin)}
+    global FCSwitchPin = "!3.io0.in"
+else
+    set global.FCSwitchPin = "!3.io0.in"
+
+if !{exists(global.CDOnTrigger)}
+    global CDOnTrigger = 2
+else
+    set global.CDOnTrigger = 2
+
+if !{exists(global.CDOffTrigger)}
+    global CDOffTrigger = 3
+else
+    set global.CDOffTrigger = 3
+
+if !{exists(global.EStopOnTrigger)}
+    global EStopOnTrigger = 4
+else
+    set global.EStopOnTrigger = 4
+
+if !{exists(global.EStopOffTrigger)}
+    global EStopOffTrigger = 5
+else
+    set global.EStopOffTrigger = 5
+
+if !{exists(global.FCSwitchOnTrigger)}
+    global FCSwitchOnTrigger = 6
+else
+    set global.FCSwitchOnTrigger = 6
+
+if !{exists(global.FCSwitchOffTrigger)}
+    global FCSwitchOffTrigger = 7
+else
+    set global.FCSwitchOffTrigger = 7
+
+if !{exists(global.FCRH)}
+    global FCRH = -273.15
+else
+    set global.FCRH = -273.15
+
+if !{exists(global.FCDoorOpenTime)}
+    global FCDoorOpenTime = 0
+else
+    set global.FCDoorOpenTime = 0
+
+if !{exists(global.FCDoorCloseTime)}
+    global FCDoorCloseTime = 0
+else
+    set global.FCDoorCloseTime = 0
 
 M118 S"End machinespecific.g" L2
