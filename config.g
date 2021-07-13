@@ -5,7 +5,7 @@
 
 ; Logging
 M929 P"eventlog.txt" S3 ; start logging to file eventlog.txt (S0 = stop logging, S1 = log level WARN, S2 = log level INFO, S3 = log level DEBUG)
-M118 S"Begin config.g" L2
+M118 S"Info: Begin config.g" L2
 
 ;Machine-specific settings
 M98 P"machinespecific.g"
@@ -37,8 +37,8 @@ M569 P2.2 S{global.CDirection}              ; Set motor driver direction. Line 3
 
 ; Drive settings
 M584 X{global.XDrive} Y{global.YDrive} Z{global.ZDrive} U{global.UDrive} V{global.VDrive} W{global.WDrive} A2.0:2.1 C2.2 E1.0:1.1:1.2:3.0:3.1:3.2; Set driver mapping.
-M208 X-208 Y-90 Z-10 U{global.UMin} V-100 W0 A-365 C-1000 S1 ; Set axis minima
-M208 X208 Y90 Z410 U360 V200 W35 A365 C10000 S0 ; Set axis maxima
+M208 X{global.XMin} Y{global.YMin} Z{global.ZMin} U{global.UMin} V{global.VMin} W{global.WMin} A{global.AMin} C{global.CMin} S1 ; Set axis minima
+M208 X{global.XMax} Y{global.YMax} Z{global.ZMax} U{global.UMax} V{global.VMax} W{global.WMax} A{global.AMax} C{global.CMax} S0 ; Set axis maxima
 M350 X16 Y16 Z16 U16 V16 W16 A16 C16 E16 I1 ; Configure microstepping with interpolation - high lead cleaning station motor
 M92 X320 Y320 Z320 U230.22 V1600 W400 A53.33 C53.33 E96 ; Set steps per mm
 M566 X300 Y300 Z300 U120 V500 W500 A1000 C1000 E1200 ; Set maximum instantaneous speed changes (mm/min)
@@ -73,4 +73,4 @@ M575 P1 B115200 S1; Set up UART for pendant input
 ; Post Config.g Commands
 M501 ; Set active parameters to those stored in config-override.g
 M98 P"maxoffset.g"     ;set maxoffset to maximum tool length
-M118 S"End config.g" L2
+M118 S"Info: End config.g" L2
