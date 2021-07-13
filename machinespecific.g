@@ -15,10 +15,85 @@ if !{exists(global.MachineModel)}
 else
     set global.MachineModel = "H5"
 
-if !{exists(global.UMin)}
-    global UMin = -10 ; Physical u-axis position when USwitchPin triggers.
+if !{exists(global.XMin)}
+    global XMin = -208
 else
-    set global.UMin = -10
+    set global.XMin = -208
+
+if !{exists(global.XMax)}
+    global XMax = 208
+else
+    set global.XMax = 208
+
+if !{exists(global.YMin)}
+    global YMin = -90
+else
+    set global.YMin = -90
+
+if !{exists(global.YMax)}
+    global YMax = 90
+else
+    set global.YMax = 90
+
+if !{exists(global.ZMin)}
+    global ZMin = -10
+else
+    set global.ZMin = -10
+
+if !{exists(global.ZMax)}
+    global ZMax = 410
+else
+    set global.ZMax = 410
+
+if !{exists(global.UMin)}
+    global UMin = -9.9 ; Physical u-axis position when USwitchPin triggers.
+else
+    set global.UMin = -9.9
+
+if !{exists(global.UMax)}
+    global UMax = 360
+else
+    set global.UMax = 360
+
+if !{exists(global.VMin)}
+    global VMin = -100
+else
+    set global.VMin = -100
+
+if !{exists(global.VMax)}
+    global VMax = 200
+else
+    set global.VMax = 200
+
+if !{exists(global.WMin)}
+    global WMin = 0
+else
+    set global.WMin = 0
+
+if !{exists(global.WMax)}
+    global WMax = 35
+else
+    set global.WMax = 35
+
+if !{exists(global.AMin)}
+    global AMin = -365
+else
+    set global.AMin = -365
+
+if !{exists(global.AMax)}
+    global AMax = 365
+else
+    set global.AMax = 365
+
+if !{exists(global.CMin)}
+    global CMin = -1000
+else
+    set global.CMin = -1000
+
+if !{exists(global.CMax)}
+    global CMax = 10000
+else
+    set global.CMax = 10000
 
 if !{exists(global.CSType)}
     global CSType = "Motor" ; Cleaning station type. Options are "None", "Solenoid", or "Motor"
@@ -71,9 +146,14 @@ else
 ;     set global.WSwitchPin = ""
 
 if !{exists(global.ASwitchPin)}
-    global ASwitchPin = "2.io1.in"
+    global ASwitchPin = "2.io0.in"
 else
-    set global.ASwitchPin = "2.io1.in"
+    set global.ASwitchPin = "2.io0.in"
+
+if !{exists(global.APrimeSwitchPin)}
+    global APrimeSwitchPin = "2.io1.in"
+else
+    set global.APrimeSwitchPin = "2.io1.in"
 
 if !{exists(global.CSwitchPin)}
     global CSwitchPin = "2.io2.in"
