@@ -1,31 +1,10 @@
 ; trigger5.g
 ; Behavior for Disengaging the E-Stop
 ; Written by Diabase Engineering
-; Last Updated: July 13, 2021
+; Last Updated: July 14, 2021
 
-echo state.upTime^"."^state.msUpTime^": trigger5.g begins"
-echo state.upTime^"."^state.msUpTime^": Vin is " ^ boards[0].vIn.current ^ ". V12 is " ^ boards[0].v12.current^ "."
-while boards[0].vIn.current < 24
-    echo state.upTime^"."^state.msUpTime^": Loop "^{iterations}^". Vin is " ^ boards[0].vIn.current ^ ". V12 is " ^ boards[0].v12.current^ "."
-    G4 P100
-echo state.upTime^"."^state.msUpTime^": Vin is " ^ boards[0].vIn.current ^ ". V12 is " ^ boards[0].v12.current^ "."
-G4 S10
-
-if state.gpOut[2].pwm == 1
-    echo state.upTime^"."^state.msUpTime^": E-Stop released. Z brake fully engaged."
-elif state.gpOut[2].pwm == 0
-    echo state.upTime^"."^state.msUpTime^": E-Stop released. Z brake fully disengaged."
-else
-    echo state.upTime^"."^state.msUpTime^": E-Stop released. Z brake partly engaged."
-
-if move.axes[3].homed == true
-    echo state.upTime^"."^state.msUpTime^": Z axis homed, releasing Z brake".
-    M42 P2 S0 ; Release Z Brake
-    if state.gpOut[2].pwm == 0
-        echo state.upTime^"."^state.msUpTime^": Z brake fully released."
-    else
-        echo state.upTime^"."^state.msUpTime^": Error: Z brake did not fully release. Z brake value is now "^state.gpOut[2].pwm
-else
-    echo state.upTime^"."^state.msUpTime^": Z axis not homed, leaving Z brake value unchanged at "^state.gpOut[2].pwm
-echo state.upTime^"."^state.msUpTime^": Vin is " ^ boards[0].vIn.current ^ ". V12 is " ^ boards[0].v12.current^ "."
-echo state.upTime^"."^state.msUpTime^": Trigger5.g ends"
+M118 S{"Info: Begin trigger5.g"} L2
+M118 S{"Info: Vin is " ^ boards[0].vIn.current ^ " at " ^ state.upTime ^ "." ^ state.msUpTime} L2
+M98 P"disengagezbrake.g"
+M118 S{"Info: Vin is " ^ boards[0].vIn.current ^ " at " ^ state.upTime ^ "." ^ state.msUpTime} L2
+M118 S{"Info: End trigger5.g"} L2
