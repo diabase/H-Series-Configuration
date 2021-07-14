@@ -58,7 +58,7 @@ M574 C1 S1 P{global.CSwitchPin}
 
 ; Probes
 M558 P8 C{global.ProbePin} H2 F150 T10000 ; Set Z probe type for Probe 0 (Tool 10). 2mm dive height, 150mm/min probing speed, and 10000 mm/min travel speed between probe points
-M558 K1 P8 C{global.TouchOffPlatePin} I0 F200 T10000 ; Set Z probe type for Probe 1 (touchoff plate). It's an unfiltered normally closed switch between the "1.io5.in" pin and ground, non-inverted probe reading, 200mm/min probing speed, and 10000 mm/min travel speed between probe points
+M558 K1 P8 C{global.TouchOffPlatePin} I0 F200 T10000 ; Set Z probe type for Probe 1 (touchoff plate). It's on the pin designated in machinespecific.g, 200mm/min probing speed, and 10000 mm/min travel speed between probe points
 G31 Z0; Set Z probe trigger height to 0mm
 
 ; Tools

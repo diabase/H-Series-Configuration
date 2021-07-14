@@ -1,15 +1,17 @@
 ; stop.g
 ; If the axes are homed and if a print is being cancelled (M25), cancel.g is called when M0 is sent. 
 ; If M0 is sent at any other time, stop.g is called.
+; Written by Diabase Engineering
+; Last Updated: July 14, 2021
 
 G60 S0  ;   save current tool information
 
 G91 ; Relative Positioning
-M574 Z2 S1 P"io4.in" ; Configure Z endstop position at high end, it's a microswitch on pin "zstop"
+M574 Z2 S1 P{global.ZSwitchPin} ; Configure Z endstop position at high end, it's a microswitch on pin defined in machinespecific.g
 if move.axes[2].machinePosition + 40 <= move.axes[2].max ; If we have enough room for a normal tool change Z-hop, do it.
     G1 Z40 F6000 ; Move Z +40mm at 6000 mm/min
 elif move.axes[2].machinePosition + 40 > move.axes[2].max ; If we don't have enough room, move as high as we can.
-    M574 Z2 S1 P"io4.in" ; Configure Z endstop position at high end, it's a microswitch on pin "zstop"
+    M574 Z2 S1 P{global.ZSwitchPin} ; Configure Z endstop position at high end, it's a microswitch on pin defined in machinespecific.g
     M400 ; Wait for all moves to finish
     M913 Z50; Reduce Z-axis motor current to 50%
     G1 Z40 F1000 H3 ; Attempt to move Z +40mm at 1000 mm/min, but halt if endstop triggered and set axis limit current position, overriding value set by previous M208 or G1 H3 special move

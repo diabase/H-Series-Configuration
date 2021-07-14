@@ -1,7 +1,7 @@
 ; homez.g
 ; Called to home only the Z axis
 ; Written by Diabase Engineering
-; Last Updated: July 6, 2021
+; Last Updated: July 14, 2021
 
 M118 S"Begin homez.g" L2
 
@@ -25,6 +25,6 @@ G1 Z{move.axes[2].max + global.MaxOffset} F10000 ; Move to Z = ZMax + Longest Z 
 
 if {state.currentTool} != -1 ; If we have a tool selected...
     if #tools[{state.currentTool}].name == 5 ; If the probe is the current tool...
-        M574 Z1 S2 P{global.ProbePin} ; Set Z endstop position to low end and configure as Z probe, pin defined in machinespecific.g
+        M574 Z1 S2 ; Set Z endstop position to low end and configure as Z probe, pin defined in machinespecific.g
 
 M118 S"End homez.g" L2

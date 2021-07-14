@@ -1,5 +1,7 @@
 ; measurez.g
 ; Called to probe the bed and set Z0 to the bed surface and then set Z-axis maximum to the carefully measured location of the upper Z-axis endstop relative to the bed surface.
+; Written by Diabase Engineering
+; Last Updated: July 14, 2021
 
 M291 P"Turret will now move. Is Probe above the surface to measure?" R"Crash Check" S3 ; Warn the user about the imminent probing move.
 
@@ -15,7 +17,7 @@ G30 ; Probe the bed at the current XY position and set the Z coordinate to the p
 M558 F150 ; Set Z probe feed rate to 150 mm/min
 G30 ; Probe the bed at the current XY position and set the Z coordinate to the probe trigger height.
 
-M574 Z2 S1 P"io4.in" ; Configure Z endstop position at high end, it's a microswitch on pin "zstop"
+M574 Z2 S1 P{global.ZSwitchPin} ; Configure Z endstop position at high end, it's a microswitch on pin defined in machinespecific.g
 M208 Z380 S0 ; Set Z-axis maximum to 380 mm
 G91 ; Relative Positioning
 G1 Z340 F6000 H3 ; Attempt to move Z +370mm at 6000 mm/min, but halt when endstop triggered and set axis limit current position, overriding value set by M208 in config.g

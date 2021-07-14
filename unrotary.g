@@ -14,5 +14,5 @@ M84 S5 ; Set idle timeout
 M574 Y1 p"nil"
 M574 A1 p"nil"
 G4 P100
-M574 Y1 S1 P"!io3.in"
+M574 Y1 S1 P{global.YSwitchPin}
 M574 A1 S1 P"2.io3.in"
