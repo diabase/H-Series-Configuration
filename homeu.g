@@ -7,7 +7,8 @@ M453 ; Switch to CNC Mode
 M574 Z2 S1 P"io4.in" ; Configure Z endstop position at high end, it's a microswitch on pin "zstop"
 
 G60 S0 ; Save current position to Slot 0
-M84 E0:1:2:3 ; Idle all extruder motors
+if {global.MachineModel} == "H4"
+    M84 E0:1:2:3 ; Idle all extruder motors
 T-1 ; Deselect current tool (if any)
 
 G91 ; Relative Positioning
