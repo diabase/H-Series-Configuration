@@ -1,8 +1,16 @@
+; tcalibrate.g
+; Called to locate the center of a cavity using the probe.
+; Written by Diabase Engineering
+; Last Updated: July 14, 2021
+
+if state.currentTool != 10
+    abort "The probe must be the active tool to perform this action. Please activate the probe and try again."
+
 M291 P"Bed will now move. Is Probe inside cavity?" R"Crash Check" S3
 
-M561
+M561 ; Identity transform
 
-M574 X1 Y1 S2; configured to use Probe
+M574 X1 Y1 S2; Use the probe as X and Y end stops.
 
 
 ; var local.probeTipRadius = 3 ; in mm
