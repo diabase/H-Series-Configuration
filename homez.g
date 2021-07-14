@@ -10,7 +10,7 @@ M574 Z2 S1 P{global.ZSwitchPin} ; Configure Z endstop position at high end, pin 
 
 G91 ; Relative Positioning
 G1 H1 Z.5 F6000 ; Move Z +0.5mm at 6000 mm/min
-M42 P2 S0       ; Release Z brake
+M98 P"disengagezbrake.g"       ; Disengage Z brake
 G4 P300         ; Wait 300 ms
 
 M400 ; Wait for all moves to finish
