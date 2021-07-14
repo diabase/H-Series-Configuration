@@ -1,7 +1,7 @@
 ; tprime-universal.g
 ; Universal priming macro
 ; Written by Diabase Engineering
-; Last Updated: February 23, 2021
+; Last Updated: July 14, 2021
 
 if #tools[{state.currentTool}].name != 8 ; If this tool is not extruder...
     abort "Tool "^state.currentTool^" ("^tools[{state.currentTool}].name^") is not an extruder and cannot be primed. Priming cycle aborted."
@@ -12,7 +12,7 @@ G91 ; Relative Positioning
 if move.axes[2].machinePosition + 40 <= move.axes[2].max ; If we have enough room for a normal tool change Z-hop, do it.
     G1 Z40 F6000 ; Move Z +40mm at 6000 mm/min
 elif move.axes[2].machinePosition + 40 > move.axes[2].max ; If we don't have enough room, move as high as we can.
-    M574 Z2 S1 P"io4.in" ; Configure Z endstop position at high end, it's a microswitch on pin "zstop"
+    M574 Z2 S1 P{global.ZSwitchPin} ; Configure Z endstop position at high end, it's a microswitch on pin defined in machinespecific.g
     M400 ; Wait for all moves to finish
     ;M913 Z50; Reduce Z-axis motor current to 50%
     G1 Z40 F6000 H3 ; Attempt to move Z +40mm at 6000 mm/min, but halt if endstop triggered and set axis limit current position, overriding value set by previous M208 or G1 H3 special move

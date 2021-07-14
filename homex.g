@@ -1,9 +1,11 @@
 ; homex.g
 ; Called to home only the X axis
+; Written by Diabase Engineering
+; Last Updated: July 14, 2021
 
 ; Ensure appropriate axis endstops are used
-M574 X1 S1 P"io2.in" ; Configure X endstop position at low end, it's an optical interrupt on pin "io2.in"
-M574 Z2 S1 P"io4.in" ; Configure Z endstop position at high end, it's an optical interrupt on pin "io4.in"
+M574 X1 S1 P{global.XSwitchPin} ; Configure X endstop position at low end, it's an optical interrupt on pin defined in machinespecific.g
+M574 Z2 S1 P{global.ZSwitchPin} ; Configure Z endstop position at high end, it's an optical interrupt on pin defined in machinespecific.g
 
 G91 ; Relative Positioning
 

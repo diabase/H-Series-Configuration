@@ -1,10 +1,13 @@
 ; homeu.g
 ; Called to home only the U axis
+; Written by Diabase Engineering
+; Last Updated: July 14, 2021
+; TODO: Save current WCS, switch to G54 for homing, return to saved WCS
 
 M453 ; Switch to CNC Mode
 
 ; Ensure appropriate axis endstops are used
-M574 Z2 S1 P"io4.in" ; Configure Z endstop position at high end, it's a microswitch on pin "zstop"
+M574 Z2 S1 P{global.ZSwitchPin} ; Configure Z endstop position at high end, it's a microswitch on pin defined in machinespecific.h
 
 G60 S0 ; Save current position to Slot 0
 if {global.MachineModel} == "H4"
@@ -19,7 +22,7 @@ G4 P300                         ;wait 300 ms
 if move.axes[2].machinePosition + 40 <= move.axes[2].max ; If we have enough room for a normal tool change Z-hop, do it.
     G1 Z40 F6000 ; Move Z +40mm at 6000 mm/min
 elif move.axes[2].machinePosition + 40 > move.axes[2].max ; If we don't have enough room, move as high as we can.
-    M574 Z2 S1 P"io4.in" ; Configure Z endstop position at high end, it's a microswitch on pin "zstop"
+    M574 Z2 S1 P{global.ZSwitchPin} ; Configure Z endstop position at high end, it's a microswitch on pin defined in machinespecific.h
     M400 ; Wait for all moves to finish
     G1 Z40 F1000 H1 ; Attempt to move Z +40mm at 1000 mm/min, but halt if endstop triggered and set current position to axis limit set by previous M208 or G1 H3 special move
     M400 ; Wait for all moves to finish
