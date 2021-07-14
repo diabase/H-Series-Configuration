@@ -1,7 +1,8 @@
 ; Universal tpre macro
 
 M453 ; Switch to CNC mode
-M84 E0:1:2:3 ; Idle all extruder motors
+if {global.MachineModel} == "H4"
+    M84 E0:1:2:3 ; Idle all extruder motors
 
 ; Only perform machine moves if we need to change the turret position
 if move.axes[3].machinePosition != -tools[{state.nextTool}].offsets[3]
