@@ -1,10 +1,13 @@
-; Universal tpost macro
+; tpost-universal.g
+; Called when a tool is selected
+; Written by Diabase Engineering
+; Last Updated: July 17, 2021
 
-if #tools[{state.nextTool}].name == 5 ; If this tool is a probe...
-    M453 ; Switch to CNC mode
-    M574 Z1 S2 ; Set Z endstop position to low end and configure as Z probe
 M118 S{"Info: Begin tpost-universal.g"} L2
+if tools[{state.nextTool}].name == "Probe"   ; If this tool is a probe...
+    M453                                      ; Switch to CNC mode
     M401 P0                                   ; Deploy Probe
+    M574 Z1 S2                                ; Set Z endstop position to low end and configure as Z probe
 
 elif #tools[{state.nextTool}].name == 7 ; If this tool is called "No Tool"...
     M451 ; Switch to FFF Mode

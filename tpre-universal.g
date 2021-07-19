@@ -1,5 +1,5 @@
 ; Universal tpre macro
-; Called whenever a tool is selected
+; Called when a tool is selected
 ; Written by Diabase Engineering
 ; Last Updated: July 14, 2021
 
