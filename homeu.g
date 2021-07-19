@@ -16,7 +16,7 @@ T-1 ; Deselect current tool (if any)
 
 G91 ; Relative Positioning
 G1 H1 Z.5 F6000                 ; Move Z +0.5mm at 6000 mm/min
-M98 P"disengagezbrake.g"       ; Disengage Z brake
+M98 P"disengagezbrake.g" H1      ; Disengage Z brake
 G4 P300                         ;wait 300 ms
 
 if move.axes[2].machinePosition + 40 <= move.axes[2].max ; If we have enough room for a normal tool change Z-hop, do it.

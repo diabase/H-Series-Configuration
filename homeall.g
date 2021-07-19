@@ -23,7 +23,7 @@ if {global.CSType} == "Motor"
 
 G91 ; Relative Positioning
 G1 H1 Z0.5 F6000 ; Move Z +0.5mm at 6000 mm/min
-M98 P"disengagezbrake.g"       ; Disengage Z brake
+M98 P"disengagezbrake.g" H1      ; Disengage Z brake
 G4 P300         ; Wait 300 ms
 
 M400 ; Wait for all moves to finish
