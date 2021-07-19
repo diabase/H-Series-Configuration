@@ -18,11 +18,11 @@ M201 Y1400 A900                 ; Set accelerations (mm/s^2)
 M906 Y2000 A2000 I30            ; Set motor currents (mA) and motor idle factor in per cent
 M84 S5                          ; Set idle timeout
 
-M574 A1 S1 P"!io3.in"	;enable new pin on A endstop
-M574 Y1 S1 P"2.io3.in"	;enable new pin on Y endstop
 M574 Y1 P"nil"                  ; Clear existing Y endstop pin
 M574 A1 P"nil"                  ; Clear existing A endstop pin
 G1 P100                         ; Wait 100ms
+M574 A1 S1 P{global.YSwitchPin} ; Set new pin for A endstop
+M574 Y1 S1 P{global.ASwitchPin} ; Set new pin for Y endstop
 
 G92 A0 Y0                       ; Set curret A and Y positions to 0
 
