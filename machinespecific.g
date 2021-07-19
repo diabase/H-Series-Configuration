@@ -2,13 +2,14 @@
 ; Configuration parameters specific to this individual H-Series machine.
 ; Produced by Diabase H-Series Configurizer
 ; Written by Diabase Engineering
-; Last Updated: July 12, 2021
+; Last Updated: July 19, 2021
+
 M118 S"Begin machinespecific.g" L2
 
 if !{exists(global.MachineName)}
-    global MachineName = "H5006" ; Machine name for web interface and local network discovery.
+    global MachineName = "H5XXX" ; Machine name for web interface and local network discovery.
 else
-    set global.MachineName = "H5006"
+    set global.MachineName = "H5XXX"
 
 if !{exists(global.MachineModel)}
     global MachineModel = "H5" ; Machine model number
@@ -46,9 +47,9 @@ else
     set global.ZMax = 410
 
 if !{exists(global.UMin)}
-    global UMin = -9.9 ; Physical u-axis position when USwitchPin triggers.
+    global UMin = -10 ; Physical u-axis position when USwitchPin triggers.
 else
-    set global.UMin = -9.9
+    set global.UMin = -10
 
 if !{exists(global.UMax)}
     global UMax = 360
@@ -150,10 +151,10 @@ if !{exists(global.ASwitchPin)}
 else
     set global.ASwitchPin = "2.io0.in"
 
-if !{exists(global.APrimeSwitchPin)}
-    global APrimeSwitchPin = "2.io1.in"
-else
-    set global.APrimeSwitchPin = "2.io1.in"
+; if !{exists(global.APrimeSwitchPin)}
+;     global APrimeSwitchPin = ""
+; else
+;     set global.APrimeSwitchPin = ""
 
 if !{exists(global.CSwitchPin)}
     global CSwitchPin = "2.io2.in"
@@ -506,9 +507,9 @@ else
     set global.EHeat5Pin = "1.out2"
 
 if !{exists(global.ProbeRetractPin)}
-    global ProbeRetractPin = "1.out3"
+    global ProbeRetractPin = "out4"
 else
-    set global.ProbeRetractPin = "1.out3"
+    set global.ProbeRetractPin = "out4"
 
 if !{exists(global.ProbePin)}
     global ProbePin = "1.io0.in"
@@ -616,9 +617,9 @@ else
     set global.FCFanPin = "3.out3"
 
 if !{exists(global.FCSwitchPin)}
-    global FCSwitchPin = "!3.io0.in"
+    global FCSwitchPin = "3.io0.in"
 else
-    set global.FCSwitchPin = "!3.io0.in"
+    set global.FCSwitchPin = "3.io0.in"
 
 if !{exists(global.CDOnTrigger)}
     global CDOnTrigger = 2
@@ -664,5 +665,95 @@ if !{exists(global.FCDoorCloseTime)}
     global FCDoorCloseTime = 0
 else
     set global.FCDoorCloseTime = 0
+
+if !{exists(global.UMotTempNum)}
+    global UMotTempNum = -1
+else
+    set global.UMotTempNum = -1
+
+if !{exists(global.UMotTemp)}
+    global UMotTemp = -273.15
+else
+    set global.UMotTemp = -273.15
+
+if !{exists(global.UMotTempPin)}
+    global UMotTempPin = "temp3"
+else
+    set global.UMotTempPin = "temp3"
+
+if !{exists(global.UMotTempTime)}
+    global UMotTempTime = 0
+else
+    set global.UMotTempTime = 0
+
+if !{exists(global.UMotTempTimeInterval)}
+    global UMotTempTimeInterval = 30
+else
+    set global.UMotTempTimeInterval = 30
+
+if !{exists(global.VacuumPin)}
+    global VacuumPin = "1.out3"
+else
+    set global.VacuumPin = "1.out3"
+
+if !{exists(global.VacuumFanNum)}
+    global VacuumFanNum = -1
+else
+    set global.VacuumFanNum = -1
+
+; if !{exists(global.CSSolenoidPin)}
+;     global CSSolenoidPin = ""
+; else
+;     set global.CSSolenoidPin = ""
+
+if !{exists(global.CSPinchOutNum)}
+    global CSPinchOutNum = -1
+else
+    set global.CSPinchOutNum = -1
+
+; if !{exists(global.CSSolenoidOutNum)}
+;     global CSSolenoidOutNum = 
+; else
+;     set global.CSSolenoidOutNum = 
+
+if !{exists(global.FffFanNum)}
+    global FffFanNum = -1
+else
+    set global.FffFanNum = -1
+
+if !{exists(global.LayerFanNum)}
+    global LayerFanNum = -1
+else
+    set global.LayerFanNum = -1
+
+if !{exists(global.BELedFanNum)}
+    global BELedFanNum = -1
+else
+    set global.BELedFanNum = -1
+
+if !{exists(global.FCLedFanNum)}
+    global FCLedFanNum = -1
+else
+    set global.FCLedFanNum = -1
+
+if !{exists(global.ZBrakeOutNum)}
+    global ZBrakeOutNum = -1
+else
+    set global.ZBrakeOutNum = -1
+
+if !{exists(global.EStopSwitchInNum)}
+    global EStopSwitchInNum = -1
+else
+    set global.EStopSwitchInNum = -1
+
+if !{exists(global.ExtruderCrashDetectInNum)}
+    global ExtruderCrashDetectInNum = -1
+else
+    set global.ExtruderCrashDetectInNum = -1
+
+if !{exists(global.ProbeRetractOutNum)}
+    global ProbeRetractOutNum = -1
+else
+    set global.ProbeRetractOutNum = -1
 
 M118 S"End machinespecific.g" L2
