@@ -1,16 +1,28 @@
 ; cleaningstation.g
 ; Configure H4 Cleaning Station
 ; Written by Diabase Engineering
-; Last Updated: July 6, 2021
+; Last Updated: July 15, 2021
 
-M118 S"cleaningstation.g Start" L2
+M118 S{"Info: Begin cleaningstation.g"} L2
 
 ; Configure Cleaning Station Solenoids
-;M950 P0 C"fan0" ; Cleaning Station, Station Extension Solenoid (if equipped) - Define GPIO Pin 0 to use pin "fan0"
-M950 P1 C{global.CSPinchPin} ; Cleaning Station, Pliers-Closing Solenoid - Define GPIO Pin 1 to use pin defined in machinespecific.g
+if {exists(global.CSSolenoidPin)}
+    set global.CSSolenoidOutNum = #state.gpOut
+    M118 S{"Info: cleaningstation.g: Creating state.gpOut[" ^ {global.CSSolenoidOutNum} ^"] on pin" ^ {CSSolenoidPin} ^ " for cleaning station solenoid extension"} L2
+    M950 P{global.CSSolenoidOutNum} C{CSSolenoidPin} ; Cleaning Station, Station Extension Solenoid - Assign next available gpOut to the CS solenoid pin as defined in machinespecific.g
+else
+    M118 S{"Info: No cleaning station solenoid pin defined"} L2
+
+
+set global.CSPinchOutNum = #state.gpOut
+M118 S{"Info: cleaningstation.g: Creating state.gpOut[" ^ {global.CSPinchOutNum} ^ "] on pin " ^ {global.CSPinchPin} ^ " for cleaning station pliers-closing solenoid"} L2
+M950 P{global.CSPinchOutNum} C{global.CSPinchPin} ; Cleaning Station, Pliers-Closing Solenoid - Assign next available gpOut to the CS pinch pin as defined in machinespecific.g
 
 ; Configure Optional Cleaning Station Vacuum
-;M950 F8 C"duex.fan8" ; Cleaning Station Vacuum - Define Fan 8 to use pin duex.fan8
-;M106 P8 S0 B0 L1 C"Vacuum" ; I/O Pin for Cleaning Station Vacuum Relay - Configure Fan 8: Speed 0, Blip Time 0, Minimum Fan Speed 1, and call it "Vacuum"
-
-M118 S"cleaningstation.g End" L2
+if {exists(global.VacuumPin)}
+    set global.VacuumFanNum = #fans
+    M118 S{"Info: cleaningstation.g: Creating fans["^{global.VacuumFanNum}^"] on pin "^{global.VacuumPin}^" for cleaning station vacuum."} L2
+    M950 F{global.VacuumFanNum} C{global.VacuumPin} ; Cleaning Station Vacuum - Assign next available fan number to the vacuum pin as defined in machinespecific.g
+    M106 P{global.VacuumFanNum} S0 B0 L1.0 C"Vacuum" ; I/O Pin for Cleaning Station Vacuum Relay - Configure the newly created fan: Speed 0, Blip Time 0, Minimum Fan Speed 1.0, and call it "Vacuum"
+    
+M118 S{"Info: End cleaningstation.g"} L2

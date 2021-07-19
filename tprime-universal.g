@@ -1,7 +1,7 @@
 ; tprime-universal.g
 ; Universal priming macro
 ; Written by Diabase Engineering
-; Last Updated: July 14, 2021
+; Last Updated: July 15, 2021
 
 M118 S"Begin tprime-universal.g" L2
 
@@ -49,13 +49,13 @@ while iterations < #move.axes ; Loop over all axes
         break
 
     elif iterations == {#move.axes - 1} ; We're on the last loop and none were W, so assume we have a solenoid cleaning station.
-        M42 P0 S1 ; Set GPIO pin 0 high to fully extend cleaning station to priming location
+        M42 P{global.CSSolenoidOutNum} S1 ; Set GPIO pin 0 high to fully extend cleaning station to priming location
         M83 ; Set Extruder to Relative Mode
         G1 E{tools[{state.currentTool}].retraction.length} F{tools[{state.currentTool}].retraction.speed*60} ; Anti-Ooze Makeup Extrusion - Extrude Filament at After Prime Retraction Amount and Feedrate
-        M42 P0 S0.75 ; Set GPIO pin 0 to 75%
+        M42 P{global.CSSolenoidOutNum} S0.75 ; Set GPIO pin 0 to 75%
         G1 E{tools[{state.currentTool}].retraction.length + tools[{state.currentTool}].retraction.extraRestart} F{tools[{state.currentTool}].retraction.unretractSpeed*60} ; Button Extrusion - Extrude Filament at Prime Extrusion Amount and Feedrate
         M400 ; Wait for current moves to finish
-        M42 P0 S0 ; Set GPIO pin 0 to low 
+        M42 P{global.CSSolenoidOutNum} S0 ; Set GPIO pin 0 to low 
         G1 E{-{tools[{state.currentTool}].retraction.length}} F{tools[{state.currentTool}].retraction.speed*60} ; Anti-Ooze Retraction - Retract Filament at After Prime Retraction Amount and Feedrate
         G4 P20 ; Dwell for 20 ms
 
@@ -70,9 +70,9 @@ if {{global.VacuumFanNum} != -1}
 
 M98 P"clean.g" ; Call clean.g
 
-M42 P1 S1 ; Close pliers
+M42 P{global.CSPinchOutNum} S1 ; Close pliers
 G4 P20 ; Dwell for 20 ms
-M42 P1 S0.4 ; Reduce pliers solenoid current to 40%
+M42 P{global.CSPinchOutNum} S0.4 ; Reduce pliers solenoid current to 40%
 
 G90 ; Set to Absolute Positioning
 
