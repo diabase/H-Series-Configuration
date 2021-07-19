@@ -36,6 +36,10 @@ M98 P"create-tool.g" T{global.ToolType5} S{global.E5TempPin} H{global.EHeat5Pin}
 M118 S{"Info: Creating Probe"} L2
 M563 P10 S"Probe"
 G10 P10 X0.00 Y0.00 Z0.00 U0.00 V0.00 W0.00 A0.00 C0.00
+set global.ProbeRetractOutNum = #state.gpOut
+M118 S{"Info: Creating state.gpOut[" ^ {global.ProbeRetractOutNum} ^ "] on pin " ^ {global.ProbeRetractPin} ^ " for probe retract"} L2
+M950 P{global.ProbeRetractOutNum} C{global.ProbeRetractPin}                                                                             ; Probe Retract
+M402 P0                                                                                                                                 ; Retract Probe
 
 ; Fans
 M118 S{"Info: Creating/Configuring Fans"} L2

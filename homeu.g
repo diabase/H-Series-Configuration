@@ -50,3 +50,4 @@ T3 P0
 T4 P0
 T5 P0
 T10 P0
+M401 P0                                   ; Deploy Probe
