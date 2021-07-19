@@ -4,6 +4,7 @@ if #tools[{state.nextTool}].name == 5 ; If this tool is a probe...
     M453 ; Switch to CNC mode
     M574 Z1 S2 ; Set Z endstop position to low end and configure as Z probe
 M118 S{"Info: Begin tpost-universal.g"} L2
+    M401 P0                                   ; Deploy Probe
 
 elif #tools[{state.nextTool}].name == 7 ; If this tool is called "No Tool"...
     M451 ; Switch to FFF Mode
