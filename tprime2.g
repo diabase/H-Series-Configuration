@@ -1,5 +1,10 @@
 ; tprime2.g
 ; Called to prime and clean tool 2
+; Written by Diabase Engineering
+; Last Updated: July 19, 2021
+
+M118 S{"Info: Begin tprime2.g"} L2
+
 if state.currentTool != 2
     if state.currentTool == -1
         G60 S0 ; Save current position in the slot reserved for user-stored positions
@@ -15,3 +20,5 @@ if state.currentTool != 2
         G92 U{-(tools[{state.previousTool}].offsets[3]-tools[2].offsets[3])} ; Return the logical U-axis position to the actual position
 
 M98 P"tprime-universal.g" ; Call tprime-universal.g
+
+M118 S{"Info: End tprime2.g"} L2
