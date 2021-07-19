@@ -63,7 +63,8 @@ elif tools[{state.currentTool}].offsets[3] + 90.00 > 0
     G1 U270.00 F9900; Rotate turret (U) to point extruder at pliers (270.00mm == (-90.00mm mod 360)) at 9900 mm/min
 
 G4 P20 ; Dwell for 20 ms
-;M106 P8 S1 ; Turn on vacuum
+if {{global.VacuumFanNum} != -1}
+    M106 P{global.VacuumFanNum} S1 ; Turn vacuum on
 
 M98 P"clean.g" ; Call clean.g
 
@@ -80,7 +81,8 @@ M98 P"lock_turret.g" ; Call lock_turret.g
 ; Perform post-cleaning of the pliers
 M98 P"postclean.g" ; Call postclean.g
 
-;M106 P8 S0 ; Turn off vacuum
+if {{global.VacuumFanNum} != -1}
+    M106 P{global.VacuumFanNum} S0 ; Turn vacuum off
 
 G1 R0 Y0 F6000 ; Return to Y coordinate saved in restore point 0 at 6000 mm/min
 
