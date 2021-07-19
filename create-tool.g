@@ -7,7 +7,7 @@
 ;   E: Variable name containing Extruder Drive Number / Spindle Direction Pin
 ;   F: Variable name containing Filament Assist Drive Number / Spindle Air Pin
 ; Written by Diabase Engineering
-; Last Updated: July 12, 2021
+; Last Updated: July 19, 2021
 
 M118 S{"Info: Begin create-tool.g."} L2
 
@@ -39,6 +39,17 @@ if param.T == "Extruder"
     M308 S{var.NewSensorNum} P{param.S} Y"thermistor" T100000 B3950 C0 A{"Nozzle "^{var.NewToolNum}} ; Create a new sensor assigned to the temp sense pin parameter, thermistor type with resistance of 100Kohms at 25C, reciprocal of Steinhart-Hart B coefficient 3950, Steinhart-Hart C coefficient 0, and call it "Nozzle #"
     M950 H{var.NewHeatNum} C{param.H} T{var.NewSensorNum} ; Create a new heater using the heater pin parameter and the newly created sensor
     M143 H{var.NewHeatNum} S250 ; Monitor this new heater and throw an error if it exceeds 250C
+    M307 H{var.NewHeatNum} R2.429 C140.000:140.000 D5.50 S1.00 V0.0 B0 I0
+    M563 P{var.NewToolNum} D{var.ExtruderIndex}:{var.FAIndex} H{var.NewHeatNum} L-1 S{"Nozzle "^{var.NewToolNum}} ; Create a new tool using the extruder and assist drive parameters, no filament mapping, and call it "Nozzle #"
+    M567 P{var.NewToolNum} E1:1 ; Drive this new tool with a 1:1 ratio between the extruder and filament assist
+    G10 P{var.NewToolNum} X0 Y1.5 Z-5 U{var.NewUOffset} V0.00 W0.00 A0.00 C0.00 ; Set initial tool offsets to default values for an extruder
+
+; High Temp Extruder
+if param.T == "HT Extruder"
+    M118 S{"Info: Creating Nozzle "^var.NewToolNum^" using Heater "^var.NewHeatNum^", Sensor "^var.NewSensorNum^", Extruder "^var.ExtruderIndex^", FA "^var.FAIndex} L2
+    M308 S{var.NewSensorNum} P{param.S} Y"thermistor" T100000 B3950 C0 A{"Nozzle "^{var.NewToolNum}} ; Create a new sensor assigned to the temp sense pin parameter, thermistor type with resistance of 100Kohms at 25C, reciprocal of Steinhart-Hart B coefficient 3950, Steinhart-Hart C coefficient 0, and call it "Nozzle #"
+    M950 H{var.NewHeatNum} C{param.H} T{var.NewSensorNum} ; Create a new heater using the heater pin parameter and the newly created sensor
+    M143 H{var.NewHeatNum} S295 ; Monitor this new heater and throw an error if it exceeds 295C
     M307 H{var.NewHeatNum} R2.429 C140.000:140.000 D5.50 S1.00 V0.0 B0 I0
     M563 P{var.NewToolNum} D{var.ExtruderIndex}:{var.FAIndex} H{var.NewHeatNum} L-1 S{"Nozzle "^{var.NewToolNum}} ; Create a new tool using the extruder and assist drive parameters, no filament mapping, and call it "Nozzle #"
     M567 P{var.NewToolNum} E1:1 ; Drive this new tool with a 1:1 ratio between the extruder and filament assist
