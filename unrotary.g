@@ -19,9 +19,10 @@ M906 Y2100 A1800 I30                    ; Set motor currents (mA) and motor idle
 M84 S5                                  ; Set idle timeout
 
 ; Endstops
-M574 Y1 S1 P{global.YSwitchPin}
-M574 A1 S1 P"2.io3.in"M574 Y1 p"nil"                          ; Clear existing Y endstop pin
+M574 Y1 p"nil"                          ; Clear existing Y endstop pin
 M574 A1 p"nil"                          ; Clear existing A endstop pin
 G4 P100                                 ; Wait 100ms
 M574 Y1 S1 P{global.YSwitchPin}         ; Set new pin for A endstop
+M574 A1 S1 P{global.ASwitchPin}         ; Set new pin for Y endstop
+
 M118 S"Info: End unrotary.g" L2
