@@ -43,43 +43,54 @@ M402 P0                                                                         
 
 ; Fans
 M118 S{"Info: Creating/Configuring Fans"} L2
-var NewFanIndex = #fans
 
-M950 F{var.NewFanIndex} C{global.FffFanPin}                                                                 ; Extruder cooling fans
-M106 P{var.NewFanIndex} H{tools[1].heaters[0]}:{tools[3].heaters[0]}:{tools[5].heaters[0]} T50 C"FFF Fans"  ; thermostatic control of cooling fan on heaters 1, 3, and 5. Turns on at 50C
-set var.NewFanIndex={var.NewFanIndex+1}                                                                     ; Increment NewFanIndex
+; FFF Fans
+set global.FffFanNum = #fans
+M118 S{"Info: Creating fans[" ^ {global.FffFanNum} ^"] on pin" ^ {global.FffFanPin} ^ " for FFF Fans"} L2
+M950 F{global.FffFanNum} C{global.FffFanPin}                                                                 ; Extruder cooling fans
+M118 S{"Info: Configuring FFF Fans (fans[" ^ {global.FffFanNum} ^"]:) Thermostatic mode (50C) on tools.[1,3,5].heaters[0]"} L2
+M106 P{global.FffFanNum} H{tools[1].heaters[0]}:{tools[3].heaters[0]}:{tools[5].heaters[0]} T50 C"FFF Fans"  ; thermostatic control of cooling fan on heaters 1, 3, and 5. Turns on at 50C
 
-M950 F{var.NewFanIndex} C{global.LayerFanPin}   ; Layer cooling fans
-M106 P{var.NewFanIndex} C"Layer Fans"           ; Enable manual control of layer cooling fans
-set var.NewFanIndex={var.NewFanIndex+1}         ; Increment NewFanIndex
+; Layer Fan
+set global.LayerFanNum = #fans
+M118 S{"Info: Creating fans[" ^ {global.LayerFanNum} ^"] on pin" ^ {global.LayerFanPin} ^ " for Layer Fans"} L2
+M950 F{global.LayerFanNum} C{global.LayerFanPin}   ; Layer cooling fans
+M106 P{global.LayerFanNum}} C"Layer Fans"           ; Enable manual control of layer cooling fans
 
-M950 F{var.NewFanIndex} C{global.BELedPin}          ; Define fan for build enclosure LEDs
-M106 P{var.NewFanIndex} C"Build Enclosure LEDs" S1.0 L1.0  ; Configure "fan" for build enclosure LEDs as toggle-able without dimming
-set var.NewFanIndex={var.NewFanIndex+1}             ; Increment NewFanIndex
+; Build Enclosure LEDs
+set global.BELedFanNum = #fans
+M118 S{"Info: Creating fans[" ^ {global.BELedFanNum} ^"] on pin" ^ {global.BELedPin} ^ " for Build Enclosure LEDs"} L2
+M950 F{global.BELedFanNum} C{global.BELedPin}          ; Define fan for build enclosure LEDs
+M106 P{global.BELedFanNum} C"Build Enclosure LEDs" S1.0 L1.0  ; Configure "fan" for build enclosure LEDs as toggle-able without dimming
 
-M950 F{var.NewFanIndex} C{global.FCLedPin}          ; Define fan for filament cabinet LEDs
-M106 P{var.NewFanIndex} C"Filament LEDs" S1.0 L1.0         ; Configure "fan" for filament cabinet LEDs as toggle-able without dimming
-set var.NewFanIndex={var.NewFanIndex+1}             ; Increment NewFanIndex
+; Filament Cabinet LEDs
+set global.FCLedFanNum = #fans
+M118 S{"Info: Creating fans[" ^ {global.FCLedFanNum} ^"] on pin" ^ {global.FCLedPin} ^ " for Filament Cabinet LEDs"} L2
+M950 F{global.FCLedFanNum} C{global.FCLedPin}          ; Define fan for filament cabinet LEDs
+M106 P{global.FCLedFanNum} C"Filament LEDs" S1.0 L1.0         ; Configure "fan" for filament cabinet LEDs as toggle-able without dimming
 
-; I/O pins and Associated Behavior
-M950 P2 C{global.ZBrakePin}            ; Z axis brake
+; Z-Axis Brake
+set global.ZBrakeOutNum = #state.gpOut
+M118 S{"Info: Creating state.gpOut[" ^ {global.ZBrakeOutNum} ^ "] on pin " ^ {global.ZBrakePin} ^ " for Z axis brake"} L2
+M950 P{global.ZBrakeOutNum} C{global.ZBrakePin}            ; Z axis brake
 
-var NewInputIndex = #sensors.gpIn
-M118 S{"Info: Creating E-Stop Detect Switch as sensors.gpIn["^var.NewInputIndex^"] using pin "^global.EStopSwitchPin} L2    ; Log informational event
-M950 J{var.NewInputIndex} C{global.EStopSwitchPin}       ; E-Stop Switch Definition
-M118 S{"Info: Activation of Input"^{var.NewInputIndex}^" will run trigger"^global.EStopOnTrigger^".g"} L2    ; Log informational event
-M581 P{var.NewInputIndex} T{global.EStopOnTrigger} S1 R0                       ; E-Stop Switch Engage Behavior
-M118 S{"Info: Deactivation of Input"^{var.NewInputIndex}^" will run trigger"^global.EStopOffTrigger^".g"} L2    ; Log informational event
-M581 P{var.NewInputIndex} T{global.EStopOffTrigger} S0 R0                       ; E-Stop Switch Release Behavior
-set var.NewInputIndex = {var.NewInputIndex+1}                   ; Increment NewInputIndex
+; E-Stop Detection
+set global.EStopSwitchInNum = #sensors.gpIn
+M118 S{"Info: Creating sensors.gpIn["^ {global.EStopSwitchInNum} ^ "] on pin " ^ {global.EStopSwitchPin} ^" for e-stop detect switch"} L2   ; Log informational event
+M950 J{global.EStopSwitchInNum} C{global.EStopSwitchPin}                                                                                    ; E-Stop Switch Definition
+M118 S{"Info: Activating sensors.gpIn["^ {global.EStopSwitchInNum} ^ "] will run trigger" ^ {global.EStopOnTrigger} ^".g"} L2               ; Log informational event
+M581 P{global.EStopSwitchInNum} T{global.EStopOnTrigger} S1 R0                                                                             ; E-Stop Switch Engage Behavior
+M118 S{"Info: Deactivating sensors.gpIn["^ {global.EStopSwitchInNum} ^ "] will run trigger" ^ {global.EStopOffTrigger} ^".g"} L2            ; Log informational event
+M581 P{global.EStopSwitchInNum} T{global.EStopOffTrigger} S0 R0                                                                             ; E-Stop Switch Release Behavior
 
-; Extruder crash detection
-M118 S{"Info: Creating Extruder Crash Detect Switch as sensors.gpIn["^var.NewInputIndex^"] using pin "^global.ExtruderCrashDetectPin} L2    ; Log informational event
-M950 J{var.NewInputIndex} C{global.ExtruderCrashDetectPin} ;define pin for crash detection
-M118 S{"Info: Activation of Input"^{var.NewInputIndex}^" will run trigger"^global.CDOnTrigger^".g"} L2    ; Log informational event
-M581 P{var.NewInputIndex} T{global.CDOnTrigger} S1 R0    ;triggers any time (printing or jogging), runs "trigger2.g"
-M118 S{"Info: Deactivation of Input"^{var.NewInputIndex}^" will be ignored"} L2    ; Log informational event
-M669 S100 T0.1      ;break up movements into smaller bits - this is necessary for the machine to be able to pause if a crash is detected
+; Extruder Crash Detection
+set global.ExtruderCrashDetectInNum = #sensors.gpIn
+M118 S{"Info: Creating sensors.gpIn[" ^ {global.ExtruderCrashDetectInNum} ^ "] on pin " ^ {global.ExtruderCrashDetectPin} ^ " for extruder crash detect switch"} L2 ; Log informational event
+M950 J{global.ExtruderCrashDetectInNum} C{global.ExtruderCrashDetectPin}                                                                                            ; Extruder crash detect input definintion
+M118 S{"Info: Activating sensors.gpIn["^ global.ExtruderCrashDetectInNum} ^ "] will run trigger" ^ {global.CDOnTrigger} ^ ".g"} L2                                  ; Log informational event
+M581 P{global.ExtruderCrashDetectInNum} T{global.CDOnTrigger} S1 R0                                                                                                 ; Extruder crash detect behavior
+M118 S{"Info: Deactivating sensors.gpIn[" ^ {global.ExtruderCrashDetectInNum} ^ "] will be ignored"} L2                                                             ; Log informational event
+M669 S100 T0.1                                                                                                                                                      ; Split movements into smaller bits - this is necessary for the machine to be able to pause if a crash is detected
 
 M302 S150 ; Set minimum extrude temp
 
