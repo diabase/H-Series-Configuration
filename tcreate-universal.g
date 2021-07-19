@@ -11,7 +11,7 @@
 ;   - Automatically looping create-tool.g for variable-defined tools
 ; TODO: Revisit when spindles aren't all automatically created. - RT
 ; Written by Diabase Engineering
-; Last Updated: July 9, 2021
+; Last Updated: July 15, 2021
 
 M118 S{"Info: Begin tcreate-universal.g"} L2
 
@@ -93,5 +93,11 @@ M118 S{"Info: Deactivating sensors.gpIn[" ^ {global.ExtruderCrashDetectInNum} ^ 
 M669 S100 T0.1                                                                                                                                                      ; Split movements into smaller bits - this is necessary for the machine to be able to pause if a crash is detected
 
 M302 S150 ; Set minimum extrude temp
+
+if {exists(global.UMotTempPin)}
+    set global.UMotTempNum = #sensors.analog
+    M118 S{"Info: Creating sensors.analog[" ^ {global.UMotTempNum} ^ "] on pin " ^ {global.UMotTempPin} ^ " for measuring U-axis motor temperature"} L2 ; Log informational event
+    M308 S{global.UMotTempNum} P{global.UMotTempPin} Y"thermistor" T100000 B3950 C0 A"UMot Temp"
+
 
 M118 S{"Info: End tcreate-universal.g"} L2
