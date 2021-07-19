@@ -3,6 +3,7 @@
 if #tools[{state.nextTool}].name == 5 ; If this tool is a probe...
     M453 ; Switch to CNC mode
     M574 Z1 S2 ; Set Z endstop position to low end and configure as Z probe
+M118 S{"Info: Begin tpost-universal.g"} L2
 
 elif #tools[{state.nextTool}].name == 7 ; If this tool is called "No Tool"...
     M451 ; Switch to FFF Mode
@@ -23,3 +24,4 @@ if state.previousTool != -1 ; If we changed to this tool from another tool...
         G1 R2 Z2 ; Return to 2mm above Z coordinate stored in restore point 2
     else
         G1 Z{move.axes[2].max - global.MaxOffset} F10000 ; Move to Z = ZMax + Longest Z Offset at 10000 mm/min
+M118 S{"Info: End tpost-universal.g"} L2
