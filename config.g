@@ -1,7 +1,7 @@
 ; config.g
 ; H5A Configuration File
 ; Written by Diabase Engineering
-; Last Updated: July 15, 2021
+; Last Updated: July 20, 2021
 
 ; Logging
 M929 P"eventlog.txt" S3 ; start logging to file eventlog.txt (S0 = stop logging, S1 = log level WARN, S2 = log level INFO, S3 = log level DEBUG)
@@ -62,9 +62,9 @@ M558 K1 P8 C{global.TouchOffPlatePin} I0 F200 T10000 ; Set Z probe type for Prob
 G31 Z0; Set Z probe trigger height to 0mm
 
 ; Tools
+M98 P"heatedbed.g" ; Configure heated bed
 M98 P"tcreate-universal.g"  ; Create Tools, Fans, GPIO
 M98 P"cleaningstation.g" ; Configure cleaning station
-M98 P"heatedbed.g" ; Configure heated bed
 M98 P"toolpriming.g" ; Configure tool priming parameters
 M98 P"drycabinet.g" ; Configure filament drying cabinet
 M911 S19 R22 P"M98 P""estop.g"""  ; Run estop.g on power loss during a print
