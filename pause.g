@@ -30,7 +30,7 @@ if {state.currentTool} != -1 ; If we have a tool selected...
 
 M400 ; Wait for current moves to finish
 
-; Put all the tools into standby mode and leave no tool selected
+; Put all the tools into standby mode and re-select the last used tool
 T1 P0
 T2 P0
 T3 P0
