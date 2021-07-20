@@ -5,7 +5,10 @@
 
 M118 S"Begin tprime-universal.g" L2
 
-if #tools[{state.currentTool}].extruders == 0 ; If this tool has no extruders...
+if state.currentTool = -1
+    abort "No tool currently active. Priming cycle aborted."
+
+elif #tools[{state.currentTool}].extruders == 0 ; If this tool has no extruders...
     abort "Tool "^state.currentTool^" ("^tools[{state.currentTool}].name^") is not an extruder and cannot be primed. Priming cycle aborted."
 
 G60 S0 ; Save current position to slot 0
