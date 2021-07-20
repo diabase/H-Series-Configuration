@@ -1,7 +1,7 @@
 ; homey.g
 ; Called to home only the Y axis
 ; Written by Diabase Engineering
-; Last Updated: July 14, 2021
+; Last Updated: July 20, 2021
 
 ; Ensure appropriate axis endstops are used
 M574 Y1 S1 P{global.YSwitchPin} ; Configure Y endstop position at low end, it's an optical interrupt on pin defined in machinespecific.g
@@ -22,7 +22,7 @@ G90 ; Absolute Positioning
 G1 Y0 F10000 ; Move to Y=0 at 10000 mm/min
 
 if {state.currentTool} != -1 ; If we have a tool selected...
-    if #tools[{state.currentTool}].name == 5 ; If the probe is the current tool...
+    if {{tools[{state.currentTool}].spindle == -1} && {#tools[{state.currentTool}].extruders == 0}} ; If the probe is the current tool...
         M574 Z1 S2 ; Set Z endstop position to low end and configure as Z probe
 
 G1 R0 Z0 ; Return to Z-axis position stored in Slot 0
