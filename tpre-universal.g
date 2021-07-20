@@ -1,11 +1,16 @@
 ; Universal tpre macro
 ; Called when a tool is selected
 ; Written by Diabase Engineering
-; Last Updated: July 14, 2021
+; Last Updated: July 20, 2021
 
 M453 ; Switch to CNC mode
 if {global.MachineModel} == "H4"
     M84 E0:1:2:3 ; Idle all extruder motors
+
+while iterations < #move.axes
+    if move.axes[iterations].homed == false
+        M291 P{ move.axes[iterations].letter^" axis is unhomed. Home all axes now?"} R"Home all?" S3
+        M98 P"homeall.g"
 
 ; Only perform machine moves if we need to change the turret position
 if move.axes[3].machinePosition != -tools[{state.nextTool}].offsets[3]
