@@ -1,11 +1,11 @@
 ; tprime-universal.g
 ; Universal priming macro
 ; Written by Diabase Engineering
-; Last Updated: July 15, 2021
+; Last Updated: July 20, 2021
 
 M118 S"Begin tprime-universal.g" L2
 
-if #tools[{state.currentTool}].name != 8 ; If this tool is not extruder...
+if #tools[{state.currentTool}].extruders == 0 ; If this tool has no extruders...
     abort "Tool "^state.currentTool^" ("^tools[{state.currentTool}].name^") is not an extruder and cannot be primed. Priming cycle aborted."
 
 G60 S0 ; Save current position to slot 0
@@ -93,4 +93,4 @@ if state.restorePoints[0].coords[2] + 2 <= {move.axes[2].max - global.MaxOffset}
 else
     G1 Z{move.axes[2].max + global.MaxOffset} F6000 ; Move to Z = ZMax + Longest Z Offset at 6000 mm/min
     
-M118 S"Begin tprime-universal.g" L2
+M118 S"End tprime-universal.g" L2
