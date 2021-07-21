@@ -6,4 +6,5 @@ if state.status != "idle"
         if {state.upTime >= {{global.UMotTempTime} + {global.UMotTempTimeInterval}}}
             set global.UMotTempTime = state.upTime
             set global.UMotTemp = sensors.analog[{global.UMotTempNum}].lastReading
-            M118 S{"Info: UMot Temperature was "^{global.UMotTemp}^" at "^{global.UMotTempTime}} L2
+            ; M118 S{"Info: UMot Temperature was "^{global.UMotTemp}^" at "^{global.UMotTempTime}} L2
+            M118 S{global.UMotTemp} L2
