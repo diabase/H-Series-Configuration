@@ -2,7 +2,7 @@
 ; Configuration parameters specific to this individual H-Series machine.
 ; Produced by Diabase H-Series Configurizer
 ; Written by Diabase Engineering
-; Last Updated: July 19, 2021
+; Last Updated: July 21, 2021
 
 M118 S"Begin machinespecific.g" L2
 
@@ -582,9 +582,9 @@ else
     set global.ToolType4 = "Spindle"
 
 if !{exists(global.ToolType5)}
-    global ToolType5 = "Extruder"
+    global ToolType5 = "HT Extruder"
 else
-    set global.ToolType5 = "Extruder"
+    set global.ToolType5 = "HT Extruder"
 
 if !{exists(global.E1TempPin)}
     global E1TempPin = "1.temp0"
@@ -755,5 +755,45 @@ if !{exists(global.ProbeRetractOutNum)}
     global ProbeRetractOutNum = -1
 else
     set global.ProbeRetractOutNum = -1
+
+if !{exists(global.BedHeaterNum)}
+    global BedHeaterNum = -1
+else
+    set global.BedHeaterNum = -1
+
+if !{exists(global.BedSensorNum)}
+    global BedSensorNum = -1
+else
+    set global.BedSensorNum = -1
+
+if !{exists(global.ConfigLastRun)}
+    global ConfigLastRun = -1
+else
+    set global.ConfigLastRun = -1
+
+if !{exists(global.HeatedBedLastRun)}
+    global HeatedBedLastRun = -1
+else
+    set global.HeatedBedLastRun = -1
+
+if !{exists(global.TCreateLastRun)}
+    global TCreateLastRun = -1
+else
+    set global.TCreateLastRun = -1
+
+if !{exists(global.CleaningStationLastRun)}
+    global CleaningStationLastRun = -1
+else
+    set global.CleaningStationLastRun = -1
+
+if !{exists(global.DryCabinetLastRun)}
+    global DryCabinetLastRun = -1
+else
+    set global.DryCabinetLastRun = -1
+
+if !{exists(global.MaxOffsetLastRun)}
+    global MaxOffsetLastRun = -1
+else
+    set global.MaxOffsetLastRun = -1
 
 M118 S"End machinespecific.g" L2
