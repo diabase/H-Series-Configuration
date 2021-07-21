@@ -16,4 +16,7 @@ M118 S{"Info: Registering heat.heaters[" ^ {global.BedHeaterNum} ^"] as a bed he
 M140 H{global.BedHeaterNum} ; Define this heater as a bed heater
 M143 H{global.BedHeaterNum} S120 ; Limit Bed temperature to 120C
 M307 H{global.BedHeaterNum} R0.129 C700.000:700.000 D10.00 S1.00 V0.0 B1 I0 ; Set initial heater parameters
+
+set global.HeatedBedLastRun = state.upTime
+
 M118 S{"Info: End heatedbed.g"} L2

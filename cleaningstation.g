@@ -1,7 +1,7 @@
 ; cleaningstation.g
 ; Configure H4 Cleaning Station
 ; Written by Diabase Engineering
-; Last Updated: July 15, 2021
+; Last Updated: July 20, 2021
 
 M118 S{"Info: Begin cleaningstation.g"} L2
 
@@ -24,5 +24,7 @@ if {exists(global.VacuumPin)}
     M118 S{"Info: cleaningstation.g: Creating fans["^{global.VacuumFanNum}^"] on pin "^{global.VacuumPin}^" for cleaning station vacuum."} L2
     M950 F{global.VacuumFanNum} C{global.VacuumPin} ; Cleaning Station Vacuum - Assign next available fan number to the vacuum pin as defined in machinespecific.g
     M106 P{global.VacuumFanNum} S0 B0 L1.0 C"Vacuum" ; I/O Pin for Cleaning Station Vacuum Relay - Configure the newly created fan: Speed 0, Blip Time 0, Minimum Fan Speed 1.0, and call it "Vacuum"
-    
+
+set global.CleaningStationLastRun = state.upTime
+
 M118 S{"Info: End cleaningstation.g"} L2

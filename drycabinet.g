@@ -1,7 +1,7 @@
 ; drycabinet.g
 ; Configures parameters for monitoring H5 filament drying cabinet.
 ; Written by Diabase Engineering
-; Last Updated: July 12, 2021
+; Last Updated: July 20, 2021
 
 M118 S{"Info: Begin drycabinet.g"} L2
 
@@ -27,5 +27,7 @@ M581 P{var.NewInputIndex} T{global.FCSwitchOnTrigger} S1 R0     ; Filament Cabin
 M118 S{"Info: Deactivation of Input"^{var.NewInputIndex}^" will run trigger"^global.FCSwitchOffTrigger^".g"} L2    ; Log informational event
 M581 P{var.NewInputIndex} T{global.FCSwitchOffTrigger} S0 R0    ; Filament Cabinet Release Behavior
 set var.NewInputIndex = {var.NewInputIndex+1}                   ; Increment NewInputIndex
+
+set global.DryCabinetLastRun = state.upTime
 
 M118 S{"Info: End drycabinet.g"} L2

@@ -73,4 +73,6 @@ M575 P1 B115200 S1; Set up UART for pendant input
 ; Post Config.g Commands
 M501 ; Set active parameters to those stored in config-override.g
 M98 P"maxoffset.g"     ;set maxoffset to maximum tool length
+
+set global.ConfigLastRun = state.upTime
 M118 S"Info: End config.g" L2
