@@ -7,7 +7,7 @@
 ;   E: Variable name containing Extruder Drive Number / Spindle Direction Pin
 ;   F: Variable name containing Filament Assist Drive Number / Spindle Air Pin
 ; Written by Diabase Engineering
-; Last Updated: July 19, 2021
+; Last Updated: July 20, 2021
 
 M118 S{"Info: Begin create-tool.g."} L2
 
@@ -20,13 +20,13 @@ var ExtruderIndex = 0
 var FAIndex = 0
 var NewUOffset = {{{var.NewToolNum - 1} * -72} - 30}
 
-if param.T == "Extruder"
+if {{param.T == "Extruder"} || {param.T == "HT Extruder"}}
     while iterations < #move.extruders
         if {({param.E} ^ "") == (move.extruders[iterations].driver ^ "")}
             set var.ExtruderIndex = iterations
             break
 
-if param.T == "Extruder"
+if {{param.T == "Extruder"} || {param.T == "HT Extruder"}}
     while iterations < #move.extruders
         if {({param.F} ^ "")== (move.extruders[iterations].driver ^ "")}
             set var.FAIndex = iterations
