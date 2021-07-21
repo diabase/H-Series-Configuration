@@ -11,7 +11,7 @@
 ;   - Automatically looping create-tool.g for variable-defined tools
 ; TODO: Revisit when spindles aren't all automatically created. - RT
 ; Written by Diabase Engineering
-; Last Updated: July 15, 2021
+; Last Updated: July 20, 2021
 
 M118 S{"Info: Begin tcreate-universal.g"} L2
 
@@ -99,5 +99,6 @@ if {exists(global.UMotTempPin)}
     M118 S{"Info: Creating sensors.analog[" ^ {global.UMotTempNum} ^ "] on pin " ^ {global.UMotTempPin} ^ " for measuring U-axis motor temperature"} L2 ; Log informational event
     M308 S{global.UMotTempNum} P{global.UMotTempPin} Y"thermistor" T100000 B3950 C0 A"UMot Temp"
 
+set global.TCreateLastRun = state.upTime
 
 M118 S{"Info: End tcreate-universal.g"} L2
