@@ -796,4 +796,14 @@ if !{exists(global.MaxOffsetLastRun)}
 else
     set global.MaxOffsetLastRun = -1
 
+if !{exists(global.XMaxSpeed)}
+    global XMaxSpeed = 10000
+else
+    set global.XMaxSpeed = 10000
+
+if !{exists(global.XMaxSpeedRotary)}
+    global XMaxSpeedRotary = 2000
+else
+    set global.XMaxSpeedRotary = 2000
+
 M118 S"End machinespecific.g" L2
