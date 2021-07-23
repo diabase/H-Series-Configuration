@@ -2,7 +2,7 @@
 ; Configuration parameters specific to this individual H-Series machine.
 ; Produced by Diabase H-Series Configurizer
 ; Written by Diabase Engineering
-; Last Updated: July 22, 2021
+; Last Updated: July 23, 2021
 
 M118 S"Begin machinespecific.g" L2
 
@@ -13,7 +13,7 @@ if global.MachineName == "H5001"
 
 if global.MachineName == "H5002"
     set global.ZMin = -20
-    M906 I90
+    M906 A2000 I90
     M203 U6500
 
 if global.MachineName == "H5003"
