@@ -1,11 +1,15 @@
 ; config.g
 ; H5A Configuration File
 ; Written by Diabase Engineering
-; Last Updated: July 20, 2021
+; Last Updated: July 22, 2021
 
 ; Logging
 M929 P"eventlog.txt" S3 ; start logging to file eventlog.txt (S0 = stop logging, S1 = log level WARN, S2 = log level INFO, S3 = log level DEBUG)
 M118 S"Info: Begin config.g" L2
+
+;Default Parameters
+if !{exists(global.DefaultParametersLastRun)}
+    M98 P"defaultparameters.g"
 
 ;Machine-specific settings
 M98 P"machinespecific.g"
@@ -73,6 +77,9 @@ M575 P1 B115200 S1; Set up UART for pendant input
 ; Post Config.g Commands
 M501 ; Set active parameters to those stored in config-override.g
 M98 P"maxoffset.g"     ;set maxoffset to maximum tool length
+
+;Machine-specific settings
+M98 P"machinespecific.g"
 
 set global.ConfigLastRun = state.upTime
 M118 S"Info: End config.g" L2
