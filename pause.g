@@ -3,7 +3,7 @@
 ; Written by Diabase Engineering
 ; Last Updated: July 22, 2021
 
-G60 S0  ;   save current tool information
+G60 S1  ;   save current tool information
 
 if state.machineMode="FFF"
     M83 ; Set extruder to relative mode
@@ -36,7 +36,7 @@ T3 P0
 T4 P0
 T5 P0
 T10 P0
-T{state.restorePoints[0].toolNumber} P0
+T{state.restorePoints[1].toolNumber} P0
 
 if heat.heaters[{global.BedHeaterNum}] != null ; ...and we have defined a bed heater...
     if {heat.heaters[{global.BedHeaterNum}].state != "fault" && heat.heaters[{global.BedHeaterNum}].current != -273.15} ; ...and it's not in a fault state...
