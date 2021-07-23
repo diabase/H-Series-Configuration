@@ -1,7 +1,7 @@
 ; pause.g
 ; Called when a job is paused.
 ; Written by Diabase Engineering
-; Last Updated: July 20, 2021
+; Last Updated: July 22, 2021
 
 G60 S0  ;   save current tool information
 
@@ -24,9 +24,8 @@ elif move.axes[2].machinePosition + 40 > move.axes[2].max ; If we don't have eno
 G90 ; Set to Absolute Positioning
 G1 Y85 F6000 ; Move Y to 85 mm at 6000 mm/min
 
-if {state.currentTool} != -1 ; If we have a tool selected...
-    if {{tools[{state.currentTool}].spindle != -1} && {#tools[{state.currentTool}].extruders == 0}} ; If this tool is a spindle...
-        M3 P{tools[{state.currentTool}].spindle} S0 ; ...set it to 0 RPM, clockwise.
+if state.machineMode="CNC"
+    M5       ; Stop the spindle of the current tool (if any) or stop all spindles if the current tool has no spindles or no tool is selected
 
 M400 ; Wait for current moves to finish
 
