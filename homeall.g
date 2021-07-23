@@ -8,9 +8,9 @@ M208
 G54 ; Assert WCS
 
 ; Ensure axis endstops are used
-M574 X1 S1 P{global.XSwitchPin} ; Configure X endstop position at low end, it's an optical interrupt on pin defined in machinespecific.g
-M574 Y1 S1 P{global.YSwitchPin} ; Configure Y endstop position at low end, it's an optical interrupt on pin defined in machinespecific.g
-M574 Z2 S1 P{global.ZSwitchPin} ; Configure Z endstop position at high end, it's an optical interrupt on pin defined in machinespecific.g
+M574 X1 S1 P{global.XSwitchPin} ; Configure X endstop position at low end, it's an optical interrupt on pin defined in defaultparameters.g
+M574 Y1 S1 P{global.YSwitchPin} ; Configure Y endstop position at low end, it's an optical interrupt on pin defined in defaultparameters.g
+M574 Z2 S1 P{global.ZSwitchPin} ; Configure Z endstop position at high end, it's an optical interrupt on pin defined in defaultparameters.g
 
 if {global.MachineModel} == "H4"
     M84 E0:1:2:3 ; Idle all extruder motors

@@ -4,8 +4,8 @@
 ; Last Updated: July 20, 2021
 
 ; Ensure appropriate axis endstops are used
-M574 X1 S1 P{global.XSwitchPin} ; Configure X endstop position at low end, it's an optical interrupt on pin defined in machinespecific.g
-M574 Z2 S1 P{global.ZSwitchPin} ; Configure Z endstop position at high end, it's an optical interrupt on pin defined in machinespecific.g
+M574 X1 S1 P{global.XSwitchPin} ; Configure X endstop position at low end, it's an optical interrupt on pin defined in defaultparameters.g
+M574 Z2 S1 P{global.ZSwitchPin} ; Configure Z endstop position at high end, it's an optical interrupt on pin defined in defaultparameters.g
 
 G91 ; Relative Positioning
 

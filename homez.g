@@ -6,7 +6,7 @@
 M118 S"Begin homez.g" L2
 
 ; Ensure appropriate axis endstops are used
-M574 Z2 S1 P{global.ZSwitchPin} ; Configure Z endstop position at high end, pin defined in machinespecific.g
+M574 Z2 S1 P{global.ZSwitchPin} ; Configure Z endstop position at high end, pin defined in defaultparameters.g
 
 G91 ; Relative Positioning
 G1 H1 Z.5 F6000 ; Move Z +0.5mm at 6000 mm/min
@@ -25,6 +25,6 @@ G1 Z{move.axes[2].max + global.MaxOffset} F10000 ; Move to Z = ZMax + Longest Z 
 
 if {state.currentTool} != -1 ; If we have a tool selected...
     if {{tools[{state.currentTool}].spindle == -1} && {#tools[{state.currentTool}].extruders == 0}} ; If the probe is the current tool...
-        M574 Z1 S2 ; Set Z endstop position to low end and configure as Z probe, pin defined in machinespecific.g
+        M574 Z1 S2 ; Set Z endstop position to low end and configure as Z probe, pin defined in defaultparameters.g
 
 M118 S"End homez.g" L2
