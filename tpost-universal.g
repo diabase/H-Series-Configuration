@@ -1,7 +1,7 @@
 ; tpost-universal.g
 ; Called when a tool is selected
 ; Written by Diabase Engineering
-; Last Updated: July 21, 2021
+; Last Updated: July 22, 2021
 
 M118 S{"Info: Begin tpost-universal.g"} L2
 
@@ -27,6 +27,6 @@ if state.previousTool != -1                                                     
     if state.restorePoints[2].coords[2] + 2 <= {move.axes[2].max - global.MaxOffset}
         G1 R2 Z2                                                                                                                    ; Return to 2mm above Z coordinate stored in restore point 2
     else
-        G1 Z{move.axes[2].max - global.MaxOffset} F10000                                                                            ; Move to Z = ZMax + Longest Z Offset at 10000 mm/min
+        G1 Z{move.axes[2].max + global.MaxOffset} F10000                                                                            ; Move to Z = ZMax + Longest Z Offset at 10000 mm/min
 
 M118 S{"Info: End tpost-universal.g"} L2
