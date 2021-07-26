@@ -1,34 +1,53 @@
 ; tcreate-universal.g
 ; Creates and configures all tools
 ; Parameters for create-tool.g:
-;   T: Variable name containing Tool Type
-;   S: Variable name containing Temp Sense Pin / Spindle Speed Sense Pin
-;   H: Variable name containing Heater Pin / Spindle Speed Pin
-;   E: Variable name containing Extruder Drive Number / Spindle Direction Pin
-;   F: Variable name containing Filament Assist Drive Number / Spindle Air Pin
+;   T: Tool Number
+;   Y: Tool Type
+;   S: Temp Sense Pin if Extruder / Spindle Index if Spindle
+;   N: Temp Sense Index if Extruder / "Fan" Index for Air Assist if Spindle
+;   H: Heater Pin if Extruder / Spindle Speed Pin if Spindle
+;   R: Heater Index
+;   E: Extruder Drive Number if Extruder / Spindle Direction Pin if Spindle
+;   F: Filament Assist Drive Number if Extruder / Spindle Air Pin if Spindle
 ; TODO: Revisit when variable arrays are available.
 ;   - Identifying heaters for thermostatic fan. - RT
 ;   - Automatically looping create-tool.g for variable-defined tools
 ; TODO: Revisit when spindles aren't all automatically created. - RT
 ; Written by Diabase Engineering
-; Last Updated: July 22, 2021
+; Last Updated: July 26, 2021
 
 M118 S{"Info: Begin tcreate-universal.g"} L2
 
 ; Tool 1
-M98 P"create-tool.g" T{global.ToolType1} S{global.E1TempPin} H{global.EHeat1Pin} E{global.E1Drive} F{global.FA1Drive}
+if global.E1HeatIndex == -1
+    set global.E1HeatIndex = #heat.heaters
+if global.E1TempIndex == -1
+    set global.E1TempIndex = #sensors.analog
+M98 P"create-tool.g" T1 Y{global.ToolType1} S{global.E1TempPin} N{global.E1TempIndex} H{global.EHeat1Pin} R{global.E1HeatIndex} E{global.E1Drive} F{global.FA1Drive}
 
 ; Tool 2
-M98 P"create-tool.g" T{global.ToolType2} S0 H{global.Spindle2SpeedPin} E{global.Spindle2DirectionPin} F{global.Spindle2AirPin}
+if global.Spindle2AirIndex == -1
+    set global.Spindle2AirIndex = #fans
+M98 P"create-tool.g" T2 Y{global.ToolType2} S0 H{global.Spindle2SpeedPin} N{global.Spindle2AirIndex} E{global.Spindle2DirectionPin} F{global.Spindle2AirPin}
 
 ; Tool 3
-M98 P"create-tool.g" T{global.ToolType3} S{global.E3TempPin} H{global.EHeat3Pin} E{global.E3Drive} F{global.FA3Drive}
+if global.E3HeatIndex == -1
+    set global.E3HeatIndex = #heat.heaters
+if global.E3TempIndex == -1
+    set global.E3TempIndex = #sensors.analog
+M98 P"create-tool.g" T3 Y{global.ToolType3} S{global.E3TempPin} N{global.E3TempIndex} H{global.EHeat3Pin} R{global.E3HeatIndex} E{global.E3Drive} F{global.FA3Drive}
 
 ; Tool 4
-M98 P"create-tool.g" T{global.ToolType4} S1 H{global.Spindle4SpeedPin} E{global.Spindle4DirectionPin} F{global.Spindle4AirPin}
+if global.Spindle4AirIndex == -1
+    set global.Spindle4AirIndex = #fans
+M98 P"create-tool.g" T4 Y{global.ToolType4} S1 H{global.Spindle4SpeedPin} N{global.Spindle4AirIndex} E{global.Spindle4DirectionPin} F{global.Spindle4AirPin}
 
 ; Tool 5
-M98 P"create-tool.g" T{global.ToolType5} S{global.E5TempPin} H{global.EHeat5Pin} E{global.E5Drive} F{global.FA5Drive}
+if global.E5HeatIndex == -1
+    set global.E5HeatIndex = #heat.heaters
+if global.E5TempIndex == -1
+    set global.E5TempIndex = #sensors.analog
+M98 P"create-tool.g" T5 Y{global.ToolType5} S{global.E5TempPin} N{global.E5TempIndex} H{global.EHeat5Pin} R{global.E5HeatIndex} E{global.E5Drive} F{global.FA5Drive}
 
 ; Tool 10
 M118 S{"Info: Creating Probe"} L2
