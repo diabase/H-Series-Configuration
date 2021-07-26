@@ -2,7 +2,7 @@
 ; Default configuration parameters for H-Series machines
 ; Produced by Diabase H-Series Configurizer
 ; Written by Diabase Engineering
-; Last Updated: July 22, 2021
+; Last Updated: July 26, 2021
 
 M118 S"Begin defaultparameters.g" L2
 
@@ -456,6 +456,31 @@ else
 ; else
 ;     set global.Spindle5AirPin = ""
 
+; if !{exists(global.Spindle1AirIndex)}
+;     global Spindle1AirIndex = 
+; else
+;     set global.Spindle1AirIndex = 
+
+if !{exists(global.Spindle2AirIndex)}
+    global Spindle2AirIndex = -1
+else
+    set global.Spindle2AirIndex = -1
+
+; if !{exists(global.Spindle3AirIndex)}
+;     global Spindle3AirIndex = 
+; else
+;     set global.Spindle3AirIndex = 
+
+if !{exists(global.Spindle4AirIndex)}
+    global Spindle4AirIndex = -1
+else
+    set global.Spindle4AirIndex = -1
+
+; if !{exists(global.Spindle5AirIndex)}
+;     global Spindle5AirIndex = 
+; else
+;     set global.Spindle5AirIndex = 
+
 if !{exists(global.MaxOffset)}
     global MaxOffset = 0
 else
@@ -505,6 +530,31 @@ if !{exists(global.EHeat5Pin)}
     global EHeat5Pin = "1.out2"
 else
     set global.EHeat5Pin = "1.out2"
+
+if !{exists(global.E1HeatIndex)}
+    global E1HeatIndex = -1
+else
+    set global.E1HeatIndex = -1
+
+; if !{exists(global.E2HeatIndex)}
+;     global E2HeatIndex = 
+; else
+;     set global.E2HeatIndex = 
+
+if !{exists(global.E3HeatIndex)}
+    global E3HeatIndex = -1
+else
+    set global.E3HeatIndex = -1
+
+; if !{exists(global.E4HeatIndex)}
+;     global E4HeatIndex = 
+; else
+;     set global.E4HeatIndex = 
+
+if !{exists(global.E5HeatIndex)}
+    global E5HeatIndex = -1
+else
+    set global.E5HeatIndex = -1
 
 if !{exists(global.ProbeRetractPin)}
     global ProbeRetractPin = "out4"
@@ -610,6 +660,31 @@ if !{exists(global.E5TempPin)}
     global E5TempPin = "1.temp2"
 else
     set global.E5TempPin = "1.temp2"
+
+if !{exists(global.E1TempIndex)}
+    global E1TempIndex = -1
+else
+    set global.E1TempIndex = -1
+
+; if !{exists(global.E2TempIndex)}
+;     global E2TempIndex = 
+; else
+;     set global.E2TempIndex = 
+
+if !{exists(global.E3TempIndex)}
+    global E3TempIndex = -1
+else
+    set global.E3TempIndex = -1
+
+; if !{exists(global.E4TempIndex)}
+;     global E4TempIndex = 
+; else
+;     set global.E4TempIndex = 
+
+if !{exists(global.E5TempIndex)}
+    global E5TempIndex = -1
+else
+    set global.E5TempIndex = -1
 
 if !{exists(global.FCFanPin)}
     global FCFanPin = "3.out3"
@@ -825,5 +900,6 @@ if !{exists(global.FCSwitchInNum)}
     global FCSwitchInNum = -1
 else
     set global.FCSwitchInNum = -1
+
 
 M118 S"End defaultparameters.g" L2
