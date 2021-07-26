@@ -13,7 +13,7 @@ if global.MachineName == "H5001"
 
 if global.MachineName == "H5002"
     set global.ZMin = -20
-    M906 A2000 I90
+    M906 A2000 V1000 I90
     M203 U6500
 
 if global.MachineName == "H5003"
