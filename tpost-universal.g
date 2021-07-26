@@ -1,7 +1,7 @@
 ; tpost-universal.g
 ; Called when a tool is selected
 ; Written by Diabase Engineering
-; Last Updated: July 22, 2021
+; Last Updated: July 25, 2021
 
 M118 S{"Info: Begin tpost-universal.g"} L2
 
@@ -18,8 +18,9 @@ else                                                                            
     if {#tools[{state.nextTool}].extruders == 0}                                                                                    ; ... but no extruders, we assume it's a spindle.
         M453                                                                                                                        ; Switch to CNC mode
         if heat.heaters[{global.BedHeaterNum}] != null                                                                              ; If we have defined a bed heater...
-            if {heat.heaters[{global.BedHeaterNum}].state != "fault" && heat.heaters[{global.BedHeaterNum}].current != -273.15}     ; ...and it's not in a fault state...
-                M140 H{global.BedHeaterNum} S-273.15                                                                                ; ...turn it off to protect power supply.
+            if {heat.heaters[{global.BedHeaterNum}].state != "fault"}                                                               ; ... it's not currently in a fault state...
+                if {heat.heaters[{global.BedHeaterNum}].current != -273.15}                                                         ; ... and it's not physically disconnected
+                    M140 H{global.BedHeaterNum} S-273.15                                                                            ; ... turn it off to protect power supply.
 
 if state.previousTool != -1                                                                                                         ; If we changed to this tool from another tool...
     G90                                                                                                                             ; Set to Absolute Positioning
