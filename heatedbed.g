@@ -1,7 +1,7 @@
 ; heatedbed.g
 ; Configures heated bed for H5 machines
 ; Written by Diabase Engineering
-; Last Updated: July 22, 2021
+; Last Updated: July 26, 2021
 
 M118 S{"Info: Begin heatedbed.g"} L2
 
@@ -20,7 +20,7 @@ M950 H{global.BedHeaterNum} C{global.BedHeatPin} T{global.BedSensorNum} ; Create
 M118 S{"Info: Registering heat.heaters[" ^ {global.BedHeaterNum} ^"] as a bed heater"} L2
 M140 H{global.BedHeaterNum} ; Define this heater as a bed heater
 M143 H{global.BedHeaterNum} S120 ; Limit Bed temperature to 120C
-M307 H{global.BedHeaterNum} R0.129 C700.000:700.000 D10.00 S1.00 V0.0 B1 I0 ; Set initial heater parameters
+M307 H{global.BedHeaterNum} R0.111 C1212.519:1212.519 D20.84 S1.00 V24.0 B1 I0 ; Set initial heater parameters
 
 set global.HeatedBedLastRun = state.upTime
 
