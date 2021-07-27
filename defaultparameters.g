@@ -901,5 +901,9 @@ if !{exists(global.FCSwitchInNum)}
 else
     set global.FCSwitchInNum = -1
 
+if !{exists(global.PrimeNextTC)}
+    global PrimeNextTC = 1
+else
+    set global.PrimeNextTC = 1
 
 M118 S"End defaultparameters.g" L2
