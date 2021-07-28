@@ -15,7 +15,8 @@ while iterations < #move.axes
 
 if {global.PrimeNextTC} == 1
     #tools[{state.nextTool}].extruders >= 0
-        M98 P"tprime.g"                         ; Prime the next tool
+        M98 P"tprime.g"                         ; Prime the upcoming tool
+        set global.PrimeNextTC = 0              ; We've performed the requested priming.
 
 ; Only perform machine moves if we need to change the turret position
 if move.axes[3].machinePosition != -tools[{state.nextTool}].offsets[3]
