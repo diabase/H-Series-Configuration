@@ -1,9 +1,18 @@
 ; cleaningstation.g
 ; Configure H4 Cleaning Station
 ; Written by Diabase Engineering
-; Last Updated: July 22, 2021
+; Last Updated: July 28, 2021
 
 M118 S{"Info: Begin cleaningstation.g"} L2
+
+; Configure Positions for Cleaning Station Motor
+if {exists(global.WPrimeSurface)}
+    if global.WClearance == -1
+        set global.WClearance = {{global.WPrimeSurface} - 5}
+    if global.WClean == -1
+        set global.WClean = {{global.WPrimeSurface} - 2}
+    if global.WGrab == -1
+        set global.WGrab = {{global.WPrimeSurface} - 10}
 
 ; Configure Cleaning Station Solenoids
 if {exists(global.CSSolenoidPin)}

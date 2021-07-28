@@ -1,7 +1,7 @@
 ; tprime.g
 ; Universal priming macro
 ; Written by Diabase Engineering
-; Last Updated: July 27, 2021
+; Last Updated: July 28, 2021
 
 M118 S{"Begin tprime.g"} L2
 
@@ -36,14 +36,12 @@ G4 P20 ; Dwell for 20 ms
 M116 P{state.nextTool} S5 ; Wait until tool reaches +/-5C of its set value
 
 if global.CSType == "Motor"
-    ;G1 W31 F15000 ; Move W to 31mm at 15000 mm/min to extend cleaning station to priming location (Wprimesurface)
-    G1 W22 F15000 ; Changed to 23.5mm for H5 crash detect extruder (SFH)
+    G1 W{global.WPrimeSurface} F15000 ; Move W to value specified in defaultparameters.g at 15000 mm/min to extend cleaning station to priming location
     M83 ; Set Extruder to Relative Mode
     G1 E{tools[{state.nextTool}].retraction.length} F{tools[{state.nextTool}].retraction.speed*60} ; Anti-Ooze Makeup Extrusion - Extrude Filament at After Prime Retraction Amount and Feedrate
     G1 E{tools[{state.nextTool}].retraction.length + tools[{state.nextTool}].retraction.extraRestart} F{tools[{state.nextTool}].retraction.unretractSpeed*60} ; Extrude Filament at Prime Extrusion Amount and Feedrate
     M400 ; Wait for current moves to finish
-    ;G1 W26 F6000 ; Move W to 26mm at 6000 mm/min to retract cleaning station to the clearance location for a turret rotation (Wclearance)
-    G1 W17 F6000 ; Changed to 21.5mm for H5 crash detect extruder (SFH)
+    G1 W{global.WClearance} F15000 ; Move W to 5mm less than value specified in defaultparameters.g at 6000 mm/min to retract cleaning station to the clearance location for a turret rotation
     G1 E{-{tools[{state.nextTool}].retraction.length}} F{tools[{state.nextTool}].retraction.speed*60} ; Anti-Ooze Retraction - Retract Filament at After Prime Retraction Amount and Feedrate
     G4 P20 ; Dwell for 20 ms
 

@@ -1,17 +1,17 @@
 ; clean.g
 ; Extend, close, retract, and open the cleaning station pliers
 ; Written by Diabase Engineering
-; Last Updated: July 21, 2021
+; Last Updated: July 28, 2021
 
 if global.CSType == "Motor"
     G90 ; Set to Absolute Positioning
     M400 ; Wait for current moves to finish
-    G1 W22 F15000 ; Move W to 26mm at 15000 mm/min to extend the cleaning station pliers to surround the nozzle (Wclean)
+    G1 W{global.WClean} F15000 ; Move W to value specified in cleaningstation.g at 15000 mm/min to extend the cleaning station pliers to surround the nozzle
     G4 P125 ; Dwell for 125 ms
     M400 ; Wait for current moves to finish
     M42 P{global.CSPinchOutNum} S1.0 ; Close pliers
     G4 P125 ; Dwell for 125 ms
-    G1 W17 F15000 ; Move W to 18mm at 15000 mm/min to retract the cleaning station pliers to pull the filament button from the nozzle (Wgrab)
+    G1 W{global.WGrab} F15000 ; Move W to value specified in cleaningstation.g at 15000 mm/min to retract the cleaning station pliers to pull the filament button from the nozzle
     G28 W ; Home W
     M42 P{global.CSPinchOutNum} S0.75 ; Reduce pliers-closing solenoid current to 75%
     G4 P125 ; Dwell for 125 ms
