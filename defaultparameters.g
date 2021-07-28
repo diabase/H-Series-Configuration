@@ -2,7 +2,7 @@
 ; Default configuration parameters for H-Series machines
 ; Produced by Diabase H-Series Configurizer
 ; Written by Diabase Engineering
-; Last Updated: July 26, 2021
+; Last Updated: July 28, 2021
 
 M118 S"Begin defaultparameters.g" L2
 
@@ -101,10 +101,25 @@ if !{exists(global.CSType)}
 else
     set global.CSType = "Motor"
 
-if !{exists(global.WCleanPosition)}
-    global WCleanPosition = 22 ; W-axis position for forming filament button during priming cycle.
+if !{exists(global.WPrimeSurface)}
+    global WPrimeSurface = 22 ; W-axis position for forming filament button during priming cycle.
 else
-    set global.WCleanPosition = 22
+    set global.WPrimeSurface = 22
+
+if !{exists(global.WClearance)}
+    global WClearance = -1
+else
+    set global.WClearance = -1
+
+if !{exists(global.WClean)}
+    global WClean = -1
+else
+    set global.WClean = -1
+
+if !{exists(global.WGrab)}
+    global WGrab = -1
+else
+    set global.WGrab = -1
 
 if !{exists(global.LogFileName)}
     global LogFileName = "eventlog.txt"
