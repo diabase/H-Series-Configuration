@@ -2,7 +2,7 @@
 ; Configuration parameters specific to this individual H-Series machine.
 ; Produced by Diabase H-Series Configurizer
 ; Written by Diabase Engineering
-; Last Updated: July 26, 2021
+; Last Updated: July 30, 2021
 
 M118 S"Begin machinespecific.g" L2
 
@@ -13,25 +13,18 @@ if global.MachineName == "H5001"
 
 if global.MachineName == "H5002"
     set global.ZMin = -20
-    M906 A2000 V1000 I90
-    M203 U6500
+    M906 A2000 I90
 
 if global.MachineName == "H5003"
     set global.UMin = -9.9
 
 if global.MachineName == "H5004"
     set global.UMin = -9.9
-    if !{exists(global.UMotTempPin)}
-        global UMotTempPin = "temp3"
-    else
-        set global.UMotTempPin = "temp3"
 
 if global.MachineName == "H5005"
     set global.UMin = -8.8
-    M203 U6500
 
 if global.MachineName == "H5006"
-    M906 V1000
 
 set global.MachineSpecificLastRun = state.upTime
 
