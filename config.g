@@ -1,7 +1,7 @@
 ; config.g
 ; H5A Configuration File
 ; Written by Diabase Engineering
-; Last Updated: August 1, 2021
+; Last Updated: August 2, 2021
 
 ; Logging
 M929 P"eventlog.txt" S3 ; start logging to file eventlog.txt (S0 = stop logging, S1 = log level WARN, S2 = log level INFO, S3 = log level DEBUG)
@@ -16,6 +16,7 @@ M98 P"machinespecific.g"
 
 ;Network
 M550 P{global.MachineName}
+M118 S{{global.MachineName}} L1
 M552 S1 ; Enable network
 
 ; General preferences
