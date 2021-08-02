@@ -1,7 +1,7 @@
 ; trigger7.g
-; Behavior for Opoening Filament Cabinet
+; Behavior for Opening Filament Cabinet
 ; Written by Diabase Engineering
-; Last Updated: July 12, 2021
+; Last Updated: August 1, 2021
 
 while iterations < #sensors.analog
     if sensors.analog[iterations] != null
