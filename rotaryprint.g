@@ -1,13 +1,13 @@
 ; rotaryprint.g
 ; Called to switch machine into rotary printing mode
 ; Written by Diabase Engineering
-; Last Updated: July 21, 2021
+; Last Updated: August 2, 2021
 
 M118 S"Info: Begin rotaryprint.g" L2
 
 ; Drive settings
 M584 Y2.0:2.1 R1                                ; Set driver mapping
-M584 A2 R0                                      ; Set driver mapping
+M584 A{global.YDrive} R0                        ; Set driver mapping
 M208 Y-365 A-93 S1                              ; Set axis minima
 M208 Y365 A93 S0                                ; Set axis maxima
 M350 Y16 A16  I1                                ; Configure microstepping with interpolation

@@ -1,13 +1,13 @@
 ; unrotary.g
 ; Called to return machine to normal mode from rotary printing mode
 ; Written by Diabase Engineering
-; Last Updated: July 19, 2021
+; Last Updated: August 2, 2021
 
 M118 S"Info: Begin unrotary.g" L2
 
 ; Drive settings
 M584 A2.0:2.1 R1                        ; Set driver mapping
-M584 Y2 R0                              ; Set driver mapping
+M584 Y{global.YDrive} R0                ; Set driver mapping
 M208 Y{global.YMin} A{global.AMin} S1   ; Set axis minima
 M208 Y{global.YMax} A{global.AMax} S0   ; Set axis maxima
 M350 Y16 A16 I1                         ; Configure microstepping with interpolation
