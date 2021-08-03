@@ -27,7 +27,7 @@ M574 Y1 S1 P{global.ASwitchPin}                             ; Set new pin for Y 
 
 ; Swap Y- and A-axis offsets
 while iterations < #tools                                   ; For each tool...
-    while tools[iterations] != null                         ; ... that is defined
+    if tools[iterations] != null                            ; ... that is defined
         var YOffset = {tools[(iterations)].offsets[1]}      ; Save Y-axis offset in a temporary variable
         G10 P{iterations} Y{tools[(iterations)].offsets[6]} ; Populate the Y-axis offset with the value from the A-axis offset
         G10 P{iterations} A{var.YOffset}                    ; Populate the A-axis offset with the value from the Y-axis offset
