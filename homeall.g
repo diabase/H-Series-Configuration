@@ -1,10 +1,10 @@
 ; homeall.g
 ; Called to home all axes
 ; Written by Diabase Engineering
-; Last Updated: July 14, 2021
+; Last Updated: August 3, 2021
 
 M118 S"Info: Begin homeall.g" L2
-M208
+; M208
 G54 ; Assert WCS
 
 ; Ensure axis endstops are used
