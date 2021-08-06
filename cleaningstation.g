@@ -1,7 +1,7 @@
 ; cleaningstation.g
-; Configure H4 Cleaning Station
+; Configure Cleaning Station
 ; Written by Diabase Engineering
-; Last Updated: July 28, 2021
+; Last Updated: August 5, 2021
 
 M118 S{"Info: Begin cleaningstation.g"} L2
 
@@ -24,7 +24,8 @@ else
     M118 S{"Info: No cleaning station solenoid pin defined"} L2
 
 
-set global.CSPinchOutNum = #state.gpOut
+if global.CSPinchOutNum == -1
+    set global.CSPinchOutNum = #state.gpOut
 M118 S{"Info: cleaningstation.g: Creating state.gpOut[" ^ {global.CSPinchOutNum} ^ "] on pin " ^ {global.CSPinchPin} ^ " for cleaning station pliers-closing solenoid"} L2
 M950 P{global.CSPinchOutNum} C{global.CSPinchPin} ; Cleaning Station, Pliers-Closing Solenoid - Assign next available gpOut to the CS pinch pin as defined in defaultparameters.g
 
