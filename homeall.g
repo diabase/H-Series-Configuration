@@ -1,9 +1,9 @@
 ; homeall.g
 ; Called to home all axes
 ; Written by Diabase Engineering
-; Last Updated: August 3, 2021
+; Last Updated: August 6, 2021
 
-M118 S"Info: Begin homeall.g" L2
+M118 S"Debug: Begin homeall.g" L3
 ; M208
 G54 ; Assert WCS
 
@@ -65,4 +65,4 @@ T5 P0
 T10 P0
 M401 P0                                   ; Deploy Probe
 
-M118 S"Info: End homeall.g" L2
+M118 S"Debug: End homeall.g" L3

@@ -1,9 +1,9 @@
 ; tprime5.g
 ; Called to prime and clean tool 5
 ; Written by Diabase Engineering
-; Last Updated: July 19, 2021
+; Last Updated: August 6, 2021
 
-M118 S{"Info: Begin tprime5.g"} L2
+M118 S{"Debug: Begin tprime5.g"} L3
 
 if state.currentTool != 5
     if state.currentTool == -1
@@ -21,4 +21,4 @@ if state.currentTool != 5
 
 M98 P"tprime-universal.g" ; Call tprime-universal.g
 
-M118 S{"Info: End tprime5.g"} L2
+M118 S{"Debug: End tprime5.g"} L3

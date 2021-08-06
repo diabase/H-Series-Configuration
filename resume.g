@@ -1,9 +1,9 @@
 ; resume.g
 ; Called when a paused job is resumed
 ; Written by Diabase Engineering
-; Last Updated: July 22, 2021
+; Last Updated: August 6, 2021
 
-M118 S{"Info: Begin resume.g"} L2
+M118 S{"Debug: Begin resume.g"} L3
 
 T{state.restorePoints[1].toolNumber} ; Select the tool that was active when the job was paused.
 
@@ -33,4 +33,4 @@ if state.machineMode == "FFF"
 
 M400 ; Wait for current moves to finish
 
-M118 S{"Info: End resume.g"} L2
+M118 S{"Debug: End resume.g"} L3

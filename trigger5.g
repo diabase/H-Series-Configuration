@@ -1,10 +1,13 @@
 ; trigger5.g
-; Behavior for Disengaging the E-Stop
+; Behavior on E-Stop Disengagement
 ; Written by Diabase Engineering
-; Last Updated: July 22, 2021
+; Last Updated: August 6, 2021
 
-M118 S{"Info: Begin trigger5.g"} L2
-M118 S{"Info: Vin is " ^ boards[0].vIn.current ^ " at " ^ state.upTime ^ "." ^ state.msUpTime} L2
+M118 S{"Debug: Begin trigger5.g"} L3
+
+M118 S{"Debug: Vin is " ^ boards[0].vIn.current ^ " at " ^ state.upTime ^ "." ^ state.msUpTime} L3
+M118 S{"Warning: E-Stop Disengaged"} L1
 M98 P"resurrect-prologue.g"
-M118 S{"Info: Vin is " ^ boards[0].vIn.current ^ " at " ^ state.upTime ^ "." ^ state.msUpTime} L2
-M118 S{"Info: End trigger5.g"} L2
+M118 S{"Debug: Vin is " ^ boards[0].vIn.current ^ " at " ^ state.upTime ^ "." ^ state.msUpTime} L3
+
+M118 S{"Debug: End trigger5.g"} L3

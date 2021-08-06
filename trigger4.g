@@ -1,10 +1,13 @@
 ; trigger4.g
-; Behavior for Disengaging the E-Stop
+; Behavior on E-Stop Engagement
 ; Written by Diabase Engineering
-; Last Updated: July 13, 2021
+; Last Updated: August 6, 2021
 
-M118 S{"Info: Begin trigger4.g"} L2
-M118 S{"Info: Vin is " ^ boards[0].vIn.current ^ " at " ^ state.upTime ^ "." ^ state.msUpTime} L2
+M118 S{"Debug: Begin trigger4.g"} L3
+
+M118 S{"Debug: Vin is " ^ boards[0].vIn.current ^ " at " ^ state.upTime ^ "." ^ state.msUpTime} L3
+M118 S{"Warning: E-Stop Engaged"} L1
 M98 P"engagezbrake.g"
-M118 S{"Info: Vin is " ^ boards[0].vIn.current ^ " at " ^ state.upTime ^ "." ^ state.msUpTime} L2
-M118 S{"Info: End trigger4.g"} L2
+M118 S{"Debug: Vin is " ^ boards[0].vIn.current ^ " at " ^ state.upTime ^ "." ^ state.msUpTime} L3
+
+M118 S{"Debug: End trigger4.g"} L3

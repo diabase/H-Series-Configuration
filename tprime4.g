@@ -1,9 +1,9 @@
 ; tprime4.g
 ; Called to prime and clean tool 4
 ; Written by Diabase Engineering
-; Last Updated: July 19, 2021
+; Last Updated: August 6, 2021
 
-M118 S{"Info: Begin tprime4.g"} L2
+M118 S{"Debug: Begin tprime4.g"} L3
 
 if state.currentTool != 4
     if state.currentTool == -1
@@ -21,4 +21,4 @@ if state.currentTool != 4
 
 M98 P"tprime-universal.g" ; Call tprime-universal.g
 
-M118 S{"Info: End tprime4.g"} L2
+M118 S{"Debug: End tprime4.g"} L3

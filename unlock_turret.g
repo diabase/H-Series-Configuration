@@ -1,9 +1,9 @@
 ; unlock_turret.g
 ; Called to release the turret latch
 ; Written by Diabase Engineering
-; Last Updated: August 2, 2021
+; Last Updated: August 6, 2021
 
-M118 S{"Info: Begin unlock_turret.g"} L2
+M118 S{"Debug: Begin unlock_turret.g"} L3
 
 G91 ; Set to Relative Positioning
 
@@ -21,7 +21,7 @@ while sensors.endstops[var.AxisIndex].triggered == false
     G92 V0 ; Assign current V position to 0
     ;if iterations == 10
     if sensors.endstops[var.AxisIndex].triggered == true
-        M118 S{"Info: Turret unlatched after " ^ {iterations +1} ^ " attempt(s)"} L2
+        M118 S{"Debug: Turret unlatched after " ^ {iterations +1} ^ " attempt(s)"} L3
         break
     if iterations > 0
         if {{mod(iterations,10)} == 0}
@@ -33,4 +33,4 @@ while sensors.endstops[var.AxisIndex].triggered == false
 M400 ; Wait for current moves to finish
 ;M915 U S10 H20 R2 ; Configure U-axis stall detection. Threshold 10, Minimum motor steps 20, and Pause Print if detected
 
-M118 S{"Info: End unlock_turret.g"} L2
+M118 S{"Debug: End unlock_turret.g"} L3

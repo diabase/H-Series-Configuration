@@ -1,9 +1,9 @@
 ; pause.g
 ; Called when a job is paused.
 ; Written by Diabase Engineering
-; Last Updated: August 2, 2021
+; Last Updated: August 6, 2021
 
-M118 S{"Info: Begin pause.g"} L2
+M118 S{"Debug: Begin pause.g"} L3
 
 G60 S1                                                              ; Save current tool information
 
@@ -31,4 +31,4 @@ if heat.heaters[{global.BedHeaterNum}] != null                      ; If we have
         if {heat.heaters[{global.BedHeaterNum}].state != "fault"}   ; ... and it's not in a fault state...
             M144 S0                                                 ; Set bed to standby
 
-M118 S{"Info: End pause.g"} L2
+M118 S{"Debug: End pause.g"} L3

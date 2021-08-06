@@ -1,9 +1,9 @@
 ; tcalibrate.g
 ; Called to locate the center of a cavity using the probe.
 ; Written by Diabase Engineering
-; Last Updated: August 1, 2021
+; Last Updated: August 6, 2021
 
-M118 S{"Info: Begin tcalibrate.g"} L2
+M118 S{"Debug: Begin tcalibrate.g"} L3
 
 if {exists(global.diameterProbeHole)}
     if {exists(global.DiameterProbeHole)}
@@ -60,4 +60,4 @@ G38.2 X{move.axes[0].userPosition - global.DiameterProbeHole/2} P0 ; Ajust the -
 G53 G0 X{move.axes[0].machinePosition + ((state.restorePoints[4].coords[0] - move.axes[0].machinePosition) / 2.0)} F300; Move to very good X-value of hole center
 M558 K0 F150
 
-M118 S{"Info: End tcalibrate.g"} L2
+M118 S{"Debug: End tcalibrate.g"} L3

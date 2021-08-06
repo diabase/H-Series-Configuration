@@ -2,9 +2,9 @@
 ; If the axes are homed and if a print is being cancelled (M25), cancel.g is called when M0 is sent. 
 ; If M0 is sent at any other time, stop.g is called.
 ; Written by Diabase Engineering
-; Last Updated: August 2, 2021
+; Last Updated: August 6, 2021
 
-M118 S{"Info: Begin stop.g"} L2
+M118 S{"Debug: Begin stop.g"} L3
 
 G60 S0                                                              ; Save current tool information
 
@@ -36,4 +36,4 @@ if heat.heaters[{global.BedHeaterNum}] != null                      ; If we have
         if {heat.heaters[{global.BedHeaterNum}].state != "fault"}   ; ... and it's not in a fault state...
             M144 S0                                                 ; Set bed to standby
 
-M118 S{"Info: End stop.g"} L2
+M118 S{"Debug: End stop.g"} L3

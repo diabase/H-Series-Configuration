@@ -1,9 +1,9 @@
 ; homez.g
 ; Called to home only the Z axis
 ; Written by Diabase Engineering
-; Last Updated: July 22, 2021
+; Last Updated: August 6, 2021
 
-M118 S"Begin homez.g" L2
+M118 S{"Debug: Begin homez.g"} L3
 
 ; Ensure appropriate axis endstops are used
 M574 Z2 S1 P{global.ZSwitchPin}                             ; Configure Z endstop position at high end, pin defined in defaultparameters.g
@@ -28,4 +28,4 @@ if {state.currentTool} != -1                                ; If we have a tool 
         if {#tools[{state.currentTool}].extruders == 0}     ; ... or extruders, we assume it's a probe
             M574 Z1 S2                                      ; Set Z endstop position to low end and configure as Z probe
 
-M118 S"End homez.g" L2
+M118 S{"Debug: End homez.g"} L3
