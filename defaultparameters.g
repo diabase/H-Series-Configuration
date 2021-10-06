@@ -2,7 +2,7 @@
 ; Default configuration parameters for H-Series machines
 ; Produced by Diabase H-Series Configurizer
 ; Written by Diabase Engineering
-; Last Updated: August 2, 2021
+; Last Updated: October 6, 2021
 
 M118 S"Begin defaultparameters.g" L2
 
@@ -577,14 +577,14 @@ else
     set global.ProbeRetractPin = "out4"
 
 if !{exists(global.ProbePin)}
-    global ProbePin = "1.io0.in"
+    global ProbePin = "io5.in"
 else
-    set global.ProbePin = "1.io0.in"
+    set global.ProbePin = "io5.in"
 
 if !{exists(global.TouchOffPlatePin)}
-    global TouchOffPlatePin = "1.io3.in"
+    global TouchOffPlatePin = "io7.in"
 else
-    set global.TouchOffPlatePin = "1.io3.in"
+    set global.TouchOffPlatePin = "io7.in"
 
 if !{exists(global.ExtruderCrashDetectPin)}
     global ExtruderCrashDetectPin = "1.io4.in"
@@ -592,9 +592,9 @@ else
     set global.ExtruderCrashDetectPin = "1.io4.in"
 
 if !{exists(global.DhtPin)}
-    global DhtPin = "0.spi.cs1"
+    global DhtPin = "io1.out"
 else
-    set global.DhtPin = "0.spi.cs1"
+    set global.DhtPin = "io1.out"
 
 if !{exists(global.FSense1Pin)}
     global FSense1Pin = "3.io2.in"
