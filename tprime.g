@@ -1,9 +1,9 @@
 ; tprime.g
 ; Universal priming macro
 ; Written by Diabase Engineering
-; Last Updated: July 28, 2021
+; Last Updated: August 6, 2021
 
-M118 S{"Begin tprime.g"} L2
+M118 S{"Debug: Begin tprime.g"} L3
 
 if state.nextTool = -1
     abort "No tool currently active. Priming cycle aborted."
@@ -90,4 +90,4 @@ if state.restorePoints[0].coords[2] + 2 <= {move.axes[2].max - global.MaxOffset}
 else
     G1 Z{move.axes[2].max + global.MaxOffset} F6000 ; Move to Z = ZMax + Longest Z Offset at 6000 mm/min
     
-M118 S{"End tprime.g"} L2
+M118 S{"Debug: End tprime.g"} L3

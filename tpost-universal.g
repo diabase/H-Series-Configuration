@@ -1,9 +1,9 @@
 ; tpost-universal.g
 ; Called when a tool is selected
 ; Written by Diabase Engineering
-; Last Updated: July 25, 2021
+; Last Updated: August 6, 2021
 
-M118 S{"Info: Begin tpost-universal.g"} L2
+M118 S{"Debug: Begin tpost-universal.g"} L3
 
 if {tools[{state.nextTool}].spindle == -1}                                                                                          ; If this tool has no spindles...
     if {#tools[{state.nextTool}].extruders == 0}                                                                                    ; ... or extruders, we assume it's a probe
@@ -25,9 +25,9 @@ else                                                                            
 if state.previousTool != -1                                                                                                         ; If we changed to this tool from another tool...
     G90                                                                                                                             ; Set to Absolute Positioning
     G1 R2 X0 Y0 F6000                                                                                                               ; Return to X and Y coordinates stored in restore point 2 at a speed of 6000 mm/min
-    if state.restorePoints[2].coords[2] + 2 <= {move.axes[2].max - global.MaxOffset}
+    if state.restorePoints[2].coords[2] + 2 <= {move.axes[2].max + global.MaxOffset}
         G1 R2 Z2                                                                                                                    ; Return to 2mm above Z coordinate stored in restore point 2
     else
         G1 Z{move.axes[2].max + global.MaxOffset} F10000                                                                            ; Move to Z = ZMax + Longest Z Offset at 10000 mm/min
 
-M118 S{"Info: End tpost-universal.g"} L2
+M118 S{"Debug: End tpost-universal.g"} L3

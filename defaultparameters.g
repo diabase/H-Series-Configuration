@@ -2,7 +2,7 @@
 ; Default configuration parameters for H-Series machines
 ; Produced by Diabase H-Series Configurizer
 ; Written by Diabase Engineering
-; Last Updated: July 28, 2021
+; Last Updated: August 2, 2021
 
 M118 S"Begin defaultparameters.g" L2
 
@@ -920,5 +920,55 @@ if !{exists(global.PrimeNextTC)}
     global PrimeNextTC = 1
 else
     set global.PrimeNextTC = 1
+
+if !{exists(global.TOSafeHeight)}
+    global TOSafeHeight = 40
+else
+    set global.TOSafeHeight = 40
+
+if !{exists(global.TOPlateHeight)}
+    global TOPlateHeight = 12
+else
+    set global.TOPlateHeight = 12
+
+if !{exists(global.TOPlateWidth)}
+    global TOPlateWidth = 12
+else
+    set global.TOPlateWidth = 12
+
+if !{exists(global.TOPlateXPos)}
+    global TOPlateXPos = 0
+else
+    set global.TOPlateXPos = 0
+
+if !{exists(global.TOPlateYPos)}
+    global TOPlateYPos = 0
+else
+    set global.TOPlateYPos = 0
+
+if !{exists(global.TOSCupHeight)}
+    global TOSCupHeight = 10
+else
+    set global.TOSCupHeight = 10
+
+if !{exists(global.TOSCupOD)}
+    global TOSCupOD = 5
+else
+    set global.TOSCupOD = 5
+
+if !{exists(global.TOSCupID)}
+    global TOSCupID = 3
+else
+    set global.TOSCupID = 3
+
+if !{exists(global.TOSCupDepth)}
+    global TOSCupDepth = 2
+else
+    set global.TOSCupDepth = 2
+
+if !{exists(global.IsRetractingProbe)}
+    global IsRetractingProbe = 0
+else
+    set global.IsRetractingProbe = 0
 
 M118 S"End defaultparameters.g" L2

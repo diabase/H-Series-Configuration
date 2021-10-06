@@ -1,10 +1,10 @@
 ; config.g
 ; H5A Configuration File
 ; Written by Diabase Engineering
-; Last Updated: July 30, 2021
+; Last Updated: August 2, 2021
 
 ; Logging
-M929 P"eventlog.txt" S3 ; start logging to file eventlog.txt (S0 = stop logging, S1 = log level WARN, S2 = log level INFO, S3 = log level DEBUG)
+M929 P"eventlog.txt" S1 ; start logging to file eventlog.txt (S0 = stop logging, S1 = log level WARN, S2 = log level INFO, S3 = log level DEBUG)
 M118 S"Info: Begin config.g" L2
 
 ;Default Parameters
@@ -16,6 +16,7 @@ M98 P"machinespecific.g"
 
 ;Network
 M550 P{global.MachineName}
+M118 S{{global.MachineName}} L1
 M552 S1 ; Enable network
 
 ; General preferences
@@ -46,9 +47,9 @@ M208 X{global.XMax} Y{global.YMax} Z{global.ZMax} U{global.UMax} V{global.VMax} 
 M350 X16 Y16 Z16 U16 V16 W16 A16 C16 E16 I1 ; Configure microstepping with interpolation - high lead cleaning station motor
 M92 X320 Y320 Z320 U230.22 V1600 W400 A53.33 C53.33 E96 ; Set steps per mm
 M566 X300 Y300 Z300 U120 V500 W500 A1000 C1000 E1200 ; Set maximum instantaneous speed changes (mm/min)
-M203 X10000 Y10000 Z3000 U8900 V10000 W20000 A20000 C20000 E6000 ; Set maximum speeds (mm/min)
+M203 X10000 Y10000 Z3000 U8000 V10000 W20000 A20000 C20000 E6000 ; Set maximum speeds (mm/min)
 M201 X600 Y600 Z450 U600 V500 W10000 A600 C600 E250 ; Set accelerations (mm/s^2)
-M906 X1800 Y2100 Z1800 U1440 V1000 W800 A1600 C1600 E1500:1500:1500:1000:1000:1000 I30 ; Set motor currents (mA) and motor idle factor percent
+M906 X1800 Y2100 Z2400 U1440 V1000 W800 A1600 C1600 E1500:1500:1500:1000:1000:1000 I30 ; Set motor currents (mA) and motor idle factor percent
 M84 S5 ; Allow all motors to drop hold current to idle after 5 seconds
 
 ; Endstops

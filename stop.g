@@ -2,36 +2,25 @@
 ; If the axes are homed and if a print is being cancelled (M25), cancel.g is called when M0 is sent. 
 ; If M0 is sent at any other time, stop.g is called.
 ; Written by Diabase Engineering
-; Last Updated: July 20, 2021
+; Last Updated: August 6, 2021
 
-G60 S0  ;   save current tool information
+M118 S{"Debug: Begin stop.g"} L3
 
-G91 ; Relative Positioning
-M574 Z2 S1 P{global.ZSwitchPin} ; Configure Z endstop position at high end, it's a microswitch on pin defined in defaultparameters.g
-if move.axes[2].machinePosition + 40 <= move.axes[2].max ; If we have enough room for a normal tool change Z-hop, do it.
-    G1 Z40 F6000 ; Move Z +40mm at 6000 mm/min
-elif move.axes[2].machinePosition + 40 > move.axes[2].max ; If we don't have enough room, move as high as we can.
-    M574 Z2 S1 P{global.ZSwitchPin} ; Configure Z endstop position at high end, it's a microswitch on pin defined in defaultparameters.g
-    M400 ; Wait for all moves to finish
-    M913 Z50; Reduce Z-axis motor current to 50%
-    G1 Z40 F1000 H3 ; Attempt to move Z +40mm at 1000 mm/min, but halt if endstop triggered and set axis limit current position, overriding value set by previous M208 or G1 H3 special move
-    M400 ; Wait for all moves to finish
-    M913 Z100 ; Restore Z-axis motor current to 100%
+G60 S0                                                              ; Save current tool information
 
-G90 ; Set to Absolute Positioning
-G1 Y85 F6000 ; Move Y to 85 mm at 6000 mm/min
+G90                                                                 ; Set to Absolute Positioning
+G1 Z{move.axes[2].max + global.MaxOffset} F10000                    ; Move to Z = ZMax + Longest Z Offset at 10000 mm/min
+M400                                                                ; Wait for current moves to finish
 
 if state.machineMode="CNC"
-    M5 ; Turn off all spindles
-
-M400 ; Wait for current moves to finish
+    M5                                                              ; Stop the spindle of the current tool (if any) or stop all spindles if the current tool has no spindles or no tool is selected
 
 ; Turn off all extruder heaters
-G10 P1 R0 S0 ; Set Tool 1 active and standby temperatures to 0C
-G10 P2 R0 S0 ; Set Tool 2 active and standby temperatures to 0C
-G10 P3 R0 S0 ; Set Tool 3 active and standby temperatures to 0C
-G10 P4 R0 S0 ; Set Tool 4 active and standby temperatures to 0C
-G10 P5 R0 S0 ; Set Tool 5 active and standby temperatures to 0C
+G10 P1 R0 S0                                                        ; Set Tool 1 active and standby temperatures to 0C
+G10 P2 R0 S0                                                        ; Set Tool 2 active and standby temperatures to 0C
+G10 P3 R0 S0                                                        ; Set Tool 3 active and standby temperatures to 0C
+G10 P4 R0 S0                                                        ; Set Tool 4 active and standby temperatures to 0C
+G10 P5 R0 S0                                                        ; Set Tool 5 active and standby temperatures to 0C
 
 ; Put all the tools into standby mode and re-select the last used tool
 T1 P0
@@ -42,6 +31,9 @@ T5 P0
 T10 P0
 T{state.restorePoints[0].toolNumber} P0
 
-if heat.heaters[{global.BedHeaterNum}] != null ; ...and we have defined a bed heater...
-    if {heat.heaters[{global.BedHeaterNum}].state != "fault" && heat.heaters[{global.BedHeaterNum}].current != -273.15} ; ...and it's not in a fault state...
-        M144 S0 ; Set bed to standby
+if heat.heaters[{global.BedHeaterNum}] != null                      ; If we have defined a bed heater...
+    if {heat.heaters[{global.BedHeaterNum}].current != -273.15}     ; ... and it's connected... 
+        if {heat.heaters[{global.BedHeaterNum}].state != "fault"}   ; ... and it's not in a fault state...
+            M144 S0                                                 ; Set bed to standby
+
+M118 S{"Debug: End stop.g"} L3

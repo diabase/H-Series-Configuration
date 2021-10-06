@@ -1,9 +1,9 @@
 ; maxoffset.g
 ; Determines the tool offset of the longest tool.
 ; Written by Diabase Engineering
-; Last Updated: July 20, 2021
+; Last Updated: August 6, 2021
 
-M118 S{"Info: Begin maxoffset.g"} L2
+M118 S{"Debug: Begin maxoffset.g"} L3
 
 set global.MaxOffset=0 ; Wipe any maxoffset set previously.
 while iterations<#tools ; Step through all tools.
@@ -12,4 +12,4 @@ while iterations<#tools ; Step through all tools.
 
 set global.MaxOffsetLastRun = state.upTime
 
-M118 S{"Info: End maxoffset.g"} L2
+M118 S{"Debug: End maxoffset.g"} L3

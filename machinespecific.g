@@ -2,9 +2,9 @@
 ; Configuration parameters specific to this individual H-Series machine.
 ; Produced by Diabase H-Series Configurizer
 ; Written by Diabase Engineering
-; Last Updated: July 30, 2021
+; Last Updated: August 6, 2021
 
-M118 S"Begin machinespecific.g" L2
+M118 S{"Info: Begin machinespecific.g"} L2
 
 if {exists(global.MachineName)}
     set global.MachineName = "H5005"
@@ -28,4 +28,4 @@ if global.MachineName == "H5006"
 
 set global.MachineSpecificLastRun = state.upTime
 
-M118 S"End machinespecific.g" L2
+M118 S{"Info: End machinespecific.g"} L2
