@@ -112,7 +112,7 @@ if global.ExtruderCrashDetectInNum == -1
     set global.ExtruderCrashDetectInNum = #sensors.gpIn
 M118 S{"Info: Creating sensors.gpIn[" ^ {global.ExtruderCrashDetectInNum} ^ "] on pin " ^ {global.ExtruderCrashDetectPin} ^ " for extruder crash detect switch"} L2 ; Log informational event
 M950 J{global.ExtruderCrashDetectInNum} C{global.ExtruderCrashDetectPin}                                                                                            ; Extruder crash detect input definintion
-M118 S{"Info: Activating sensors.gpIn["^ global.ExtruderCrashDetectInNum} ^ "] will run trigger" ^ {global.CDOnTrigger} ^ ".g"} L2                                  ; Log informational event
+M118 S{"Info: Activating sensors.gpIn["^ {global.ExtruderCrashDetectInNum} ^ "] will run trigger" ^ {global.CDOnTrigger} ^ ".g"} L2                                 ; Log informational event
 M581 P{global.ExtruderCrashDetectInNum} T{global.CDOnTrigger} S1 R0                                                                                                 ; Extruder crash detect behavior
 M118 S{"Info: Deactivating sensors.gpIn[" ^ {global.ExtruderCrashDetectInNum} ^ "] will be ignored"} L2                                                             ; Log informational event
 M669 S100 T0.1                                                                                                                                                      ; Split movements into smaller bits - this is necessary for the machine to be able to pause if a crash is detected
