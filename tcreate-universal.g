@@ -14,7 +14,7 @@
 ;   - Automatically looping create-tool.g for variable-defined tools
 ; TODO: Revisit when spindles aren't all automatically created. - RT
 ; Written by Diabase Engineering
-; Last Updated: July 26, 2021
+; Last Updated: October 8, 2021
 
 M118 S{"Info: Begin tcreate-universal.g"} L2
 
@@ -116,6 +116,15 @@ M118 S{"Info: Activating sensors.gpIn["^ {global.ExtruderCrashDetectInNum} ^ "] 
 M581 P{global.ExtruderCrashDetectInNum} T{global.CDOnTrigger} S1 R0                                                                                                 ; Extruder crash detect behavior
 M118 S{"Info: Deactivating sensors.gpIn[" ^ {global.ExtruderCrashDetectInNum} ^ "] will be ignored"} L2                                                             ; Log informational event
 M669 S100 T0.1                                                                                                                                                      ; Split movements into smaller bits - this is necessary for the machine to be able to pause if a crash is detected
+
+; Monitor Compressed Air Pressure
+if global.AirPressureInNum == -1
+    set global.AirPressureInNum = #sensors.gpIn
+M118 S{"Info: Creating sensors.gpIn[" ^ {global.AirPressureInNum} ^ "] on pin " ^ {global.AirPressureSwitchPin} ^ " for incoming air pressure switch"} L2   ; Log informational event
+M950 J{global.AirPressureInNum} C{global.AirPressureSwitchPin}                                                                                              ; Air pressure switch input definintion
+M118 S{"Info: Activating sensors.gpIn["^ {global.AirPressureInNum} ^ "] will run trigger" ^ {global.AirPressureLowTrigger} ^ ".g"} L2                       ; Log informational event
+M581 P{global.AirPressureInNum} T{global.AirPressureLowTrigger} S1 R0                                                                                       ; Air pressure switch behavior
+M118 S{"Info: Deactivating sensors.gpIn[" ^ {global.AirPressureInNum} ^ "] will be ignored"} L2                                                             ; Log informational event
 
 M302 S150 ; Set minimum extrude temp
 

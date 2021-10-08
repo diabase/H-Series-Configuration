@@ -2,7 +2,7 @@
 ; Default configuration parameters for H-Series machines
 ; Produced by Diabase H-Series Configurizer
 ; Written by Diabase Engineering
-; Last Updated: October 6, 2021
+; Last Updated: October 8, 2021
 
 M118 S"Begin defaultparameters.g" L2
 
@@ -970,5 +970,20 @@ if !{exists(global.IsRetractingProbe)}
     global IsRetractingProbe = 0
 else
     set global.IsRetractingProbe = 0
+
+if !{exists(global.AirPresureInNum)}
+    global AirPresureInNum = -1
+else
+    set global.AirPresureInNum = -1
+
+if !{exists(global.AirPressureSwitchPin)}
+    global AirPressureSwitchPin = "1.io3.in"
+else
+    set global.AirPressureSwitchPin = "1.io3.in"
+
+if !{exists(global.AirPressureLowTrigger)}
+    global AirPressureLowTrigger = 8
+else
+    set global.AirPressureLowTrigger = 8
 
 M118 S"End defaultparameters.g" L2
