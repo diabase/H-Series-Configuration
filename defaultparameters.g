@@ -971,10 +971,10 @@ if !{exists(global.IsRetractingProbe)}
 else
     set global.IsRetractingProbe = 0
 
-if !{exists(global.AirPresureInNum)}
-    global AirPresureInNum = -1
+if !{exists(global.AirPressureInNum)}
+    global AirPressureInNum = -1
 else
-    set global.AirPresureInNum = -1
+    set global.AirPressureInNum = -1
 
 if !{exists(global.AirPressureSwitchPin)}
     global AirPressureSwitchPin = "1.io3.in"
