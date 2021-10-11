@@ -2,7 +2,7 @@
 ; Default configuration parameters for H-Series machines
 ; Produced by Diabase H-Series Configurizer
 ; Written by Diabase Engineering
-; Last Updated: October 8, 2021
+; Last Updated: October 11, 2021
 
 M118 S"Begin defaultparameters.g" L2
 
@@ -12,9 +12,9 @@ else
     set global.MachineName = "H5XXX"
 
 if !{exists(global.MachineModel)}
-    global MachineModel = "H5" ; Machine model number
+    global MachineModel = "H5A" ; Machine model number
 else
-    set global.MachineModel = "H5"
+    set global.MachineModel = "H5A"
 
 if !{exists(global.XMin)}
     global XMin = -208

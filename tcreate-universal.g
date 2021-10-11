@@ -14,7 +14,7 @@
 ;   - Automatically looping create-tool.g for variable-defined tools
 ; TODO: Revisit when spindles aren't all automatically created. - RT
 ; Written by Diabase Engineering
-; Last Updated: October 8, 2021
+; Last Updated: October 11, 2021
 
 M118 S{"Info: Begin tcreate-universal.g"} L2
 
@@ -122,9 +122,10 @@ if global.AirPressureInNum == -1
     set global.AirPressureInNum = #sensors.gpIn
 M118 S{"Info: Creating sensors.gpIn[" ^ {global.AirPressureInNum} ^ "] on pin " ^ {global.AirPressureSwitchPin} ^ " for incoming air pressure switch"} L2   ; Log informational event
 M950 J{global.AirPressureInNum} C{global.AirPressureSwitchPin}                                                                                              ; Air pressure switch input definintion
-M118 S{"Info: Activating sensors.gpIn["^ {global.AirPressureInNum} ^ "] will run trigger" ^ {global.AirPressureLowTrigger} ^ ".g"} L2                       ; Log informational event
-M581 P{global.AirPressureInNum} T{global.AirPressureLowTrigger} S1 R0                                                                                       ; Air pressure switch behavior
-M118 S{"Info: Deactivating sensors.gpIn[" ^ {global.AirPressureInNum} ^ "] will be ignored"} L2                                                             ; Log informational event
+M118 S{"Info: Activating sensors.gpIn[" ^ {global.AirPressureInNum} ^ "] will be ignored"} L2                                                               ; Log informational event
+M118 S{"Info: Deactivating sensors.gpIn["^ {global.AirPressureInNum} ^ "] will run trigger" ^ {global.AirPressureLowTrigger} ^ ".g"} L2                     ; Log informational event
+M581 P{global.AirPressureInNum} T{global.AirPressureLowTrigger} S0 R0                                                                                       ; Air pressure switch behavior
+
 
 M302 S150 ; Set minimum extrude temp
 

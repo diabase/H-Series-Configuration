@@ -1,7 +1,7 @@
 ; tpost-universal.g
 ; Called when a tool is selected
 ; Written by Diabase Engineering
-; Last Updated: August 6, 2021
+; Last Updated: October 11, 2021
 
 M118 S{"Debug: Begin tpost-universal.g"} L3
 
@@ -29,5 +29,7 @@ if state.previousTool != -1                                                     
         G1 R2 Z2                                                                                                                    ; Return to 2mm above Z coordinate stored in restore point 2
     else
         G1 Z{move.axes[2].max + global.MaxOffset} F10000                                                                            ; Move to Z = ZMax + Longest Z Offset at 10000 mm/min
+
+M582 T{global.AirPressureLowTrigger}                                                                                                ; Check incoming air pressure
 
 M118 S{"Debug: End tpost-universal.g"} L3
