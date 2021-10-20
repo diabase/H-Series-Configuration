@@ -1,7 +1,7 @@
 ; tprime-universal.g
 ; Universal priming macro
 ; Written by Diabase Engineering
-; Last Updated: August 6, 2021
+; Last Updated: October 20, 2021
 
 M118 S{"Debug: Begin tprime-universal.g"} L3
 
@@ -19,10 +19,8 @@ if move.axes[2].machinePosition + 40 <= move.axes[2].max ; If we have enough roo
 elif move.axes[2].machinePosition + 40 > move.axes[2].max ; If we don't have enough room, move as high as we can.
     M574 Z2 S1 P{global.ZSwitchPin} ; Configure Z endstop position at high end, it's a microswitch on pin defined in defaultparameters.g
     M400 ; Wait for all moves to finish
-    ;M913 Z50; Reduce Z-axis motor current to 50%
     G1 Z40 F6000 H3 ; Attempt to move Z +40mm at 6000 mm/min, but halt if endstop triggered and set axis limit current position, overriding value set by previous M208 or G1 H3 special move
     M400 ; Wait for all moves to finish
-    M913 Z100 ; Restore Z-axis motor current to 100%
 
 G90 ; Set to Absolute Positioning
 G1 Y85 F6000 ; Move Y to 85 mm at 6000 mm/min
@@ -38,14 +36,12 @@ G4 P20 ; Dwell for 20 ms
 M116 P{state.currentTool} S5 ; Wait until tool reaches +/-5C of its set value
 
 if global.CSType == "Motor"
-    ;G1 W31 F15000 ; Move W to 31mm at 15000 mm/min to extend cleaning station to priming location (Wprimesurface)
-    G1 W22 F15000 ; Changed to 23.5mm for H5 crash detect extruder (SFH)
+    G1 W{global.WPrimeSurface} F15000 ; Move W to value specified in defaultparameters.g at 15000 mm/min to extend cleaning station to priming location
     M83 ; Set Extruder to Relative Mode
     G1 E{tools[{state.currentTool}].retraction.length} F{tools[{state.currentTool}].retraction.speed*60} ; Anti-Ooze Makeup Extrusion - Extrude Filament at After Prime Retraction Amount and Feedrate
     G1 E{tools[{state.currentTool}].retraction.length + tools[{state.currentTool}].retraction.extraRestart} F{tools[{state.currentTool}].retraction.unretractSpeed*60} ; Extrude Filament at Prime Extrusion Amount and Feedrate
     M400 ; Wait for current moves to finish
-    ;G1 W26 F6000 ; Move W to 26mm at 6000 mm/min to retract cleaning station to the clearance location for a turret rotation (Wclearance)
-    G1 W17 F6000 ; Changed to 21.5mm for H5 crash detect extruder (SFH)
+    G1 W{global.WClearance} F15000 ; Move W to 5mm less than value specified in defaultparameters.g at 6000 mm/min to retract cleaning station to the clearance location for a turret rotation
     G1 E{-{tools[{state.currentTool}].retraction.length}} F{tools[{state.currentTool}].retraction.speed*60} ; Anti-Ooze Retraction - Retract Filament at After Prime Retraction Amount and Feedrate
     G4 P20 ; Dwell for 20 ms
 
