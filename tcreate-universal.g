@@ -14,7 +14,7 @@
 ;   - Automatically looping create-tool.g for variable-defined tools
 ; TODO: Revisit when spindles aren't all automatically created. - RT
 ; Written by Diabase Engineering
-; Last Updated: October 11, 2021
+; Last Updated: October 13, 2021
 
 M118 S{"Info: Begin tcreate-universal.g"} L2
 
@@ -126,6 +126,15 @@ M118 S{"Info: Activating sensors.gpIn[" ^ {global.AirPressureInNum} ^ "] will be
 M118 S{"Info: Deactivating sensors.gpIn["^ {global.AirPressureInNum} ^ "] will run trigger" ^ {global.AirPressureLowTrigger} ^ ".g"} L2                     ; Log informational event
 M581 P{global.AirPressureInNum} T{global.AirPressureLowTrigger} S0 R0                                                                                       ; Air pressure switch behavior
 
+; Monitor Build Enclosure Switch
+if global.BESwitchInNum == -1                                                                                                           ; If a gpIn sensor number hasn't yet been assigned for the build enclosure switch...
+    set global.BESwitchInNum = #sensors.gpIn                                                                                            ; ... take the next available gpIn sensor number
+M118 S{"Info: Creating sensors.gpIn[" ^ {global.BESwitchInNum} ^ "] on pin " ^{global.BESwitchPin} ^" for build enclosure switch"} L2   ; Log informational event
+M950 J{global.BESwitchInNum} C{global.BESwitchPin}                                                                                      ; Build Enclosure Switch Definition
+M118 S{"Info: Activating sensors.gpIn[" ^ {global.BESwitchInNum} ^ "] will run trigger" ^ {global.BESwitchHighTrigger} ^ ".g"} L2       ; Log informational event
+M581 P{global.BESwitchInNum} T{global.BESwitchHighTrigger} S1 R0                                                                        ; Build Enclosure Close Behavior
+M118 S{"Info: Deactivating sensors.gpIn[" ^ {global.BESwitchInNum} ^ "] will run trigger" ^ {global.BESwitchLowTrigger} ^ ".g"} L2      ; Log informational event
+M581 P{global.BESwitchInNum} T{global.BESwitchLowTrigger} S0 R0                                                                         ; Build Enclosure Open Behavior
 
 M302 S150 ; Set minimum extrude temp
 
