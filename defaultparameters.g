@@ -2,7 +2,7 @@
 ; Default configuration parameters for H-Series machines
 ; Produced by Diabase H-Series Configurizer
 ; Written by Diabase Engineering
-; Last Updated: October 13, 2021
+; Last Updated: October 28, 2021
 
 M118 S"Begin defaultparameters.g" L2
 
@@ -966,10 +966,10 @@ if !{exists(global.TOSCupDepth)}
 else
     set global.TOSCupDepth = 2
 
-if !{exists(global.IsRetractingProbe)}
-    global IsRetractingProbe = 0
+if !{exists(global.IsMovingProbe)}
+    global IsMovingProbe = 0
 else
-    set global.IsRetractingProbe = 0
+    set global.IsMovingProbe = 0
 
 if !{exists(global.AirPressureInNum)}
     global AirPressureInNum = -1
