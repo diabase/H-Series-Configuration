@@ -1,7 +1,7 @@
 ; drycabinet.g
 ; Configures parameters for monitoring H5 filament drying cabinet.
 ; Written by Diabase Engineering
-; Last Updated: October 8, 2021
+; Last Updated: October 28, 2021
 
 M118 S{"Info: Begin drycabinet.g"} L2
 
@@ -9,7 +9,7 @@ M118 S{"Info: Begin drycabinet.g"} L2
 ; var NewSensorNum = #sensors.analog
 ;M308 S{var.NewSensorNum} P{global.DhtPin} Y"dht22" A"FilamentCabinetTemp" ; define DHT22 temperature sensor
 ;M308 S{{var.NewSensorNum}+1} P"{{var.NewSensorNum} ^ ".1"}" Y"dhthumidity" A"FilamentCabinetRH[%]" ; Attach DHT22 humidity sensor to secondary output of temperature sensor
-M308 S10 P{global.DhtPin} Y"dht22" A"FilamentCabinetTemp"                                                                       ; Define DHT22 temperature sensor
+M308 S10 P{global.DhtPin} Y"dht22" A"FilamentCabinetTemp"                                                                   ; Define DHT22 temperature sensor
 M308 S11 P"S10.1" Y"dhthumidity" A"FilamentCabinetRH[%]"                                                                    ; Attach DHT22 humidity sensor to secondary output of temperature sensor
 
 ; Create Fans for Dry Cabinet
@@ -17,7 +17,6 @@ if global.DryCabinetFanNum == -1
     set global.DryCabinetFanNum = #fans
 M118 S{"Info: Creating filament cabinet fans as fan "^{global.DryCabinetFanNum}^" using pin "^{global.FCFanPin}} L2         ; Log informational event
 M950 F{global.DryCabinetFanNum} C{global.FCFanPin}                                                                          ; Filament cabinet fans
-M106 P{global.DryCabinetFanNum} C"Filament Cabinet Fan" S1.0 L1.0                                                           ; Enable manual control of filament cabinet fans -- TODO: Remove this after testing
 
 if global.FCSwitchInNum == -1                                                                                               ; If a gpIn sensor number hasn't yet been assigned for the filament cabinet switch...
     set global.FCSwitchInNum = #sensors.gpIn                                                                                ; ... take the next available gpIn sensor number
