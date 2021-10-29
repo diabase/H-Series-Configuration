@@ -1016,4 +1016,34 @@ if !{exists(global.BECloseTime)}
 else
     set global.BECloseTime = 0
 
+if !{exists(global.t1AdditionalRetraction)}
+    global t1AdditionalRetraction = 0
+else
+    set global.t1AdditionalRetraction = 0
+
+if !{exists(global.t2AdditionalRetraction)}
+    global t2AdditionalRetraction = 0
+else
+    set global.t2AdditionalRetraction = 0
+
+if !{exists(global.t3AdditionalRetraction)}
+    global t3AdditionalRetraction = 0
+else
+    set global.t3AdditionalRetraction = 0
+
+if !{exists(global.t4AdditionalRetraction)}
+    global t4AdditionalRetraction = 0
+else
+    set global.t4AdditionalRetraction = 0
+
+if !{exists(global.t5AdditionalRetraction)}
+    global t5AdditionalRetraction = 0
+else
+    set global.t5AdditionalRetraction = 0
+
+if !{exists(global.CurrentAdditionalRetraction)}
+    global CurrentAdditionalRetraction = 0
+else
+    set global.CurrentAdditionalRetraction = 0
+
 M118 S"End defaultparameters.g" L2
