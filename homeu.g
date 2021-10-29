@@ -1,8 +1,15 @@
 ; homeu.g
 ; Called to home only the U axis
 ; Written by Diabase Engineering
-; Last Updated: July 14, 2021
+; Last Updated: October 29, 2021
 ; TODO: Save current WCS, switch to G54 for homing, return to saved WCS
+
+M118 S{"Debug: Begin homeu.g"} L3
+
+if {global.MachineModel} == "H5B"
+        if sensors.gpIn[{global.AirPressureInNum}] == 0
+            M291 P"Warning: Incoming air pressure low. Resolve before continuing." R"Warning" S3            ; Display a blocking warning with no timeout.
+            abort
 
 M453 ; Switch to CNC Mode
 
@@ -51,3 +58,5 @@ T4 P0
 T5 P0
 T10 P0
 M401 P0                                   ; Deploy Probe
+
+M118 S{"Debug: End homeu.g"} L3

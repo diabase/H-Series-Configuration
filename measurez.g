@@ -1,9 +1,14 @@
 ; measurez.g
 ; Called to probe the bed and set Z0 to the bed surface and then set Z-axis maximum to the carefully measured location of the upper Z-axis endstop relative to the bed surface.
 ; Written by Diabase Engineering
-; Last Updated: August 6, 2021
+; Last Updated: October 29, 2021
 
 M118 S{"Debug: Begin measurez.g"} L3
+
+if {global.MachineModel} == "H5B"
+        if sensors.gpIn[{global.AirPressureInNum}] == 0
+            M291 P"Warning: Incoming air pressure low. Resolve before continuing." R"Warning" S3            ; Display a blocking warning with no timeout.
+            abort
 
 M291 P"Turret will now move. Is Probe above the surface to measure?" R"Crash Check" S3  ; Warn the user about the imminent probing move.
 

@@ -1,9 +1,14 @@
 ; resume.g
 ; Called when a paused job is resumed
 ; Written by Diabase Engineering
-; Last Updated: August 6, 2021
+; Last Updated: October 29, 2021
 
 M118 S{"Debug: Begin resume.g"} L3
+
+if {global.MachineModel} == "H5B"
+        if sensors.gpIn[{global.AirPressureInNum}] == 0
+            M291 P"Warning: Incoming air pressure low. Resolve before continuing." R"Warning" S3            ; Display a blocking warning with no timeout.
+            abort
 
 T{state.restorePoints[1].toolNumber} ; Select the tool that was active when the job was paused.
 
