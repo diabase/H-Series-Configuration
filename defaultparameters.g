@@ -2,7 +2,7 @@
 ; Default configuration parameters for H-Series machines
 ; Produced by Diabase H-Series Configurizer
 ; Written by Diabase Engineering
-; Last Updated: October 28, 2021
+; Last Updated: October 29, 2021
 
 M118 S"Begin defaultparameters.g" L2
 
@@ -302,14 +302,14 @@ else
     set global.WDirection = 0
 
 if !{exists(global.ADirection)}
-    global ADirection = 1
+    global ADirection = 0
 else
-    set global.ADirection = 1
+    set global.ADirection = 0
 
 if !{exists(global.APrimeDirection)}
-    global APrimeDirection = 0
+    global APrimeDirection = 1
 else
-    set global.APrimeDirection = 0
+    set global.APrimeDirection = 1
 
 if !{exists(global.CDirection)}
     global CDirection = 1
