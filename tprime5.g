@@ -1,7 +1,7 @@
 ; tprime5.g
 ; Called to prime and clean tool 5
 ; Written by Diabase Engineering
-; Last Updated: August 6, 2021
+; Last Updated: October 29, 2021
 
 M118 S{"Debug: Begin tprime5.g"} L3
 
@@ -18,6 +18,8 @@ if state.currentTool != 5
         G92 U{state.restorePoints[0].coords[3]} ; Return the logical U-axis position to the actual position stored above.
     else
         G92 U{-(tools[{state.previousTool}].offsets[3]-tools[5].offsets[3])} ; Return the logical U-axis position to the actual position
+
+set global.CurrentAdditionalRetraction = global.t5AdditionalRetraction
 
 M98 P"tprime-universal.g" ; Call tprime-universal.g
 

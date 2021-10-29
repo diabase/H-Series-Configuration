@@ -1,7 +1,7 @@
 ; tprime-universal.g
 ; Universal priming macro
 ; Written by Diabase Engineering
-; Last Updated: October 20, 2021
+; Last Updated: October 29, 2021
 
 M118 S{"Debug: Begin tprime-universal.g"} L3
 
@@ -42,7 +42,7 @@ if global.CSType == "Motor"
     G1 E{tools[{state.currentTool}].retraction.length + tools[{state.currentTool}].retraction.extraRestart} F{tools[{state.currentTool}].retraction.unretractSpeed*60} ; Extrude Filament at Prime Extrusion Amount and Feedrate
     M400 ; Wait for current moves to finish
     G1 W{global.WClearance} F15000 ; Move W to 5mm less than value specified in defaultparameters.g at 6000 mm/min to retract cleaning station to the clearance location for a turret rotation
-    G1 E{-{tools[{state.currentTool}].retraction.length}} F{tools[{state.currentTool}].retraction.speed*60} ; Anti-Ooze Retraction - Retract Filament at After Prime Retraction Amount and Feedrate
+    G1 E{-{tools[{state.currentTool}].retraction.length + global.CurrentAdditionalRetraction}} F{tools[{state.currentTool}].retraction.speed*60} ; Anti-Ooze Retraction - Retract Filament at After Prime Retraction Amount (with Additional Retraction Amount) and Feedrate
     G4 P20 ; Dwell for 20 ms
 
 elif global.CSType == "Solenoid"
@@ -53,7 +53,7 @@ elif global.CSType == "Solenoid"
     G1 E{tools[{state.currentTool}].retraction.length + tools[{state.currentTool}].retraction.extraRestart} F{tools[{state.currentTool}].retraction.unretractSpeed*60} ; Button Extrusion - Extrude Filament at Prime Extrusion Amount and Feedrate
     M400 ; Wait for current moves to finish
     M42 P{global.CSSolenoidOutNum} S0 ; Set GPIO pin 0 to low 
-    G1 E{-{tools[{state.currentTool}].retraction.length}} F{tools[{state.currentTool}].retraction.speed*60} ; Anti-Ooze Retraction - Retract Filament at After Prime Retraction Amount and Feedrate
+    G1 E{-{tools[{state.currentTool}].retraction.length + global.CurrentAdditionalRetraction}} F{tools[{state.currentTool}].retraction.speed*60} ; Anti-Ooze Retraction - Retract Filament at After Prime Retraction Amount (with Additional Retraction Amount) and Feedrate
     G4 P20 ; Dwell for 20 ms
 
 if tools[{state.currentTool}].offsets[3] + 90.00 <= 0
