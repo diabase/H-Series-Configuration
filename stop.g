@@ -2,7 +2,7 @@
 ; If the axes are homed and if a print is being cancelled (M25), cancel.g is called when M0 is sent. 
 ; If M0 is sent at any other time, stop.g is called.
 ; Written by Diabase Engineering
-; Last Updated: August 6, 2021
+; Last Updated: November 02, 2021
 
 M118 S{"Debug: Begin stop.g"} L3
 
@@ -35,5 +35,9 @@ if heat.heaters[{global.BedHeaterNum}] != null                      ; If we have
     if {heat.heaters[{global.BedHeaterNum}].current != -273.15}     ; ... and it's connected... 
         if {heat.heaters[{global.BedHeaterNum}].state != "fault"}   ; ... and it's not in a fault state...
             M144 S0                                                 ; Set bed to standby
+
+M220 S100                                                           ; Reset speed factor override to 100%
+while iterations < #move.extruders                                  ; Loop over all extruders and ...
+    M221 S100 D{iterations}                                         ; ... reset extrude factor override to 100%
 
 M118 S{"Debug: End stop.g"} L3
