@@ -9,7 +9,7 @@ if {exists(global.diameterProbeHole)}
     if {exists(global.DiameterProbeHole)}
         set global.DiameterProbeHole = global.diameterProbeHole
 
-if state.currentTool != 10
+if {tools[{state.currentTool}].spindle != -1} || {#tools[{state.nextTool}].extruders > 0}}
     abort "The probe must be the active tool to perform this action. Please activate the probe and try again."
 
 M291 P"Bed will now move. Is Probe inside cavity?" R"Crash Check" S3
