@@ -9,10 +9,16 @@ if {exists(global.diameterProbeHole)}
     if {exists(global.DiameterProbeHole)}
         set global.DiameterProbeHole = global.diameterProbeHole
 
-if {tools[{state.currentTool}].spindle != -1} || {#tools[{state.nextTool}].extruders > 0}}
+if {state.currentTool} == -1
     abort "The probe must be the active tool to perform this action. Please activate the probe and try again."
 
-M291 P"Bed will now move. Is Probe inside cavity?" R"Crash Check" S3
+if {tools[{state.currentTool}].spindle != -1}
+    abort "The probe must be the active tool to perform this action. Please activate the probe and try again."
+
+if {#tools[{state.nextTool}].extruders > 0}
+    abort "The probe must be the active tool to perform this action. Please activate the probe and try again."
+
+M291 P"Bed will now move. Is Probe inside a cavity with diameter <" ^ {global.DiameterProbeHole} ^ " mm?" R"Crash Check" S3
 
 M561                                                                                                                        ; Identity transform
 
