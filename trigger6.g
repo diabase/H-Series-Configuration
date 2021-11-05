@@ -1,7 +1,7 @@
 ; trigger6.g
 ; Behavior for Closing Filament Cabinet
 ; Written by Diabase Engineering
-; Last Updated: October 29, 2021
+; Last Updated: November 05, 2021
 
 M118 S{"Debug: Begin trigger6.g"} L3
 
@@ -12,7 +12,7 @@ while iterations < #sensors.analog
             break
 
 set global.FCDoorCloseTime = state.upTime
-M118 S{"Warning: Filament Cabinet -- Door closed, fans starting, relative humidity is "^{global.FCRH}^"%"} L1    ; Log warning event
+M118 S{"Info: Filament Cabinet -- Door closed, fans starting, relative humidity is "^{global.FCRH}^"%"} L2    ; Log info event
 while iterations < #fans
     if fans[iterations] != null
         if fans[iterations].name == "Filament Cabinet Fan"
