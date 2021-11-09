@@ -1,7 +1,7 @@
 ; trigger2.g
 ; Activates when extruder crash detect switch is triggered
 ; Written by Diabase Engineering
-; Last Updated: October 29, 2021
+; Last Updated: November 09, 2021
 
 M118 S{"Debug: Begin trigger2.g"} L3
 
@@ -11,4 +11,4 @@ if global.IsMovingProbe != 1                                                    
             M25                                                                                     ; Pause job
         M291 P"Crash detect switch is engaged. Reseat extruder and continue." R"Crash Detected" S3  ; Display alert message
 
-M118 S{"Debug: End trigger2.g} L3
+M118 S{"Debug: End trigger2.g"} L3
