@@ -5,8 +5,8 @@
 
 M118 S{"Debug: Begin trigger8.g"} L3
 
-if {global.MachineModel} == "H5B"
-        if sensors.gpIn[{global.AirPressureInNum}] == 0
+if {global.machineModel} == "H5B"
+        if sensors.gpIn[{global.airPressureInNum}] == 0
             if {state.status} == "processing"
                 M25                                                                                                     ; Pause job
             M18 U                                                                                                       ; Disable U axis motor and...

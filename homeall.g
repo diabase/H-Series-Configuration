@@ -5,8 +5,8 @@
 
 M118 S{"Debug: Begin homeall.g"} L3
 
-if {global.MachineModel} == "H5B"
-        if sensors.gpIn[{global.AirPressureInNum}] == 0
+if {global.machineModel} == "H5B"
+        if sensors.gpIn[{global.airPressureInNum}] == 0
             M291 P"Warning: Incoming air pressure low. Resolve before continuing." R"Warning" S3            ; Display a blocking warning with no timeout.
             abort
             
@@ -14,17 +14,17 @@ if {global.MachineModel} == "H5B"
 G54 ; Assert WCS
 
 ; Ensure axis endstops are used
-M574 X1 S1 P{global.XSwitchPin} ; Configure X endstop position at low end, it's an optical interrupt on pin defined in defaultparameters.g
-M574 Y1 S1 P{global.YSwitchPin} ; Configure Y endstop position at low end, it's an optical interrupt on pin defined in defaultparameters.g
-M574 Z2 S1 P{global.ZSwitchPin} ; Configure Z endstop position at high end, it's an optical interrupt on pin defined in defaultparameters.g
+M574 X1 S1 P{global.xSwitchPin} ; Configure X endstop position at low end, it's an optical interrupt on pin defined in defaultparameters.g
+M574 Y1 S1 P{global.ySwitchPin} ; Configure Y endstop position at low end, it's an optical interrupt on pin defined in defaultparameters.g
+M574 Z2 S1 P{global.zSwitchPin} ; Configure Z endstop position at high end, it's an optical interrupt on pin defined in defaultparameters.g
 
-if {global.MachineModel} == "H4"
+if {global.machineModel} == "H4"
     M84 E0:1:2:3 ; Idle all extruder motors
 
 T-1 ; Deselect current tool (if any)
 G92 A0 C0 ; Set current A and C positions as 0 mm
 
-if {global.CSType} == "Motor"
+if {global.cSType} == "Motor"
     M98 p"homew.g" ; Call homew.g
 
 G91 ; Relative Positioning
@@ -58,7 +58,7 @@ G92 U0 ; Set current U position as 0 mm
 M574 Z1 S2 ; Set Z endstop position to low end and configure as Z probe
 
 G1 X0 Y0 F10000 ; Move to X=0, Y=0 at 10000 mm/min
-G1 Z{move.axes[2].max + global.MaxOffset} F10000 ; Move to Z = ZMax + Longest Z Offset at 10000 mm/min
+G1 Z{move.axes[2].max + global.maxOffset} F10000 ; Move to Z = ZMax + Longest Z Offset at 10000 mm/min
 
 G60 S1 ; Save current position in slot 1 (the slot used when pausing)
 

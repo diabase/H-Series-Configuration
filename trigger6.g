@@ -8,11 +8,11 @@ M118 S{"Debug: Begin trigger6.g"} L3
 while iterations < #sensors.analog
     if sensors.analog[iterations] != null
         if sensors.analog[iterations].name == "FilamentCabinetRH[%]"
-            set global.FCRH = sensors.analog[iterations].lastReading
+            set global.fCRH = sensors.analog[iterations].lastReading
             break
 
-set global.FCDoorCloseTime = state.upTime
-M118 S{"Info: Filament Cabinet -- Door closed, fans starting, relative humidity is "^{global.FCRH}^"%"} L2    ; Log info event
+set global.fCDoorCloseTime = state.upTime
+M118 S{"Info: Filament Cabinet -- Door closed, fans starting, relative humidity is "^{global.fCRH}^"%"} L2    ; Log info event
 while iterations < #fans
     if fans[iterations] != null
         if fans[iterations].name == "Filament Cabinet Fan"

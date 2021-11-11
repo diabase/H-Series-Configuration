@@ -19,7 +19,7 @@ if state.currentTool != 3
     else
         G92 U{-(tools[{state.previousTool}].offsets[3]-tools[3].offsets[3])} ; Return the logical U-axis position to the actual position
 
-set global.CurrentAdditionalRetraction = global.t3AdditionalRetraction
+set global.currentAdditionalRetraction = global.t3AdditionalRetraction
 
 M98 P"tprime-universal.g" ; Call tprime-universal.g
 

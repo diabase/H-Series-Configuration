@@ -5,7 +5,7 @@
 
 M118 S{"Debug: Begin trigger2.g"} L3
 
-if global.IsMovingProbe != 1                                                                        ; Run only if we're not in the middle of moving the probe
+if global.isMovingProbe != 1                                                                        ; Run only if we're not in the middle of moving the probe
     if state.machineMode == "FFF"                                                                   ; and we're in FFF mode.
         if {state.status} == "processing"
             M25                                                                                     ; Pause job

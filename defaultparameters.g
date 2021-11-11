@@ -6,1015 +6,1015 @@
 
 M118 S"Begin defaultparameters.g" L2
 
-if !{exists(global.MachineName)}
-    global MachineName = "H5XXX" ; Machine name for web interface and local network discovery.
+if !{exists(global.machineName)}
+    global machineName = "H5XXX" ; Machine name for web interface and local network discovery.
 else
-    set global.MachineName = "H5XXX"
+    set global.machineName = "H5XXX"
 
-if !{exists(global.MachineModel)}
-    global MachineModel = "H5A" ; Machine model number
+if !{exists(global.machineModel)}
+    global machineModel = "H5A" ; Machine model number
 else
-    set global.MachineModel = "H5A"
+    set global.machineModel = "H5A"
 
-if !{exists(global.XMin)}
-    global XMin = -208
+if !{exists(global.xMin)}
+    global xMin = -208
 else
-    set global.XMin = -208
+    set global.xMin = -208
 
-if !{exists(global.XMax)}
-    global XMax = 208
+if !{exists(global.xMax)}
+    global xMax = 208
 else
-    set global.XMax = 208
+    set global.xMax = 208
 
-if !{exists(global.YMin)}
-    global YMin = -90
+if !{exists(global.yMin)}
+    global yMin = -90
 else
-    set global.YMin = -90
+    set global.yMin = -90
 
-if !{exists(global.YMax)}
-    global YMax = 90
+if !{exists(global.yMax)}
+    global yMax = 90
 else
-    set global.YMax = 90
+    set global.yMax = 90
 
-if !{exists(global.ZMin)}
-    global ZMin = -10
+if !{exists(global.zMin)}
+    global zMin = -10
 else
-    set global.ZMin = -10
+    set global.zMin = -10
 
-if !{exists(global.ZMax)}
-    global ZMax = 410
+if !{exists(global.zMax)}
+    global zMax = 410
 else
-    set global.ZMax = 410
+    set global.zMax = 410
 
-if !{exists(global.UMin)}
-    global UMin = -10 ; Physical u-axis position when USwitchPin triggers.
+if !{exists(global.uMin)}
+    global uMin = -10 ; Physical u-axis position when uSwitchPin triggers.
 else
-    set global.UMin = -10
+    set global.uMin = -10
 
-if !{exists(global.UMax)}
-    global UMax = 360
+if !{exists(global.uMax)}
+    global uMax = 360
 else
-    set global.UMax = 360
+    set global.uMax = 360
 
-if !{exists(global.VMin)}
-    global VMin = -100
+if !{exists(global.vMin)}
+    global vMin = -100
 else
-    set global.VMin = -100
+    set global.vMin = -100
 
-if !{exists(global.VMax)}
-    global VMax = 200
+if !{exists(global.vMax)}
+    global vMax = 200
 else
-    set global.VMax = 200
+    set global.vMax = 200
 
-if !{exists(global.WMin)}
-    global WMin = 0
+if !{exists(global.wMin)}
+    global wMin = 0
 else
-    set global.WMin = 0
+    set global.wMin = 0
 
-if !{exists(global.WMax)}
-    global WMax = 35
+if !{exists(global.wMax)}
+    global wMax = 35
 else
-    set global.WMax = 35
+    set global.wMax = 35
 
-if !{exists(global.AMin)}
-    global AMin = -365
+if !{exists(global.aMin)}
+    global aMin = -365
 else
-    set global.AMin = -365
+    set global.aMin = -365
 
-if !{exists(global.AMax)}
-    global AMax = 365
+if !{exists(global.aMax)}
+    global aMax = 365
 else
-    set global.AMax = 365
+    set global.aMax = 365
 
-if !{exists(global.CMin)}
-    global CMin = -1000
+if !{exists(global.cMin)}
+    global cMin = -1000
 else
-    set global.CMin = -1000
+    set global.cMin = -1000
 
-if !{exists(global.CMax)}
-    global CMax = 10000
+if !{exists(global.cMax)}
+    global cMax = 10000
 else
-    set global.CMax = 10000
+    set global.cMax = 10000
 
-if !{exists(global.CSType)}
-    global CSType = "Motor" ; Cleaning station type. Options are "None", "Solenoid", or "Motor"
+if !{exists(global.cSType)}
+    global cSType = "Motor" ; Cleaning station type. Options are "None", "Solenoid", or "Motor"
 else
-    set global.CSType = "Motor"
+    set global.cSType = "Motor"
 
-if !{exists(global.WPrimeSurface)}
-    global WPrimeSurface = 22 ; W-axis position for forming filament button during priming cycle.
+if !{exists(global.wPrimeSurface)}
+    global wPrimeSurface = 22 ; W-axis position for forming filament button during priming cycle.
 else
-    set global.WPrimeSurface = 22
+    set global.wPrimeSurface = 22
 
-if !{exists(global.WClearance)}
-    global WClearance = -1
+if !{exists(global.wClearance)}
+    global wClearance = -1
 else
-    set global.WClearance = -1
+    set global.wClearance = -1
 
-if !{exists(global.WClean)}
-    global WClean = -1
+if !{exists(global.wClean)}
+    global wClean = -1
 else
-    set global.WClean = -1
+    set global.wClean = -1
 
-if !{exists(global.WGrab)}
-    global WGrab = -1
+if !{exists(global.wGrab)}
+    global wGrab = -1
 else
-    set global.WGrab = -1
+    set global.wGrab = -1
 
-if !{exists(global.LogFileName)}
-    global LogFileName = "eventlog.txt"
+if !{exists(global.logFileName)}
+    global logFileName = "eventlog.txt"
 else
-    set global.LogFileName = "eventlog.txt"
+    set global.logFileName = "eventlog.txt"
 
-if !{exists(global.LogLevel)}
-    global LogLevel = 0 ; Verbosity for logging to eventlog.txt. (Options: "0" for Off, "1" for Warnings, "2" for Information, and "3" for Debug)
+if !{exists(global.logLevel)}
+    global logLevel = 0 ; Verbosity for logging to eventlog.txt. (Options: "0" for Off, "1" for Warnings, "2" for Information, and "3" for Debug)
 else
-    set global.LogLevel = 0
+    set global.logLevel = 0
 
-if !{exists(global.XSwitchPin)}
-    global XSwitchPin = "io2.in"
+if !{exists(global.xSwitchPin)}
+    global xSwitchPin = "io2.in"
 else
-    set global.XSwitchPin = "io2.in"
+    set global.xSwitchPin = "io2.in"
 
-if !{exists(global.YSwitchPin)}
-    global YSwitchPin = "io3.in"
+if !{exists(global.ySwitchPin)}
+    global ySwitchPin = "io3.in"
 else
-    set global.YSwitchPin = "io3.in"
+    set global.ySwitchPin = "io3.in"
 
-if !{exists(global.ZSwitchPin)}
-    global ZSwitchPin = "io4.in"
+if !{exists(global.zSwitchPin)}
+    global zSwitchPin = "io4.in"
 else
-    set global.ZSwitchPin = "io4.in"
+    set global.zSwitchPin = "io4.in"
 
-if !{exists(global.USwitchPin)}
-    global USwitchPin = "1.io1.in"
+if !{exists(global.uSwitchPin)}
+    global uSwitchPin = "1.io1.in"
 else
-    set global.USwitchPin = "1.io1.in"
+    set global.uSwitchPin = "1.io1.in"
 
-if !{exists(global.VSwitchPin)}
-    global VSwitchPin = "1.io2.in"
+if !{exists(global.vSwitchPin)}
+    global vSwitchPin = "1.io2.in"
 else
-    set global.VSwitchPin = "1.io2.in"
+    set global.vSwitchPin = "1.io2.in"
 
-; if !{exists(global.WSwitchPin)}
-;     global WSwitchPin = ""
+; if !{exists(global.wSwitchPin)}
+;     global wSwitchPin = ""
 ; else
-;     set global.WSwitchPin = ""
+;     set global.wSwitchPin = ""
 
-if !{exists(global.ASwitchPin)}
-    global ASwitchPin = "2.io0.in"
+if !{exists(global.aSwitchPin)}
+    global aSwitchPin = "2.io0.in"
 else
-    set global.ASwitchPin = "2.io0.in"
+    set global.aSwitchPin = "2.io0.in"
 
-; if !{exists(global.APrimeSwitchPin)}
-;     global APrimeSwitchPin = ""
+; if !{exists(global.aPrimeSwitchPin)}
+;     global aPrimeSwitchPin = ""
 ; else
-;     set global.APrimeSwitchPin = ""
+;     set global.aPrimeSwitchPin = ""
 
-if !{exists(global.CSwitchPin)}
-    global CSwitchPin = "2.io2.in"
+if !{exists(global.cSwitchPin)}
+    global cSwitchPin = "2.io2.in"
 else
-    set global.CSwitchPin = "2.io2.in"
+    set global.cSwitchPin = "2.io2.in"
 
-if !{exists(global.XDrive)}
-    global XDrive = 0
+if !{exists(global.xDrive)}
+    global xDrive = 0
 else
-    set global.XDrive = 0
+    set global.xDrive = 0
 
-if !{exists(global.YDrive)}
-    global YDrive = 1
+if !{exists(global.yDrive)}
+    global yDrive = 1
 else
-    set global.YDrive = 1
+    set global.yDrive = 1
 
-if !{exists(global.ZDrive)}
-    global ZDrive = 2
+if !{exists(global.zDrive)}
+    global zDrive = 2
 else
-    set global.ZDrive = 2
+    set global.zDrive = 2
 
-if !{exists(global.UDrive)}
-    global UDrive = 3
+if !{exists(global.uDrive)}
+    global uDrive = 3
 else
-    set global.UDrive = 3
+    set global.uDrive = 3
 
-if !{exists(global.VDrive)}
-    global VDrive = 4
+if !{exists(global.vDrive)}
+    global vDrive = 4
 else
-    set global.VDrive = 4
+    set global.vDrive = 4
 
-if !{exists(global.WDrive)}
-    global WDrive = 5
+if !{exists(global.wDrive)}
+    global wDrive = 5
 else
-    set global.WDrive = 5
+    set global.wDrive = 5
 
-if !{exists(global.ADrive)}
-    global ADrive = 2.0
+if !{exists(global.aDrive)}
+    global aDrive = 2.0
 else
-    set global.ADrive = 2.0
+    set global.aDrive = 2.0
 
-if !{exists(global.APrimeDrive)}
-    global APrimeDrive = 2.1
+if !{exists(global.aPrimeDrive)}
+    global aPrimeDrive = 2.1
 else
-    set global.APrimeDrive = 2.1
+    set global.aPrimeDrive = 2.1
 
-if !{exists(global.CDrive)}
-    global CDrive = 2.2
+if !{exists(global.cDrive)}
+    global cDrive = 2.2
 else
-    set global.CDrive = 2.2
+    set global.cDrive = 2.2
 
-if !{exists(global.E1Drive)}
-    global E1Drive = 1.0
+if !{exists(global.e1Drive)}
+    global e1Drive = 1.0
 else
-    set global.E1Drive = 1.0
+    set global.e1Drive = 1.0
 
-; if !{exists(global.E2Drive)}
-;     global E2Drive = 
+; if !{exists(global.e2Drive)}
+;     global e2Drive = 
 ; else
-;     set global.E2Drive = 
+;     set global.e2Drive = 
 
-if !{exists(global.E3Drive)}
-    global E3Drive = 1.1
+if !{exists(global.e3Drive)}
+    global e3Drive = 1.1
 else
-    set global.E3Drive = 1.1
+    set global.e3Drive = 1.1
 
-; if !{exists(global.E4Drive)}
-;     global E4Drive = 
+; if !{exists(global.e4Drive)}
+;     global e4Drive = 
 ; else
-;     set global.E4Drive = 
+;     set global.e4Drive = 
 
-if !{exists(global.E5Drive)}
-    global E5Drive = 1.2
+if !{exists(global.e5Drive)}
+    global e5Drive = 1.2
 else
-    set global.E5Drive = 1.2
+    set global.e5Drive = 1.2
 
-if !{exists(global.FA1Drive)}
-    global FA1Drive = 3.0
+if !{exists(global.fA1Drive)}
+    global fA1Drive = 3.0
 else
-    set global.FA1Drive = 3.0
+    set global.fA1Drive = 3.0
 
-; if !{exists(global.FA2Drive)}
-;     global FA2Drive = 
+; if !{exists(global.fA2Drive)}
+;     global fA2Drive = 
 ; else
-;     set global.FA2Drive = 
+;     set global.fA2Drive = 
 
-if !{exists(global.FA3Drive)}
-    global FA3Drive = 3.1
+if !{exists(global.fA3Drive)}
+    global fA3Drive = 3.1
 else
-    set global.FA3Drive = 3.1
+    set global.fA3Drive = 3.1
 
-; if !{exists(global.FA4Drive)}
-;     global FA4Drive = 
+; if !{exists(global.fA4Drive)}
+;     global fA4Drive = 
 ; else
-;     set global.FA4Drive = 
+;     set global.fA4Drive = 
 
-if !{exists(global.FA5Drive)}
-    global FA5Drive = 3.2
+if !{exists(global.fA5Drive)}
+    global fA5Drive = 3.2
 else
-    set global.FA5Drive = 3.2
+    set global.fA5Drive = 3.2
 
-if !{exists(global.XDirection)}
-    global XDirection = 0
+if !{exists(global.xDirection)}
+    global xDirection = 0
 else
-    set global.XDirection = 0
+    set global.xDirection = 0
 
-if !{exists(global.YDirection)}
-    global YDirection = 0
+if !{exists(global.yDirection)}
+    global yDirection = 0
 else
-    set global.YDirection = 0
+    set global.yDirection = 0
 
-if !{exists(global.ZDirection)}
-    global ZDirection = 0
+if !{exists(global.zDirection)}
+    global zDirection = 0
 else
-    set global.ZDirection = 0
+    set global.zDirection = 0
 
-if !{exists(global.UDirection)}
-    global UDirection = 0
+if !{exists(global.uDirection)}
+    global uDirection = 0
 else
-    set global.UDirection = 0
+    set global.uDirection = 0
 
-if !{exists(global.VDirection)}
-    global VDirection = 1
+if !{exists(global.vDirection)}
+    global vDirection = 1
 else
-    set global.VDirection = 1
+    set global.vDirection = 1
 
-if !{exists(global.WDirection)}
-    global WDirection = 0
+if !{exists(global.wDirection)}
+    global wDirection = 0
 else
-    set global.WDirection = 0
+    set global.wDirection = 0
 
-if !{exists(global.ADirection)}
-    global ADirection = 0
+if !{exists(global.aDirection)}
+    global aDirection = 0
 else
-    set global.ADirection = 0
+    set global.aDirection = 0
 
-if !{exists(global.APrimeDirection)}
-    global APrimeDirection = 1
+if !{exists(global.aPrimeDirection)}
+    global aPrimeDirection = 1
 else
-    set global.APrimeDirection = 1
+    set global.aPrimeDirection = 1
 
-if !{exists(global.CDirection)}
-    global CDirection = 1
+if !{exists(global.cDirection)}
+    global cDirection = 1
 else
-    set global.CDirection = 1
+    set global.cDirection = 1
 
-if !{exists(global.E1Direction)}
-    global E1Direction = 0
+if !{exists(global.e1Direction)}
+    global e1Direction = 0
 else
-    set global.E1Direction = 0
+    set global.e1Direction = 0
 
-; if !{exists(global.E2Direction)}
-;     global E2Direction = 
+; if !{exists(global.e2Direction)}
+;     global e2Direction = 
 ; else
-;     set global.E2Direction = 
+;     set global.e2Direction = 
 
-if !{exists(global.E3Direction)}
-    global E3Direction = 0
+if !{exists(global.e3Direction)}
+    global e3Direction = 0
 else
-    set global.E3Direction = 0
+    set global.e3Direction = 0
 
-; if !{exists(global.E4Direction)}
-;     global E4Direction = 
+; if !{exists(global.e4Direction)}
+;     global e4Direction = 
 ; else
-;     set global.E4Direction = 
+;     set global.e4Direction = 
 
-if !{exists(global.E5Direction)}
-    global E5Direction = 0
+if !{exists(global.e5Direction)}
+    global e5Direction = 0
 else
-    set global.E5Direction = 0
+    set global.e5Direction = 0
 
-if !{exists(global.FA1Direction)}
-    global FA1Direction = 0
+if !{exists(global.fA1Direction)}
+    global fA1Direction = 0
 else
-    set global.FA1Direction = 0
+    set global.fA1Direction = 0
 
-; if !{exists(global.FA2Direction)}
-;     global FA2Direction = 
+; if !{exists(global.fA2Direction)}
+;     global fA2Direction = 
 ; else
-;     set global.FA2Direction = 
+;     set global.fA2Direction = 
 
-if !{exists(global.FA3Direction)}
-    global FA3Direction = 0
+if !{exists(global.fA3Direction)}
+    global fA3Direction = 0
 else
-    set global.FA3Direction = 0
+    set global.fA3Direction = 0
 
-; if !{exists(global.FA4Direction)}
-;     global FA4Direction = 
+; if !{exists(global.fA4Direction)}
+;     global fA4Direction = 
 ; else
-;     set global.FA4Direction = 
+;     set global.fA4Direction = 
 
-if !{exists(global.FA5Direction)}
-    global FA5Direction = 0
+if !{exists(global.fA5Direction)}
+    global fA5Direction = 0
 else
-    set global.FA5Direction = 0
+    set global.fA5Direction = 0
 
-if !{exists(global.CSPinchPin)}
-    global CSPinchPin = "out1"
+if !{exists(global.cSPinchPin)}
+    global cSPinchPin = "out1"
 else
-    set global.CSPinchPin = "out1"
+    set global.cSPinchPin = "out1"
 
-if !{exists(global.ZBrakePin)}
-    global ZBrakePin = "!out2"
+if !{exists(global.zBrakePin)}
+    global zBrakePin = "!out2"
 else
-    set global.ZBrakePin = "!out2"
+    set global.zBrakePin = "!out2"
 
-if !{exists(global.BELedPin)}
-    global BELedPin = "3.out4"
+if !{exists(global.bELedPin)}
+    global bELedPin = "3.out4"
 else
-    set global.BELedPin = "3.out4"
+    set global.bELedPin = "3.out4"
 
-if !{exists(global.FCLedPin)}
-    global FCLedPin = "3.out5"
+if !{exists(global.fCLedPin)}
+    global fCLedPin = "3.out5"
 else
-    set global.FCLedPin = "3.out5"
+    set global.fCLedPin = "3.out5"
 
-if !{exists(global.FffFanPin)}
-    global FffFanPin = "1.out7"
+if !{exists(global.fffFanPin)}
+    global fffFanPin = "1.out7"
 else
-    set global.FffFanPin = "1.out7"
+    set global.fffFanPin = "1.out7"
 
-if !{exists(global.LayerFanPin)}
-    global LayerFanPin = "1.out8"
+if !{exists(global.layerFanPin)}
+    global layerFanPin = "1.out8"
 else
-    set global.LayerFanPin = "1.out8"
+    set global.layerFanPin = "1.out8"
 
-; if !{exists(global.Spindle1SpeedPin)}
-;     global Spindle1SpeedPin = ""
+; if !{exists(global.spindle1SpeedPin)}
+;     global spindle1SpeedPin = ""
 ; else
-;     set global.Spindle1SpeedPin = ""
+;     set global.spindle1SpeedPin = ""
 
-if !{exists(global.Spindle2SpeedPin)}
-    global Spindle2SpeedPin = "io5.out"
+if !{exists(global.spindle2SpeedPin)}
+    global spindle2SpeedPin = "io5.out"
 else
-    set global.Spindle2SpeedPin = "io5.out"
+    set global.spindle2SpeedPin = "io5.out"
 
-; if !{exists(global.Spindle3SpeedPin)}
-;     global Spindle3SpeedPin = ""
+; if !{exists(global.spindle3SpeedPin)}
+;     global spindle3SpeedPin = ""
 ; else
-;     set global.Spindle3SpeedPin = ""
+;     set global.spindle3SpeedPin = ""
 
-if !{exists(global.Spindle4SpeedPin)}
-    global Spindle4SpeedPin = "io7.out"
+if !{exists(global.spindle4SpeedPin)}
+    global spindle4SpeedPin = "io7.out"
 else
-    set global.Spindle4SpeedPin = "io7.out"
+    set global.spindle4SpeedPin = "io7.out"
 
-; if !{exists(global.Spindle5SpeedPin)}
-;     global Spindle5SpeedPin = ""
+; if !{exists(global.spindle5SpeedPin)}
+;     global spindle5SpeedPin = ""
 ; else
-;     set global.Spindle5SpeedPin = ""
+;     set global.spindle5SpeedPin = ""
 
-; if !{exists(global.Spindle1DirectionPin)}
-;     global Spindle1DirectionPin = ""
+; if !{exists(global.spindle1DirectionPin)}
+;     global spindle1DirectionPin = ""
 ; else
-;     set global.Spindle1DirectionPin = ""
+;     set global.spindle1DirectionPin = ""
 
-if !{exists(global.Spindle2DirectionPin)}
-    global Spindle2DirectionPin = "!io6.out"
+if !{exists(global.spindle2DirectionPin)}
+    global spindle2DirectionPin = "!io6.out"
 else
-    set global.Spindle2DirectionPin = "!io6.out"
+    set global.spindle2DirectionPin = "!io6.out"
 
-; if !{exists(global.Spindle3DirectionPin)}
-;     global Spindle3DirectionPin = ""
+; if !{exists(global.spindle3DirectionPin)}
+;     global spindle3DirectionPin = ""
 ; else
-;     set global.Spindle3DirectionPin = ""
+;     set global.spindle3DirectionPin = ""
 
-if !{exists(global.Spindle4DirectionPin)}
-    global Spindle4DirectionPin = "!io8.out"
+if !{exists(global.spindle4DirectionPin)}
+    global spindle4DirectionPin = "!io8.out"
 else
-    set global.Spindle4DirectionPin = "!io8.out"
+    set global.spindle4DirectionPin = "!io8.out"
 
-; if !{exists(global.Spindle5DirectionPin)}
-;     global Spindle5DirectionPin = ""
+; if !{exists(global.spindle5DirectionPin)}
+;     global spindle5DirectionPin = ""
 ; else
-;     set global.Spindle5DirectionPin = ""
+;     set global.spindle5DirectionPin = ""
 
-; if !{exists(global.Spindle1AirPin)}
-;     global Spindle1AirPin = ""
+; if !{exists(global.spindle1AirPin)}
+;     global spindle1AirPin = ""
 ; else
-;     set global.Spindle1AirPin = ""
+;     set global.spindle1AirPin = ""
 
-if !{exists(global.Spindle2AirPin)}
-    global Spindle2AirPin = "out5"
+if !{exists(global.spindle2AirPin)}
+    global spindle2AirPin = "out5"
 else
-    set global.Spindle2AirPin = "out5"
+    set global.spindle2AirPin = "out5"
 
-; if !{exists(global.Spindle3AirPin)}
-;     global Spindle3AirPin = ""
+; if !{exists(global.spindle3AirPin)}
+;     global spindle3AirPin = ""
 ; else
-;     set global.Spindle3AirPin = ""
+;     set global.spindle3AirPin = ""
 
-if !{exists(global.Spindle4AirPin)}
-    global Spindle4AirPin = "out6"
+if !{exists(global.spindle4AirPin)}
+    global spindle4AirPin = "out6"
 else
-    set global.Spindle4AirPin = "out6"
+    set global.spindle4AirPin = "out6"
 
-; if !{exists(global.Spindle5AirPin)}
-;     global Spindle5AirPin = ""
+; if !{exists(global.spindle5AirPin)}
+;     global spindle5AirPin = ""
 ; else
-;     set global.Spindle5AirPin = ""
+;     set global.spindle5AirPin = ""
 
-; if !{exists(global.Spindle1AirIndex)}
-;     global Spindle1AirIndex = 
+; if !{exists(global.spindle1AirIndex)}
+;     global spindle1AirIndex = 
 ; else
-;     set global.Spindle1AirIndex = 
+;     set global.spindle1AirIndex = 
 
-if !{exists(global.Spindle2AirIndex)}
-    global Spindle2AirIndex = -1
+if !{exists(global.spindle2AirIndex)}
+    global spindle2AirIndex = -1
 else
-    set global.Spindle2AirIndex = -1
+    set global.spindle2AirIndex = -1
 
-; if !{exists(global.Spindle3AirIndex)}
-;     global Spindle3AirIndex = 
+; if !{exists(global.spindle3AirIndex)}
+;     global spindle3AirIndex = 
 ; else
-;     set global.Spindle3AirIndex = 
+;     set global.spindle3AirIndex = 
 
-if !{exists(global.Spindle4AirIndex)}
-    global Spindle4AirIndex = -1
+if !{exists(global.spindle4AirIndex)}
+    global spindle4AirIndex = -1
 else
-    set global.Spindle4AirIndex = -1
+    set global.spindle4AirIndex = -1
 
-; if !{exists(global.Spindle5AirIndex)}
-;     global Spindle5AirIndex = 
+; if !{exists(global.spindle5AirIndex)}
+;     global spindle5AirIndex = 
 ; else
-;     set global.Spindle5AirIndex = 
+;     set global.spindle5AirIndex = 
 
-if !{exists(global.MaxOffset)}
-    global MaxOffset = 0
+if !{exists(global.maxOffset)}
+    global maxOffset = 0
 else
-    set global.MaxOffset = 0
+    set global.maxOffset = 0
 
-if !{exists(global.DiameterProbeHole)}
-    global DiameterProbeHole = 14
+if !{exists(global.diameterProbeHole)}
+    global diameterProbeHole = 14
 else
-    set global.DiameterProbeHole = 14
+    set global.diameterProbeHole = 14
 
-if !{exists(global.BedHeatPin)}
-    global BedHeatPin = "out7"
+if !{exists(global.bedHeatPin)}
+    global bedHeatPin = "out7"
 else
-    set global.BedHeatPin = "out7"
+    set global.bedHeatPin = "out7"
 
-if !{exists(global.BedTempPin)}
-    global BedTempPin = "temp0"
+if !{exists(global.bedTempPin)}
+    global bedTempPin = "temp0"
 else
-    set global.BedTempPin = "temp0"
+    set global.bedTempPin = "temp0"
 
-if !{exists(global.BEDoorPin)}
-    global BEDoorPin = "1.io5.in"
+if !{exists(global.bEDoorPin)}
+    global bEDoorPin = "1.io5.in"
 else
-    set global.BEDoorPin = "1.io5.in"
+    set global.bEDoorPin = "1.io5.in"
 
-if !{exists(global.EHeat1Pin)}
-    global EHeat1Pin = "1.out0"
+if !{exists(global.eHeat1Pin)}
+    global eHeat1Pin = "1.out0"
 else
-    set global.EHeat1Pin = "1.out0"
+    set global.eHeat1Pin = "1.out0"
 
-; if !{exists(global.EHeat2Pin)}
-;     global EHeat2Pin = ""
+; if !{exists(global.eHeat2Pin)}
+;     global eHeat2Pin = ""
 ; else
-;     set global.EHeat2Pin = ""
+;     set global.eHeat2Pin = ""
 
-if !{exists(global.EHeat3Pin)}
-    global EHeat3Pin = "1.out1"
+if !{exists(global.eHeat3Pin)}
+    global eHeat3Pin = "1.out1"
 else
-    set global.EHeat3Pin = "1.out1"
+    set global.eHeat3Pin = "1.out1"
 
-; if !{exists(global.EHeat4Pin)}
-;     global EHeat4Pin = ""
+; if !{exists(global.eHeat4Pin)}
+;     global eHeat4Pin = ""
 ; else
-;     set global.EHeat4Pin = ""
+;     set global.eHeat4Pin = ""
 
-if !{exists(global.EHeat5Pin)}
-    global EHeat5Pin = "1.out2"
+if !{exists(global.eHeat5Pin)}
+    global eHeat5Pin = "1.out2"
 else
-    set global.EHeat5Pin = "1.out2"
+    set global.eHeat5Pin = "1.out2"
 
-if !{exists(global.E1HeatIndex)}
-    global E1HeatIndex = -1
+if !{exists(global.e1HeatIndex)}
+    global e1HeatIndex = -1
 else
-    set global.E1HeatIndex = -1
+    set global.e1HeatIndex = -1
 
-; if !{exists(global.E2HeatIndex)}
-;     global E2HeatIndex = 
+; if !{exists(global.e2HeatIndex)}
+;     global e2HeatIndex = 
 ; else
-;     set global.E2HeatIndex = 
+;     set global.e2HeatIndex = 
 
-if !{exists(global.E3HeatIndex)}
-    global E3HeatIndex = -1
+if !{exists(global.e3HeatIndex)}
+    global e3HeatIndex = -1
 else
-    set global.E3HeatIndex = -1
+    set global.e3HeatIndex = -1
 
-; if !{exists(global.E4HeatIndex)}
-;     global E4HeatIndex = 
+; if !{exists(global.e4HeatIndex)}
+;     global e4HeatIndex = 
 ; else
-;     set global.E4HeatIndex = 
+;     set global.e4HeatIndex = 
 
-if !{exists(global.E5HeatIndex)}
-    global E5HeatIndex = -1
+if !{exists(global.e5HeatIndex)}
+    global e5HeatIndex = -1
 else
-    set global.E5HeatIndex = -1
+    set global.e5HeatIndex = -1
 
-if !{exists(global.ProbeRetractPin)}
-    global ProbeRetractPin = "out4"
+if !{exists(global.probeRetractPin)}
+    global probeRetractPin = "out4"
 else
-    set global.ProbeRetractPin = "out4"
+    set global.probeRetractPin = "out4"
 
-if !{exists(global.ProbePin)}
-    global ProbePin = "io5.in"
+if !{exists(global.probePin)}
+    global probePin = "io5.in"
 else
-    set global.ProbePin = "io5.in"
+    set global.probePin = "io5.in"
 
-if !{exists(global.TouchOffPlatePin)}
-    global TouchOffPlatePin = "io7.in"
+if !{exists(global.touchOffPlatePin)}
+    global touchOffPlatePin = "io7.in"
 else
-    set global.TouchOffPlatePin = "io7.in"
+    set global.touchOffPlatePin = "io7.in"
 
-if !{exists(global.ExtruderCrashDetectPin)}
-    global ExtruderCrashDetectPin = "1.io4.in"
+if !{exists(global.extruderCrashDetectPin)}
+    global extruderCrashDetectPin = "1.io4.in"
 else
-    set global.ExtruderCrashDetectPin = "1.io4.in"
+    set global.extruderCrashDetectPin = "1.io4.in"
 
-if !{exists(global.DhtPin)}
-    global DhtPin = "io1.out"
+if !{exists(global.dhtPin)}
+    global dhtPin = "io1.out"
 else
-    set global.DhtPin = "io1.out"
+    set global.dhtPin = "io1.out"
 
-if !{exists(global.FSense1Pin)}
-    global FSense1Pin = "3.io2.in"
+if !{exists(global.fSense1Pin)}
+    global fSense1Pin = "3.io2.in"
 else
-    set global.FSense1Pin = "3.io2.in"
+    set global.fSense1Pin = "3.io2.in"
 
-; if !{exists(global.FSense2Pin)}
-;     global FSense2Pin = ""
+; if !{exists(global.fSense2Pin)}
+;     global fSense2Pin = ""
 ; else
-;     set global.FSense2Pin = ""
+;     set global.fSense2Pin = ""
 
-if !{exists(global.FSense3Pin)}
-    global FSense3Pin = "3.io3.in"
+if !{exists(global.fSense3Pin)}
+    global fSense3Pin = "3.io3.in"
 else
-    set global.FSense3Pin = "3.io3.in"
+    set global.fSense3Pin = "3.io3.in"
 
-; if !{exists(global.FSense4Pin)}
-;     global FSense4Pin = ""
+; if !{exists(global.fSense4Pin)}
+;     global fSense4Pin = ""
 ; else
-;     set global.FSense4Pin = ""
+;     set global.fSense4Pin = ""
 
-if !{exists(global.FSense5Pin)}
-    global FSense5Pin = "3.io4.in"
+if !{exists(global.fSense5Pin)}
+    global fSense5Pin = "3.io4.in"
 else
-    set global.FSense5Pin = "3.io4.in"
+    set global.fSense5Pin = "3.io4.in"
 
-if !{exists(global.EStopSwitchPin)}
-    global EStopSwitchPin = "io1.in"
+if !{exists(global.eStopSwitchPin)}
+    global eStopSwitchPin = "io1.in"
 else
-    set global.EStopSwitchPin = "io1.in"
+    set global.eStopSwitchPin = "io1.in"
 
-if !{exists(global.ToolType1)}
-    global ToolType1 = "Extruder"
+if !{exists(global.toolType1)}
+    global toolType1 = "Extruder"
 else
-    set global.ToolType1 = "Extruder"
+    set global.toolType1 = "Extruder"
 
-if !{exists(global.ToolType2)}
-    global ToolType2 = "Spindle"
+if !{exists(global.toolType2)}
+    global toolType2 = "Spindle"
 else
-    set global.ToolType2 = "Spindle"
+    set global.toolType2 = "Spindle"
 
-if !{exists(global.ToolType3)}
-    global ToolType3 = "Extruder"
+if !{exists(global.toolType3)}
+    global toolType3 = "Extruder"
 else
-    set global.ToolType3 = "Extruder"
+    set global.toolType3 = "Extruder"
 
-if !{exists(global.ToolType4)}
-    global ToolType4 = "Spindle"
+if !{exists(global.toolType4)}
+    global toolType4 = "Spindle"
 else
-    set global.ToolType4 = "Spindle"
+    set global.toolType4 = "Spindle"
 
-if !{exists(global.ToolType5)}
-    global ToolType5 = "HT Extruder"
+if !{exists(global.toolType5)}
+    global toolType5 = "HT Extruder"
 else
-    set global.ToolType5 = "HT Extruder"
+    set global.toolType5 = "HT Extruder"
 
-if !{exists(global.E1TempPin)}
-    global E1TempPin = "1.temp0"
+if !{exists(global.e1TempPin)}
+    global e1TempPin = "1.temp0"
 else
-    set global.E1TempPin = "1.temp0"
+    set global.e1TempPin = "1.temp0"
 
-; if !{exists(global.E2TempPin)}
-;     global E2TempPin = ""
+; if !{exists(global.e2TempPin)}
+;     global e2TempPin = ""
 ; else
-;     set global.E2TempPin = ""
+;     set global.e2TempPin = ""
 
-if !{exists(global.E3TempPin)}
-    global E3TempPin = "1.temp1"
+if !{exists(global.e3TempPin)}
+    global e3TempPin = "1.temp1"
 else
-    set global.E3TempPin = "1.temp1"
+    set global.e3TempPin = "1.temp1"
 
-; if !{exists(global.E4TempPin)}
-;     global E4TempPin = ""
+; if !{exists(global.e4TempPin)}
+;     global e4TempPin = ""
 ; else
-;     set global.E4TempPin = ""
+;     set global.e4TempPin = ""
 
-if !{exists(global.E5TempPin)}
-    global E5TempPin = "1.temp2"
+if !{exists(global.e5TempPin)}
+    global e5TempPin = "1.temp2"
 else
-    set global.E5TempPin = "1.temp2"
+    set global.e5TempPin = "1.temp2"
 
-if !{exists(global.E1TempIndex)}
-    global E1TempIndex = -1
+if !{exists(global.e1TempIndex)}
+    global e1TempIndex = -1
 else
-    set global.E1TempIndex = -1
+    set global.e1TempIndex = -1
 
-; if !{exists(global.E2TempIndex)}
-;     global E2TempIndex = 
+; if !{exists(global.e2TempIndex)}
+;     global e2TempIndex = 
 ; else
-;     set global.E2TempIndex = 
+;     set global.e2TempIndex = 
 
-if !{exists(global.E3TempIndex)}
-    global E3TempIndex = -1
+if !{exists(global.e3TempIndex)}
+    global e3TempIndex = -1
 else
-    set global.E3TempIndex = -1
+    set global.e3TempIndex = -1
 
-; if !{exists(global.E4TempIndex)}
-;     global E4TempIndex = 
+; if !{exists(global.e4TempIndex)}
+;     global e4TempIndex = 
 ; else
-;     set global.E4TempIndex = 
+;     set global.e4TempIndex = 
 
-if !{exists(global.E5TempIndex)}
-    global E5TempIndex = -1
+if !{exists(global.e5TempIndex)}
+    global e5TempIndex = -1
 else
-    set global.E5TempIndex = -1
+    set global.e5TempIndex = -1
 
-if !{exists(global.FCFanPin)}
-    global FCFanPin = "3.out3"
+if !{exists(global.fCFanPin)}
+    global fCFanPin = "3.out3"
 else
-    set global.FCFanPin = "3.out3"
+    set global.fCFanPin = "3.out3"
 
-if !{exists(global.FCSwitchPin)}
-    global FCSwitchPin = "3.io0.in"
+if !{exists(global.FcSwitchPin)}
+    global FcSwitchPin = "3.io0.in"
 else
-    set global.FCSwitchPin = "3.io0.in"
+    set global.FcSwitchPin = "3.io0.in"
 
-if !{exists(global.CDOnTrigger)}
-    global CDOnTrigger = 2
+if !{exists(global.cDOnTrigger)}
+    global cDOnTrigger = 2
 else
-    set global.CDOnTrigger = 2
+    set global.cDOnTrigger = 2
 
-if !{exists(global.CDOffTrigger)}
-    global CDOffTrigger = 3
+if !{exists(global.cDOffTrigger)}
+    global cDOffTrigger = 3
 else
-    set global.CDOffTrigger = 3
+    set global.cDOffTrigger = 3
 
-if !{exists(global.EStopOnTrigger)}
-    global EStopOnTrigger = 4
+if !{exists(global.eStopOnTrigger)}
+    global eStopOnTrigger = 4
 else
-    set global.EStopOnTrigger = 4
+    set global.eStopOnTrigger = 4
 
-if !{exists(global.EStopOffTrigger)}
-    global EStopOffTrigger = 5
+if !{exists(global.eStopOffTrigger)}
+    global eStopOffTrigger = 5
 else
-    set global.EStopOffTrigger = 5
+    set global.eStopOffTrigger = 5
 
-if !{exists(global.FCSwitchOnTrigger)}
-    global FCSwitchOnTrigger = 6
+if !{exists(global.fCSwitchOnTrigger)}
+    global fCSwitchOnTrigger = 6
 else
-    set global.FCSwitchOnTrigger = 6
+    set global.fCSwitchOnTrigger = 6
 
-if !{exists(global.FCSwitchOffTrigger)}
-    global FCSwitchOffTrigger = 7
+if !{exists(global.fCSwitchOffTrigger)}
+    global fCSwitchOffTrigger = 7
 else
-    set global.FCSwitchOffTrigger = 7
+    set global.fCSwitchOffTrigger = 7
 
-if !{exists(global.FCRH)}
-    global FCRH = -273.15
+if !{exists(global.fCRH)}
+    global fCRH = -273.15
 else
-    set global.FCRH = -273.15
+    set global.fCRH = -273.15
 
-if !{exists(global.FCDoorOpenTime)}
-    global FCDoorOpenTime = 0
+if !{exists(global.fCDoorOpenTime)}
+    global fCDoorOpenTime = 0
 else
-    set global.FCDoorOpenTime = 0
+    set global.fCDoorOpenTime = 0
 
-if !{exists(global.FCDoorCloseTime)}
-    global FCDoorCloseTime = 0
+if !{exists(global.fCDoorCloseTime)}
+    global fCDoorCloseTime = 0
 else
-    set global.FCDoorCloseTime = 0
+    set global.fCDoorCloseTime = 0
 
-if !{exists(global.UMotTempNum)}
-    global UMotTempNum = -1
+if !{exists(global.uMotTempNum)}
+    global uMotTempNum = -1
 else
-    set global.UMotTempNum = -1
+    set global.uMotTempNum = -1
 
-if !{exists(global.UMotTemp)}
-    global UMotTemp = -273.15
+if !{exists(global.uMotTemp)}
+    global uMotTemp = -273.15
 else
-    set global.UMotTemp = -273.15
+    set global.uMotTemp = -273.15
 
-; if !{exists(global.UMotTempPin)}
-;     global UMotTempPin = ""
+; if !{exists(global.uMotTempPin)}
+;     global uMotTempPin = ""
 ; else
-;     set global.UMotTempPin = ""
+;     set global.uMotTempPin = ""
 
-if !{exists(global.UMotTempTime)}
-    global UMotTempTime = 0
+if !{exists(global.uMotTempTime)}
+    global uMotTempTime = 0
 else
-    set global.UMotTempTime = 0
+    set global.uMotTempTime = 0
 
-if !{exists(global.UMotTempTimeInterval)}
-    global UMotTempTimeInterval = 30
+if !{exists(global.uMotTempTimeInterval)}
+    global uMotTempTimeInterval = 30
 else
-    set global.UMotTempTimeInterval = 30
+    set global.uMotTempTimeInterval = 30
 
-if !{exists(global.VacuumPin)}
-    global VacuumPin = "1.out3"
+if !{exists(global.vacuumPin)}
+    global vacuumPin = "1.out3"
 else
-    set global.VacuumPin = "1.out3"
+    set global.vacuumPin = "1.out3"
 
-if !{exists(global.VacuumFanNum)}
-    global VacuumFanNum = -1
+if !{exists(global.vacuumFanNum)}
+    global vacuumFanNum = -1
 else
-    set global.VacuumFanNum = -1
+    set global.vacuumFanNum = -1
 
-; if !{exists(global.CSSolenoidPin)}
-;     global CSSolenoidPin = ""
+; if !{exists(global.cSSolenoidPin)}
+;     global cSSolenoidPin = ""
 ; else
-;     set global.CSSolenoidPin = ""
+;     set global.cSSolenoidPin = ""
 
-if !{exists(global.CSPinchOutNum)}
-    global CSPinchOutNum = -1
+if !{exists(global.cSPinchOutNum)}
+    global cSPinchOutNum = -1
 else
-    set global.CSPinchOutNum = -1
+    set global.cSPinchOutNum = -1
 
-; if !{exists(global.CSSolenoidOutNum)}
-;     global CSSolenoidOutNum = 
+; if !{exists(global.cSSolenoidOutNum)}
+;     global cSSolenoidOutNum = 
 ; else
-;     set global.CSSolenoidOutNum = 
+;     set global.cSSolenoidOutNum = 
 
-if !{exists(global.FffFanNum)}
-    global FffFanNum = -1
+if !{exists(global.fffFanNum)}
+    global fffFanNum = -1
 else
-    set global.FffFanNum = -1
+    set global.fffFanNum = -1
 
-if !{exists(global.LayerFanNum)}
-    global LayerFanNum = -1
+if !{exists(global.layerFanNum)}
+    global layerFanNum = -1
 else
-    set global.LayerFanNum = -1
+    set global.layerFanNum = -1
 
-if !{exists(global.BELedFanNum)}
-    global BELedFanNum = -1
+if !{exists(global.bELedFanNum)}
+    global bELedFanNum = -1
 else
-    set global.BELedFanNum = -1
+    set global.bELedFanNum = -1
 
-if !{exists(global.FCLedFanNum)}
-    global FCLedFanNum = -1
+if !{exists(global.fCLedFanNum)}
+    global fCLedFanNum = -1
 else
-    set global.FCLedFanNum = -1
+    set global.fCLedFanNum = -1
 
-if !{exists(global.ZBrakeOutNum)}
-    global ZBrakeOutNum = -1
+if !{exists(global.zBrakeOutNum)}
+    global zBrakeOutNum = -1
 else
-    set global.ZBrakeOutNum = -1
+    set global.zBrakeOutNum = -1
 
-if !{exists(global.EStopSwitchInNum)}
-    global EStopSwitchInNum = -1
+if !{exists(global.eStopSwitchInNum)}
+    global eStopSwitchInNum = -1
 else
-    set global.EStopSwitchInNum = -1
+    set global.eStopSwitchInNum = -1
 
-if !{exists(global.ExtruderCrashDetectInNum)}
-    global ExtruderCrashDetectInNum = -1
+if !{exists(global.extruderCrashDetectInNum)}
+    global extruderCrashDetectInNum = -1
 else
-    set global.ExtruderCrashDetectInNum = -1
+    set global.extruderCrashDetectInNum = -1
 
-if !{exists(global.ProbeRetractOutNum)}
-    global ProbeRetractOutNum = -1
+if !{exists(global.probeRetractOutNum)}
+    global probeRetractOutNum = -1
 else
-    set global.ProbeRetractOutNum = -1
+    set global.probeRetractOutNum = -1
 
-if !{exists(global.BedHeaterNum)}
-    global BedHeaterNum = -1
+if !{exists(global.bedHeaterNum)}
+    global bedHeaterNum = -1
 else
-    set global.BedHeaterNum = -1
+    set global.bedHeaterNum = -1
 
-if !{exists(global.BedSensorNum)}
-    global BedSensorNum = -1
+if !{exists(global.bedSensorNum)}
+    global bedSensorNum = -1
 else
-    set global.BedSensorNum = -1
+    set global.bedSensorNum = -1
 
-if !{exists(global.ConfigLastRun)}
-    global ConfigLastRun = -1
+if !{exists(global.configLastRun)}
+    global configLastRun = -1
 else
-    set global.ConfigLastRun = -1
+    set global.configLastRun = -1
 
-if !{exists(global.HeatedBedLastRun)}
-    global HeatedBedLastRun = -1
+if !{exists(global.heatedBedLastRun)}
+    global heatedBedLastRun = -1
 else
-    set global.HeatedBedLastRun = -1
+    set global.heatedBedLastRun = -1
 
-if !{exists(global.TCreateLastRun)}
-    global TCreateLastRun = -1
+if !{exists(global.tCreateLastRun)}
+    global tCreateLastRun = -1
 else
-    set global.TCreateLastRun = -1
+    set global.tCreateLastRun = -1
 
-if !{exists(global.CleaningStationLastRun)}
-    global CleaningStationLastRun = -1
+if !{exists(global.cleaningStationLastRun)}
+    global cleaningStationLastRun = -1
 else
-    set global.CleaningStationLastRun = -1
+    set global.cleaningStationLastRun = -1
 
-if !{exists(global.DryCabinetLastRun)}
-    global DryCabinetLastRun = -1
+if !{exists(global.dryCabinetLastRun)}
+    global dryCabinetLastRun = -1
 else
-    set global.DryCabinetLastRun = -1
+    set global.dryCabinetLastRun = -1
 
-if !{exists(global.MaxOffsetLastRun)}
-    global MaxOffsetLastRun = -1
+if !{exists(global.maxOffsetLastRun)}
+    global maxOffsetLastRun = -1
 else
-    set global.MaxOffsetLastRun = -1
+    set global.maxOffsetLastRun = -1
 
-if !{exists(global.XMaxSpeed)}
-    global XMaxSpeed = 10000
+if !{exists(global.xMaxSpeed)}
+    global xMaxSpeed = 10000
 else
-    set global.XMaxSpeed = 10000
+    set global.xMaxSpeed = 10000
 
-if !{exists(global.XMaxSpeedRotary)}
-    global XMaxSpeedRotary = 2000
+if !{exists(global.xMaxSpeedRotary)}
+    global xMaxSpeedRotary = 2000
 else
-    set global.XMaxSpeedRotary = 2000
+    set global.xMaxSpeedRotary = 2000
 
-if !{exists(global.MachineSpecificLastRun)}
-    global MachineSpecificLastRun = -1
+if !{exists(global.machineSpecificLastRun)}
+    global machineSpecificLastRun = -1
 else
-    set global.MachineSpecificLastRun = -1
+    set global.machineSpecificLastRun = -1
 
-if !{exists(global.DefaultParametersLastRun)}
-    global DefaultParametersLastRun = -1
+if !{exists(global.defaultParametersLastRun)}
+    global defaultParametersLastRun = -1
 else
-    set global.DefaultParametersLastRun = -1
+    set global.defaultParametersLastRun = -1
 
-if !{exists(global.DryCabinetFanNum)}
-    global DryCabinetFanNum = -1
+if !{exists(global.dryCabinetFanNum)}
+    global dryCabinetFanNum = -1
 else
-    set global.DryCabinetFanNum = -1
+    set global.dryCabinetFanNum = -1
 
-if !{exists(global.FCSwitchInNum)}
-    global FCSwitchInNum = -1
+if !{exists(global.fCSwitchInNum)}
+    global fCSwitchInNum = -1
 else
-    set global.FCSwitchInNum = -1
+    set global.fCSwitchInNum = -1
 
-if !{exists(global.PrimeNextTC)}
-    global PrimeNextTC = 1
+if !{exists(global.primeNextTC)}
+    global primeNextTC = 1
 else
-    set global.PrimeNextTC = 1
+    set global.primeNextTC = 1
 
-if !{exists(global.TOSafeHeight)}
-    global TOSafeHeight = 40
+if !{exists(global.tOSafeHeight)}
+    global tOSafeHeight = 40
 else
-    set global.TOSafeHeight = 40
+    set global.tOSafeHeight = 40
 
-if !{exists(global.TOPlateHeight)}
-    global TOPlateHeight = 12
+if !{exists(global.tOPlateHeight)}
+    global tOPlateHeight = 12
 else
-    set global.TOPlateHeight = 12
+    set global.tOPlateHeight = 12
 
-if !{exists(global.TOPlateWidth)}
-    global TOPlateWidth = 12
+if !{exists(global.tOPlateWidth)}
+    global tOPlateWidth = 12
 else
-    set global.TOPlateWidth = 12
+    set global.tOPlateWidth = 12
 
-if !{exists(global.TOPlateXPos)}
-    global TOPlateXPos = 0
+if !{exists(global.tOPlateXPos)}
+    global tOPlateXPos = 0
 else
-    set global.TOPlateXPos = 0
+    set global.tOPlateXPos = 0
 
-if !{exists(global.TOPlateYPos)}
-    global TOPlateYPos = 0
+if !{exists(global.tOPlateYPos)}
+    global tOPlateYPos = 0
 else
-    set global.TOPlateYPos = 0
+    set global.tOPlateYPos = 0
 
-if !{exists(global.TOSCupHeight)}
-    global TOSCupHeight = 10
+if !{exists(global.tOSCupHeight)}
+    global tOSCupHeight = 10
 else
-    set global.TOSCupHeight = 10
+    set global.tOSCupHeight = 10
 
-if !{exists(global.TOSCupOD)}
-    global TOSCupOD = 5
+if !{exists(global.tOSCupOD)}
+    global tOSCupOD = 5
 else
-    set global.TOSCupOD = 5
+    set global.tOSCupOD = 5
 
-if !{exists(global.TOSCupID)}
-    global TOSCupID = 3
+if !{exists(global.tOSCupID)}
+    global tOSCupID = 3
 else
-    set global.TOSCupID = 3
+    set global.tOSCupID = 3
 
-if !{exists(global.TOSCupDepth)}
-    global TOSCupDepth = 2
+if !{exists(global.tOSCupDepth)}
+    global tOSCupDepth = 2
 else
-    set global.TOSCupDepth = 2
+    set global.tOSCupDepth = 2
 
-if !{exists(global.IsMovingProbe)}
-    global IsMovingProbe = 0
+if !{exists(global.isMovingProbe)}
+    global isMovingProbe = 0
 else
-    set global.IsMovingProbe = 0
+    set global.isMovingProbe = 0
 
-if !{exists(global.AirPressureInNum)}
-    global AirPressureInNum = -1
+if !{exists(global.airPressureInNum)}
+    global airPressureInNum = -1
 else
-    set global.AirPressureInNum = -1
+    set global.airPressureInNum = -1
 
-if !{exists(global.AirPressureSwitchPin)}
-    global AirPressureSwitchPin = "1.io3.in"
+if !{exists(global.airPressureSwitchPin)}
+    global airPressureSwitchPin = "1.io3.in"
 else
-    set global.AirPressureSwitchPin = "1.io3.in"
+    set global.airPressureSwitchPin = "1.io3.in"
 
-if !{exists(global.AirPressureLowTrigger)}
-    global AirPressureLowTrigger = 8
+if !{exists(global.airPressureLowTrigger)}
+    global airPressureLowTrigger = 8
 else
-    set global.AirPressureLowTrigger = 8
+    set global.airPressureLowTrigger = 8
 
-if !{exists(global.BESwitchInNum)}
-    global BESwitchInNum = -1
+if !{exists(global.bESwitchInNum)}
+    global bESwitchInNum = -1
 else
-    set global.BESwitchInNum = -1
+    set global.bESwitchInNum = -1
 
-if !{exists(global.BESwitchPin)}
-    global BESwitchPin = "1.io5.in"
+if !{exists(global.bESwitchPin)}
+    global bESwitchPin = "1.io5.in"
 else
-    set global.BESwitchPin = "1.io5.in"
+    set global.bESwitchPin = "1.io5.in"
 
-if !{exists(global.BESwitchHighTrigger)}
-    global BESwitchHighTrigger = 10
+if !{exists(global.bESwitchHighTrigger)}
+    global bESwitchHighTrigger = 10
 else
-    set global.BESwitchHighTrigger = 10
+    set global.bESwitchHighTrigger = 10
 
-if !{exists(global.BESwitchLowTrigger)}
-    global BESwitchLowTrigger = 11
+if !{exists(global.bESwitchLowTrigger)}
+    global bESwitchLowTrigger = 11
 else
-    set global.BESwitchLowTrigger = 11
+    set global.bESwitchLowTrigger = 11
 
-if !{exists(global.BEOpenTime)}
-    global BEOpenTime = 0
+if !{exists(global.bEOpenTime)}
+    global bEOpenTime = 0
 else
-    set global.BEOpenTime = 0
+    set global.bEOpenTime = 0
 
-if !{exists(global.BECloseTime)}
-    global BECloseTime = 0
+if !{exists(global.bECloseTime)}
+    global bECloseTime = 0
 else
-    set global.BECloseTime = 0
+    set global.bECloseTime = 0
 
 if !{exists(global.t1AdditionalRetraction)}
     global t1AdditionalRetraction = 0
@@ -1041,9 +1041,9 @@ if !{exists(global.t5AdditionalRetraction)}
 else
     set global.t5AdditionalRetraction = 0
 
-if !{exists(global.CurrentAdditionalRetraction)}
-    global CurrentAdditionalRetraction = 0
+if !{exists(global.currentAdditionalRetraction)}
+    global currentAdditionalRetraction = 0
 else
-    set global.CurrentAdditionalRetraction = 0
+    set global.currentAdditionalRetraction = 0
 
 M118 S"End defaultparameters.g" L2

@@ -61,5 +61,5 @@ if {tools[{state.currentTool}].spindle != -1}                                   
     if {#tools[{state.currentTool}].extruders == 0}                                                                     ; ... but no extruders, we assume it's a spindle.
         M5                                                                                                              ; Turn spindle off
 
-M574 X1 S1 P{global.XSwitchPin}
-M574 Y1 S1 P{global.YSwitchPin}
+M574 X1 S1 P{global.xSwitchPin}
+M574 Y1 S1 P{global.ySwitchPin}

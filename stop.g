@@ -9,7 +9,7 @@ M118 S{"Debug: Begin stop.g"} L3
 G60 S0                                                              ; Save current tool information
 
 G90                                                                 ; Set to Absolute Positioning
-G1 Z{move.axes[2].max + global.MaxOffset} F10000                    ; Move to Z = ZMax + Longest Z Offset at 10000 mm/min
+G1 Z{move.axes[2].max + global.maxOffset} F10000                    ; Move to Z = ZMax + Longest Z Offset at 10000 mm/min
 M400                                                                ; Wait for current moves to finish
 
 if state.machineMode="CNC"
@@ -31,9 +31,9 @@ T5 P0
 T10 P0
 T{state.restorePoints[0].toolNumber} P0
 
-if heat.heaters[{global.BedHeaterNum}] != null                      ; If we have defined a bed heater...
-    if {heat.heaters[{global.BedHeaterNum}].current != -273.15}     ; ... and it's connected... 
-        if {heat.heaters[{global.BedHeaterNum}].state != "fault"}   ; ... and it's not in a fault state...
+if heat.heaters[{global.bedHeaterNum}] != null                      ; If we have defined a bed heater...
+    if {heat.heaters[{global.bedHeaterNum}].current != -273.15}     ; ... and it's connected... 
+        if {heat.heaters[{global.bedHeaterNum}].state != "fault"}   ; ... and it's not in a fault state...
             M144 S0                                                 ; Set bed to standby
 
 M220 S100                                                           ; Reset speed factor override to 100%

@@ -5,7 +5,7 @@
 
 M118 S{"Debug: Begin trigger11.g"} L3
 
-set global.BEOpenTime = state.upTime
+set global.bEOpenTime = state.upTime
 M118 S{"Info: Build Enclosure -- Enclosure Opened"} L2    ; Log informational event
 
 M118 S{"Debug: state.status is " ^ {state.status}} L3

@@ -11,7 +11,7 @@ if state.machineMode="FFF"
     M83                                                             ; Set extruder to relative mode
     G1 E-10 F6000                                                   ; Retract 10mm of filament at 6000 mm/min
     G90                                                             ; Set to Absolute Positioning
-    G1 Z{move.axes[2].max + global.MaxOffset} F10000                ; Move to Z = ZMax + Longest Z Offset at 10000 mm/min
+    G1 Z{move.axes[2].max + global.maxOffset} F10000                ; Move to Z = ZMax + Longest Z Offset at 10000 mm/min
     M400                                                            ; Wait for current moves to finish
 
 if state.machineMode="CNC"
@@ -26,9 +26,9 @@ T5 P0
 T10 P0
 T{state.restorePoints[1].toolNumber} P0
 
-if heat.heaters[{global.BedHeaterNum}] != null                      ; If we have defined a bed heater...
-    if {heat.heaters[{global.BedHeaterNum}].current != -273.15}     ; ... and it's connected... 
-        if {heat.heaters[{global.BedHeaterNum}].state != "fault"}   ; ... and it's not in a fault state...
+if heat.heaters[{global.bedHeaterNum}] != null                      ; If we have defined a bed heater...
+    if {heat.heaters[{global.bedHeaterNum}].current != -273.15}     ; ... and it's connected... 
+        if {heat.heaters[{global.bedHeaterNum}].state != "fault"}   ; ... and it's not in a fault state...
             M144 S0                                                 ; Set bed to standby
 
 M118 S{"Debug: End pause.g"} L3

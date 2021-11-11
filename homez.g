@@ -6,7 +6,7 @@
 M118 S{"Debug: Begin homez.g"} L3
 
 ; Ensure appropriate axis endstops are used
-M574 Z2 S1 P{global.ZSwitchPin}                             ; Configure Z endstop position at high end, pin defined in defaultparameters.g
+M574 Z2 S1 P{global.zSwitchPin}                             ; Configure Z endstop position at high end, pin defined in defaultparameters.g
 
 G91                                                         ; Relative Positioning
 G1 H1 Z.5 F6000                                             ; Move Z +0.5mm at 6000 mm/min
@@ -21,7 +21,7 @@ M400                                                        ; Wait for all moves
 
 G90                                                         ; Absolute Positioning
 
-G1 Z{move.axes[2].max + global.MaxOffset} F10000            ; Move to Z = ZMax + Longest Z Offset at 10000 mm/min
+G1 Z{move.axes[2].max + global.maxOffset} F10000            ; Move to Z = ZMax + Longest Z Offset at 10000 mm/min
 
 if {state.currentTool} != -1                                ; If we have a tool selected...
     if {tools[{state.currentTool}].spindle == -1}           ; If this tool has no spindles...

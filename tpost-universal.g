@@ -22,19 +22,19 @@ if {tools[{state.nextTool}].spindle == -1}                                      
 else                                                                                                                                            ; If this tool has spindles...
     if {#tools[{state.nextTool}].extruders == 0}                                                                                                ; ... but no extruders, we assume it's a spindle.
         M453                                                                                                                                    ; Switch to CNC mode
-        if heat.heaters[{global.BedHeaterNum}] != null                                                                                          ; If we have defined a bed heater...
-            if {heat.heaters[{global.BedHeaterNum}].state != "fault"}                                                                           ; ... it's not currently in a fault state...
-                if {heat.heaters[{global.BedHeaterNum}].current != -273.15}                                                                     ; ... and it's not physically disconnected
-                    M140 H{global.BedHeaterNum} S-273.15                                                                                        ; ... turn it off to protect power supply.
+        if heat.heaters[{global.bedHeaterNum}] != null                                                                                          ; If we have defined a bed heater...
+            if {heat.heaters[{global.bedHeaterNum}].state != "fault"}                                                                           ; ... it's not currently in a fault state...
+                if {heat.heaters[{global.bedHeaterNum}].current != -273.15}                                                                     ; ... and it's not physically disconnected
+                    M140 H{global.bedHeaterNum} S-273.15                                                                                        ; ... turn it off to protect power supply.
 
 if state.previousTool != -1                                                                                                                     ; If we changed to this tool from another tool...
     G90                                                                                                                                         ; Set to Absolute Positioning
     G1 R2 X0 Y0 F6000                                                                                                                           ; Return to X and Y coordinates stored in restore point 2 at a speed of 6000 mm/min
-    if state.restorePoints[2].coords[2] + 2 <= {move.axes[2].max + global.MaxOffset}
+    if state.restorePoints[2].coords[2] + 2 <= {move.axes[2].max + global.maxOffset}
         G1 R2 Z2                                                                                                                                ; Return to 2mm above Z coordinate stored in restore point 2
     else
-        G1 Z{move.axes[2].max + global.MaxOffset} F10000                                                                                        ; Move to Z = ZMax + Longest Z Offset at 10000 mm/min
+        G1 Z{move.axes[2].max + global.maxOffset} F10000                                                                                        ; Move to Z = ZMax + Longest Z Offset at 10000 mm/min
 
-M582 T{global.AirPressureLowTrigger}                                                                                                            ; Check incoming air pressure
+M582 T{global.airPressureLowTrigger}                                                                                                            ; Check incoming air pressure
 
 M118 S{"Debug: End tpost-universal.g"} L3
