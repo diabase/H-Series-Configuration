@@ -2,12 +2,13 @@
 ; If the axes are homed and if a print is being cancelled (M25), cancel.g is called when M0 is sent. 
 ; If M0 is sent at any other time, stop.g is called.
 ; Written by Diabase Engineering
-; Last Updated: November 02, 2021
+; Last Updated: November 12, 2021
 
 M118 S{"Debug: Begin stop.g"} L3
 
 G60 S0                                                              ; Save current tool information
 
+G54                                                                 ; Assert normal WCS
 G90                                                                 ; Set to Absolute Positioning
 G1 Z{move.axes[2].max + global.maxOffset} F10000                    ; Move to Z = ZMax + Longest Z Offset at 10000 mm/min
 M400                                                                ; Wait for current moves to finish
