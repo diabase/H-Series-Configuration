@@ -706,10 +706,10 @@ if !{exists(global.fCFanPin)}
 else
     set global.fCFanPin = "3.out3"
 
-if !{exists(global.FcSwitchPin)}
-    global FcSwitchPin = "3.io0.in"
+if !{exists(global.fcSwitchPin)}
+    global fcSwitchPin = "3.io0.in"
 else
-    set global.FcSwitchPin = "3.io0.in"
+    set global.fcSwitchPin = "3.io0.in"
 
 if !{exists(global.cDOnTrigger)}
     global cDOnTrigger = 2
