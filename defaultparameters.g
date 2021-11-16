@@ -47,7 +47,7 @@ else
     set global.zMax = 410
 
 if !{exists(global.uMin)}
-    global uMin = -10 ; Physical u-axis position when uSwitchPin triggers.
+    global uMin = -5 ; Physical u-axis position when uSwitchPin triggers.
 else
     set global.uMin = -10
 
@@ -56,15 +56,15 @@ if !{exists(global.uMax)}
 else
     set global.uMax = 360
 
-if !{exists(global.vMin)}
-    global vMin = -100
+if !{exists(global.bMin)}
+    global bMin = -300
 else
-    set global.vMin = -100
+    set global.bMin = -300
 
-if !{exists(global.vMax)}
-    global vMax = 200
+if !{exists(global.bMax)}
+    global bMax = 300
 else
-    set global.vMax = 200
+    set global.bMax = 300
 
 if !{exists(global.wMin)}
     global wMin = 0
@@ -151,10 +151,10 @@ if !{exists(global.uSwitchPin)}
 else
     set global.uSwitchPin = "1.io1.in"
 
-if !{exists(global.vSwitchPin)}
-    global vSwitchPin = "1.io2.in"
+if !{exists(global.bSwitchPin)}
+    global bSwitchPin = "io8.in"
 else
-    set global.vSwitchPin = "1.io2.in"
+    set global.bSwitchPin = "io8.in"
 
 ; if !{exists(global.wSwitchPin)}
 ;     global wSwitchPin = ""
@@ -196,10 +196,10 @@ if !{exists(global.uDrive)}
 else
     set global.uDrive = 3
 
-if !{exists(global.vDrive)}
-    global vDrive = 4
+if !{exists(global.bDrive)}
+    global bDrive = 4
 else
-    set global.vDrive = 4
+    set global.bDrive = 4
 
 if !{exists(global.wDrive)}
     global wDrive = 5
@@ -291,10 +291,10 @@ if !{exists(global.uDirection)}
 else
     set global.uDirection = 0
 
-if !{exists(global.vDirection)}
-    global vDirection = 1
+if !{exists(global.bDirection)}
+    global bDirection = 0
 else
-    set global.vDirection = 1
+    set global.bDirection = 0
 
 if !{exists(global.wDirection)}
     global wDirection = 0

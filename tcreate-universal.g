@@ -37,11 +37,6 @@ if global.e3TempIndex == -1
     set global.e3TempIndex = #sensors.analog
 M98 P"create-tool.g" T3 Y{global.toolType3} S{global.e3TempPin} N{global.e3TempIndex} H{global.eHeat3Pin} R{global.e3HeatIndex} E{global.e3Drive} F{global.fA3Drive}
 
-; Tool 4
-if global.spindle4AirIndex == -1
-    set global.spindle4AirIndex = #fans
-M98 P"create-tool.g" T4 Y{global.toolType4} S1 H{global.spindle4SpeedPin} N{global.spindle4AirIndex} E{global.spindle4DirectionPin} F{global.spindle4AirPin}
-
 ; Tool 5
 if global.e5HeatIndex == -1
     set global.e5HeatIndex = #heat.heaters
