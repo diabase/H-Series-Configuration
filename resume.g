@@ -1,7 +1,7 @@
 ; resume.g
 ; Called when a paused job is resumed
 ; Written by Diabase Engineering
-; Last Updated: October 29, 2021
+; Last Updated: November 17, 2021
 
 M118 S{"Debug: Begin resume.g"} L3
 
@@ -35,6 +35,16 @@ G1 R1 Z0 F3000 ; Return to Z position stored in slot 1 at 3000 mm/min
 if state.machineMode == "FFF"
     M83 ; Set extruder to relative mode
     G1 E10 F6000 ; Extrude the retracted 10mm of filament at 6000 mm/min
+    if {state.currentTool} == 1
+        M98 P"tprime1.g" ; Call tprime1.g
+    elif {state.currentTool} == 2
+        M98 P"tprime2.g" ; Call tprime2.g
+    elif {state.currentTool} == 3
+        M98 P"tprime3.g" ; Call tprime3.g
+    elif {state.currentTool} == 4
+        M98 P"tprime4.g" ; Call tprime4.g
+    elif {state.currentTool} == 5
+        M98 P"tprime5.g" ; Call tprime5.g
 
 M400 ; Wait for current moves to finish
 
