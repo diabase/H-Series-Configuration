@@ -46,6 +46,9 @@ if state.machineMode == "FFF"
     elif {state.currentTool} == 5
         M98 P"tprime5.g" ; Call tprime5.g
 
+    G1 E{tools[{state.currentTool}].retraction.length} F{tools[{state.currentTool}].retraction.speed*60} ; Anti-Ooze Makeup - Extrude Filament at After Prime Retraction Amount and Feedrate
+    G4 P20 ; Dwell for 20 ms
+
 M400 ; Wait for current moves to finish
 
 M118 S{"Debug: End resume.g"} L3
