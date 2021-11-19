@@ -14,19 +14,19 @@
 
 M118 S{"Info: Begin create-tool.g."} L2
 
-var NewUOffset = {{{param.T - 1} * -72} - 30}
+var newUOffset = {{{param.T - 1} * -72} - 30}
 
 ; Extruder and High Temp Extruder
 if {{param.Y == "Extruder"} || {param.Y == "HT Extruder"}}
-    var ExtruderIndex = 0
-    var FAIndex = 0
+    var extruderIndex = 0
+    var fAIndex = 0
     while iterations < #move.extruders
         if {({param.E} ^ "") == (move.extruders[iterations].driver ^ "")}
-            set var.ExtruderIndex = iterations
+            set var.extruderIndex = iterations
         elif {({param.F} ^ "") == (move.extruders[iterations].driver ^ "")}
-            set var.FAIndex = iterations
+            set var.fAIndex = iterations
 
-    M118 S{"Info: Creating Nozzle "^param.T^" using Heater "^param.R^", Sensor "^param.N^", Extruder "^var.ExtruderIndex^", FA "^var.FAIndex} L2
+    M118 S{"Info: Creating Nozzle "^param.T^" using Heater "^param.R^", Sensor "^param.N^", Extruder "^var.extruderIndex^", FA "^var.fAIndex} L2
     M308 S{param.N} P{param.S} Y"thermistor" T100000 B3950 C0 A{"Nozzle "^{param.T}}                                ; Create a new sensor assigned to the temp sense pin parameter, thermistor type with resistance of 100Kohms at 25C, reciprocal of Steinhart-Hart B coefficient 3950, Steinhart-Hart C coefficient 0, and call it "Nozzle #"
     M950 H{param.R} C{param.H} T{param.N}                                                                           ; Create a new heater using the heater pin parameter and the newly created sensor
     if {param.Y == "Extruder"}
@@ -34,9 +34,9 @@ if {{param.Y == "Extruder"} || {param.Y == "HT Extruder"}}
     elif {param.Y == "HT Extruder"}
         M143 H{param.R} S295                                                                                        ; Monitor this new heater and throw an error if it exceeds 295C
     M307 H{param.R} R2.429 C140.000:140.000 D5.50 S1.00 V0.0 B0 I0
-    M563 P{param.T} D{var.ExtruderIndex}:{var.FAIndex} H{param.R} L-1 S{"Nozzle "^{param.T}}                        ; Create a new tool using the extruder and assist drive parameters, no filament mapping, and call it "Nozzle #"
+    M563 P{param.T} D{var.extruderIndex}:{var.fAIndex} H{param.R} L-1 S{"Nozzle "^{param.T}}                        ; Create a new tool using the extruder and assist drive parameters, no filament mapping, and call it "Nozzle #"
     M567 P{param.T} E1:1                                                                                            ; Drive this new tool with a 1:1 ratio between the extruder and filament assist
-    G10 P{param.T} X0 Y1.5 Z-5 U{var.NewUOffset} V0.00 W0.00 A0.00 C0.00                                            ; Set initial tool offsets to default values for an extruder
+    G10 P{param.T} X0 Y1.5 Z-5 U{var.newUOffset} V0.00 W0.00 A0.00 C0.00                                            ; Set initial tool offsets to default values for an extruder
 
 ; Spindle
 if param.Y == "Spindle"
@@ -45,7 +45,7 @@ if param.Y == "Spindle"
     M106 P{param.N} S0 B0 L1.0 C{"T"^{param.T}^" Air"}                                                              ; Configure the "fan" for spindle air assist.
     M950 R{param.S} C{param.H}^"+nil+"^{param.E} L10000 Q10000                                                      ; Define a new spindle with inbound parameters and 10000 RPM achieved at full PWM using a 10kHz PWM frequency
     M563 P{param.T} F{param.N} R{param.S} S{"Spindle "^{param.T}}                                                   ; Create a new tool with the newly created fan and spindle and call it "Spindle #"
-    G10 P{param.T} X6 Y7.5 Z-2 U{var.NewUOffset} V0.00 W0.00 A0.00 C0.00
+    G10 P{param.T} X6 Y7.5 Z-2 U{var.newUOffset} V0.00 W0.00 A0.00 C0.00
     M453                                                                                                            ; CNC Mode
     M3 P{param.S} S0 ; Ensure new spindle is off
 

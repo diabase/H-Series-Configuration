@@ -7,20 +7,20 @@ M118 S{"Debug: Begin unlock_turret.g"} L3
 
 G91 ; Set to Relative Positioning
 
-var AxisIndex = -1
+var axisIndex = -1
 
 while iterations < #move.axes
     if move.axes[iterations].letter == "V"
-        set var.AxisIndex = iterations
+        set var.axisIndex = iterations
         break
 
-while sensors.endstops[var.AxisIndex].triggered == false
+while sensors.endstops[var.axisIndex].triggered == false
     G1 U-0.2 V3 H1 ; Move U -0.2mm and V 3mm. Terminate the move if endstop switch is triggered and set axis position to axis limit.
     G1 U0.4 V3 H1 ; Move U 0.4mm and V 3mm. Terminate the move if endstop switch is triggered and set axis position to axis limit.
     G1 U-0.2 V3 H1 ; Move U -0.2mm and V 3mm. Terminate the move if endstop switch is triggered and set axis position to axis limit.
     G92 V0 ; Assign current V position to 0
     ;if iterations == 10
-    if sensors.endstops[var.AxisIndex].triggered == true
+    if sensors.endstops[var.axisIndex].triggered == true
         M118 S{"Debug: Turret unlatched after " ^ {iterations +1} ^ " attempt(s)"} L3
         break
     if iterations > 0
