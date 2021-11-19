@@ -1,7 +1,7 @@
 ; pause.g
 ; Called when a job is paused.
 ; Written by Diabase Engineering
-; Last Updated: August 6, 2021
+; Last Updated: November 18, 2021
 
 M118 S{"Debug: Begin pause.g"} L3
 
@@ -9,7 +9,7 @@ G60 S1                                                              ; Save curre
 
 if state.machineMode="FFF"
     M83                                                             ; Set extruder to relative mode
-    G1 E-10 F6000                                                   ; Retract 10mm of filament at 6000 mm/min
+    G1 E{-tools[{state.currentTool}].retraction.length} F{tools[{state.currentTool}].retraction.speed*60} ; Anti-Ooze Retraction - Retract Filament at After Prime Retraction Amount and Feedrate
     G90                                                             ; Set to Absolute Positioning
     G1 Z{move.axes[2].max + global.maxOffset} F10000                ; Move to Z = ZMax + Longest Z Offset at 10000 mm/min
     M400                                                            ; Wait for current moves to finish
