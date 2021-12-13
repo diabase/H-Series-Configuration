@@ -1,7 +1,7 @@
 ; resume.g
 ; Called when a paused job is resumed
 ; Written by Diabase Engineering
-; Last Updated: November 18, 2021
+; Last Updated: December 13, 2021
 
 M118 S{"Debug: Begin resume.g"} L3
 
@@ -14,8 +14,9 @@ T{state.restorePoints[1].toolNumber} ; Select the tool that was active when the 
 
 if state.machineMode == "FFF" ; If we're in FFF mode...
     if heat.heaters[{global.bedHeaterNum}] != null ; ...and we have defined a bed heater...
-        if {heat.heaters[{global.bedHeaterNum}].state != "fault"  && heat.heaters[{global.bedHeaterNum}].current != -273.15} ; ...and it's not in a fault state...
-            M144 S1 ; Set bed heater to active.
+        if heat.heaters[{global.bedHeaterNum}].state != "fault"
+            if heat.heaters[{global.bedHeaterNum}].current != -273.15 ; ...and it's not in a fault state...
+                M144 S1 ; Set bed heater to active.
 
 if {state.currentTool} != -1 ; If we have a tool selected...
     if {tools[{state.currentTool}].spindle != -1}           ; ... and it has spindles
