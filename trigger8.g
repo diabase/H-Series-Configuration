@@ -1,12 +1,12 @@
 ; trigger8.g
 ; Activates when incoming air pressure drops below set point
 ; Written by Diabase Engineering
-; Last Updated: October 29, 2021
+; Last Updated: December 01, 2021
 
 M118 S{"Debug: Begin trigger8.g"} L3
 
 if {global.machineModel} == "H5B"
-        if sensors.gpIn[{global.airPressureInNum}] == 0
+        if sensors.gpIn[{global.airPressureInNum}].value == 0
             if {state.status} == "processing"
                 M25                                                                                                     ; Pause job
             M18 U                                                                                                       ; Disable U axis motor and...
