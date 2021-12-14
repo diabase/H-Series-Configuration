@@ -49,4 +49,6 @@ if param.Y == "Spindle"
     M453                                                                                                            ; CNC Mode
     M3 P{param.S} S0 ; Ensure new spindle is off
 
+; Create tfree.g, tpre.g, and tpost.g for this tool
+M98 P"createtoolfiles.g" T{param.T}
 M118 S{"Info: End create-tool.g"} L2
