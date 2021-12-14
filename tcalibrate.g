@@ -1,7 +1,7 @@
 ; tcalibrate.g
 ; Called to locate the center of a cavity using the probe.
 ; Written by Diabase Engineering
-; Last Updated: November 10, 2021
+; Last Updated: December 01, 2021
 
 M118 S{"Debug: Begin tcalibrate.g"} L3
 
@@ -14,7 +14,7 @@ if {tools[{state.currentTool}].spindle != -1}
 if {#tools[{state.nextTool}].extruders > 0}
     abort "The probe must be the active tool to perform this action. Please activate the probe and try again."
 
-M291 P"Bed will now move. Is Probe inside a cavity with diameter <" ^ {global.diameterProbeHole} ^ " mm?" R"Crash Check" S3
+M291 P{"Bed will now move. Is Probe inside a cavity with diameter <" ^ {global.diameterProbeHole} ^ " mm?"} R"Crash Check" S3
 
 M561                                                                                                                        ; Identity transform
 

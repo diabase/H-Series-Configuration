@@ -1,7 +1,7 @@
 ; deployprobe0.g
 ; Prepare turret probe for use
 ; Written by Diabase Engineering
-; Last Updated: October 28, 2021
+; Last Updated: December 13, 2021
 
 M118 S{"Debug: Begin deployprobe0.g"} L3
 set global.isMovingProbe = 1
@@ -11,7 +11,7 @@ if state.gpOut[{global.probeRetractOutNum}].pwm == 1.0
 elif state.gpOut[{global.probeRetractOutNum}].pwm == 0.0
     M118 S{"Debug: Probe is deployed."} L3
 else
-    M118 S{"Error: Probe is in an intermediate state."} L3
+    M118 S{"Warning: Probe is in an intermediate state."} L1
 
 M118 S{"Debug: Attempting to deploy probe."} L3
 M42 P{global.probeRetractOutNum} S0.0                                                                                               ; Deactivate probe retract solenoid
@@ -19,7 +19,7 @@ M42 P{global.probeRetractOutNum} S0.0                                           
 if state.gpOut[{global.probeRetractOutNum}].pwm == 0.0
     M118 S{"Debug: Probe deployed."} L3
 else
-    M118 S{"Error: Probe not fully deployed. Probe retract value is now "^state.gpOut[{global.probeRetractOutNum}].pwm^"."} L3
+    M118 S{"Warning: Probe not fully deployed. Probe retract value is now "^state.gpOut[{global.zProbeRetractOutNum}].pwm^"."} L1
 
 G4 P100                                                                                                                              ; Wait 100 ms
 
