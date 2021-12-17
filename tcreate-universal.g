@@ -13,9 +13,8 @@
 ;   - Identifying heaters for thermostatic fan. - RT
 ;   - Automatically looping create-tool.g for variable-defined tools
 ; TODO: Revisit when spindles aren't all automatically created. - RT
-; TODO: Clean up Tool 11 - RT
 ; Written by Diabase Engineering
-; Last Updated: December 03, 2021
+; Last Updated: December 17, 2021
 
 M118 S{"Info: Begin tcreate-universal.g"} L2
 
@@ -84,11 +83,12 @@ M950 P{global.zProbeRetractOutNum} C{global.zProbeRetractPin}                   
 M402 P0                                                                                                                                                                     ; Retract Probe
 
 ; Tools 11 - 24 (Tool Changer)
-while iterations < 24
-    if iterations < 10
-        continue
-    M118 S{"Info: Creating Tool " ^ {iterations+1}} L2
-    M98 P"create-tool.g" T{iterations+1} Y"TC Tool" S2
+if {global.machineModel} == "H5B"
+    while iterations < 24
+        if iterations < 10
+            continue
+        M118 S{"Info: Creating Tool " ^ {iterations+1}} L2
+        M98 P"create-tool.g" T{iterations+1} Y"TC Tool" S2
 
 M118 S{"Info: Configuring FFF Fans (fans[" ^ {global.fffFanNum} ^"]:) Thermostatic mode (50C) on tools.[1,3,5].heaters[0]"} L2
 if {boards[0].firmwareVersion == "3.3"}
