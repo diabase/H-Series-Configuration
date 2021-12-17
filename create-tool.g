@@ -42,12 +42,16 @@ if {{param.Y == "Extruder"} || {param.Y == "HT Extruder"}}
             set var.fAIndex = iterations
 
     M118 S{"Info: Creating Nozzle "^param.T^" using Heater "^param.R^", Sensor "^param.N^", Extruder "^var.extruderIndex^", FA "^var.fAIndex} L2
+    M118 S{"Info: Creating Nozzle "^param.T^": Creating sensor"} L2
     M308 S{param.N} P{param.S} Y"thermistor" T100000 B3950 C0 A{"Nozzle "^{param.T}}                                ; Create a new sensor assigned to the temp sense pin parameter, thermistor type with resistance of 100Kohms at 25C, reciprocal of Steinhart-Hart B coefficient 3950, Steinhart-Hart C coefficient 0, and call it "Nozzle #"
+    M118 S{"Info: Creating Nozzle "^param.T^": Creating heater"} L2
     M950 H{param.R} C{param.H} T{param.N}                                                                           ; Create a new heater using the heater pin parameter and the newly created sensor
+    M118 S{"Info: Creating Nozzle "^param.T^": Creating monitor"} L2
     if {param.Y == "Extruder"}
         M143 H{param.R} S250                                                                                        ; Monitor this new heater and throw an error if it exceeds 250C
     elif {param.Y == "HT Extruder"}
         M143 H{param.R} S295                                                                                        ; Monitor this new heater and throw an error if it exceeds 295C
+    M118 S{"Info: Creating Nozzle "^param.T^": Setting heater model parameters"} L2
     M307 H{param.R} R2.429 C140.000:140.000 D5.50 S1.00 V0.0 B0 I0
     M118 S{"Info: Creating Nozzle "^param.T^": Creating actual tool"} L2
     if {boards[0].firmwareVersion == "3.3"}
@@ -61,7 +65,7 @@ if {{param.Y == "Extruder"} || {param.Y == "HT Extruder"}}
 
 ; Spindle
 if param.Y == "Spindle"
-    M118 S{"Info: Creating Spindle "^param.T^" using Spindle "^param.S^"and air assist on Fan "^param.N} L2
+    M118 S{"Info: Creating Spindle "^param.T^" using Spindle "^param.S^" and air assist on Fan "^param.N} L2
     M950 F{param.N} C{param.F}                                                                                      ; Define a new "fan" for spindle air assist using the inbound parameters
     M106 P{param.N} S0 B0 L1.0 C{"T"^{param.T}^" Air"}                                                              ; Configure the "fan" for spindle air assist.
     if {global.machineModel} == "H4" || {global.machineModel} == "H5A"
@@ -88,4 +92,5 @@ elif {global.machineModel} == "H5B"
 
 ; Create tfree.g, tpre.g, and tpost.g for this tool
 M98 P"createtoolfiles.g" T{param.T}
+
 M118 S{"Info: End create-tool.g"} L2
