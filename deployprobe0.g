@@ -1,7 +1,7 @@
 ; deployprobe0.g
 ; Prepare turret probe for use
 ; Written by Diabase Engineering
-; Last Updated: December 13, 2021
+; Last Updated: December 17, 2021
 
 M118 S{"Debug: Begin deployprobe0.g"} L3
 set global.isMovingProbe = 1
@@ -21,7 +21,12 @@ if state.gpOut[{global.probeRetractOutNum}].pwm == 0.0
 else
     M118 S{"Warning: Probe not fully deployed. Probe retract value is now "^state.gpOut[{global.zProbeRetractOutNum}].pwm^"."} L1
 
-G4 P100                                                                                                                              ; Wait 100 ms
+G4 P200                                                                                                                              ; Wait 200 ms
 
 set global.isMovingProbe = 0
+
+if sensors.probes[0].value[0] == 1000
+    G4 P200                                                                                                                          ; Wait 200 ms
+    M291 P{"Deploy Probe Error: Probe already triggered."} R"Probe Already Triggered" S2
+
 M118 S{"Debug: End deployprobe0.g"} L3
