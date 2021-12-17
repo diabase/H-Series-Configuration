@@ -1,7 +1,7 @@
 ; resume.g
 ; Called when a paused job is resumed
 ; Written by Diabase Engineering
-; Last Updated: December 13, 2021
+; Last Updated: December 15, 2021
 
 M118 S{"Debug: Begin resume.g"} L3
 
@@ -29,6 +29,8 @@ if state.machineMode == "FFF" ; If we're in FFF mode...
             M116 H{global.bedHeaterNum} S5 ; Wait until bed heater reaches +/-5C of target temperature
 
 if state.machineMode == "FFF"
+    G1 R1 Z10 F3000                                     ; Move to 10 mm above Z position stored in slot 1 at 3000 mm/min
+
     if {state.currentTool} == 1
         M98 P"tprime1.g" ; Call tprime1.g
     elif {state.currentTool} == 2
@@ -39,13 +41,17 @@ if state.machineMode == "FFF"
         M98 P"tprime4.g" ; Call tprime4.g
     elif {state.currentTool} == 5
         M98 P"tprime5.g" ; Call tprime5.g
-    M83 ; Set extruder to relative mode
-    G1 E{tools[{state.currentTool}].retraction.length} F{tools[{state.currentTool}].retraction.speed*60} ; Anti-Ooze Makeup - Extrude Filament at After Prime Retraction Amount and Feedrate
     G4 P20 ; Dwell for 20 ms
-
 
 G1 R1 Y0 F3000 ; Return to Y position stored in slot 1 at 3000 mm/min
 G1 R1 Z0 F3000 ; Return to Z position stored in slot 1 at 3000 mm/min
+
+M400 ; Wait for current moves to finish
+
+if state.machineMode == "FFF"
+    M83 ; Set extruder to relative mode
+    G1 E{tools[{state.currentTool}].retraction.length} F{tools[{state.currentTool}].retraction.speed*60} ; Anti-Ooze Makeup - Extrude Filament at After Prime Retraction Amount and Feedrate
+    G4 P20 ; Dwell for 20 ms
 
 M400 ; Wait for current moves to finish
 
