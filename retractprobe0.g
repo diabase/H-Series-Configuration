@@ -4,7 +4,7 @@
 ; Last Updated: December 13, 2021
 
 M118 S{"Debug: Begin retractprobe0.g"} L3
-set global.isMovingProbe = 1
+if global.keepProbeDeployed != 1
 
     set global.isMovingProbe = 1
 
@@ -23,7 +23,10 @@ set global.isMovingProbe = 1
     else
         M118 S{"Warning: Probe not fully retracted. Probe retract value is now "^state.gpOut[{global.zProbeRetractOutNum}].pwm^"."} L1
 
-G4 P100                                                                                                                              ; Wait 100 ms
+    G4 P100                                                                                                                              ; Wait 100 ms
 
-set global.isMovingProbe = 0
+    set global.isMovingProbe = 0
+else
+    M118 S{"Debug: global.keepProbeDeployed is "^ {global.keepProbeDeployed}^". Probe not retracted."} L3
+
 M118 S{"Debug: End retractprobe0.g"} L3
