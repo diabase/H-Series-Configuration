@@ -91,7 +91,10 @@ while iterations < 24
     M98 P"create-tool.g" T{iterations+1} Y"TC Tool" S2
 
 M118 S{"Info: Configuring FFF Fans (fans[" ^ {global.fffFanNum} ^"]:) Thermostatic mode (50C) on tools.[1,3,5].heaters[0]"} L2
-M106 P{global.fffFanNum} H{tools[1].heaters[0]}:{tools[3].heaters[0]}:{tools[5].heaters[0]} T50 C"FFF Fans"  ; thermostatic control of cooling fan on heaters 1, 3, and 5. Turns on at 50C
+if {boards[0].firmwareVersion == "3.3"}
+    M106 P{global.fffFanNum} H{tools[1].heaters[0]}:{tools[3].heaters[0]}:{tools[5].heaters[0]} T50 C"FFF Fans"                                                             ; thermostatic control of cooling fan on heaters 1, 3, and 5. Turns on at 50C
+elif {boards[0].firmwareVersion != "3.3"}
+    M106 P{global.fffFanNum} H{tools[1].heaters[0],tools[3].heaters[0],tools[5].heaters[0]} T50 C"FFF Fans"                                                                 ; thermostatic control of cooling fan on heaters 1, 3, and 5. Turns on at 50C
 
 ; Build Enclosure LEDs
 if global.bELedFanNum == -1

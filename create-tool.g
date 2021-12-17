@@ -49,7 +49,12 @@ if {{param.Y == "Extruder"} || {param.Y == "HT Extruder"}}
     elif {param.Y == "HT Extruder"}
         M143 H{param.R} S295                                                                                        ; Monitor this new heater and throw an error if it exceeds 295C
     M307 H{param.R} R2.429 C140.000:140.000 D5.50 S1.00 V0.0 B0 I0
-    M563 P{param.T} D{var.extruderIndex}:{var.fAIndex} H{param.R} L-1 S{"Nozzle "^{param.T}}                        ; Create a new tool using the extruder and assist drive parameters, no filament mapping, and call it "Nozzle #"
+    M118 S{"Info: Creating Nozzle "^param.T^": Creating actual tool"} L2
+    if {boards[0].firmwareVersion == "3.3"}
+        M563 P{param.T} D{var.extruderIndex}:{var.fAIndex} H{param.R} L-1 S{"Nozzle "^{param.T}}                    ; Create a new tool using the extruder and assist drive parameters, no filament mapping, and call it "Nozzle #"
+    elif {boards[0].firmwareVersion != "3.3"}
+        M563 P{param.T} D{var.extruderIndex,var.fAIndex} H{param.R} L-1 S{"Nozzle "^{param.T}}                      ; Create a new tool using the extruder and assist drive parameters, no filament mapping, and call it "Nozzle #"
+    M118 S{"Info: Creating Nozzle "^param.T^": Setting extruder/FA ratio"} L2
     M567 P{param.T} E1:1                                                                                            ; Drive this new tool with a 1:1 ratio between the extruder and filament assist
     M118 S{"Info: Setting initial tool offsets"} L2
     G10 P{param.T} X0 Y1.5 Z-5                                                                                      ; Set initial tool offsets to default values for an extruder
