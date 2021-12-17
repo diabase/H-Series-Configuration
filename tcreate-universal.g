@@ -55,10 +55,10 @@ if global.e3TempIndex == -1
 M98 P"create-tool.g" T3 Y{global.toolType3} S{global.e3TempPin} N{global.e3TempIndex} H{global.eHeat3Pin} R{global.e3HeatIndex} E{global.e3Drive} F{global.fA3Drive}
 
 ; ;Tool 4
-; if {global.machineModel} == "H4" || {global.machineModel} == "H5A"
-;     if global.spindle4AirIndex == -1
-;         set global.spindle4AirIndex = #fans
-;     M98 P"create-tool.g" T4 Y"Spindle" S1 H{global.spindle4SpeedPin} N{global.spindle4AirIndex} E{global.spindle4DirectionPin} F{global.spindle4AirPin}
+if {global.machineModel} == "H4" || {global.machineModel} == "H5A"
+    if global.spindle4AirIndex == -1
+        set global.spindle4AirIndex = #fans
+    M98 P"create-tool.g" T4 Y"Spindle" S1 H{global.spindle4SpeedPin} N{global.spindle4AirIndex} E{global.spindle4DirectionPin} F{global.spindle4AirPin}
 ; if {global.machineModel} == "H5B"
 ;     if global.e4HeatIndex == -1
 ;         set global.e4HeatIndex = #heat.heaters
