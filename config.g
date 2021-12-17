@@ -82,5 +82,9 @@ M98 P"maxoffset.g"     ;set maxoffset to maximum tool length
 ;Machine-specific settings
 M98 P"machinespecific.g"
 
+if {global.machineModel} == "H5B"
+        if sensors.gpIn[{global.airPressureInNum}].value == 0
+            M291 P"Warning: Incoming air pressure low. Resolve before continuing." R"Warning" S3            ; Display a blocking warning with no timeout.
+
 set global.configLastRun = state.upTime
 M118 S"Info: End config.g" L2
