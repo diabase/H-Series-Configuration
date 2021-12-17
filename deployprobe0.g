@@ -6,17 +6,17 @@
 M118 S{"Debug: Begin deployprobe0.g"} L3
 set global.isMovingProbe = 1
 
-if state.gpOut[{global.probeRetractOutNum}].pwm == 1.0
+if state.gpOut[{global.zProbeRetractOutNum}].pwm == 1.0
     M118 S{"Debug: Probe is retracted."} L3
-elif state.gpOut[{global.probeRetractOutNum}].pwm == 0.0
+elif state.gpOut[{global.zProbeRetractOutNum}].pwm == 0.0
     M118 S{"Debug: Probe is deployed."} L3
 else
     M118 S{"Warning: Probe is in an intermediate state."} L1
 
 M118 S{"Debug: Attempting to deploy probe."} L3
-M42 P{global.probeRetractOutNum} S0.0                                                                                               ; Deactivate probe retract solenoid
+M42 P{global.zProbeRetractOutNum} S0.0                                                                                               ; Deactivate probe retract solenoid
 
-if state.gpOut[{global.probeRetractOutNum}].pwm == 0.0
+if state.gpOut[{global.zProbeRetractOutNum}].pwm == 0.0
     M118 S{"Debug: Probe deployed."} L3
 else
     M118 S{"Warning: Probe not fully deployed. Probe retract value is now "^state.gpOut[{global.zProbeRetractOutNum}].pwm^"."} L1

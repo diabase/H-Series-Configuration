@@ -841,10 +841,10 @@ if !{exists(global.extruderCrashDetectInNum)}
 else
     set global.extruderCrashDetectInNum = -1
 
-if !{exists(global.probeRetractOutNum)}
-    global probeRetractOutNum = -1
+if !{exists(global.zProbeRetractOutNum)}
+    global zProbeRetractOutNum = -1
 else
-    set global.probeRetractOutNum = -1
+    set global.zProbeRetractOutNum = -1
 
 if !{exists(global.bedHeaterNum)}
     global bedHeaterNum = -1
