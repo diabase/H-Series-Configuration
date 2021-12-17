@@ -13,10 +13,27 @@
 ;   - Identifying heaters for thermostatic fan. - RT
 ;   - Automatically looping create-tool.g for variable-defined tools
 ; TODO: Revisit when spindles aren't all automatically created. - RT
+; TODO: Clean up Tool 11 - RT
 ; Written by Diabase Engineering
-; Last Updated: October 13, 2021
+; Last Updated: December 03, 2021
 
 M118 S{"Info: Begin tcreate-universal.g"} L2
+
+; Fans
+M118 S{"Info: Creating/Configuring Fans"} L2
+
+; FFF Fans
+if global.fffFanNum == -1
+    set global.fffFanNum = #fans
+M118 S{"Info: Creating fans[" ^ {global.fffFanNum} ^"] on pin " ^ {global.fffFanPin} ^ " for FFF Fans"} L2
+M950 F{global.fffFanNum} C{global.fffFanPin}                                                                 ; Extruder cooling fans
+
+; Layer Fan
+if global.layerFanNum == -1
+    set global.layerFanNum = #fans
+M118 S{"Info: Creating fans[" ^ {global.layerFanNum} ^"] on pin " ^ {global.layerFanPin} ^ " for Layer Fans"} L2
+M950 F{global.layerFanNum} C{global.layerFanPin}   ; Layer cooling fans
+M106 P{global.layerFanNum}} C"Layer Fans"           ; Enable manual control of layer cooling fans
 
 ; Tool 1
 if global.e1HeatIndex == -1
@@ -66,8 +83,6 @@ M118 S{"Info: Creating state.gpOut[" ^ {global.zProbeRetractOutNum} ^ "] on pin 
 M950 P{global.zProbeRetractOutNum} C{global.zProbeRetractPin}                                                                                                               ; Probe Retract
 M402 P0                                                                                                                                                                     ; Retract Probe
 
-; Fans
-M118 S{"Info: Creating/Configuring Fans"} L2
 ; Tools 11 - 24 (Tool Changer)
 while iterations < 24
     if iterations < 10
@@ -75,20 +90,8 @@ while iterations < 24
     M118 S{"Info: Creating Tool " ^ {iterations+1}} L2
     M98 P"create-tool.g" T{iterations+1} Y"TC Tool" S2
 
-; FFF Fans
-if global.fffFanNum == -1
-    set global.fffFanNum = #fans
-M118 S{"Info: Creating fans[" ^ {global.fffFanNum} ^"] on pin " ^ {global.fffFanPin} ^ " for FFF Fans"} L2
-M950 F{global.fffFanNum} C{global.fffFanPin}                                                                 ; Extruder cooling fans
 M118 S{"Info: Configuring FFF Fans (fans[" ^ {global.fffFanNum} ^"]:) Thermostatic mode (50C) on tools.[1,3,5].heaters[0]"} L2
 M106 P{global.fffFanNum} H{tools[1].heaters[0]}:{tools[3].heaters[0]}:{tools[5].heaters[0]} T50 C"FFF Fans"  ; thermostatic control of cooling fan on heaters 1, 3, and 5. Turns on at 50C
-
-; Layer Fan
-if global.layerFanNum == -1
-    set global.layerFanNum = #fans
-M118 S{"Info: Creating fans[" ^ {global.layerFanNum} ^"] on pin " ^ {global.layerFanPin} ^ " for Layer Fans"} L2
-M950 F{global.layerFanNum} C{global.layerFanPin}   ; Layer cooling fans
-M106 P{global.layerFanNum}} C"Layer Fans"           ; Enable manual control of layer cooling fans
 
 ; Build Enclosure LEDs
 if global.bELedFanNum == -1
