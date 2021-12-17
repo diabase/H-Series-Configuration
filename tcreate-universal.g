@@ -37,10 +37,17 @@ if global.e3TempIndex == -1
     set global.e3TempIndex = #sensors.analog
 M98 P"create-tool.g" T3 Y{global.toolType3} S{global.e3TempPin} N{global.e3TempIndex} H{global.eHeat3Pin} R{global.e3HeatIndex} E{global.e3Drive} F{global.fA3Drive}
 
-; Tool 4
-if global.spindle4AirIndex == -1
-    set global.spindle4AirIndex = #fans
-M98 P"create-tool.g" T4 Y{global.toolType4} S1 H{global.spindle4SpeedPin} N{global.spindle4AirIndex} E{global.spindle4DirectionPin} F{global.spindle4AirPin}
+; ;Tool 4
+; if {global.machineModel} == "H4" || {global.machineModel} == "H5A"
+;     if global.spindle4AirIndex == -1
+;         set global.spindle4AirIndex = #fans
+;     M98 P"create-tool.g" T4 Y"Spindle" S1 H{global.spindle4SpeedPin} N{global.spindle4AirIndex} E{global.spindle4DirectionPin} F{global.spindle4AirPin}
+; if {global.machineModel} == "H5B"
+;     if global.e4HeatIndex == -1
+;         set global.e4HeatIndex = #heat.heaters
+;     if global.e4TempIndex == -1
+;         set global.e4TempIndex = #sensors.analog
+;     M98 P"create-tool.g" T4 Y"Extruder" S{global.e4TempPin} N{global.e4TempIndex} H{global.eHeat4Pin} R{global.e4HeatIndex} E{global.e4Drive} F{global.fA4Drive}
 
 ; Tool 5
 if global.e5HeatIndex == -1
@@ -53,14 +60,20 @@ M98 P"create-tool.g" T5 Y{global.toolType5} S{global.e5TempPin} N{global.e5TempI
 M118 S{"Info: Creating Probe"} L2
 M563 P10 S"Probe"
 G10 P10 X0.00 Y0.00 Z0.00 U0.00 V0.00 W0.00 A0.00 C0.00
-M402 P0                                                                                                                                 ; Retract Probe
 if global.zProbeRetractOutNum == -1
     set global.zProbeRetractOutNum = #state.gpOut
 M118 S{"Info: Creating state.gpOut[" ^ {global.zProbeRetractOutNum} ^ "] on pin " ^ {global.zProbeRetractPin} ^ " for probe retract"} L2
 M950 P{global.zProbeRetractOutNum} C{global.zProbeRetractPin}                                                                                                               ; Probe Retract
+M402 P0                                                                                                                                                                     ; Retract Probe
 
 ; Fans
 M118 S{"Info: Creating/Configuring Fans"} L2
+; Tools 11 - 24 (Tool Changer)
+while iterations < 24
+    if iterations < 10
+        continue
+    M118 S{"Info: Creating Tool " ^ {iterations+1}} L2
+    M98 P"create-tool.g" T{iterations+1} Y"TC Tool" S2
 
 ; FFF Fans
 if global.fffFanNum == -1
@@ -135,6 +148,40 @@ M118 S{"Info: Activating sensors.gpIn[" ^ {global.bESwitchInNum} ^ "] will run t
 M581 P{global.bESwitchInNum} T{global.bESwitchHighTrigger} S1 R0                                                                        ; Build Enclosure Close Behavior
 M118 S{"Info: Deactivating sensors.gpIn[" ^ {global.bESwitchInNum} ^ "] will run trigger" ^ {global.bESwitchLowTrigger} ^ ".g"} L2      ; Log informational event
 M581 P{global.bESwitchInNum} T{global.bESwitchLowTrigger} S0 R0                                                                         ; Build Enclosure Open Behavior
+
+if {global.machineModel} == "H5B"
+    ; Turret Lock
+    if global.tLockOutNum == -1
+        set global.tLockOutNum = #state.gpOut
+    M118 S{"Info: Creating state.gpOut[" ^ {global.tLockOutNum} ^ "] on pin " ^ {global.tLockPin} ^ " for turret lock solenoid"} L2     ; Log informational event
+    M950 P{global.tLockOutNum} C{global.tLockPin}
+    
+    ; Main Drawbar Solenoid
+    if global.dbarOutNum == -1
+        set global.dbarOutNum = #state.gpOut
+    M118 S{"Info: Creating state.gpOut[" ^ {global.dbarOutNum} ^ "] on pin " ^ {global.dbarPin} ^ " for drawbar solenoid"} L2           ; Log informational event
+    M950 P{global.dbarOutNum} C{global.dbarPin}
+    
+    ; Drawbar Spindle Indexing Pressure Select
+    if global.spindleIndexOutNum == -1
+        set global.spindleIndexOutNum = #state.gpOut
+    M118 S{"Info: Creating state.gpOut[" ^ {global.spindleIndexOutNum} ^ "] on pin " ^ {global.spindleIndexPin} ^ " for drawbar spindle indexing pressure select"} L2           ; Log informational event
+    M950 P{global.spindleIndexOutNum} C{global.spindleIndexPin}
+    
+    ; Drawbar Position Sensor
+    if global.spindleIndexSenseInNum == -1
+        set global.spindleIndexSenseInNum = #sensors.gpIn
+    M118 S{"Info: Creating sensors.gpIn[" ^ {global.spindleIndexSenseInNum} ^ "] on pin " ^ {global.spindleIndexSensePin} ^ " drawbar position sensor"} L2              ; Log informational event
+    M950 J{global.spindleIndexSenseInNum} C{global.spindleIndexSensePin}                                                                                                ; Define input
+    M118 S{"Info: Activating sensors.gpIn[" ^ {global.spindleIndexSenseInNum} ^ "] will not run a trigger"} L2                                                          ; Log informational event
+    M118 S{"Info: Deactivating sensors.gpIn["^ {global.spindleIndexSenseInNum} ^ "] will not run a trigger"} L2                                                         ; Log informational event
+    
+    ; Toolchanger Tool Release
+    if global.tCToolReleaseOutNum == -1
+        set global.tCToolReleaseOutNum = #state.gpOut
+    M118 S{"Info: Creating state.gpOut[" ^ {global.tCToolReleaseOutNum} ^ "] on pin " ^ {global.tCToolReleasePin} ^ " for tool changer tool release"} L2           ; Log informational event
+    M950 P{global.tCToolReleaseOutNum} C{global.tCToolReleasePin}
+
 
 M302 S150 ; Set minimum extrude temp
 

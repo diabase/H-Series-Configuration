@@ -2,7 +2,7 @@
 ; Default configuration parameters for H-Series machines
 ; Produced by Diabase H-Series Configurizer
 ; Written by Diabase Engineering
-; Last Updated: October 29, 2021
+; Last Updated: December 13, 2021
 
 M118 S"Begin defaultparameters.g" L2
 
@@ -47,7 +47,7 @@ else
     set global.zMax = 410
 
 if !{exists(global.uMin)}
-    global uMin = -10 ; Physical u-axis position when uSwitchPin triggers.
+    global uMin = -10 ; Physical u-axis position when USwitchPin triggers.
 else
     set global.uMin = -10
 
@@ -85,6 +85,16 @@ if !{exists(global.aMax)}
     global aMax = 365
 else
     set global.aMax = 365
+
+if !{exists(global.bMin)}
+    global bMin = -217.5
+else
+    set global.bMin = -217.5
+
+if !{exists(global.bMax)}
+    global bMax = 217.5
+else
+    set global.bMax = 217.5
 
 if !{exists(global.cMin)}
     global cMin = -1000
@@ -171,6 +181,11 @@ else
 ; else
 ;     set global.aPrimeSwitchPin = ""
 
+if !{exists(global.bSwitchPin)}
+    global bSwitchPin = "io8.in"
+else
+    set global.bSwitchPin = "io8.in"
+
 if !{exists(global.cSwitchPin)}
     global cSwitchPin = "2.io2.in"
 else
@@ -216,6 +231,11 @@ if !{exists(global.aPrimeDrive)}
 else
     set global.aPrimeDrive = 2.1
 
+if !{exists(global.bDrive)}
+    global bDrive = 4
+else
+    set global.bDrive = 4
+
 if !{exists(global.cDrive)}
     global cDrive = 2.2
 else
@@ -236,10 +256,10 @@ if !{exists(global.e3Drive)}
 else
     set global.e3Drive = 1.1
 
-; if !{exists(global.e4Drive)}
-;     global e4Drive = 
-; else
-;     set global.e4Drive = 
+if !{exists(global.e4Drive)}
+    global e4Drive = 3.3
+else
+    set global.e4Drive = 3.3
 
 if !{exists(global.e5Drive)}
     global e5Drive = 1.2
@@ -261,10 +281,10 @@ if !{exists(global.fA3Drive)}
 else
     set global.fA3Drive = 3.1
 
-; if !{exists(global.fA4Drive)}
-;     global fA4Drive = 
-; else
-;     set global.fA4Drive = 
+if !{exists(global.fA4Drive)}
+    global fA4Drive = 3.5
+else
+    set global.fA4Drive = 3.5
 
 if !{exists(global.fA5Drive)}
     global fA5Drive = 3.2
@@ -311,6 +331,11 @@ if !{exists(global.aPrimeDirection)}
 else
     set global.aPrimeDirection = 1
 
+if !{exists(global.bDirection)}
+    global bDirection = 1
+else
+    set global.bDirection = 1
+
 if !{exists(global.cDirection)}
     global cDirection = 1
 else
@@ -331,10 +356,10 @@ if !{exists(global.e3Direction)}
 else
     set global.e3Direction = 0
 
-; if !{exists(global.e4Direction)}
-;     global e4Direction = 
-; else
-;     set global.e4Direction = 
+if !{exists(global.e4Direction)}
+    global e4Direction = 0
+else
+    set global.e4Direction = 0
 
 if !{exists(global.e5Direction)}
     global e5Direction = 0
@@ -356,10 +381,10 @@ if !{exists(global.fA3Direction)}
 else
     set global.fA3Direction = 0
 
-; if !{exists(global.fA4Direction)}
-;     global fA4Direction = 
-; else
-;     set global.fA4Direction = 
+if !{exists(global.fA4Direction)}
+    global fA4Direction = 0
+else
+    set global.fA4Direction = 0
 
 if !{exists(global.fA5Direction)}
     global fA5Direction = 0
@@ -536,10 +561,10 @@ if !{exists(global.eHeat3Pin)}
 else
     set global.eHeat3Pin = "1.out1"
 
-; if !{exists(global.eHeat4Pin)}
-;     global eHeat4Pin = ""
-; else
-;     set global.eHeat4Pin = ""
+if !{exists(global.eHeat4Pin)}
+    global eHeat4Pin = "3.out1"
+else
+    set global.eHeat4Pin = "3.out1"
 
 if !{exists(global.eHeat5Pin)}
     global eHeat5Pin = "1.out2"
@@ -561,30 +586,35 @@ if !{exists(global.e3HeatIndex)}
 else
     set global.e3HeatIndex = -1
 
-; if !{exists(global.e4HeatIndex)}
-;     global e4HeatIndex = 
-; else
-;     set global.e4HeatIndex = 
+if !{exists(global.e4HeatIndex)}
+    global e4HeatIndex = -1
+else
+    set global.e4HeatIndex = -1
 
 if !{exists(global.e5HeatIndex)}
     global e5HeatIndex = -1
 else
     set global.e5HeatIndex = -1
 
-if !{exists(global.probeRetractPin)}
-    global probeRetractPin = "out4"
+if !{exists(global.zProbeRetractPin)}
+    global zProbeRetractPin = "out4"
 else
-    set global.probeRetractPin = "out4"
+    set global.zProbeRetractPin = "out4"
 
-if !{exists(global.probePin)}
-    global probePin = "io5.in"
+if !{exists(global.zProbePin)}
+    global zProbePin = "io5.in"
 else
-    set global.probePin = "io5.in"
+    set global.zProbePin = "io5.in"
 
 if !{exists(global.touchOffPlatePin)}
     global touchOffPlatePin = "io7.in"
 else
     set global.touchOffPlatePin = "io7.in"
+
+if !{exists(global.tCTouchOffPin)}
+    global tCTouchOffPin = "io6.in"
+else
+    set global.tCTouchOffPin = "io6.in"
 
 if !{exists(global.extruderCrashDetectPin)}
     global extruderCrashDetectPin = "1.io4.in"
@@ -611,10 +641,10 @@ if !{exists(global.fSense3Pin)}
 else
     set global.fSense3Pin = "3.io3.in"
 
-; if !{exists(global.fSense4Pin)}
-;     global fSense4Pin = ""
-; else
-;     set global.fSense4Pin = ""
+if !{exists(global.fSense4Pin)}
+    global fSense4Pin = "3.io5.in"
+else
+    set global.fSense4Pin = "3.io5.in"
 
 if !{exists(global.fSense5Pin)}
     global fSense5Pin = "3.io4.in"
@@ -641,10 +671,10 @@ if !{exists(global.toolType3)}
 else
     set global.toolType3 = "Extruder"
 
-if !{exists(global.toolType4)}
-    global toolType4 = "Spindle"
-else
-    set global.toolType4 = "Spindle"
+; if !{exists(global.toolType4)}
+;     global toolType4 = "" ; toolType4 is defined by machineType in tcreate-universal.g
+; else
+;     set global.toolType4 = ""
 
 if !{exists(global.toolType5)}
     global toolType5 = "HT Extruder"
@@ -666,10 +696,10 @@ if !{exists(global.e3TempPin)}
 else
     set global.e3TempPin = "1.temp1"
 
-; if !{exists(global.e4TempPin)}
-;     global e4TempPin = ""
-; else
-;     set global.e4TempPin = ""
+if !{exists(global.e4TempPin)}
+    global e4TempPin = "3.temp0"
+else
+    set global.e4TempPin = "3.temp0"
 
 if !{exists(global.e5TempPin)}
     global e5TempPin = "1.temp2"
@@ -691,10 +721,10 @@ if !{exists(global.e3TempIndex)}
 else
     set global.e3TempIndex = -1
 
-; if !{exists(global.e4TempIndex)}
-;     global e4TempIndex = 
-; else
-;     set global.e4TempIndex = 
+if !{exists(global.e4TempIndex)}
+    global e4TempIndex = -1
+else
+    set global.e4TempIndex = -1
 
 if !{exists(global.e5TempIndex)}
     global e5TempIndex = -1
@@ -706,10 +736,10 @@ if !{exists(global.fCFanPin)}
 else
     set global.fCFanPin = "3.out3"
 
-if !{exists(global.fcSwitchPin)}
-    global fcSwitchPin = "3.io0.in"
+if !{exists(global.fCSwitchPin)}
+    global fCSwitchPin = "3.io0.in"
 else
-    set global.fcSwitchPin = "3.io0.in"
+    set global.fCSwitchPin = "3.io0.in"
 
 if !{exists(global.cDOnTrigger)}
     global cDOnTrigger = 2
@@ -1045,5 +1075,125 @@ if !{exists(global.currentAdditionalRetraction)}
     global currentAdditionalRetraction = 0
 else
     set global.currentAdditionalRetraction = 0
+
+if !{exists(global.jobXMin)}
+    global jobXMin = 0
+else
+    set global.jobXMin = 0
+
+if !{exists(global.jobXMax)}
+    global jobXMax = 0
+else
+    set global.jobXMax = 0
+
+if !{exists(global.jobYMin)}
+    global jobYMin = 0
+else
+    set global.jobYMin = 0
+
+if !{exists(global.jobYMax)}
+    global jobYMax = 0
+else
+    set global.jobYMax = 0
+
+if !{exists(global.jobZMin)}
+    global jobZMin = 0
+else
+    set global.jobZMin = 0
+
+if !{exists(global.jobZMax)}
+    global jobZMax = 0
+else
+    set global.jobZMax = 0
+
+if !{exists(global.jobAMin)}
+    global jobAMin = 0
+else
+    set global.jobAMin = 0
+
+if !{exists(global.jobAMax)}
+    global jobAMax = 0
+else
+    set global.jobAMax = 0
+
+if !{exists(global.jobCMin)}
+    global jobCMin = 0
+else
+    set global.jobCMin = 0
+
+if !{exists(global.jobCMax)}
+    global jobCMax = 0
+else
+    set global.jobCMax = 0
+
+if !{exists(global.tLockPin)}
+    global tLockPin = "out6"
+else
+    set global.tLockPin = "out6"
+
+if !{exists(global.tLockOutNum)}
+    global tLockOutNum = -1
+else
+    set global.tLockOutNum = -1
+
+if !{exists(global.dbarPin)}
+    global dbarPin = "1.out4"
+else
+    set global.dbarPin = "1.out4"
+
+if !{exists(global.dbarOutNum)}
+    global dbarOutNum = -1
+else
+    set global.dbarOutNum = -1
+
+if !{exists(global.spindleIndexPin)}
+    global spindleIndexPin = "2.out3"
+else
+    set global.spindleIndexPin = "2.out3"
+
+if !{exists(global.spindleIndexOutNum)}
+    global spindleIndexOutNum = -1
+else
+    set global.spindleIndexOutNum = -1
+
+if !{exists(global.spindleIndexSensePin)}
+    global spindleIndexSensePin = "!1.io2.in"
+else
+    set global.spindleIndexSensePin = "!1.io2.in"
+
+if !{exists(global.spindleIndexSenseInNum)}
+    global spindleIndexSenseInNum = -1
+else
+    set global.spindleIndexSenseInNum = -1
+
+if !{exists(global.tCToolReleaseOutNum)}
+    global tCToolReleaseOutNum = -1
+else
+    set global.tCToolReleaseOutNum = -1
+
+if !{exists(global.tCToolReleasePin)}
+    global tCToolReleasePin = "1.out5"
+else
+    set global.tCToolReleasePin = "1.out5"
+
+if !{exists(global.probeOverTravelTCTouchOff)}
+    global probeOverTravelTCTouchOff = -1 ; The distance to move above ZMax when probing the tool changer touch off plate.
+else
+    set global.probeOverTravelTCTouchOff = -1
+
+if !{exists(global.tCOvertravelGetTool)}
+    global tCOvertravelGetTool = 31.25 ; The distance to move above ZMax when retrieving a tool from the tool changer.
+else
+    set global.tCOvertravelGetTool = 31.25
+
+if !{exists(global.tCOvertravelPutTool)}
+    global tCOvertravelPutTool = 31.75 ; The distance to move above ZMax when returning a tool to the tool changer.
+else
+    set global.tCOvertravelPutTool = 31.75
+
+if !{exists(global.keepProbeDeployed)}
+    global keepProbeDeployed = 0 ; A status flag to prevent unwanted probe retraction
+else
+    set global.keepProbeDeployed = 0
 
 M118 S"End defaultparameters.g" L2
