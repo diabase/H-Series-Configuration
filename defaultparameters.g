@@ -2,7 +2,7 @@
 ; Default configuration parameters for H-Series machines
 ; Produced by Diabase H-Series Configurizer
 ; Written by Diabase Engineering
-; Last Updated: December 13, 2021
+; Last Updated: December 27, 2021
 
 M118 S"Begin defaultparameters.g" L2
 
@@ -1156,15 +1156,25 @@ if !{exists(global.spindleIndexOutNum)}
 else
     set global.spindleIndexOutNum = -1
 
-if !{exists(global.spindleIndexSensePin)}
-    global spindleIndexSensePin = "!1.io2.in"
+if !{exists(global.spindleIndexSense1Pin)}
+    global spindleIndexSense1Pin = "!1.io2.in"
 else
-    set global.spindleIndexSensePin = "!1.io2.in"
+    set global.spindleIndexSense1Pin = "!1.io2.in"
 
-if !{exists(global.spindleIndexSenseInNum)}
-    global spindleIndexSenseInNum = -1
+if !{exists(global.spindleIndexSense1InNum)}
+    global spindleIndexSense1InNum = -1
 else
-    set global.spindleIndexSenseInNum = -1
+    set global.spindleIndexSense1InNum = -1
+
+if !{exists(global.spindleIndexSense2Pin)}
+    global spindleIndexSense2Pin = "!1.io0.in"
+else
+    set global.spindleIndexSense2Pin = "!1.io0.in"
+
+if !{exists(global.spindleIndexSense2InNum)}
+    global spindleIndexSense2InNum = -1
+else
+    set global.spindleIndexSense2InNum = -1
 
 if !{exists(global.tCToolReleaseOutNum)}
     global tCToolReleaseOutNum = -1

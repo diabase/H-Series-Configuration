@@ -167,14 +167,20 @@ if {global.machineModel} == "H5B"
     M118 S{"Info: Creating state.gpOut[" ^ {global.spindleIndexOutNum} ^ "] on pin " ^ {global.spindleIndexPin} ^ " for drawbar spindle indexing pressure select"} L2   ; Log informational event
     M950 P{global.spindleIndexOutNum} C{global.spindleIndexPin}
     
-    ; Drawbar Position Sensor
-    if global.spindleIndexSenseInNum == -1
-        set global.spindleIndexSenseInNum = #sensors.gpIn
-    M118 S{"Info: Creating sensors.gpIn[" ^ {global.spindleIndexSenseInNum} ^ "] on pin " ^ {global.spindleIndexSensePin} ^ " drawbar position sensor"} L2              ; Log informational event
-    M950 J{global.spindleIndexSenseInNum} C{global.spindleIndexSensePin}                                                                                                ; Define input
-    M118 S{"Info: Activating sensors.gpIn[" ^ {global.spindleIndexSenseInNum} ^ "] will not run a trigger"} L2                                                          ; Log informational event
-    M118 S{"Info: Deactivating sensors.gpIn["^ {global.spindleIndexSenseInNum} ^ "] will not run a trigger"} L2                                                         ; Log informational event
-    
+    ; Drawbar Position Sensors
+    if global.spindleIndexSense1InNum == -1
+        set global.spindleIndexSense1InNum = #sensors.gpIn
+    M118 S{"Info: Creating sensors.gpIn[" ^ {global.spindleIndexSense1InNum} ^ "] on pin " ^ {global.spindleIndexSense1Pin} ^ " drawbar position sensor"} L2            ; Log informational event
+    M950 J{global.spindleIndexSense1InNum} C{global.spindleIndexSense1Pin}                                                                                              ; Define input
+    M118 S{"Info: Activating sensors.gpIn[" ^ {global.spindleIndexSense1InNum} ^ "] will not run a trigger"} L2                                                         ; Log informational event
+    M118 S{"Info: Deactivating sensors.gpIn["^ {global.spindleIndexSense1InNum} ^ "] will not run a trigger"} L2                                                        ; Log informational event
+    if global.spindleIndexSense2InNum == -1
+        set global.spindleIndexSense2InNum = #sensors.gpIn
+    M118 S{"Info: Creating sensors.gpIn[" ^ {global.spindleIndexSense2InNum} ^ "] on pin " ^ {global.spindleIndexSense2Pin} ^ " drawbar position sensor"} L2            ; Log informational event
+    M950 J{global.spindleIndexSense2InNum} C{global.spindleIndexSense2Pin}                                                                                              ; Define input
+    M118 S{"Info: Activating sensors.gpIn[" ^ {global.spindleIndexSense2InNum} ^ "] will not run a trigger"} L2                                                         ; Log informational event
+    M118 S{"Info: Deactivating sensors.gpIn["^ {global.spindleIndexSense2InNum} ^ "] will not run a trigger"} L2                                                        ; Log informational event
+
     ; Toolchanger Tool Release
     if global.tCToolReleaseOutNum == -1
         set global.tCToolReleaseOutNum = #state.gpOut

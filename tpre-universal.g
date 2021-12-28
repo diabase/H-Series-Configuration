@@ -1,7 +1,7 @@
 ; Universal tpre macro
 ; Called when a tool is selected
 ; Written by Diabase Engineering
-; Last Updated: December 13, 2021
+; Last Updated: December 27, 2021
 
 M118 S{"Debug: Begin tpre-universal.g"} L3
 
@@ -62,11 +62,8 @@ if {global.machineModel} == "H5B"
             G90                                                                                                             ; Absolute Positioning
             G1 B{-tools[{state.nextTool}].offsets[6]} F10000                                                                ; Move tool changer to position for upcoming tool
             if state.gpOut[{global.dbarOutNum}].pwm == 0                                                                    ; If drawbar release pressure is off
-                M42 P{global.spindleIndexOutNum} S1                                                                             ; Toggle Drawbar Release Pressure Low
-                M42 P{global.dbarOutNum} S1                                                                                     ; Turn Drawbar Release Pressure On
-                ; The following two lines are commented out assuming that the spindle state at the beginning of this code block is indexed, with the drawbar clamped, and no tool inserted - RT 12/7/2021
-                ; if sensors.gpIn[{global.spindleIndexSenseInNum}].value == 1                                                     ; Drawbar position sensor active means the index pin hasn't dropped into its slot
-                ;    M291 P"Rotate spindle until index pin is in the correct location. Press OK when aligned." R"Warning" S3     ; Display a blocking warning with no timeout.
+                var spindleNum = tools[state.nextTool].spindle
+                M98 P"indexspindle.g" H0 S{var.spindleNum}                                                                      ; Call indexspindle.g
 
             if {abs({move.axes[3].machinePosition}-{{-tools[{state.nextTool}].offsets[3]}+180}) > 1.0}                       ; If the turret isn't already pointing the spindle within 1 degree of the tool changer...
                 M118 S{"Debug: Current turret position is " ^ move.axes[3].machinePosition ^ " and we need it to be " ^ {{-tools[{state.nextTool}].offsets[3]}+180}} L3
