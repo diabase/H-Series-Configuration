@@ -1192,14 +1192,14 @@ else
     set global.probeOverTravelTCTouchOff = -1
 
 if !{exists(global.tCOvertravelGetTool)}
-    global tCOvertravelGetTool = 31.25 ; The distance to move above ZMax when retrieving a tool from the tool changer.
+    global tCOvertravelGetTool = 31.5 ; The distance to move above ZMax when retrieving a tool from the tool changer.
 else
-    set global.tCOvertravelGetTool = 31.25
+    set global.tCOvertravelGetTool = 31.5
 
 if !{exists(global.tCOvertravelPutTool)}
-    global tCOvertravelPutTool = 31.75 ; The distance to move above ZMax when returning a tool to the tool changer.
+    global tCOvertravelPutTool = 32 ; The distance to move above ZMax when returning a tool to the tool changer.
 else
-    set global.tCOvertravelPutTool = 31.75
+    set global.tCOvertravelPutTool = 32
 
 if !{exists(global.keepProbeDeployed)}
     global keepProbeDeployed = 0 ; A status flag to prevent unwanted probe retraction
