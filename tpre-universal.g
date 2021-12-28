@@ -47,12 +47,12 @@ if {global.machineModel} == "H5B"
         M400                                                                    ; Wait for all moves to finish
         if move.axes[2].machinePosition < {move.axes[2].max - 70}               ; If we have enough room for a normal tool change Z-hop (plus 30mm of clearance for the tool changer), do it.
             G91                                                                 ; Relative Positioning
-            G1 Z40 F6000                                                        ; Move Z +40mm at 6000 mm/min
+            G53 G1 Z40 F6000                                                        ; Move Z +40mm at 6000 mm/min
 
         elif move.axes[2].machinePosition > {move.axes[2].max - 70}             ; If we don't have enough room, move as high as we can.
             M574 Z2 S1 P{global.zSwitchPin}                                     ; Configure Z endstop position at high end, it's a microswitch on pin defined in defaultparameters.g
             G90                                                                 ; Absolute positioning
-            G1 Z{move.axes[2].max - 70} F6000                                   ; Move to 70mm below ZMax
+            G53 G1 Z{move.axes[2].max - 70} F6000                                   ; Move to 70mm below ZMax
             M400                                                                ; Wait for all moves to finish
 
         elif move.axes[2].machinePosition == {move.axes[2].max - 70}            ; If we're already at the safe z position for a tool change...
@@ -73,8 +73,8 @@ if {global.machineModel} == "H5B"
                 M400
                 M98 P"lock_turret.g"                                                                                        ; Lock turret
             M42 P{global.spindleIndexOutNum} S0                                                                             ; Toggle Drawbar Release Pressure High
-            G1 Z{move.axes[2].max} F6000                                                                                    ; Move Z to ZMax quickly
-            G1 Z{{move.axes[2].max}+{global.tCOvertravelGetTool}} H2 F1000                                                  ; Move Z beyond ZMax slowly, ignoring endstops
+            G53 G1 Z{move.axes[2].max} F6000                                                                                ; Move Z to ZMax quickly
+            G53 G1 Z{{move.axes[2].max}+{global.tCOvertravelGetTool}} H2 F3000                                              ; Move Z beyond ZMax ignoring endstops
             M400                                                                                                            ; Wait for all moves to finish
             M42 P{global.tCToolReleaseOutNum} S1                                                                            ; Extend the tool changer release piston
             G4 P500                                                                                                         ; Dwell for 500 ms
@@ -85,7 +85,7 @@ if {global.machineModel} == "H5B"
             var zMotorCurrent = move.axes[2].current
             M906 Z{var.zMotorCurrent * 0.5}
             M118 S{"Max z-motor current is now "^move.axes[2].current^ "mA. Attempting downward move."} L3
-            G1 Z{{move.axes[2].max}-100} H2 F6000                                                                           ; Move Z to 100 mm below ZMax, ignoring endstops
+            G53 G1 Z{{move.axes[2].max}-100} H2 F6000                                                                           ; Move Z to 100 mm below ZMax, ignoring endstops
             M906 Z{var.zMotorCurrent}
             M118 S{"Attempted move finished. Max z-motor current is now "^move.axes[2].current^ "mA."} L3
             M400                                                                                                            ; Wait for any current moves to finish
@@ -94,7 +94,7 @@ if {global.machineModel} == "H5B"
         G90 ; Absolute Positioning
         M400
         M98 P"unlock_turret.g" ; Call unlock_turret.g
-        G1 U{-tools[{state.nextTool}].offsets[3]} Z{move.axes[2].max + global.maxOffset} F8900 ; Rotate turret to active position for new tool
+        G53 G1 U{-tools[{state.nextTool}].offsets[3]} Z{move.axes[2].max + global.maxOffset} F8900 ; Rotate turret to active position for new tool
         G4 P20 ; Dwell for 20 ms
         
         M400

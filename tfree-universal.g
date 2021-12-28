@@ -31,12 +31,12 @@ if {global.machineModel} == "H5B"
         M400
         M98 P"lock_turret.g"                                                                                            ; Lock turret
         if move.axes[2].machinePosition < move.axes[2].max                                                              ; If we're below ZMax
-            G1 Z{move.axes[2].max + global.maxOffset} F6000                                                                                ; Move Z to ZMax quickly
-        G1 Z{{move.axes[2].max}+{global.tCOvertravelPutTool}} H2 F1000                                                  ; Move Z beyond ZMax slowly, ignoring endstops
+            G53 G1 Z{move.axes[2].max + global.maxOffset} F6000                                                         ; Move Z to ZMax quickly
+        G53 G1 Z{{move.axes[2].max}+{global.tCOvertravelPutTool}} H2 F3000                                              ; Move Z beyond ZMax ignoring endstops
         M400                                                                                                            ; Wait for all moves to finish
         M42 P{global.tCToolReleaseOutNum} S0                                                                            ; Retract the tool changer release piston
         G4 P500                                                                                                         ; Dwell for 500 ms
-        G1 Z{{move.axes[2].max}-70} H2 F6000                                                                            ; Move Z to 70 mm below ZMax, ignoring endstops
+        G53 G1 Z{{move.axes[2].max}-70} H2 F6000                                                                        ; Move Z to 70 mm below ZMax, ignoring endstops
         M400                                                                                                            ; Wait for any current moves to finish
         if {{state.nextTool} < 11}
             M42 P{global.dbarOutNum} S0                                                                                 ; Turn Drawbar Release Pressure Off (Fully clamp drawbar)
