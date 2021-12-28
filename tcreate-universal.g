@@ -186,6 +186,14 @@ if {global.machineModel} == "H5B"
         set global.tCToolReleaseOutNum = #state.gpOut
     M118 S{"Info: Creating state.gpOut[" ^ {global.tCToolReleaseOutNum} ^ "] on pin " ^ {global.tCToolReleasePin} ^ " for tool changer tool release"} L2                ; Log informational event
     M950 P{global.tCToolReleaseOutNum} C{global.tCToolReleasePin}
+    
+    ; Z High Switch
+    if global.zHighInNum == -1
+        set global.zHighInNum = #sensors.gpIn
+    M118 S{"Info: Creating sensors.gpIn[" ^ {global.zHighInNum} ^ "] on pin " ^ {global.zHighSwitchPin} ^ " for High Z Switch"} L2  ; Log informational event
+    M950 J{global.zHighInNum} C{global.zHighSwitchPin}                                                                              ; Input definintion
+    M118 S{"Info: Activating sensors.gpIn[" ^ {global.zHighInNum} ^ "] will be ignored"} L2                                         ; Log informational event
+    M118 S{"Info: Deactivating sensors.gpIn["^ {global.zHighInNum} ^ "] will be ignored"} L2                                        ; Log informational event
 
 
 M302 S150 ; Set minimum extrude temp

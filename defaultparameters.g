@@ -1206,4 +1206,14 @@ if !{exists(global.keepProbeDeployed)}
 else
     set global.keepProbeDeployed = 0
 
+if !{exists(global.zHighInNum)}
+    global zHighInNum = -1
+else
+    set global.zHighInNum = -1
+
+if !{exists(global.zHighSwitchPin)}
+    global zHighSwitchPin = "2.io3.in"
+else
+    set global.zHighSwitchPin = "2.io3.in"
+
 M118 S"End defaultparameters.g" L2

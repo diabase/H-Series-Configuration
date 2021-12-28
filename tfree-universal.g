@@ -34,6 +34,11 @@ if {global.machineModel} == "H5B"
             G53 G1 Z{move.axes[2].max + global.maxOffset} F6000                                                         ; Move Z to ZMax quickly
         G53 G1 Z{{move.axes[2].max}+{global.tCOvertravelPutTool}} H2 F3000                                              ; Move Z beyond ZMax ignoring endstops
         M400                                                                                                            ; Wait for all moves to finish
+        if sensors.gpIn[{global.zHighInNum}].value == 0
+            M291 P{"Z High switch is not triggered. Z might have crashed. We will now abort."}  R"Not high enough." S2
+            abort
+        M42 P{global.spindleIndexOutNum} S0                                                                             ; Toggle Drawbar Release Pressure High
+        G4 P500                                                                                                         ; Dwell for 500 ms
         M42 P{global.tCToolReleaseOutNum} S0                                                                            ; Retract the tool changer release piston
         G4 P500                                                                                                         ; Dwell for 500 ms
         G53 G1 Z{{move.axes[2].max}-70} H2 F6000                                                                        ; Move Z to 70 mm below ZMax, ignoring endstops
