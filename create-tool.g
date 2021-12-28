@@ -92,6 +92,7 @@ if param.Y == "TC Tool"
     M118 S{"Info: Creating Tool Changer Tool "^param.T^" using Spindle "^ param.S} L2
     var spindleFanNum = {global.spindle2AirIndex}
     M563 P{param.T} F{var.spindleFanNum} R{tools[{param.S}].spindle} S{"TC "^{param.T}}                                ; Create a new tool with the newly created fan and spindle and call it "Spindle #"
+    G10 P{param.T} X0 Y-1.5 Z-100                                                                                      ; Set initial tool offsets to default values for a tool changer tool
 
 ; Set other initial tool offsets
 M118 S{"Info: U offset for " ^ {param.T} ^ " is " ^ var.newUOffset} L2
