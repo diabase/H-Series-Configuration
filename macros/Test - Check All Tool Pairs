@@ -1,0 +1,2 @@
+M291 P"Do you want to attempt tool changing between all pairs of tool changer tools?" R"checkalltoolpairs.g" S3
+M98 P"0:/sys/sys-macros/checkalltoolpairs.g"

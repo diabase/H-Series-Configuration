@@ -1,0 +1,2 @@
+M291 P"Rotate the current tool to the active position?" R"rotatetoactive.g" S3
+M98 P"0:/sys/sys-macros/rotatetoactive.g"

@@ -1,0 +1,2 @@
+M291 P"Release the tool from the spindle?" R"manualdbarrelease.g" S3
+M98 P"0:/sys/sys-macros/manualdbarrelease.g"

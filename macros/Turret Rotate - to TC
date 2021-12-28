@@ -1,0 +1,2 @@
+M291 P"Rotate the current tool to the tool changer position?" R"rotatetotc.g" S3
+M98 P"0:/sys/sys-macros/rotatetotc.g"

@@ -1,0 +1,2 @@
+M291 P"Lock the turret?" R"lock_turret.g" S3
+M98 P"0:/sys/lock_turret.g"

@@ -1,0 +1,2 @@
+M291 P"Clamp the tool in the spindle?" R"manualdbarclamp.g" S3
+M98 P"0:/sys/sys-macros/manualdbarclamp.g"

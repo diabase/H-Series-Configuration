@@ -1,0 +1,2 @@
+M291 P"Do you want to touch off this tool on the tool changer touch off plate?" R"tctouchoff.g" S3  ; Warn the user about the imminent macro.
+M98 P"0:/sys/sys-macros/tctouchoff.g" I1

@@ -1,0 +1,2 @@
+M291 P"Do you want to run loadedtoolrecovery.g?" R"loadedtoolrecovery.g?" S3  ; Get user input
+M98 P"0:/sys/sys-macros/loadedtoolrecovery.g"

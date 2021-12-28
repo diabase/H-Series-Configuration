@@ -1,0 +1,2 @@
+M291 P"Ready to set tool offsets for all tool changer tools?" R"Crash Check" S3  ; Warn the user about the imminent probing move.
+M98 P"0:/sys/sys-macros/zoffsetalltc.g"
