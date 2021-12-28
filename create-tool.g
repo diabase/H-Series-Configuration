@@ -10,7 +10,7 @@
 ;   E: Variable name containing Extruder Drive Number / Spindle Direction Pin
 ;   F: Variable name containing Filament Assist Drive Number / Spindle Air Pin
 ; Written by Diabase Engineering
-; Last Updated: December 14, 2021
+; Last Updated: December 21, 2021
 
 M118 S{"Info: Begin create-tool.g."} L2
 
@@ -29,6 +29,17 @@ elif {global.machineModel} == "H5B"
             set var.newBOffset = -{{{18 - {param.T}} * 30} + 3}
         elif {{param.T} > 17}
             set var.newBOffset = -{{{18 - {param.T}} * 30} - 33}
+    
+
+if {param.Y == "Probe"}
+    set var.newUOffset = 0
+    set var.newBOffset = 0
+    M563 P{param.T} S{param.Y}
+    if global.zProbeRetractOutNum == -1
+        set global.zProbeRetractOutNum = #state.gpOut
+    M118 S{"Info: Creating state.gpOut[" ^ {global.zProbeRetractOutNum} ^ "] on pin " ^ {global.zProbeRetractPin} ^ " for probe retract"} L2
+    M950 P{global.zProbeRetractOutNum} C{global.zProbeRetractPin}                                                                                                               ; Probe Retract
+    M402 P0                                                                                                                                                                     ; Retract Probe
 
 ; Extruder and High Temp Extruder
 if {{param.Y == "Extruder"} || {param.Y == "HT Extruder"}}

@@ -14,7 +14,7 @@
 ;   - Automatically looping create-tool.g for variable-defined tools
 ; TODO: Revisit when spindles aren't all automatically created. - RT
 ; Written by Diabase Engineering
-; Last Updated: December 17, 2021
+; Last Updated: December 27, 2021
 
 M118 S{"Info: Begin tcreate-universal.g"} L2
 
@@ -72,15 +72,8 @@ if global.e5TempIndex == -1
     set global.e5TempIndex = #sensors.analog
 M98 P"create-tool.g" T5 Y{global.toolType5} S{global.e5TempPin} N{global.e5TempIndex} H{global.eHeat5Pin} R{global.e5HeatIndex} E{global.e5Drive} F{global.fA5Drive}
 
-; Tool 10
-M118 S{"Info: Creating Probe"} L2
-M563 P10 S"Probe"
-G10 P10 X0.00 Y0.00 Z0.00 U0.00 V0.00 W0.00 A0.00 C0.00
-if global.zProbeRetractOutNum == -1
-    set global.zProbeRetractOutNum = #state.gpOut
-M118 S{"Info: Creating state.gpOut[" ^ {global.zProbeRetractOutNum} ^ "] on pin " ^ {global.zProbeRetractPin} ^ " for probe retract"} L2
-M950 P{global.zProbeRetractOutNum} C{global.zProbeRetractPin}                                                                                                               ; Probe Retract
-M402 P0                                                                                                                                                                     ; Retract Probe
+; Tool 10 - Probe
+M98 P"create-tool.g" T10 Y"Probe"
 
 ; Tools 11 - 24 (Tool Changer)
 if {global.machineModel} == "H5B"
