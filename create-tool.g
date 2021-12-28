@@ -29,7 +29,6 @@ elif {global.machineModel} == "H5B"
             set var.newBOffset = -{{{18 - {param.T}} * 30} + 3}
         elif {{param.T} > 17}
             set var.newBOffset = -{{{18 - {param.T}} * 30} - 33}
-    M118 S{"Info: var.newBOffset is " ^ var.newBOffset} L2
 
 ; Extruder and High Temp Extruder
 if {{param.Y == "Extruder"} || {param.Y == "HT Extruder"}}
@@ -81,13 +80,15 @@ if param.Y == "Spindle"
 if param.Y == "TC Tool"
     M118 S{"Info: Creating Tool Changer Tool "^param.T^" using Spindle "^ param.S} L2
     var spindleFanNum = {global.spindle2AirIndex}
-    M563 P{param.T} F{var.spindleFanNum} R{tools[{param.S}].spindle} S{"TC "^{param.T}}                                                   ; Create a new tool with the newly created fan and spindle and call it "Spindle #"
+    M563 P{param.T} F{var.spindleFanNum} R{tools[{param.S}].spindle} S{"TC "^{param.T}}                                ; Create a new tool with the newly created fan and spindle and call it "Spindle #"
 
 ; Set other initial tool offsets
+M118 S{"Info: U offset for " ^ {param.T} ^ " is " ^ var.newUOffset} L2
 G10 P{param.T} U{var.newUOffset} W0.00 A0.00 C0.00
 if {global.machineModel} == "H4" || {global.machineModel} == "H5A"
     G10 P{param.T} V0.00
 elif {global.machineModel} == "H5B"
+    M118 S{"Info: B offset for " ^ {param.T} ^ " is " ^ var.newBOffset} L2
     G10 P{param.T} B{var.newBOffset}
 
 ; Create tfree.g, tpre.g, and tpost.g for this tool

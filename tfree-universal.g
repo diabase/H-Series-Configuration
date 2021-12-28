@@ -11,19 +11,16 @@ M5                              ; Turn off all spindles
 
 if {global.machineModel} == "H5B"
     if {{state.currentTool} >= 11}
-        M400                                                    ; Wait for all moves to finish
-        ; echo "The turret is currently at "^move.axes[3].machinePosition^". Tool "^state.nextTool^" is located at "^-tools[{state.nextTool}].offsets[3]^"."
+        M400                                                        ; Wait for all moves to finish
         if move.axes[2].machinePosition + 70 <= move.axes[2].max    ; If we have enough room for a normal tool change Z-hop (plus 30mm of clearance for the tool changer), do it.
-            G91 ; Relative Positioning
+            G91                                                     ; Relative Positioning
             G1 Z40 F6000                                            ; Move Z +40mm at 6000 mm/min
         elif move.axes[2].machinePosition + 40 > move.axes[2].max   ; If we don't have enough room, move as high as we can.
             M574 Z2 S1 P{global.zSwitchPin}                         ; Configure Z endstop position at high end, it's a microswitch on pin defined in defaultparameters.g
             G90                                                     ; Absolute positioning
-            G1 Z{move.axes[2].max - 70} F6000                       ; Move to 70mm below ZMax
+            G53 G1 Z{move.axes[2].max - 70} F6000                       ; Move to 70mm below ZMax
             M400                                                    ; Wait for all moves to finish
 
-
-        ; echo "Rotating turret to "^{-tools[{state.nextTool}].offsets[3]}
         G90                                                                                                             ; Absolute Positioning
         G1 B0 F10000                                                                                                    ; Move tool changer to position for current tool
         M42 P{global.spindleIndexOutNum} S1                                                                             ; Toggle Drawbar Release Pressure Low

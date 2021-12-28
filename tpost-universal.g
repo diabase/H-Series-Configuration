@@ -29,8 +29,10 @@ else                                                                            
 
 if state.previousTool != -1                                                                                                                     ; If we changed to this tool from another tool...
     G90                                                                                                                                         ; Set to Absolute Positioning
+    M118 S{"Debug: tpost-universal.g: Moving to X and Y coordinates stored in restore point 2"} L3
     G1 R2 X0 Y0 F6000                                                                                                                           ; Return to X and Y coordinates stored in restore point 2 at a speed of 6000 mm/min
     if state.restorePoints[2].coords[2] + 2 <= {move.axes[2].max + global.maxOffset}
+        M118 S{"Debug: tpost-universal.g: Moving to 2mm above Z coordinate stored in restore point 2"} L3
         G1 R2 Z2                                                                                                                                ; Return to 2mm above Z coordinate stored in restore point 2
     else
         G1 Z{move.axes[2].max + global.maxOffset} F10000                                                                                        ; Move to Z = ZMax + Longest Z Offset at 10000 mm/min

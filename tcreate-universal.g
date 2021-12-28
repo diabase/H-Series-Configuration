@@ -171,7 +171,7 @@ if {global.machineModel} == "H5B"
     ; Drawbar Spindle Indexing Pressure Select
     if global.spindleIndexOutNum == -1
         set global.spindleIndexOutNum = #state.gpOut
-    M118 S{"Info: Creating state.gpOut[" ^ {global.spindleIndexOutNum} ^ "] on pin " ^ {global.spindleIndexPin} ^ " for drawbar spindle indexing pressure select"} L2           ; Log informational event
+    M118 S{"Info: Creating state.gpOut[" ^ {global.spindleIndexOutNum} ^ "] on pin " ^ {global.spindleIndexPin} ^ " for drawbar spindle indexing pressure select"} L2   ; Log informational event
     M950 P{global.spindleIndexOutNum} C{global.spindleIndexPin}
     
     ; Drawbar Position Sensor
@@ -185,7 +185,7 @@ if {global.machineModel} == "H5B"
     ; Toolchanger Tool Release
     if global.tCToolReleaseOutNum == -1
         set global.tCToolReleaseOutNum = #state.gpOut
-    M118 S{"Info: Creating state.gpOut[" ^ {global.tCToolReleaseOutNum} ^ "] on pin " ^ {global.tCToolReleasePin} ^ " for tool changer tool release"} L2           ; Log informational event
+    M118 S{"Info: Creating state.gpOut[" ^ {global.tCToolReleaseOutNum} ^ "] on pin " ^ {global.tCToolReleasePin} ^ " for tool changer tool release"} L2                ; Log informational event
     M950 P{global.tCToolReleaseOutNum} C{global.tCToolReleasePin}
 
 
