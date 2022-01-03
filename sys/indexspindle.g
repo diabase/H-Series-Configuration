@@ -6,7 +6,7 @@
 ; Written by Diabase Engineering
 ; Last Updated: December 21, 2021
 
-M118 S{"Debug: Begin indexspindle.g with parameters H" ^ {param.H} ^ "and S" ^ {param.S} } L3
+M118 S{"Debug: Begin indexspindle.g with parameters H" ^ {param.H} ^ " and S" ^ {param.S} } L3
 
 if {global.machineModel} == "H5B"
     M42 P{global.spindleIndexOutNum} S1                                                                             ; Toggle Drawbar Release Pressure Low
@@ -52,7 +52,6 @@ if {global.machineModel} == "H5B"
                     M5
                     G4 P200
                     M42 P{global.dbarOutNum} S1
-                    G4 P500                                                                                                         ; Dwell 100ms
             if iterations = 10
                 set var.blipSpindleSpeed = 2000
                 set var.blipDuration = 400
