@@ -4,13 +4,14 @@
 ;    H: Has Tool (H0 - No tool, H1 - Tool Loaded)
 ;    S: Spindle Number
 ; Written by Diabase Engineering
-; Last Updated: December 21, 2021
+; Last Updated: December 30, 2021
 
 M118 S{"Debug: Begin indexspindle.g with parameters H" ^ {param.H} ^ " and S" ^ {param.S} } L3
 
 if {global.machineModel} == "H5B"
     M42 P{global.spindleIndexOutNum} S1                                                                             ; Toggle Drawbar Release Pressure Low
     M42 P{global.dbarOutNum} S1                                                                                     ; Turn Drawbar Release Pressure On
+    G4 P1000                                                                                                        ; Dwell 1000ms
     var blipSpindleSpeed = 1000
     var blipDuration = 200
 
@@ -52,6 +53,7 @@ if {global.machineModel} == "H5B"
                     M5
                     G4 P200
                     M42 P{global.dbarOutNum} S1
+                    G4 P500                                                                                                         ; Dwell 500ms
             if iterations = 10
                 set var.blipSpindleSpeed = 2000
                 set var.blipDuration = 400
