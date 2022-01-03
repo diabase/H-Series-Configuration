@@ -1,7 +1,7 @@
 ; Universal tpre macro
 ; Called when a tool is selected
 ; Written by Diabase Engineering
-; Last Updated: December 27, 2021
+; Last Updated: December 30, 2021
 
 M118 S{"Debug: Begin tpre-universal.g"} L3
 
@@ -77,7 +77,8 @@ if {global.machineModel} == "H5B"
             G53 G1 Z{{move.axes[2].max}+{global.tCOvertravelGetTool}} H2 F3000                                              ; Move Z beyond ZMax ignoring endstops
             M400                                                                                                            ; Wait for all moves to finish
             if sensors.gpIn[{global.zHighInNum}].value == 0
-                M291 P{"Z High switch is not triggered. Z might have crashed. We will now abort."}  R"Not high enough." S2
+                M98 P"engagezbrake.g"
+                M291 P{"Z High switch is not triggered. Z might have crashed. Z brake engaged. We will now abort."}  R"Not high enough." S2
                 abort
             M42 P{global.tCToolReleaseOutNum} S1                                                                            ; Extend the tool changer release piston
             G4 P500                                                                                                         ; Dwell for 500 ms
