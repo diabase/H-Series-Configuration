@@ -1,6 +1,9 @@
 ; Universal tfree macro
 ; Called whenever a tool is de-selected
 ; Written by Diabase Engineering
+; state.previousTool is now the tool being freed
+; state.currentTool is still the tool being freed
+; state.nextTool is the upcoming tool
 ; Last Updated: January 07, 2022
 
 M118 S{"Debug: Begin tfree-universal.g"} L3

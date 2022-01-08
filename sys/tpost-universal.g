@@ -1,7 +1,10 @@
 ; tpost-universal.g
 ; Called when a tool is selected
 ; Written by Diabase Engineering
-; Last Updated: December 21, 2021
+; state.previousTool is the just-freed tool 
+; state.currentTool is the upcoming tool
+; state.nextTool is the upcoming tool
+; Last Updated: January 07, 2022
 
 M118 S{"Debug: Begin tpost-universal.g"} L3
 
