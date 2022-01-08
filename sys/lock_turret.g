@@ -1,7 +1,7 @@
 ; lock_turret.g
 ; Called to engage the turret latch
 ; Written by Diabase Engineering
-; Last Updated: December 06, 2021
+; Last Updated: January 04, 2022
 
 M118 S{"Debug: Begin lock_turret.g"} L3
 
@@ -21,5 +21,6 @@ if {global.machineModel} == "H4" || {global.machineModel} == "H5A"
 
 elif {global.machineModel} == "H5B"
     M42 P{global.tLockOutNum} S1                                    ; Activate the turret lock solenoid valve
+    G4 P500                                                         ; Dwell 500ms
 
 M118 S{"Debug: End lock_turret.g"} L3
