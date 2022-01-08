@@ -1,7 +1,7 @@
 ; Universal tfree macro
 ; Called whenever a tool is de-selected
 ; Written by Diabase Engineering
-; Last Updated: December 30, 2021
+; Last Updated: January 07, 2022
 
 M118 S{"Debug: Begin tfree-universal.g"} L3
 M453                            ; Switch to CNC mode
@@ -22,7 +22,7 @@ if {global.machineModel} == "H5B"
             M400                                                    ; Wait for all moves to finish
 
         G90                                                                                                             ; Absolute Positioning
-        G1 B0 F10000                                                                                                    ; Move tool changer to position for current tool
+        G1 B0 F30000                                                                                                    ; Move tool changer to position for current tool
         var spindleNum = tools[state.previousTool].spindle
         M98 P"indexspindle.g" H1 S{var.spindleNum}                                                                      ; Call indexspindle.g
         M42 P{global.tCToolReleaseOutNum} S1                                                                            ; Extend the tool changer release piston

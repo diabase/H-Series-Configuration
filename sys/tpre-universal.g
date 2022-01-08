@@ -60,7 +60,7 @@ if {global.machineModel} == "H5B"
 
         if {{state.nextTool} >= 11}
             G90                                                                                                             ; Absolute Positioning
-            G1 B{-tools[{state.nextTool}].offsets[6]} F10000                                                                ; Move tool changer to position for upcoming tool
+            G1 B{-tools[{state.nextTool}].offsets[6]} F30000                                                                ; Move tool changer to position for upcoming tool
             if state.gpOut[{global.dbarOutNum}].pwm == 0                                                                    ; If drawbar release pressure is off
                 var spindleNum = tools[state.nextTool].spindle
                 M98 P"indexspindle.g" H0 S{var.spindleNum}                                                                      ; Call indexspindle.g
