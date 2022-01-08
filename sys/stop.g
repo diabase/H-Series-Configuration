@@ -2,7 +2,7 @@
 ; If the axes are homed and if a print is being cancelled (M25), cancel.g is called when M0 is sent. 
 ; If M0 is sent at any other time, stop.g is called.
 ; Written by Diabase Engineering
-; Last Updated: November 12, 2021
+; Last Updated: January 07, 2022
 
 M118 S{"Debug: Begin stop.g"} L3
 
@@ -17,20 +17,10 @@ if state.machineMode="CNC"
     M5                                                              ; Stop the spindle of the current tool (if any) or stop all spindles if the current tool has no spindles or no tool is selected
 
 ; Turn off all extruder heaters
-G10 P1 R0 S0                                                        ; Set Tool 1 active and standby temperatures to 0C
-G10 P2 R0 S0                                                        ; Set Tool 2 active and standby temperatures to 0C
-G10 P3 R0 S0                                                        ; Set Tool 3 active and standby temperatures to 0C
-G10 P4 R0 S0                                                        ; Set Tool 4 active and standby temperatures to 0C
-G10 P5 R0 S0                                                        ; Set Tool 5 active and standby temperatures to 0C
-
-; Put all the tools into standby mode and re-select the last used tool
-T1 P0
-T2 P0
-T3 P0
-T4 P0
-T5 P0
-T10 P0
-T{state.restorePoints[0].toolNumber} P0
+while iterations < #tools                                           ; Loop through all tools...
+    if tools[iterations] != null                                    ; if it's defined...
+        if tools[iterations].heaters != null                        ; and has heaters...
+            M568 P{iterations} R0 S0 A0                             ; set the active and standby temperatures to 0C and turn them off.
 
 if heat.heaters[{global.bedHeaterNum}] != null                      ; If we have defined a bed heater...
     if {heat.heaters[{global.bedHeaterNum}].current != -273.15}     ; ... and it's connected... 
