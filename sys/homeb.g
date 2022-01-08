@@ -8,7 +8,7 @@ M118 S{"Debug: Begin homeb.g"} L3
 
 M42 P{global.tCToolReleaseOutNum} S0    ; Ensure the tool changer release piston is retracted
 
-T0 P0                                   ; Select Tool 0 but don't run any of the tool changing files
+T-1 P0                                  ; Deselect the current tool, but don't run any of the tool changing files
 G91                                     ; Relative positioning
 G1 B-500 H1 F30000                      ; Attempt to move B axis by -500 mm, but stop when endstop is triggered and set axis position to axis limit as defined by previous M208 or G1 H3 special move
 M400                                    ; Wait for current moves to finish
