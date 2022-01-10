@@ -1,7 +1,7 @@
 ; homeb.g
 ; Called to home tool changer
 ; Written by Diabase Engineering
-; Last Updated: January 07, 2022
+; Last Updated: January 10, 2022
 
 M118 S{"Debug: Begin homeb.g"} L3
 
@@ -10,9 +10,9 @@ M42 P{global.tCToolReleaseOutNum} S0    ; Ensure the tool changer release piston
 
 T-1 P0                                  ; Deselect the current tool, but don't run any of the tool changing files
 G91                                     ; Relative positioning
-G1 B-500 H1 F30000                      ; Attempt to move B axis by -500 mm, but stop when endstop is triggered and set axis position to axis limit as defined by previous M208 or G1 H3 special move
+G1 B-500 H1 F15000                      ; Attempt to move B axis by -500 mm, but stop when endstop is triggered and set axis position to axis limit as defined by previous M208 or G1 H3 special move
 M400                                    ; Wait for current moves to finish
-G1 B2 F30000                            ; Move off the endstop
+G1 B2 F15000                            ; Move off the endstop
 M400                                    ; Wait for current moves to finish
 G1 B-5 H1 F200                          ; Attempt slow overrun move to find accurate endstop position, stopping when endstop is triggered and set axis position to axis limit as defined by previous M208 or G1 H3 special move
 M400                                    ; Wait for current moves to finish
