@@ -34,6 +34,8 @@ if {global.machineModel} == "H5B"
             G90                                                                                                         ; Absolute positioning
             G1 U180 B{tools[{state.currentTool}].offsets[6]} Z{{move.axes[2].max}-{var.currentZWCSOffset}-100} F30000    ; Point active tool at tool changer
             M98 P"lock_turret.g"                                                                                        ; Lock turret
+        else
+            G1 B{tools[{state.currentTool}].offsets[6]} Z{{move.axes[2].max}-{var.currentZWCSOffset}-100} F30000    ; Point active tool at tool changer
         M400                                                                                                        ; Wait for current moves to finish
 
         M574 Z2 S1 P{global.zSwitchPin}                                                                             ; Configure Z endstop position at high end, it's an optical interrupt on pin defined in defaultparameters.g
