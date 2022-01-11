@@ -107,7 +107,7 @@ if {global.machineModel} == "H5B"
             ; M291 P"Ready for second probe attempt?" R"Crash Check" S3
             G38.2 K2 Z{{move.axes[2].max}+27}                                                                           ; Attempt to probe straight up, above ZMax by 27 mm
             set var.thisProbingOverTravel = {{move.axes[2].machinePosition}-{move.axes[2].max}}                         ; Save distance traveled beyond ZMax to temporary variable
-            G10 L1 T{state.currentTool} Z{{var.thisProbingOverTravel}-{global.probeOverTravelTCTouchOff}}
+            G10 L1 T{state.currentTool} Z{-{{var.thisProbingOverTravel}-{global.probeOverTravelTCTouchOff}}}
             M500 P10
             M98 P"maxoffset.g"
             M118 S{"Debug: tctouchoff.g: Fine tool touch off triggered at Z"^ {move.axes[2].machinePosition} ^". Z offset saved as " ^ {tools[{state.currentTool}].offsets[2]}} L3
