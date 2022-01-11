@@ -1,0 +1,2 @@
+M291 P"Ready to set tool offsets for all tool changer tools without rotating between them?" R"Crash Check" S3  ; Warn the user about the imminent move.
+M98 P"0:/sys/sys-macros/zoffsetalltc-norotate.g"

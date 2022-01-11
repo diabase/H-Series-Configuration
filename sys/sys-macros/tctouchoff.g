@@ -3,7 +3,7 @@
 ; Parameters:
 ;    I: Wait for user confirmation that the tool is in position for touchoff? (0 - Don't wait, 1 - Wait)
 ; Written by Diabase Engineering
-; Last Updated: January 07, 2022
+; Last Updated: January 11, 2022
 ; To Do
 ;       Assert z position before rotating turret - RT 12/13/2021 
 
@@ -29,10 +29,11 @@ if {global.machineModel} == "H5B"
                 abort
 
         var currentZWCSOffset = move.axes[2].workplaceOffsets[{move.workplaceNumber}]
-        M98 P"unlock_turret.g"                                                                                      ; Unlock turret
-        G90                                                                                                         ; Absolute positioning
-        G1 U180 B{tools[{state.currentTool}].offsets[6]} Z{{move.axes[2].max}-{var.currentZWCSOffset}-100} F30000    ; Point active tool at tool changer
-        M98 P"lock_turret.g"                                                                                        ; Lock turret
+        if global.dontRotate != 1
+            M98 P"unlock_turret.g"                                                                                      ; Unlock turret
+            G90                                                                                                         ; Absolute positioning
+            G1 U180 B{tools[{state.currentTool}].offsets[6]} Z{{move.axes[2].max}-{var.currentZWCSOffset}-100} F30000    ; Point active tool at tool changer
+            M98 P"lock_turret.g"                                                                                        ; Lock turret
         M400                                                                                                        ; Wait for current moves to finish
 
         M574 Z2 S1 P{global.zSwitchPin}                                                                             ; Configure Z endstop position at high end, it's an optical interrupt on pin defined in defaultparameters.g
@@ -115,11 +116,11 @@ if {global.machineModel} == "H5B"
 
         G1 H2 Z{{move.axes[2].max}-{var.currentZWCSOffset}-100} F6000                                               ; Move to 100mm below ZMax
         M400                                                                                                        ; Wait for current moves to finish
-
-        M98 P"unlock_turret.g"                                                                                      ; Unlock turret
-        M118 S{"Debug: tpost-universal.g: Moving to U0 and Z= ZMax + global.maxOffset - currentZWCSOffset"} L3
-        G1 U0 Z{move.axes[2].max + global.maxOffset - var.currentZWCSOffset} F8900                                  ; Point current tool to active position
-        M98 P"lock_turret.g"                                                                                        ; Lock turret
+        if global.dontRotate != 1
+            M98 P"unlock_turret.g"                                                                                      ; Unlock turret
+            M118 S{"Debug: tpost-universal.g: Moving to U0 and Z= ZMax + global.maxOffset - currentZWCSOffset"} L3
+            G1 U0 Z{move.axes[2].max + global.maxOffset - var.currentZWCSOffset} F8900                                  ; Point current tool to active position
+            M98 P"lock_turret.g"                                                                                        ; Lock turret
 
         M574 Z1 S2                                                                                                  ; Set Z endstop position to low end and configure as Z probe
 

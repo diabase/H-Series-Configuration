@@ -4,7 +4,7 @@
 ; state.previousTool is now the tool being freed
 ; state.currentTool is still the tool being freed
 ; state.nextTool is the upcoming tool
-; Last Updated: January 07, 2022
+; Last Updated: January 11, 2022
 
 M118 S{"Debug: Begin tfree-universal.g"} L3
 M453                            ; Switch to CNC mode
@@ -21,12 +21,13 @@ if {global.machineModel} == "H5B"
         var spindleNum = tools[state.previousTool].spindle
         M98 P"indexspindle.g" H1 S{var.spindleNum}                                                                      ; Call indexspindle.g
         M42 P{global.tCToolReleaseOutNum} S1                                                                            ; Extend the tool changer release piston
-        M98 P"unlock_turret.g"                                                                                          ; Call unlock_turret.g
-        G1 U90 F8900                                                                                                    ; Rotate turret to tool changer
-        G53 G1 Z{move.axes[2].max+global.maxOffset} F6000                                                               ; Move Z to ZMax quickly
-        G1 U180 F8900                                                                                                   ; Rotate turret to tool changer
-        M400                                                                                                            ; Wait for all moves to finish
-        M98 P"lock_turret.g"                                                                                            ; Lock turret
+        if global.dontRotate != 1
+            M98 P"unlock_turret.g"                                                                                          ; Call unlock_turret.g
+            G1 U90 F8900                                                                                                    ; Rotate turret to tool changer
+            G53 G1 Z{move.axes[2].max+global.maxOffset} F6000                                                               ; Move Z to ZMax quickly
+            G1 U180 F8900                                                                                                   ; Rotate turret to tool changer
+            M400                                                                                                            ; Wait for all moves to finish
+            M98 P"lock_turret.g"                                                                                            ; Lock turret
         G53 G1 Z{{move.axes[2].max}+{global.tCOvertravelPutTool}} H2 F3000                                              ; Move Z beyond ZMax ignoring endstops
         M400                                                                                                            ; Wait for all moves to finish
         if sensors.gpIn[{global.zHighInNum}].value == 0

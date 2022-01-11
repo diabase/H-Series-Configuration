@@ -2,7 +2,7 @@
 ; Default configuration parameters for H-Series machines
 ; Produced by Diabase H-Series Configurizer
 ; Written by Diabase Engineering
-; Last Updated: December 27, 2021
+; Last Updated: January 11, 2022
 
 M118 S"Begin defaultparameters.g" L2
 
@@ -1215,5 +1215,10 @@ if !{exists(global.zHighSwitchPin)}
     global zHighSwitchPin = "2.io3.in"
 else
     set global.zHighSwitchPin = "2.io3.in"
+
+if !{exists(global.dontRotate)}
+    global dontRotate = -1
+else
+    set global.dontRotate = -1
 
 M118 S"End defaultparameters.g" L2

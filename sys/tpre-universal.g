@@ -4,7 +4,7 @@
 ; state.previousTool is the just-freed tool 
 ; state.currentTool is -1
 ; state.nextTool is the upcoming tool
-; Last Updated: January 07, 2022
+; Last Updated: January 11, 2022
 
 M118 S{"Debug: Begin tpre-universal.g"} L3
 
@@ -100,11 +100,12 @@ if {global.machineModel} == "H5B"
             
         G90 ; Absolute Positioning
         M400
-        M98 P"unlock_turret.g" ; Call unlock_turret.g
-        G53 G1 U{-tools[{state.nextTool}].offsets[3]} Z{move.axes[2].max + global.maxOffset} F8900 ; Rotate turret to active position for new tool
-        G4 P20 ; Dwell for 20 ms
-        
-        M400
-        M98 P"lock_turret.g" ; Call lock_turret.g
+        if global.dontRotate != 1
+            M98 P"unlock_turret.g" ; Call unlock_turret.g
+            G53 G1 U{-tools[{state.nextTool}].offsets[3]} Z{move.axes[2].max + global.maxOffset} F8900 ; Rotate turret to active position for new tool
+            G4 P20 ; Dwell for 20 ms
+            
+            M400
+            M98 P"lock_turret.g" ; Call lock_turret.g
 
 M118 S{"Debug: End tpre-universal.g"} L3
