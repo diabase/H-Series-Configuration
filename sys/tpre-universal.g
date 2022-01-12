@@ -4,7 +4,7 @@
 ; state.previousTool is the just-freed tool 
 ; state.currentTool is -1
 ; state.nextTool is the upcoming tool
-; Last Updated: January 11, 2022
+; Last Updated: January 12, 2022
 
 M118 S{"Debug: Begin tpre-universal.g"} L3
 
@@ -92,20 +92,26 @@ if {global.machineModel} == "H5B"
             var zMotorCurrent = move.axes[2].current
             M906 Z{var.zMotorCurrent * 0.5}
             M118 S{"Max z-motor current is now "^move.axes[2].current^ "mA. Attempting downward move."} L3
-            G53 G1 Z{{move.axes[2].max}-100} H2 F6000                                                                           ; Move Z to 100 mm below ZMax, ignoring endstops
+            G1 Z{move.axes[2].max} H2 F6000
             M906 Z{var.zMotorCurrent}
             M118 S{"Attempted move finished. Max z-motor current is now "^move.axes[2].current^ "mA."} L3
             M400                                                                                                            ; Wait for any current moves to finish
-            M42 P{global.tCToolReleaseOutNum} S0                                                                            ; Retract the tool changer release piston
-            
-        G90 ; Absolute Positioning
-        M400
         if global.dontRotate != 1
             M98 P"unlock_turret.g" ; Call unlock_turret.g
-            G53 G1 U{-tools[{state.nextTool}].offsets[3]} Z{move.axes[2].max + global.maxOffset} F8900 ; Rotate turret to active position for new tool
+            if {{state.nextTool} >= 11}
+                G91                                                                                                             ; Relative Positioning
+                G0 U-2 F8900                                                                                                    ; Jitter turret to walk onto bearing
+                G0 U2  F8900                                                                                                    ; Jitter turret to walk onto bearing
+                G0 U-4 F8900                                                                                                    ; Jitter turret to walk onto bearing
+                G0 U4  F8900                                                                                                    ; Jitter turret to walk onto bearing
+                G0 U-6 F8900                                                                                                    ; Jitter turret to walk onto bearing
+                G0 U6  F8900                                                                                                    ; Jitter turret to walk onto bearing
+            G90                                                                                                             ; Absolute Positioning
+            G53 G1 U{-tools[{state.nextTool}].offsets[3]} Z{move.axes[2].max + global.maxOffset} F8900                      ; Rotate turret to active position for new tool
             G4 P20 ; Dwell for 20 ms
-            
-            M400
+            M400                                                                                                            ; Wait for any current moves to finish
             M98 P"lock_turret.g" ; Call lock_turret.g
+        M42 P{global.tCToolReleaseOutNum} S0                                                                            ; Retract the tool changer release piston
+        M400                                                                                                            ; Wait for any current moves to finish
 
 M118 S{"Debug: End tpre-universal.g"} L3
