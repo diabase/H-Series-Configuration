@@ -2,7 +2,7 @@
 ; Default configuration parameters for H-Series machines
 ; Produced by Diabase H-Series Configurizer
 ; Written by Diabase Engineering
-; Last Updated: January 11, 2022
+; Last Updated: January 13, 2022
 
 M118 S"Begin defaultparameters.g" L2
 
@@ -87,14 +87,14 @@ else
     set global.aMax = 365
 
 if !{exists(global.bMin)}
-    global bMin = -217.5
+    global bMin = -216
 else
-    set global.bMin = -217.5
+    set global.bMin = -216
 
 if !{exists(global.bMax)}
-    global bMax = 217.5
+    global bMax = 216
 else
-    set global.bMax = 217.5
+    set global.bMax = 216
 
 if !{exists(global.cMin)}
     global cMin = -1000
