@@ -1,7 +1,7 @@
 ; homeall.g
 ; Called to home all axes
 ; Written by Diabase Engineering
-; Last Updated: January 03, 2022
+; Last Updated: January 13, 2022
 
 M118 S{"Debug: Begin homeall.g"} L3
 
@@ -36,6 +36,12 @@ M400 ; Wait for all moves to finish
 G1 H1 Z40 F6000 ; Move Z +40mm at 6000 mm/min
 M400 ; Wait for all moves to finish
 
+var zAxisIndex = -1
+while iterations < #move.axes
+    if move.axes[iterations].letter == Z
+        set var.zAxisIndex = iterations
+        break
+
 if {global.machineModel} == "H4" || {global.machineModel} == "H5A"
     ; Home X Y Z U
     M98 P"unlock_turret.g" ; Call unlock_turret.g
@@ -44,6 +50,9 @@ if {global.machineModel} == "H4" || {global.machineModel} == "H5A"
     M400                                ; Wait for all moves to finish
     G1 H1 X-420 Y-180 Z320 U-380 F6000  ; Attempt to move X -420mm, Y -180mm, Z +220mm, and U -380mm at 6000 mm/min, but halt when endstop triggered and set axis position to axis limit as defined by previous M208 or G1 H3 special move
     G1 H2 X2 Y2 Z-2 U2 F6000            ; Move X +2mm, Y +2mm, Z -2mm, and U +2mm at 6000 mm/min, ignoring endstops and axis limits while moving
+    while sensors[{var.zAxisIndex}].triggered == "true"
+        G1 H2 Z-1 F6000
+        M400
     G1 H1 X-4 Y-4 Z4 U-4 F1000          ; Attempt to move X -4mm, Y -4mm, Z +4mm, and U -4mm at 1000 mm/min, but halt when endstop triggered and set axis position to axis limit as defined by previous M208 or G1 H3 special move
     G1 H2 X2 Y2 Z-2 U2 F6000            ; Move X +2mm, Y +2mm, Z -2mm, and U +2mm at 6000 mm/min, ignoring endstops and axis limits while moving
     M400                                ; Wait for all moves to finish
@@ -53,6 +62,9 @@ if {global.machineModel} == "H5B"
     M400                                ; Wait for all moves to finish
     G1 H1 X-420 Y-180 Z320 F6000        ; Attempt to move X -420mm, Y -180mm, Z +220mm, and at 6000 mm/min, but halt when endstop triggered and set axis position to axis limit as defined by previous M208 or G1 H3 special move
     G1 H2 X2 Y2 Z-2 F6000               ; Move X +2mm, Y +2mm, Z -2mm, and at 6000 mm/min, ignoring endstops and axis limits while moving
+    while sensors[{var.zAxisIndex}].triggered == "true"
+        G1 H2 Z-1 F6000
+        M400
     G1 H1 X-4 Y-4 Z4 F1000              ; Attempt to move X -4mm, Y -4mm, Z +4mm, and at 1000 mm/min, but halt when endstop triggered and set axis position to axis limit as defined by previous M208 or G1 H3 special move
     G1 H2 X2 Y2 Z-2 F6000               ; Move X +2mm, Y +2mm, Z -2mm, and at 6000 mm/min, ignoring endstops and axis limits while moving
     M400                                ; Wait for all moves to finish
