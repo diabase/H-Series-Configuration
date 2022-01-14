@@ -58,12 +58,12 @@ if {global.machineModel} == "H4" || {global.machineModel} == "H5A"
     if global.spindle4AirIndex == -1
         set global.spindle4AirIndex = #fans
     M98 P"create-tool.g" T4 Y"Spindle" S1 H{global.spindle4SpeedPin} N{global.spindle4AirIndex} E{global.spindle4DirectionPin} F{global.spindle4AirPin}
-; if {global.machineModel} == "H5B"
-;     if global.e4HeatIndex == -1
-;         set global.e4HeatIndex = #heat.heaters
-;     if global.e4TempIndex == -1
-;         set global.e4TempIndex = #sensors.analog
-;     M98 P"create-tool.g" T4 Y"Extruder" S{global.e4TempPin} N{global.e4TempIndex} H{global.eHeat4Pin} R{global.e4HeatIndex} E{global.e4Drive} F{global.fA4Drive}
+if {global.machineModel} == "H5B"
+    if global.e4HeatIndex == -1
+        set global.e4HeatIndex = #heat.heaters
+    if global.e4TempIndex == -1
+        set global.e4TempIndex = #sensors.analog
+    M98 P"create-tool.g" T4 Y"Extruder" S{global.e4TempPin} N{global.e4TempIndex} H{global.eHeat4Pin} R{global.e4HeatIndex} E{global.e4Drive} F{global.fA4Drive}
 
 ; Tool 5
 if global.e5HeatIndex == -1
