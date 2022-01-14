@@ -1,7 +1,7 @@
 ; config.g
 ; H5A Configuration File
 ; Written by Diabase Engineering
-; Last Updated: January 06, 2022
+; Last Updated: January 14, 2022
 
 ; Logging
 M929 P"eventlog.txt" S1 ; start logging to file eventlog.txt (S0 = stop logging, S1 = log level WARN, S2 = log level INFO, S3 = log level DEBUG)
@@ -63,7 +63,7 @@ elif {global.machineModel} == "H5B"
     M566 X300 Y300 Z300 U120 W200 A1000 B400 C1000 E1200 ; Set maximum instantaneous speed changes (mm/min)
     M203 X10000 Y10000 Z3000 U8000 W13000 A20000 B30000 C20000 E6000 ; Set maximum speeds (mm/min)
     M201 X600 Y600 Z450 U600 W5000 A600 B2000 C600 E250 ; Set accelerations (mm/s^2)
-    M906 X1800 Y2100 Z2400 U1440 W1000 A1600 B1500 C1600 E1500:1500:1500:1000:1000:1000 I30 ; Set motor currents (mA) and motor idle factor percent
+    M906 X1800 Y2100 Z3000 U1750 W1000 A1600 B1500 C1600 E1500:1500:1500:1000:1000:1000 I70 ; Set motor currents (mA) and motor idle factor percent
 
 M84 S5 ; Allow all motors to drop hold current to idle after 5 seconds
 
