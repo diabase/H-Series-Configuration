@@ -103,6 +103,17 @@ M118 S{"Info: Creating fans[" ^ {global.fCLedFanNum} ^"] on pin " ^ {global.fCLe
 M950 F{global.fCLedFanNum} C{global.fCLedPin}          ; Define fan for filament cabinet LEDs
 M106 P{global.fCLedFanNum} C"Filament LEDs" S1.0 L1.0         ; Configure "fan" for filament cabinet LEDs as toggle-able without dimming
 
+; Status LEDs
+if global.redLedOutNum == -1
+    set global.redLedOutNum = #state.gpOut
+M118 S{"Info: Creating state.gpOut[" ^ {global.redLedOutNum} ^ "] on pin " ^ {global.redLedPin} ^ " for red status LED"} L2
+M950 P{global.redLedOutNum} C{global.redLedPin}            ; Red Status LED
+
+if global.greenLedOutNum == -1
+    set global.greenLedOutNum = #state.gpOut
+M118 S{"Info: Creating state.gpOut[" ^ {global.greenLedOutNum} ^ "] on pin " ^ {global.greenLedPin} ^ " for green status LED"} L2
+M950 P{global.greenLedOutNum} C{global.greenLedPin}            ; Green Status LED
+
 ; Z-Axis Brake
 if global.zBrakeOutNum == -1
     set global.zBrakeOutNum = #state.gpOut

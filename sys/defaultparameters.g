@@ -2,7 +2,7 @@
 ; Default configuration parameters for H-Series machines
 ; Produced by Diabase H-Series Configurizer
 ; Written by Diabase Engineering
-; Last Updated: January 13, 2022
+; Last Updated: January 14, 2022
 
 M118 S"Begin defaultparameters.g" L2
 
@@ -1220,5 +1220,25 @@ if !{exists(global.dontRotate)}
     global dontRotate = -1
 else
     set global.dontRotate = -1
+
+if !{exists(global.redLedOutNum)}
+    global redLedOutNum = -1
+else
+    set global.redLedOutNum = -1
+
+if !{exists(global.redLedPin)}
+    global redLedPin = "3.out7"
+else
+    set global.redLedPin = "3.out7"
+
+if !{exists(global.greenLedOutNum)}
+    global greenLedOutNum = -1
+else
+    set global.greenLedOutNum = -1
+
+if !{exists(global.greenLedPin)}
+    global greenLedPin = "3.out8"
+else
+    set global.greenLedPin = "3.out8"
 
 M118 S"End defaultparameters.g" L2
