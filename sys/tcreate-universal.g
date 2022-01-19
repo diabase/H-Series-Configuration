@@ -63,7 +63,7 @@ if {global.machineModel} == "H5B"
         set global.e4HeatIndex = #heat.heaters
     if global.e4TempIndex == -1
         set global.e4TempIndex = #sensors.analog
-    M98 P"create-tool.g" T4 Y"Extruder" S{global.e4TempPin} N{global.e4TempIndex} H{global.eHeat4Pin} R{global.e4HeatIndex} E{global.e4Drive} F{global.fA4Drive}
+    M98 P"create-tool.g" T4 Y"HT Extruder" S{global.e4TempPin} N{global.e4TempIndex} H{global.eHeat4Pin} R{global.e4HeatIndex} E{global.e4Drive} F{global.fA4Drive}
 
 ; Tool 5
 if global.e5HeatIndex == -1
@@ -83,11 +83,18 @@ if {global.machineModel} == "H5B"
         M118 S{"Info: Creating Tool " ^ {iterations+1}} L2
         M98 P"create-tool.g" T{iterations+1} Y"TC Tool" S2
 
-M118 S{"Info: Configuring FFF Fans (fans[" ^ {global.fffFanNum} ^"]:) Thermostatic mode (50C) on tools.[1,3,5].heaters[0]"} L2
-if {boards[0].firmwareVersion == "3.3"}
-    M106 P{global.fffFanNum} H{tools[1].heaters[0]}:{tools[3].heaters[0]}:{tools[5].heaters[0]} T50 C"FFF Fans"                                                             ; thermostatic control of cooling fan on heaters 1, 3, and 5. Turns on at 50C
-elif {boards[0].firmwareVersion != "3.3"}
-    M106 P{global.fffFanNum} H{tools[1].heaters[0],tools[3].heaters[0],tools[5].heaters[0]} T50 C"FFF Fans"                                                                 ; thermostatic control of cooling fan on heaters 1, 3, and 5. Turns on at 50C
+if {global.machineModel} == "H4" || {global.machineModel} == "H5A"
+    M118 S{"Info: Configuring FFF Fans (fans[" ^ {global.fffFanNum} ^"]:) Thermostatic mode (50C) on tools.[1,3,5].heaters[0]"} L2
+    if {boards[0].firmwareVersion == "3.3"}
+        M106 P{global.fffFanNum} H{tools[1].heaters[0]}:{tools[3].heaters[0]}:{tools[5].heaters[0]} T50 C"FFF Fans"                                                             ; thermostatic control of cooling fan on heaters 1, 3, and 5. Turns on at 50C
+    elif {boards[0].firmwareVersion != "3.3"}
+        M106 P{global.fffFanNum} H{tools[1].heaters[0],tools[3].heaters[0],tools[5].heaters[0]} T50 C"FFF Fans"                                                                 ; thermostatic control of cooling fan on heaters 1, 3, and 5. Turns on at 50C
+elif {global.machineModel} == "H5B"
+    M118 S{"Info: Configuring FFF Fans (fans[" ^ {global.fffFanNum} ^"]:) Thermostatic mode (50C) on tools.[1,3,4,5].heaters[0]"} L2
+    if {boards[0].firmwareVersion == "3.3"}
+        M106 P{global.fffFanNum} H{tools[1].heaters[0]}:{tools[3].heaters[0]}:{tools[4].heaters[0]}:{tools[5].heaters[0]} T50 C"FFF Fans"                                                             ; thermostatic control of cooling fan on heaters 1, 3, and 5. Turns on at 50C
+    elif {boards[0].firmwareVersion != "3.3"}
+        M106 P{global.fffFanNum} H{tools[1].heaters[0],tools[3].heaters[0],tools[4].heaters[0],tools[5].heaters[0]} T50 C"FFF Fans"                                                                 ; thermostatic control of cooling fan on heaters 1, 3, and 5. Turns on at 50C
 
 ; Build Enclosure LEDs
 if global.bELedFanNum == -1

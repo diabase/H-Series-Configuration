@@ -282,9 +282,9 @@ else
     set global.fA3Drive = 3.1
 
 if !{exists(global.fA4Drive)}
-    global fA4Drive = 3.5
+    global fA4Drive = 3.4
 else
-    set global.fA4Drive = 3.5
+    set global.fA4Drive = 3.4
 
 if !{exists(global.fA5Drive)}
     global fA5Drive = 3.2

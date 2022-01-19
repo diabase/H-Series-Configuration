@@ -10,7 +10,7 @@
 ;   E: Variable name containing Extruder Drive Number / Spindle Direction Pin
 ;   F: Variable name containing Filament Assist Drive Number / Spindle Air Pin
 ; Written by Diabase Engineering
-; Last Updated: January 06, 2022
+; Last Updated: January 14, 2022
 
 M118 S{"Info: Begin create-tool.g."} L2
 
@@ -47,8 +47,10 @@ if {{param.Y == "Extruder"} || {param.Y == "HT Extruder"}}
     var fAIndex = 0
     while iterations < #move.extruders
         if {({param.E} ^ "") == (move.extruders[iterations].driver ^ "")}
+            M118 S{"create-tool.g T" ^ param.T ^ ": Using move.extruders["^iterations^"].driver ("^move.extruders[iterations].driver^") for extruder"} L3
             set var.extruderIndex = iterations
         elif {({param.F} ^ "") == (move.extruders[iterations].driver ^ "")}
+            M118 S{"create-tool.g T" ^ {param.T} ^ ": Using move.extruders["^iterations^"].driver ("^move.extruders[iterations].driver^") for filament assist"} L3
             set var.fAIndex = iterations
 
     M118 S{"Info: Creating Nozzle "^param.T^" using Heater "^param.R^", Sensor "^param.N^", Extruder "^var.extruderIndex^", FA "^var.fAIndex} L2
