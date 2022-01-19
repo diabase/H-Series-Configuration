@@ -1,13 +1,13 @@
 ; homez.g
 ; Called to home only the Z axis
 ; Written by Diabase Engineering
-; Last Updated: January 13, 2022
+; Last Updated: January 14, 2022
 
 M118 S{"Debug: Begin homez.g"} L3
 
 var zAxisIndex = -1
 while iterations < #move.axes
-    if move.axes[iterations].letter == Z
+    if move.axes[iterations].letter == "Z"
         set var.zAxisIndex = iterations
         break
 
@@ -22,7 +22,7 @@ G4 P300                                                     ; Wait 300 ms
 M400                                                        ; Wait for all moves to finish
 G1 H1 Z360 F6000                                            ; Attempt to move Z +260mm at 6000 mm/min, but halt if endstop triggered and set axis position to axis limit as defined by previous M208 or G1 H3 special move
 G1 H2 Z-2 F6000                                             ; Move Z -2mm at 6000 mm/min, ignoring endstop while moving
-while sensors[{var.zAxisIndex}].triggered == "true"
+while sensors.endstops[{var.zAxisIndex}].triggered == true
         G1 H2 Z-1 F6000
         M400
 G1 H1 Z4 F200                                               ; Attempt to move Z +20mm at 200 mm/min, but halt if endstop triggered and set axis position to axis limit as defined by previous M208 or G1 H3 special move
