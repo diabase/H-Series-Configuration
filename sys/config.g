@@ -3,6 +3,8 @@
 ; Written by Diabase Engineering
 ; Last Updated: January 14, 2022
 
+G4 S2 ; Wait for 2 seconds to allow expansion boards time to boot
+
 ; Logging
 M929 P"eventlog.txt" S1 ; start logging to file eventlog.txt (S0 = stop logging, S1 = log level WARN, S2 = log level INFO, S3 = log level DEBUG)
 M118 S"Info: Begin config.g" L2
@@ -24,24 +26,26 @@ G90 ; Absolute Positioning
 M83 ; Relative Extrusions
 
 ; Drive orientation
-M569 P{global.xDrive} S{global.xDirection}  ; Set motor driver direction. Line 37: X (Linear)
-M569 P{global.yDrive} S{global.yDirection}  ; Set motor driver direction. Line 37: Y (Linear)
-M569 P{global.zDrive} S{global.zDirection}  ; Set motor driver direction. Line 37: Z (Linear)
-M569 P{global.uDrive} S{global.uDirection}  ; Set motor driver direction. Line 37: U (Turret)
+M569 P{global.xDrive} S{global.xDirection}                          ; Set motor driver direction. Line 52/62: X (Linear)
+M569 P{global.yDrive} S{global.yDirection}                          ; Set motor driver direction. Line 52/62: Y (Linear)
+M569 P{global.zDrive} S{global.zDirection}                          ; Set motor driver direction. Line 52/62: Z (Linear)
+M569 P{global.uDrive} S{global.uDirection}                          ; Set motor driver direction. Line 52/62: U (Turret)
+M569 P{global.wDrive} S{global.wDirection}                          ; Set motor driver direction. Line 52/62: W (Cleaing Station)
+M569 P{global.e1Drive} S{global.e1Direction}                        ; Set motor driver direction. Line 52/62: E (Extruder)
+M569 P{global.e3Drive} S{global.e3Direction}                        ; Set motor driver direction. Line 52/62: E (Extruder)
+M569 P{global.e5Drive} S{global.e5Direction}                        ; Set motor driver direction. Line 52/62: E (Extruder)
+M569 P{global.fA1Drive} S{global.fA1Direction}                      ; Set motor driver direction. Line 52/62: E (Filament Assist)
+M569 P{global.fA3Drive} S{global.fA3Direction}                      ; Set motor driver direction. Line 52/62: E (Filament Assist)
+M569 P{global.fA5Drive} S{global.fA5Direction}                      ; Set motor driver direction. Line 52/62: E (Filament Assist)
+M569 P{global.aDrive} S{global.aDirection}                          ; Set motor driver direction. Line 52/62: A (Rotary)
+M569 P{global.aPrimeDrive} S{global.aPrimeDirection}                ; Set motor driver direction. Line 52/62: A' (Rotary)
+M569 P{global.cDrive} S{global.cDirection}                          ; Set motor driver direction. Line 52/62: C (Rotary)
 if {global.machineModel} == "H4" || {global.machineModel} == "H5A"
-    M569 P{global.vDrive} S{global.vDirection}  ; Set motor driver direction. Line 37: V (Turret Lock)
-M569 P{global.wDrive} S{global.wDirection}  ; Set motor driver direction. Line 37: W (Cleaing Station)
-M569 P1.0 S{global.e1Direction}             ; Set motor driver direction. Line 37: E (Extruder)
-M569 P1.1 S{global.e3Direction}             ; Set motor driver direction. Line 37: E (Extruder)
-M569 P1.2 S{global.e5Direction}             ; Set motor driver direction. Line 37: E (Extruder)
-M569 P3.0 S{global.fA1Direction}            ; Set motor driver direction. Line 37: E (Filament Assist)
-M569 P3.1 S{global.fA3Direction}            ; Set motor driver direction. Line 37: E (Filament Assist)
-M569 P3.2 S{global.fA5Direction}            ; Set motor driver direction. Line 37: E (Filament Assist)
-M569 P2.0 S{global.aDirection}              ; Set motor driver direction. Line 37: A (Rotary)
-M569 P2.1 S{global.aPrimeDirection}         ; Set motor driver direction. Line 37: A' (Rotary)
-M569 P2.2 S{global.cDirection}              ; Set motor driver direction. Line 37: C (Rotary)
+    M569 P{global.vDrive} S{global.vDirection}                          ; Set motor driver direction. Line 52/62: V (Turret Lock)
 if {global.machineModel} == "H5B"
-    M569 P{global.bDrive} S{global.bDirection}  ; Set motor driver direction. Line 37: B (Toolchanger)
+    M569 P{global.e4Drive} S{global.e4Direction}                        ; Set motor driver direction. Line 52/62: E (Extruder)
+    M569 P{global.fA4Drive} S{global.fA4Direction}                      ; Set motor driver direction. Line 52/62: E (Filament Assist)
+    M569 P{global.bDrive} S{global.bDirection}                          ; Set motor driver direction. Line 52/62: B (Toolchanger)
 
 ; Drive settings
 if {global.machineModel} == "H4" || {global.machineModel} == "H5A"
@@ -55,7 +59,7 @@ if {global.machineModel} == "H4" || {global.machineModel} == "H5A"
     M201 X600 Y600 Z450 U600 V500 W5000 A600 C600 E250 ; Set accelerations (mm/s^2)
     M906 X1800 Y2100 Z2400 U1440 V1000 W1000 A1600 C1600 E1500:1500:1500:1000:1000:1000 I30 ; Set motor currents (mA) and motor idle factor percent
 elif {global.machineModel} == "H5B"
-    M584 X{global.xDrive} Y{global.yDrive} Z{global.zDrive} U{global.uDrive} W{global.wDrive} A2.0:2.1 B{global.bDrive} C2.2 E1.0:1.1:1.2:3.0:3.1:3.2; Set driver mapping.
+    M584 X{global.xDrive} Y{global.yDrive} Z{global.zDrive} U{global.uDrive} W{global.wDrive} A2.0:2.1 B{global.bDrive} C2.2 E{global.e1Drive,global.e3Drive,global.e4Drive,global.e5Drive,global.fA1Drive,global.fA3Drive,global.fA4Drive,global.fA5Drive}; Set driver mapping.
     M208 X{global.xMin} Y{global.yMin} Z{global.zMin} U{global.uMin} W{global.wMin} A{global.aMin} B{global.bMin} C{global.cMin} S1 ; Set axis minima
     M208 X{global.xMax} Y{global.yMax} Z{global.zMax} U{global.uMax} W{global.wMax} B{global.bMax} A{global.aMax} C{global.cMax} S0 ; Set axis maxima
     M350 X16 Y16 Z16 U16 W16 A16 B16 C16 E16 I1 ; Configure microstepping with interpolation - high lead cleaning station motor
@@ -63,7 +67,7 @@ elif {global.machineModel} == "H5B"
     M566 X300 Y300 Z300 U120 W200 A1000 B400 C1000 E1200 ; Set maximum instantaneous speed changes (mm/min)
     M203 X10000 Y10000 Z3000 U8000 W13000 A20000 B30000 C20000 E6000 ; Set maximum speeds (mm/min)
     M201 X600 Y600 Z450 U600 W5000 A600 B2000 C600 E250 ; Set accelerations (mm/s^2)
-    M906 X1800 Y2100 Z3000 U1750 W1000 A1600 B1500 C1600 E1500:1500:1500:1000:1000:1000 I70 ; Set motor currents (mA) and motor idle factor percent
+    M906 X1800 Y2100 Z3000 U1750 W1000 A1600 B1500 C1600 E1500:1500:1500:1500:1000:1000:1000:1000 I70 ; Set motor currents (mA) and motor idle factor percent
 
 M84 S5 ; Allow all motors to drop hold current to idle after 5 seconds
 
@@ -72,12 +76,12 @@ M574 X1 S1 P{global.xSwitchPin}
 M574 Y1 S1 P{global.ySwitchPin}
 M574 Z2 S1 P{global.zSwitchPin}
 M574 U1 S1 P{global.uSwitchPin}
+M574 A1 S1 P{global.aSwitchPin}
+M574 C1 S1 P{global.cSwitchPin}
 if {global.machineModel} == "H4" || {global.machineModel} == "H5A"
     M574 V2 S1 P{global.vSwitchPin}
-M574 A1 S1 P{global.aSwitchPin}
 if {global.machineModel} == "H5B"
     M574 B1 S1 P{global.bSwitchPin}
-M574 C1 S1 P{global.cSwitchPin}
 
 ; Probes
 M558 K0 P8 C{global.zProbePin} H2 F150 T10000 ; Set Z probe type for Probe 0 (Tool 10). 2mm dive height, 150mm/min probing speed, and 10000 mm/min travel speed between probe points
