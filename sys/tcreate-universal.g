@@ -14,7 +14,7 @@
 ;   - Automatically looping create-tool.g for variable-defined tools
 ; TODO: Revisit when spindles aren't all automatically created. - RT
 ; Written by Diabase Engineering
-; Last Updated: December 27, 2021
+; Last Updated: January 14, 2022
 
 M118 S{"Info: Begin tcreate-universal.g"} L2
 
