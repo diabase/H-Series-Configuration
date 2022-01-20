@@ -16,8 +16,12 @@ if {global.machineModel} == "H5B"
     if {{state.currentTool} >= 11}
         M400                                                                                                            ; Wait for all moves to finish
         G90                                                                                                             ; Absolute Positioning
-        G53 G1 Z{move.axes[2].max} F6000                                                                                ; Move Z to ZMax quickly
+        if global.dontRotate != 1
+            G53 G1 Z{move.axes[2].max} F6000                                                                                ; Move Z to ZMax quickly
+        else
+            G53 G1 Z{move.axes[2].max-100} F6000                                                                                ; Move Z to ZMax quickly
         G1 B0 F30000                                                                                                    ; Move tool changer to position for current tool
+        M400
         var spindleNum = tools[state.previousTool].spindle
         M98 P"indexspindle.g" H1 S{var.spindleNum}                                                                      ; Call indexspindle.g
         M42 P{global.tCToolReleaseOutNum} S1                                                                            ; Extend the tool changer release piston
