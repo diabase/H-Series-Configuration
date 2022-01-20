@@ -32,7 +32,7 @@ if {global.machineModel} == "H5B"
         if global.dontRotate != 1
             M98 P"unlock_turret.g"                                                                                      ; Unlock turret
             G90                                                                                                         ; Absolute positioning
-            G1 U180 B{tools[{state.currentTool}].offsets[6]} Z{{move.axes[2].max}-{var.currentZWCSOffset}-100} F30000    ; Point active tool at tool changer
+            G1 U180 B{tools[{state.currentTool}].offsets[6]} Z{{move.axes[2].max}-{var.currentZWCSOffset}-100} F30000   ; Point active tool at tool changer
             M98 P"lock_turret.g"                                                                                        ; Lock turret
         else
             G1 B{tools[{state.currentTool}].offsets[6]} Z{{move.axes[2].max}-{var.currentZWCSOffset}-100} F30000    ; Point active tool at tool changer

@@ -17,7 +17,7 @@ M950 F{global.dryCabinetFanNum} C{global.fCFanPin}                              
 
 if global.fCSwitchInNum == -1                                                                                                           ; If a gpIn sensor number hasn't yet been assigned for the filament cabinet switch...
     set global.fCSwitchInNum = #sensors.gpIn                                                                                                ; ... take the next available gpIn sensor number
-M118 S{"Info: Creating as sensors.gpIn["^{global.fCSwitchInNum}^"] on pin "^{global.fCSwitchPin} ^ "for filament cabinet switch"} L2    ; Log informational event
+M118 S{"Info: Creating as sensors.gpIn["^{global.fCSwitchInNum}^"] on pin "^{global.fCSwitchPin} ^ " for filament cabinet switch"} L2    ; Log informational event
 M950 J{global.fCSwitchInNum} C{global.fCSwitchPin}                                                                                      ; Filament Cabinet Switch Definition
 M118 S{"Info: Activating sensors.gpIn["^{global.fCSwitchInNum}^"] will run trigger"^global.fCSwitchOnTrigger^".g"} L2                   ; Log informational event
 M581 P{global.fCSwitchInNum} T{global.fCSwitchOnTrigger} S1 R0                                                                          ; Filament Cabinet Engage Behavior
