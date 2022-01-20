@@ -4,7 +4,7 @@
 ; state.previousTool is the just-freed tool 
 ; state.currentTool is the upcoming tool
 ; state.nextTool is the upcoming tool
-; Last Updated: January 07, 2022
+; Last Updated: January 20, 2022
 
 M118 S{"Debug: Begin tpost-universal.g"} L3
 
@@ -42,6 +42,7 @@ if state.previousTool != -1                                                     
         M118 S{"Debug: tpost-universal.g: Moving to Z= ZMax + global.maxOffset - currentZWCSOffset"} L3
         G1 Z{move.axes[2].max + global.maxOffset - var.currentZWCSOffset} F10000                                                                ; Move to Z = ZMax + Longest Z Offset at 10000 mm/min
 
-M582 T{global.airPressureLowTrigger}                                                                                                            ; Check incoming air pressure
+if {global.machineModel} == "H5B"
+    M582 T{global.airPressureLowTrigger}                                                                                                            ; Check incoming air pressure
 
 M118 S{"Debug: End tpost-universal.g"} L3
