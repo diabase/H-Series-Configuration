@@ -3,7 +3,7 @@
 ; Parameters:
 ;    I: Wait for user confirmation that the tool is in position for touchoff? (0 - Don't wait, 1 - Wait)
 ; Written by Diabase Engineering
-; Last Updated: January 12, 2022
+; Last Updated: January 20, 2022
 ; To Do
 ;       Assert z position before rotating turret - RT 12/13/2021 
 
@@ -60,7 +60,7 @@ if {global.machineModel} == "H5B"
             M118 S{"Debug: tctouchoff.g: Coarse probe triggered at Z"^ {move.axes[2].machinePosition} ^". Probe overtravel saved as " ^ {global.probeOverTravelTCTouchOff}} L3
 
             G91                                                                                                         ; Relative positioning
-            G1 H2 Z-2 F6000                                                                                             ; Move down in Z quickly to prepare for second, slower, probing attempt
+            G1 H2 Z-2 F10000                                                                                            ; Move down in Z quickly to prepare for second, slower, probing attempt
             G90                                                                                                         ; Absolute positioning
             
             set var.lastProbingOverTravel = var.thisProbingOverTravel                                                   ; Move previous distance traveled into temporary variable for comparison
@@ -98,7 +98,7 @@ if {global.machineModel} == "H5B"
             M118 S{"Debug: tctouchoff.g: Coarse tool touch off triggered at Z"^ {move.axes[2].machinePosition} ^". Z offset saved as " ^ {tools[{state.currentTool}].offsets[2]}} L3
             
             G91                                                                                                         ; Relative positioning
-            G1 H2 Z-2 F6000                                                                                             ; Move down in Z quickly to prepare for second, slower, probing attempt
+            G1 H2 Z-2 F10000                                                                                             ; Move down in Z quickly to prepare for second, slower, probing attempt
             G90                                                                                                         ; Absolute positioning
             ; M291 P"Did we move down 2mm?" R"Crash Check" S3
 
@@ -121,7 +121,7 @@ if {global.machineModel} == "H5B"
         if global.dontRotate != 1
             M98 P"unlock_turret.g"                                                                                      ; Unlock turret
             M118 S{"Debug: tpost-universal.g: Moving to U0 and Z= ZMax + global.maxOffset - currentZWCSOffset"} L3
-            G1 U0 Z{move.axes[2].max + global.maxOffset - var.currentZWCSOffset} F8900                                  ; Point current tool to active position
+            G1 U0 Z{move.axes[2].max + global.maxOffset - var.currentZWCSOffset} F10000                                  ; Point current tool to active position
             M98 P"lock_turret.g"                                                                                        ; Lock turret
 
 M118 S{"Debug: End tctouchoff.g"} L3
