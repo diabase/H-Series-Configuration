@@ -38,9 +38,8 @@ if {global.machineModel} == "H5B"
             G1 B{tools[{state.currentTool}].offsets[6]} Z{{move.axes[2].max}-{var.currentZWCSOffset}-100} F30000    ; Point active tool at tool changer
         M400                                                                                                        ; Wait for current moves to finish
 
-        M574 Z2 S1 P{global.zSwitchPin}                                                                             ; Configure Z endstop position at high end, it's an optical interrupt on pin defined in defaultparameters.g
-
         if state.currentTool = 10
+            M574 Z2 S1 P{global.zSwitchPin}                                                                             ; Configure Z endstop position at high end, it's an optical interrupt on pin defined in defaultparameters.g
             ;M558 K0                                                                                                     ; Read the current parameters for probe 0 into the event log
             var existingProbeSpeed0 = sensors.probes[0].speeds[0]                                                       ; Save the current probe speed in a temporary variable
             var existingProbeSpeed1 = sensors.probes[0].speeds[1]                                                       ; Save the current probe speed in a temporary variable
@@ -76,6 +75,7 @@ if {global.machineModel} == "H5B"
             set global.keepProbeDeployed = 0                                                                            ; Allow the probe to retract again
             M558 K0 P8 C{global.zProbePin} H2 F{var.existingProbeSpeed0}:{var.existingProbeSpeed1} T10000 
             ;M558 K0                                                                                                     ; Read the current parameters for probe 0 into the event log
+            M574 Z1 S2                                                                                                  ; Set Z endstop position to low end and configure as Z probe
 
         else
             ;M558 K2                                                                                                     ; Record the current parameters for probe 2 (tool changer touchoff plate)
@@ -123,7 +123,5 @@ if {global.machineModel} == "H5B"
             M118 S{"Debug: tpost-universal.g: Moving to U0 and Z= ZMax + global.maxOffset - currentZWCSOffset"} L3
             G1 U0 Z{move.axes[2].max + global.maxOffset - var.currentZWCSOffset} F8900                                  ; Point current tool to active position
             M98 P"lock_turret.g"                                                                                        ; Lock turret
-
-        M574 Z1 S2                                                                                                  ; Set Z endstop position to low end and configure as Z probe
 
 M118 S{"Debug: End tctouchoff.g"} L3
