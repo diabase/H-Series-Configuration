@@ -35,7 +35,9 @@ if {global.machineModel} == "H5B"
             G1 U180 B{tools[{state.currentTool}].offsets[6]} Z{{move.axes[2].max}-{var.currentZWCSOffset}-100} F30000   ; Point active tool at tool changer
             M98 P"lock_turret.g"                                                                                        ; Lock turret
         else
-            G1 B{tools[{state.currentTool}].offsets[6]} Z{{move.axes[2].max}-{var.currentZWCSOffset}-100} F30000    ; Point active tool at tool changer
+            G90                                                                                                         ; Absolute positioning
+            G53 H2 G1 Z{move.axes[2].max - 100} F10000                                                                  ; Move Z to 100mm below ZMax quickly
+            G1 B{tools[{state.currentTool}].offsets[6]} F30000                                                          ; Move tool changer to touchoff plate position
         M400                                                                                                        ; Wait for current moves to finish
 
         if state.currentTool = 10
@@ -116,8 +118,8 @@ if {global.machineModel} == "H5B"
             M558 K2 P8 C{global.tCTouchOffPin} I0 F{var.existingProbeSpeed0}:{var.existingProbeSpeed1} T10000
             ;M558 K2                                                                                                     ; Read the current parameters for probe 0 into the event log
 
-        G1 H2 Z{{move.axes[2].max}-{var.currentZWCSOffset}-100} F6000                                               ; Move to 100mm below ZMax
-        M400                                                                                                        ; Wait for current moves to finish
+        G53 H2 G1 Z{move.axes[2].max - 5} F10000                                                                        ; Move machine position to 5mm below ZMax, ignoring endstops, at 10000 mm/min
+        M400                                                                                                            ; Wait for current moves to finish
         if global.dontRotate != 1
             M98 P"unlock_turret.g"                                                                                      ; Unlock turret
             M118 S{"Debug: tpost-universal.g: Moving to U0 and Z= ZMax + global.maxOffset - currentZWCSOffset"} L3
