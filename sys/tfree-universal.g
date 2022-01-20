@@ -36,7 +36,7 @@ if {global.machineModel} == "H5B"
             abort
         M42 P{global.spindleIndexOutNum} S0                                                                             ; Toggle Drawbar Release Pressure High
         G4 P500                                                                                                         ; Dwell for 500 ms
-        M42 P{global.tCToolReleaseOutNum} S0                                                                            ; Retract the tool changer release piston
+        M42 P{global.tCToolReleaseOutNum} S0                                                                            ; Retract the tool changer release piston, securing tool in tool changer
         G4 P500                                                                                                         ; Dwell for 500 ms
         G53 G1 Z{move.axes[2].max} H2 F10000                                                                            ; Move Z to the axis limit at 10000 mm/min ignoring endstops
         M400                                                                                                            ; Wait for any current moves to finish
