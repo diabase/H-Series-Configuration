@@ -9,26 +9,26 @@
 M118 S{"Debug: Begin tpost-universal.g"} L3
 
 if {tools[{state.nextTool}].spindle == -1}                                                                                                      ; If this tool has no spindles...
-    if {#tools[{state.nextTool}].extruders == 0}                                                                                                ; ... or extruders, we assume it's a probe
-        M453                                                                                                                                    ; Switch to CNC mode
-        M401 P0                                                                                                                                 ; Deploy Probe
-        M574 Z1 S2                                                                                                                              ; Set Z endstop position to low end and configure as Z probe
+    if {#tools[{state.nextTool}].extruders == 0}                                                                                                    ; ... or extruders, we assume it's a probe
+        M453                                                                                                                                            ; Switch to CNC mode
+        M401 P0                                                                                                                                         ; Deploy Probe
+        M574 Z1 S2                                                                                                                                      ; Set Z endstop position to low end and configure as Z probe
 
-    elif {#tools[{state.nextTool}].extruders > 0}                                                                                               ; ... but has extruders, we assume it's an extruder
-        M451                                                                                                                                    ; Switch to FFF Mode
-        while iterations < #tools[{state.nextTool}].heaters                                                                                     ; Loop over all heaters for this tool ...
-            if heat.heaters[{tools[{state.nextTool}].heaters[iterations]}].state == "fault"                                                    ; ... and if any of them are in a fault state...
-                if {state.status} == "processing"                                                                                               ; ... and we're in the middle of a job...
-                    M25                                                                                                                         ; ... pause the job.
-                M291 P{tools[{state.nextTool}].name ^ " has experienced a heater fault. Resolve before continuing."} R"Heater Fault" S1 T-1    ; Display alert message
+    elif {#tools[{state.nextTool}].extruders > 0}                                                                                                   ; ... but has extruders, we assume it's an extruder
+        M451                                                                                                                                            ; Switch to FFF Mode
+        while iterations < #tools[{state.nextTool}].heaters                                                                                             ; Loop over all heaters for this tool ...
+            if heat.heaters[{tools[{state.nextTool}].heaters[iterations]}].state == "fault"                                                                 ; ... and if any of them are in a fault state...
+                if {state.status} == "processing"                                                                                                               ; ... and we're in the middle of a job...
+                    M25                                                                                                                                             ; ... pause the job.
+                M291 P{tools[{state.nextTool}].name ^ " has experienced a heater fault. Resolve before continuing."} R"Heater Fault" S1 T-1                     ; Display alert message
 
 else                                                                                                                                            ; If this tool has spindles...
-    if {#tools[{state.nextTool}].extruders == 0}                                                                                                ; ... but no extruders, we assume it's a spindle.
-        M453                                                                                                                                    ; Switch to CNC mode
-        if heat.heaters[{global.bedHeaterNum}] != null                                                                                          ; If we have defined a bed heater...
-            if {heat.heaters[{global.bedHeaterNum}].state != "fault"}                                                                           ; ... it's not currently in a fault state...
-                if {heat.heaters[{global.bedHeaterNum}].current != -273.15}                                                                     ; ... and it's not physically disconnected
-                    M140 H{global.bedHeaterNum} S-273.15                                                                                        ; ... turn it off to protect power supply.
+    if {#tools[{state.nextTool}].extruders == 0}                                                                                                    ; ... but no extruders, we assume it's a spindle.
+        M453                                                                                                                                            ; Switch to CNC mode
+        if heat.heaters[{global.bedHeaterNum}] != null                                                                                                  ; If we have defined a bed heater...
+            if {heat.heaters[{global.bedHeaterNum}].state != "fault"}                                                                                       ; ... it's not currently in a fault state...
+                if {heat.heaters[{global.bedHeaterNum}].current != -273.15}                                                                                     ; ... and it's not physically disconnected
+                    M140 H{global.bedHeaterNum} S-273.15                                                                                                            ; ... turn it off to protect power supply.
 
 if state.previousTool != -1                                                                                                                     ; If we changed to this tool from another tool...
     G90                                                                                                                                         ; Set to Absolute Positioning
