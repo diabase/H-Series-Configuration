@@ -4,7 +4,7 @@
 ; state.previousTool is now the tool being freed
 ; state.currentTool is still the tool being freed
 ; state.nextTool is the upcoming tool
-; Last Updated: January 11, 2022
+; Last Updated: January 20, 2022
 
 M118 S{"Debug: Begin tfree-universal.g"} L3
 M453                            ; Switch to CNC mode
@@ -38,7 +38,7 @@ if {global.machineModel} == "H5B"
         G4 P500                                                                                                         ; Dwell for 500 ms
         M42 P{global.tCToolReleaseOutNum} S0                                                                            ; Retract the tool changer release piston
         G4 P500                                                                                                         ; Dwell for 500 ms
-        G53 G1 Z{{move.axes[2].max}-20} H2 F6000                                                                        ; Move Z to 20 mm below ZMax, ignoring endstops
+        G53 G1 Z{move.axes[2].max} H2 F10000                                                                            ; Move Z to the axis limit at 10000 mm/min ignoring endstops
         M400                                                                                                            ; Wait for any current moves to finish
         if {{state.nextTool} < 11}
             M42 P{global.dbarOutNum} S0                                                                                 ; Turn Drawbar Release Pressure Off (Fully clamp drawbar)
