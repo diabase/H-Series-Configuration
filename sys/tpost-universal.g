@@ -31,16 +31,16 @@ else                                                                            
                     M140 H{global.bedHeaterNum} S-273.15                                                                                                            ; ... turn it off to protect power supply.
 
 if state.previousTool != -1                                                                                                                     ; If we changed to this tool from another tool...
-    G90                                                                                                                                         ; Set to Absolute Positioning
-    M118 S{"Debug: tpost-universal.g: Moving to X and Y coordinates stored in restore point 2"} L3
-    G1 R2 X0 Y0 F6000                                                                                                                           ; Return to X and Y coordinates stored in restore point 2 at a speed of 6000 mm/min
-    if state.restorePoints[2].coords[2] + 2 <= {move.axes[2].max + global.maxOffset}
-        M118 S{"Debug: tpost-universal.g: Moving to 2mm above Z coordinate stored in restore point 2"} L3
-        G1 R2 Z2                                                                                                                                ; Return to 2mm above Z coordinate stored in restore point 2
-    else
-        var currentZWCSOffset = move.axes[2].workplaceOffsets[{move.workplaceNumber}]
-        M118 S{"Debug: tpost-universal.g: Moving to Z= ZMax + global.maxOffset - currentZWCSOffset"} L3
-        G1 Z{move.axes[2].max + global.maxOffset - var.currentZWCSOffset} F10000                                                                ; Move to Z = ZMax + Longest Z Offset at 10000 mm/min
+    G90                                                                                                                                             ; Set to Absolute Positioning
+    M118 S{"tpost-universal.g: Moving to X and Y coordinates stored in restore point 2"} L3                                                         ; Log a message to the debug channel
+    G1 R2 X0 Y0 F10000                                                                                                                              ; Return to X and Y coordinates stored in restore point 2 at a speed of 10000 mm/min
+    var currentZWCSOffset = move.axes[2].workplaceOffsets[{move.workplaceNumber}]
+    if state.restorePoints[2].coords[2] + 2 <= {move.axes[2].max + global.maxOffset + var.currentZWCSOffset}                                        ; If we have enough room between the restore point and ZMax...
+        M118 S{"tpost-universal.g: Moving to 2mm above Z coordinate stored in restore point 2"} L3                                                      ; ... log a message to the debug channel and ...
+        G1 R2 Z2                                                                                                                                        ; ... return to 2mm above Z coordinate stored in restore point 2
+    else                                                                                                                                            ; If we don't have enough room between the restore point and ZMax...
+        M118 S{"tpost-universal.g: G53 move to ZMax (Z"^{move.axes[2].max}^")"} L3                                                                      ; ... log a message to the debug channel and ...
+        G53 G1 Z{move.axes[2].max} F10000                                                                                                               ; ... Move Z to the axis limit at 10000 mm/min
 
 if {global.machineModel} == "H5B"
     M582 T{global.airPressureLowTrigger}                                                                                                            ; Check incoming air pressure
