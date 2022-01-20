@@ -16,10 +16,10 @@ if {global.machineModel} == "H5B"
     if {{state.currentTool} >= 11}
         M400                                                                                                            ; Wait for all moves to finish
         G90                                                                                                             ; Absolute Positioning
-        if global.dontRotate != 1
-            G53 G1 Z{move.axes[2].max} F6000                                                                                ; Move Z to ZMax quickly
-        else
-            G53 G1 Z{move.axes[2].max-100} F6000                                                                                ; Move Z to ZMax quickly
+        if global.dontRotate != 1                                                                                       ; If we're performing normal tool changes...
+            G53 G1 Z{move.axes[2].max} F10000                                                                                ; ... move Z to ZMax quickly
+        else                                                                                                            ; If we're performing tool changes without turret rotations...
+            G53 G1 Z{move.axes[2].max-100} F10000                                                                           ; ... We might have a tool pointing at the tool changer, so move to 100mm below ZMax for clearance
         G1 B0 F30000                                                                                                    ; Move tool changer to position for current tool
         M400
         var spindleNum = tools[state.previousTool].spindle
