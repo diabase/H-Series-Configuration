@@ -3,9 +3,7 @@
 ; Parameters:
 ;    I: Wait for user confirmation that the tool is in position for touchoff? (0 - Don't wait, 1 - Wait)
 ; Written by Diabase Engineering
-; Last Updated: January 20, 2022
-; To Do
-;       Assert z position before rotating turret - RT 12/13/2021 
+; Last Updated: January 24, 2022
 
 M118 S{"Debug: Begin tctouchoff.g"} L3
 
@@ -102,7 +100,6 @@ if {global.machineModel} == "H5B"
             G91                                                                                                         ; Relative positioning
             G1 H2 Z-2 F10000                                                                                             ; Move down in Z quickly to prepare for second, slower, probing attempt
             G90                                                                                                         ; Absolute positioning
-            ; M291 P"Did we move down 2mm?" R"Crash Check" S3
 
             set var.lastProbingOverTravel = var.thisProbingOverTravel                                                   ; Move previous distance traveled into temporary variable for comparison
             M558 K2 P8 C{global.tCTouchOffPin} I0 F200 T10000                                                               ; Override default probe parameters for slow, accurate probe
@@ -118,7 +115,7 @@ if {global.machineModel} == "H5B"
             M558 K2 P8 C{global.tCTouchOffPin} I0 F{var.existingProbeSpeed0}:{var.existingProbeSpeed1} T10000
             ;M558 K2                                                                                                     ; Read the current parameters for probe 0 into the event log
 
-        G53 H2 G1 Z{move.axes[2].max - 5} F10000                                                                        ; Move machine position to 5mm below ZMax, ignoring endstops, at 10000 mm/min
+        G53 H2 G1 Z{move.axes[2].max + global.maxOffset - 5} F10000                                                     ; Move machine position to 5mm below ZMax, ignoring endstops, at 10000 mm/min
         M400                                                                                                            ; Wait for current moves to finish
         if global.dontRotate != 1
             M98 P"unlock_turret.g"                                                                                      ; Unlock turret
