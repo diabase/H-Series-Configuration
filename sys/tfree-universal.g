@@ -26,14 +26,12 @@ if {global.machineModel} == "H5B"
         M98 P"indexspindle.g" H1 S{var.spindleNum}                                                                      ; Call indexspindle.g
         M42 P{global.tCToolReleaseOutNum} S1                                                                            ; Extend the tool changer release piston
         if global.dontRotate != 1                                                                                       ; If we're performing normal tool changes...
-            M291 P"Can we rotate directly to the tool changer without moving Z? E-stop now if we can't." S3
             M98 P"unlock_turret.g"                                                                                          ; Call unlock_turret.g
             G1 U90 F8900                                                                                                    ; Rotate turret to tool changer
             ;G53 G1 Z{move.axes[2].max+global.maxOffset} F6000                                                               ; Move Z to ZMax quickly
             G1 U180 F8900                                                                                                   ; Rotate turret to tool changer
             M400                                                                                                            ; Wait for all moves to finish
             M98 P"lock_turret.g"                                                                                            ; Lock turret
-            M291 P"Was that a safe move? E-stop now if not." S3
         G53 G1 Z{{move.axes[2].max}+{global.tCOvertravelPutTool}} H2 F3000                                              ; Move Z beyond ZMax ignoring endstops
         M400                                                                                                            ; Wait for all moves to finish
         if sensors.gpIn[{global.zHighInNum}].value == 0
