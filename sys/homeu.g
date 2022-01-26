@@ -59,11 +59,9 @@ M574 Z1 S2 ; Set Z endstop position to low end and configure as Z probe
 G1 R0 Z0 ; Return to Z-axis position stored in Slot 0
 
 ; Put all the tools into standby mode and leave the Z probe tool active
-T1 P0
-T2 P0
-T3 P0
-T4 P0
-T5 P0
+while iterations < #tools
+    if tools[iterations] != null
+        T{iterations} P0
 T{global.zProbeToolNum} P0                ; Select Probe P0
 M401 P0                                   ; Deploy Probe
 

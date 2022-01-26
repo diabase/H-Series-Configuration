@@ -1,7 +1,7 @@
 ; pause.g
 ; Called when a job is paused.
 ; Written by Diabase Engineering
-; Last Updated: November 18, 2021
+; Last Updated: January 26, 2022
 
 M118 S{"Debug: Begin pause.g"} L3
 
@@ -18,13 +18,12 @@ if state.machineMode="CNC"
     M5                                                              ; Stop the spindle of the current tool (if any) or stop all spindles if the current tool has no spindles or no tool is selected
 
 ; Put all the tools into standby mode and re-select the last used tool
-T1 P0
-T2 P0
-T3 P0
-T4 P0
-T5 P0
-T10 P0
+while iterations < #tools
+    if tools[iterations] != null
+        T{iterations} P0
 T{state.restorePoints[1].toolNumber} P0
+if {state.currentTool == global.zProbeToolNum}                      ; If this tool is the probe...
+    M401 P0                                                         ; ...deploy probe
 
 if heat.heaters[{global.bedHeaterNum}] != null                      ; If we have defined a bed heater...
     if {heat.heaters[{global.bedHeaterNum}].current != -273.15}     ; ... and it's connected... 
