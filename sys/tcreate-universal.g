@@ -35,11 +35,12 @@ M950 F{global.layerFanNum} C{global.layerFanPin}   ; Layer cooling fans
 M106 P{global.layerFanNum}} C"Layer Fans"           ; Enable manual control of layer cooling fans
 
 ; Tool 1
-if global.e1HeatIndex == -1
-    set global.e1HeatIndex = #heat.heaters
-if global.e1TempIndex == -1
-    set global.e1TempIndex = #sensors.analog
-M98 P"create-tool.g" T1 Y{global.toolType1} S{global.e1TempPin} N{global.e1TempIndex} H{global.eHeat1Pin} R{global.e1HeatIndex} E{global.e1Drive} F{global.fA1Drive}
+if {global.machineModel} == "H4" || {global.machineModel} == "H5A"
+    if global.e1HeatIndex == -1
+        set global.e1HeatIndex = #heat.heaters
+    if global.e1TempIndex == -1
+        set global.e1TempIndex = #sensors.analog
+    M98 P"create-tool.g" T1 Y{global.toolType1} S{global.e1TempPin} N{global.e1TempIndex} H{global.eHeat1Pin} R{global.e1HeatIndex} E{global.e1Drive} F{global.fA1Drive}
 
 ; Tool 2
 if global.spindle2AirIndex == -1
@@ -72,7 +73,12 @@ if global.e5TempIndex == -1
     set global.e5TempIndex = #sensors.analog
 M98 P"create-tool.g" T5 Y{global.toolType5} S{global.e5TempPin} N{global.e5TempIndex} H{global.eHeat5Pin} R{global.e5HeatIndex} E{global.e5Drive} F{global.fA5Drive}
 
-; Tool 10 - Probe
+; Probe
+if {global.machineModel} == "H4" || {global.machineModel} == "H5A"
+    set global.zProbeToolNum = 10
+elif {global.machineModel} == "H5B"
+    set global.zProbeToolNum = 1
+
 M98 P"create-tool.g" T{global.zProbeToolNum} Y"Probe"
 
 ; Tools 11 - 24 (Tool Changer)
