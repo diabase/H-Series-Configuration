@@ -1,7 +1,7 @@
 ; homeu.g
 ; Called to home only the U axis
 ; Written by Diabase Engineering
-; Last Updated: January 17, 2022
+; Last Updated: January 26, 2022
 ; TODO: Save current WCS, switch to G54 for homing, return to saved WCS
 
 M118 S{"Debug: Begin homeu.g"} L3
@@ -64,7 +64,7 @@ T2 P0
 T3 P0
 T4 P0
 T5 P0
-T10 P0
+T{global.zProbeToolNum} P0                ; Select Probe P0
 M401 P0                                   ; Deploy Probe
 
 M118 S{"Debug: End homeu.g"} L3

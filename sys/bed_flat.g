@@ -1,7 +1,7 @@
 M291 P"Edit bed_flat.g to define mesh area for flat bed" R"First open" S3
 ;UNCOMMENT ALL GCODE LINES
 
-;T10 							;bring up probe
+;T{global.zProbeToolNum}        ; Select Probe
 ;M561                           ;ensure user coordinated
 
 ;G1 X0 Y-5 Z3 F8000             ;go to starting position

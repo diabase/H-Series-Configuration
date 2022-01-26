@@ -1,7 +1,7 @@
 ; bed_rotary.g
 ; Called to probe a surface for rotary printing 
 ; Written by Diabase Engineering
-; Last Updated: December 14, 2021
+; Last Updated: January 26, 2022
 
 M118 S"Info: Begin bed_rotary.g" L2
 
@@ -19,7 +19,7 @@ while iterations < #move.axes
         set var.aAxisIndex = iterations
         break
 
-T10                                                                                                                                             ; Select Tool 10 (Probe)
+T{global.zProbeToolNum}                                                                                                                         ; Select Probe
 M561                                                                                                                                            ; Set Identity Transform (Clears any existing bed-plane fitting)
 
 G1 X0 A-5 Z3 F8000                                                                                                                              ; Move to starting position

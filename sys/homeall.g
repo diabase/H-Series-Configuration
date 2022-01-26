@@ -1,7 +1,7 @@
 ; homeall.g
 ; Called to home all axes
 ; Written by Diabase Engineering
-; Last Updated: January 14, 2022
+; Last Updated: January 26, 2022
 
 M118 S{"Debug: Begin homeall.g"} L3
 
@@ -113,7 +113,7 @@ G60 S1 ; Save current position in slot 1 (the slot used when pausing)
 while iterations < #tools
     if tools[iterations] != null
         T{iterations} P0
-T10 P0
+T{global.zProbeToolNum} P0                ; Select Probe P0
 M401 P0                                   ; Deploy Probe
 
 M118 S{"Debug: End homeall.g"} L3

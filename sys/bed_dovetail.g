@@ -2,7 +2,7 @@ M291 P"Is Dovetail Bed Installed?" R"First open" S3
 
 M140 H-1                    ;disable bed heater
 
-T10 							;bring up probe
+T{global.zProbeToolNum}     ; Select Probe
 M561                        ;ensure user coordinated
 
 G1 X0 Y-45 Z8 F8000         ;go to starting position

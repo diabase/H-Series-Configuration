@@ -2,7 +2,7 @@
 ; Default configuration parameters for H-Series machines
 ; Produced by Diabase H-Series Configurizer
 ; Written by Diabase Engineering
-; Last Updated: January 14, 2022
+; Last Updated: January 26, 2022
 
 M118 S"Begin defaultparameters.g" L2
 
@@ -605,6 +605,11 @@ if !{exists(global.zProbePin)}
     global zProbePin = "io5.in"
 else
     set global.zProbePin = "io5.in"
+
+if !{exists(global.zProbeToolNum)}
+    global zProbeToolNum = 10
+else
+    set global.zProbeToolNum = 10
 
 if !{exists(global.touchOffPlatePin)}
     global touchOffPlatePin = "io7.in"
