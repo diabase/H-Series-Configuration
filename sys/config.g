@@ -61,7 +61,9 @@ M569 P{global.cDrive} S{global.cDirection}                          ; Set motor 
 
 ; Drive settings
 if {global.machineModel} == "H4" || {global.machineModel} == "H5A"
-    M584 X{global.xDrive} Y{global.yDrive} Z{global.zDrive} U{global.uDrive} V{global.vDrive} W{global.wDrive} A{global.aDrive}:{global.aPrimeDrive} C{global.cDrive} E{global.e1Drive}:{global.e3Drive}:{global.e5Drive}:{global.fA1Drive}:{global.fA3Drive}:{global.fA5Drive}; Set driver mapping.
+    M118 S{"Setting motor drivers on lines "^{line+1}^" and "^{line+2}} L3
+    M584 X{global.xDrive} Y{global.yDrive} Z{global.zDrive} U{global.uDrive} V{global.vDrive} W{global.wDrive} A{global.aDrive}:{global.aPrimeDrive} C{global.cDrive} ; Map stepper drivers for motion
+    M584 E{global.e1Drive}:{global.e3Drive}:{global.e5Drive}:{global.fA1Drive}:{global.fA3Drive}:{global.fA5Drive} ; Map stepper drivers for extruders
     M208 X{global.xMin} Y{global.yMin} Z{global.zMin} U{global.uMin} V{global.vMin} W{global.wMin} A{global.aMin} C{global.cMin} S1 ; Set axis minima
     M208 X{global.xMax} Y{global.yMax} Z{global.zMax} U{global.uMax} V{global.vMax} W{global.wMax} A{global.aMax} C{global.cMax} S0 ; Set axis maxima
     M350 X16 Y16 Z16 U16 V16 W16 A16 C16 E16 I1 ; Configure microstepping with interpolation - high lead cleaning station motor
@@ -71,7 +73,9 @@ if {global.machineModel} == "H4" || {global.machineModel} == "H5A"
     M201 X600 Y600 Z450 U600 V500 W5000 A600 C600 E250 ; Set accelerations (mm/s^2)
     M906 X1800 Y2100 Z2400 U1440 V1000 W1000 A1600 C1600 E1500:1500:1500:1000:1000:1000 I30 ; Set motor currents (mA) and motor idle factor percent
 elif {global.machineModel} == "H5B"
-    M584 X{global.xDrive} Y{global.yDrive} Z{global.zDrive} U{global.uDrive} W{global.wDrive} A{global.aDrive,global.aPrimeDrive} B{global.bDrive} C{global.cDrive} E{global.e3Drive,global.e4Drive,global.e5Drive,global.fA3Drive,global.fA4Drive,global.fA5Drive}; Set driver mapping.
+    M118 S{"Setting motor drivers on lines "^{line+1}^" and "^{line+2}} L3
+    M584 X{global.xDrive} Y{global.yDrive} Z{global.zDrive} U{global.uDrive} W{global.wDrive} A{global.aDrive,global.aPrimeDrive} B{global.bDrive} C{global.cDrive} ; Map stepper drivers for motion
+    M584 E{global.e3Drive,global.e4Drive,global.e5Drive,global.fA3Drive,global.fA4Drive,global.fA5Drive} ; Map stepper drivers for extruders
     M208 X{global.xMin} Y{global.yMin} Z{global.zMin} U{global.uMin} W{global.wMin} A{global.aMin} B{global.bMin} C{global.cMin} S1 ; Set axis minima
     M208 X{global.xMax} Y{global.yMax} Z{global.zMax} U{global.uMax} W{global.wMax} B{global.bMax} A{global.aMax} C{global.cMax} S0 ; Set axis maxima
     M350 X16 Y16 Z16 U16 W16 A16 B16 C16 E16 I1 ; Configure microstepping with interpolation - high lead cleaning station motor
