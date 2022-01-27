@@ -3,7 +3,7 @@
 ; Parameters:
 ;    I: Wait for user confirmation that the tool is in position for touchoff? (0 - Don't wait, 1 - Wait)
 ; Written by Diabase Engineering
-; Last Updated: January 24, 2022
+; Last Updated: January 26, 2022
 
 M118 S{"Debug: Begin tctouchoff.g"} L3
 
@@ -12,7 +12,23 @@ if {global.machineModel} == "H5B"
         M291 P"Warning: Incoming air pressure low. Resolve before continuing." R"Warning" S2                        ; Display a blocking warning with no timeout.
         abort
 
-    if state.currentTool < 10
+    if state.currentTool == 2
+        M291 P{"The tool changer touchoff plate can only be used with the probe or a tool changer tool."} R"Invalid Tool" S2
+        abort
+
+    elif state.currentTool == 2
+        M291 P{"The tool changer touchoff plate can only be used with the probe or a tool changer tool."} R"Invalid Tool" S2
+        abort
+
+    elif state.currentTool == 3
+        M291 P{"The tool changer touchoff plate can only be used with the probe or a tool changer tool."} R"Invalid Tool" S2
+        abort
+
+    elif state.currentTool == 4
+        M291 P{"The tool changer touchoff plate can only be used with the probe or a tool changer tool."} R"Invalid Tool" S2
+        abort
+
+    elif state.currentTool == 5
         M291 P{"The tool changer touchoff plate can only be used with the probe or a tool changer tool."} R"Invalid Tool" S2
         abort
 
@@ -21,7 +37,7 @@ if {global.machineModel} == "H5B"
         abort
 
     else
-        if state.currentTool != 10
+        if state.currentTool != global.zProbeToolNum
             if {global.probeOverTravelTCTouchOff} = -1
                 M291 P{"Tool changer touch off position not yet probed. Try again with probe."} R"Probe First" S2
                 abort
@@ -38,7 +54,7 @@ if {global.machineModel} == "H5B"
             G1 B{tools[{state.currentTool}].offsets[6]} F30000                                                          ; Move tool changer to touchoff plate position
         M400                                                                                                        ; Wait for current moves to finish
 
-        if state.currentTool = 10
+        if state.currentTool == global.zProbeToolNum
             M574 Z2 S1 P{global.zSwitchPin}                                                                             ; Configure Z endstop position at high end, it's an optical interrupt on pin defined in defaultparameters.g
             ;M558 K0                                                                                                     ; Read the current parameters for probe 0 into the event log
             var existingProbeSpeed0 = sensors.probes[0].speeds[0]                                                       ; Save the current probe speed in a temporary variable
