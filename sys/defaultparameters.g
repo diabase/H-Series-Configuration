@@ -252,14 +252,14 @@ else
 ;     set global.e2Drive = 
 
 if !{exists(global.e3Drive)}
-    global e3Drive = 1.1
+    global e3Drive = -1 ; e3Drive is defined by machineType in config.g
 else
-    set global.e3Drive = 1.1
+    set global.e3Drive = -1
 
 if !{exists(global.e4Drive)}
-    global e4Drive = 3.3
+    global e4Drive = 1.1
 else
-    set global.e4Drive = 3.3
+    set global.e4Drive = 1.1
 
 if !{exists(global.e5Drive)}
     global e5Drive = 1.2
@@ -277,14 +277,14 @@ else
 ;     set global.fA2Drive = 
 
 if !{exists(global.fA3Drive)}
-    global fA3Drive = 3.1
+    global fA3Drive = -1 ; fA3Drive is defined by machineType in config.g
 else
-    set global.fA3Drive = 3.1
+    set global.fA3Drive = -1
 
 if !{exists(global.fA4Drive)}
-    global fA4Drive = 3.4
+    global fA4Drive = 3.1
 else
-    set global.fA4Drive = 3.4
+    set global.fA4Drive = 3.1
 
 if !{exists(global.fA5Drive)}
     global fA5Drive = 3.2
@@ -557,14 +557,14 @@ else
 ;     set global.eHeat2Pin = ""
 
 if !{exists(global.eHeat3Pin)}
-    global eHeat3Pin = "1.out1"
+    global eHeat3Pin = "nil" ; eHeat3Pin is defined by machineType in tcreate-universal.g
 else
-    set global.eHeat3Pin = "1.out1"
+    set global.eHeat3Pin = "nil"
 
 if !{exists(global.eHeat4Pin)}
-    global eHeat4Pin = "3.out1"
+    global eHeat4Pin = "1.out1"
 else
-    set global.eHeat4Pin = "3.out1"
+    set global.eHeat4Pin = "1.out1"
 
 if !{exists(global.eHeat5Pin)}
     global eHeat5Pin = "1.out2"
@@ -607,9 +607,9 @@ else
     set global.zProbePin = "io5.in"
 
 if !{exists(global.zProbeToolNum)}
-    global zProbeToolNum = -1
+    global zProbeToolNum = 10
 else
-    set global.zProbeToolNum = -1
+    set global.zProbeToolNum = 10
 
 if !{exists(global.touchOffPlatePin)}
     global touchOffPlatePin = "io7.in"
@@ -642,14 +642,14 @@ else
 ;     set global.fSense2Pin = ""
 
 if !{exists(global.fSense3Pin)}
-    global fSense3Pin = "3.io3.in"
+    global fSense3Pin = "nil" ; fSense3Pin is defined by machineType in tcreate-universal.g
 else
-    set global.fSense3Pin = "3.io3.in"
+    set global.fSense3Pin = "nil"
 
 if !{exists(global.fSense4Pin)}
-    global fSense4Pin = "3.io5.in"
+    global fSense4Pin = "3.io3.in"
 else
-    set global.fSense4Pin = "3.io5.in"
+    set global.fSense4Pin = "3.io3.in"
 
 if !{exists(global.fSense5Pin)}
     global fSense5Pin = "3.io4.in"
@@ -697,14 +697,14 @@ else
 ;     set global.e2TempPin = ""
 
 if !{exists(global.e3TempPin)}
-    global e3TempPin = "1.temp1"
+    global e3TempPin = "nil" ; e3TempPin is defined by machineType in tcreate-universal.g
 else
-    set global.e3TempPin = "1.temp1"
+    set global.e3TempPin = "nil"
 
 if !{exists(global.e4TempPin)}
-    global e4TempPin = "3.temp0"
+    global e4TempPin = "1.temp1"
 else
-    set global.e4TempPin = "3.temp0"
+    set global.e4TempPin = "1.temp1"
 
 if !{exists(global.e5TempPin)}
     global e5TempPin = "1.temp2"

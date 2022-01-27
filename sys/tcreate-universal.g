@@ -48,6 +48,27 @@ if global.spindle2AirIndex == -1
 M98 P"create-tool.g" T2 Y{global.toolType2} S0 H{global.spindle2SpeedPin} N{global.spindle2AirIndex} E{global.spindle2DirectionPin} F{global.spindle2AirPin}
 
 ; Tool 3
+if {global.machineModel} == "H4" || {global.machineModel} == "H5A"
+    if global.eHeat3Pin == "nil"
+        set global.eHeat3Pin = global.eHeat4Pin
+        set global.eHeat4Pin = "nil"
+    if global.fSense3Pin  == "nil"
+        set global.fSense3Pin = global.fSense4Pin
+        set global.fSense4Pin = "nil"
+    if global.e3TempPin == "nil"
+        set global.e3TempPin = global.e4TempPin
+        set global.e4TempPin = "nil"
+elif {global.machineModel} == "H5B"
+    if global.eHeat3Pin == "nil"
+        set global.eHeat3Pin = global.eHeat1Pin
+        set global.eHeat1Pin = "nil"
+    if global.fSense3Pin  == "nil"
+        set global.fSense3Pin = global.fSense1Pin
+        set global.fSense1Pin = "nil"
+    if global.e3TempPin == "nil"
+        set global.e3TempPin = global.e1TempPin
+        set global.e1TempPin = "nil"
+
 if global.e3HeatIndex == -1
     set global.e3HeatIndex = #heat.heaters
 if global.e3TempIndex == -1
@@ -98,9 +119,9 @@ if {global.machineModel} == "H4" || {global.machineModel} == "H5A"
 elif {global.machineModel} == "H5B"
     M118 S{"Info: Configuring FFF Fans (fans[" ^ {global.fffFanNum} ^"]:) Thermostatic mode (50C) on tools.[1,3,4,5].heaters[0]"} L2
     if {boards[0].firmwareVersion == "3.3"}
-        M106 P{global.fffFanNum} H{tools[1].heaters[0]}:{tools[3].heaters[0]}:{tools[4].heaters[0]}:{tools[5].heaters[0]} T50 C"FFF Fans"                                                             ; thermostatic control of cooling fan on heaters 1, 3, and 5. Turns on at 50C
+        M106 P{global.fffFanNum} H{{tools[3].heaters[0]}:{tools[4].heaters[0]}:{tools[5].heaters[0]} T50 C"FFF Fans"                                                             ; thermostatic control of cooling fan on heaters for tools 3, 4, and 5. Turns on at 50C
     elif {boards[0].firmwareVersion != "3.3"}
-        M106 P{global.fffFanNum} H{tools[1].heaters[0],tools[3].heaters[0],tools[4].heaters[0],tools[5].heaters[0]} T50 C"FFF Fans"                                                                 ; thermostatic control of cooling fan on heaters 1, 3, and 5. Turns on at 50C
+        M106 P{global.fffFanNum} H{tools[3].heaters[0],tools[4].heaters[0],tools[5].heaters[0]} T50 C"FFF Fans"                                                                 ; thermostatic control of cooling fan on heaters for tools 3, 4, and 5. Turns on at 50C
 
 ; Build Enclosure LEDs
 if global.bELedFanNum == -1
