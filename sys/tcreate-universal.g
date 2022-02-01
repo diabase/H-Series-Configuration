@@ -14,7 +14,7 @@
 ;   - Automatically looping create-tool.g for variable-defined tools
 ; TODO: Revisit when spindles aren't all automatically created. - RT
 ; Written by Diabase Engineering
-; Last Updated: January 31, 2022
+; Last Updated: February 01, 2022
 
 M118 S{"Info: Begin tcreate-universal.g"} L2
 
@@ -195,10 +195,10 @@ M581 P{global.bESwitchInNum} T{global.bESwitchLowTrigger} S0 R0                 
 
 if {global.machineModel} == "H5B"
     ; Turret Lock
-    if global.tLockOutNum == -1
-        set global.tLockOutNum = #state.gpOut
-    M118 S{"Info: Creating state.gpOut[" ^ {global.tLockOutNum} ^ "] on pin " ^ {global.tLockPin} ^ " for turret lock solenoid"} L2     ; Log informational event
-    M950 P{global.tLockOutNum} C{global.tLockPin}
+    if global.tUnlockOutNum == -1
+        set global.tUnlockOutNum = #state.gpOut
+    M118 S{"Info: Creating state.gpOut[" ^ {global.tUnlockOutNum} ^ "] on pin " ^ {global.tUnlockPin} ^ " for turret unlock solenoid"} L2     ; Log informational event
+    M950 P{global.tUnlockOutNum} C{global.tUnlockPin}
     
     ; Main Drawbar Solenoid
     if global.dbarOutNum == -1

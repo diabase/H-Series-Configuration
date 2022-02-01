@@ -2,7 +2,7 @@
 ; Default configuration parameters for H-Series machines
 ; Produced by Diabase H-Series Configurizer
 ; Written by Diabase Engineering
-; Last Updated: January 26, 2022
+; Last Updated: February 01, 2022
 
 M118 S"Begin defaultparameters.g" L2
 
@@ -1131,15 +1131,15 @@ if !{exists(global.jobCMax)}
 else
     set global.jobCMax = 0
 
-if !{exists(global.tLockPin)}
-    global tLockPin = "out6"
+if !{exists(global.tUnlockPin)}
+    global tUnlockPin = "out6"
 else
-    set global.tLockPin = "out6"
+    set global.tUnlockPin = "out6"
 
-if !{exists(global.tLockOutNum)}
-    global tLockOutNum = -1
+if !{exists(global.tUnlockOutNum)}
+    global tUnlockOutNum = -1
 else
-    set global.tLockOutNum = -1
+    set global.tUnlockOutNum = -1
 
 if !{exists(global.dbarPin)}
     global dbarPin = "1.out4"

@@ -1,7 +1,7 @@
 ; unlock_turret.g
 ; Called to release the turret latch
 ; Written by Diabase Engineering
-; Last Updated: December 06, 2021
+; Last Updated: February 01, 2022
 
 M118 S{"Debug: Begin unlock_turret.g"} L3
 
@@ -37,7 +37,7 @@ elif {global.machineModel} == "H5B"
     M400                            ; Wait for current moves to finish
     M17 U                           ; Enable the u-axis motor
     G4 P50                          ; Dwell for 50 ms
-    M42 P{global.tLockOutNum} S0    ; Deactivate the turret lock solenoid valve
+    M42 P{global.tUnlockOutNum} S1  ; Activate the turret unlock solenoid valve
     G4 P200                         ; Dwell for 200 ms
 
 M118 S{"Debug: End unlock_turret.g"} L3
