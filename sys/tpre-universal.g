@@ -4,11 +4,11 @@
 ; state.previousTool is the just-freed tool 
 ; state.currentTool is -1
 ; state.nextTool is the upcoming tool
-; Last Updated: January 20, 2022
+; Last Updated: February 04, 2022
 
-M118 S{"Debug: Begin tpre-universal.g"} L3
+M118 S{"Begin tpre-universal.g"} L3
 
-M118 S{"Debug: Changing from tool " ^ {state.previousTool} ^ " to tool " ^ {state.nextTool}} L3
+M118 S{"tpre-universal.g: Changing from tool " ^ {state.previousTool} ^ " to tool " ^ {state.nextTool}} L3
 
 M453 ; Switch to CNC mode
 if {global.machineModel} == "H4"
@@ -47,11 +47,13 @@ elif {global.machineModel} == "H5B"
     ; Only perform machine moves if we need to change the turret position
     if {move.axes[3].machinePosition != -tools[{state.nextTool}].offsets[3] || {state.nextTool} >= 11}
         M400                                                                    ; Wait for all moves to finish
-        if move.axes[2].machinePosition < {move.axes[2].max - 40}               ; If we have enough room for a normal tool change Z-hop (plus 30mm of clearance for the tool changer), do it.
+        if move.axes[2].machinePosition < {move.axes[2].max - 40}               ; If we have enough room for a normal tool change Z-hop, do it.
+            M118 S{"tpre-universal.g: 40mm Z-hop"} L3
             G91                                                                 ; Relative Positioning
             G53 G1 Z40 F10000                                                        ; Move Z +40mm at 10000 mm/min
 
         elif move.axes[2].machinePosition >= {move.axes[2].max - 40}            ; If we don't have enough room, move as high as we can.
+            M118 S{"tpre-universal.g: Starting within 40mm to ZMax, so moving there."} L3
             M574 Z2 S1 P{global.zSwitchPin}                                     ; Configure Z endstop position at high end, it's a microswitch on pin defined in defaultparameters.g
             G90                                                                 ; Absolute positioning
             G53 G1 Z{move.axes[2].max} F10000                                   ; Move to ZMax
@@ -95,6 +97,7 @@ elif {global.machineModel} == "H5B"
         if global.dontRotate != 1
             M98 P"unlock_turret.g" ; Call unlock_turret.g
             if {{state.nextTool} >= 11}
+                M118 S{"tpre-universal.g: state.nextTool >= 11, so performing u-axis jitter"} L3
                 G91                                                                                                             ; Relative Positioning
                 G0 U-2 F10000                                                                                                    ; Jitter turret to walk onto bearing
                 G0 U2  F10000                                                                                                    ; Jitter turret to walk onto bearing
@@ -103,11 +106,16 @@ elif {global.machineModel} == "H5B"
                 G0 U-6 F10000                                                                                                    ; Jitter turret to walk onto bearing
                 G0 U6  F10000                                                                                                    ; Jitter turret to walk onto bearing
             G90                                                                                                             ; Absolute Positioning
-            G53 G1 U{-tools[{state.nextTool}].offsets[3]} Z{move.axes[2].max} F10000                                        ; Rotate turret to active position for new tool
+            if {{state.nextTool} >= 11}
+                M118 S{"tpre-universal.g: Moving to U position for next tool and ZMax"} L3
+                G53 G1 U{-tools[{state.nextTool}].offsets[3]} Z{move.axes[2].max} F10000                                        ; Rotate turret to active position for new tool and move up to ZMax
+            else
+                M118 S{"tpre-universal.g: Moving to U position for next tool"} L3
+                G53 G1 U{-tools[{state.nextTool}].offsets[3]} F10000                                                            ; Rotate turret to active position for new tool
             G4 P20 ; Dwell for 20 ms
             M400                                                                                                            ; Wait for any current moves to finish
             M98 P"lock_turret.g" ; Call lock_turret.g
         M42 P{global.tCToolReleaseOutNum} S0                                                                            ; Retract the tool changer release piston
         M400                                                                                                            ; Wait for any current moves to finish
 
-M118 S{"Debug: End tpre-universal.g"} L3
+M118 S{"End tpre-universal.g"} L3
