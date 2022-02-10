@@ -1,11 +1,11 @@
 ; pause.g
 ; Called when a job is paused.
 ; Written by Diabase Engineering
-; Last Updated: January 26, 2022
+; Last Updated: February 10, 2022
 
 M118 S{"Debug: Begin pause.g"} L3
 
-G60 S1                                                              ; Save current tool information
+; G60 S1                                                              ; Save current tool information
 
 if state.machineMode="FFF"
     M83                                                             ; Set extruder to relative mode
