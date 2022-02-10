@@ -14,7 +14,7 @@
 ;   - Automatically looping create-tool.g for variable-defined tools
 ; TODO: Revisit when spindles aren't all automatically created. - RT
 ; Written by Diabase Engineering
-; Last Updated: February 01, 2022
+; Last Updated: February 10, 2022
 
 M118 S{"Info: Begin tcreate-universal.g"} L2
 
@@ -32,7 +32,7 @@ if global.layerFanNum == -1
     set global.layerFanNum = #fans
 M118 S{"Info: Creating fans[" ^ {global.layerFanNum} ^"] on pin " ^ {global.layerFanPin} ^ " for Layer Fans"} L2
 M950 F{global.layerFanNum} C{global.layerFanPin}   ; Layer cooling fans
-M106 P{global.layerFanNum}} C"Layer Fans"           ; Enable manual control of layer cooling fans
+M106 P{global.layerFanNum} C"Layer Fans"           ; Enable manual control of layer cooling fans
 
 ; Tool 1
 if {global.machineModel} == "H4" || {global.machineModel} == "H5A"
@@ -119,7 +119,7 @@ if {global.machineModel} == "H4" || {global.machineModel} == "H5A"
 elif {global.machineModel} == "H5B"
     M118 S{"Info: Configuring FFF Fans (fans[" ^ {global.fffFanNum} ^"]:) Thermostatic mode (50C) on tools.[3,4,5].heaters[0]"} L2
     if {boards[0].firmwareVersion == "3.3"}
-        M106 P{global.fffFanNum} H{{tools[3].heaters[0]}:{tools[4].heaters[0]}:{tools[5].heaters[0]}} T50 C"FFF Fans"                                                             ; thermostatic control of cooling fan on heaters for tools 3, 4, and 5. Turns on at 50C
+        M106 P{global.fffFanNum} H{tools[3].heaters[0]}:{tools[4].heaters[0]}:{tools[5].heaters[0]} T50 C"FFF Fans"                                                             ; thermostatic control of cooling fan on heaters for tools 3, 4, and 5. Turns on at 50C
     elif {boards[0].firmwareVersion != "3.3"}
         M106 P{global.fffFanNum} H{tools[3].heaters[0],tools[4].heaters[0],tools[5].heaters[0]} T50 C"FFF Fans"                                                                 ; thermostatic control of cooling fan on heaters for tools 3, 4, and 5. Turns on at 50C
 
