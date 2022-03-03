@@ -3,7 +3,7 @@
 ; Parameters:
 ;    I: Wait for user confirmation that the tool is in position for touchoff? (0 - Don't wait, 1 - Wait)
 ; Written by Diabase Engineering
-; Last Updated: January 26, 2022
+; Last Updated: February 17, 2022
 
 M118 S{"Debug: Begin tctouchoff.g"} L3
 
@@ -56,9 +56,11 @@ if {global.machineModel} == "H5B"
 
         if state.currentTool == global.zProbeToolNum
             M574 Z2 S1 P{global.zSwitchPin}                                                                             ; Configure Z endstop position at high end, it's an optical interrupt on pin defined in defaultparameters.g
-            ;M558 K0                                                                                                     ; Read the current parameters for probe 0 into the event log
+            M558 K0                                                                                                     ; Read the current parameters for probe 0 into the event log
             var existingProbeSpeed0 = sensors.probes[0].speeds[0]                                                       ; Save the current probe speed in a temporary variable
+            M118 S{"existingProbeSpeed0 set to "^var. existingProbeSpeed0} L3
             var existingProbeSpeed1 = sensors.probes[0].speeds[1]                                                       ; Save the current probe speed in a temporary variable
+            M118 S{"existingProbeSpeed1 set to "^var. existingProbeSpeed1} L3
             var lastProbingOverTravel = -1                                                                              ; Initialize lastProbingOverTravel
             var thisProbingOverTravel = -1                                                                              ; Initialize thisProbingOverTravel
 
@@ -90,11 +92,11 @@ if {global.machineModel} == "H5B"
             M118 S{"Debug: tctouchoff.g: Variance between coarse and fine probe was " ^{{var.thisProbingOverTravel}-{var.lastProbingOverTravel}}} L3
             set global.keepProbeDeployed = 0                                                                            ; Allow the probe to retract again
             M558 K0 P8 C{global.zProbePin} H2 F{var.existingProbeSpeed0}:{var.existingProbeSpeed1} T10000 
-            ;M558 K0                                                                                                     ; Read the current parameters for probe 0 into the event log
+            M558 K0                                                                                                     ; Read the current parameters for probe 0 into the event log
             M574 Z1 S2                                                                                                  ; Set Z endstop position to low end and configure as Z probe
 
         else
-            ;M558 K2                                                                                                     ; Record the current parameters for probe 2 (tool changer touchoff plate)
+            M558 K2                                                                                                     ; Record the current parameters for probe 2 (tool changer touchoff plate)
             var existingProbeSpeed0 = sensors.probes[2].speeds[0]                                                       ; Save the current probe speed in a temporary variable
             var existingProbeSpeed1 = sensors.probes[2].speeds[1]                                                       ; Save the current probe speed in a temporary variable
             var lastProbingOverTravel = -1                                                                              ; Initialize lastProbingOverTravel
@@ -129,7 +131,7 @@ if {global.machineModel} == "H5B"
             M118 S{"Debug: tctouchoff.g: Variance between coarse and fine touch off was " ^{{var.thisProbingOverTravel}-{var.lastProbingOverTravel}}} L3
             set global.keepProbeDeployed = 0                                                                            ; Allow the probe to retract again
             M558 K2 P8 C{global.tCTouchOffPin} I0 F{var.existingProbeSpeed0}:{var.existingProbeSpeed1} T10000
-            ;M558 K2                                                                                                     ; Read the current parameters for probe 0 into the event log
+            M558 K2                                                                                                     ; Read the current parameters for probe 0 into the event log
 
         G53 H2 G1 Z{move.axes[2].max + global.maxOffset - 5} F10000                                                     ; Move machine position to 5mm below ZMax, ignoring endstops, at 10000 mm/min
         M400                                                                                                            ; Wait for current moves to finish
