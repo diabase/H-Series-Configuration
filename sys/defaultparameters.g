@@ -2,7 +2,7 @@
 ; Default configuration parameters for H-Series machines
 ; Produced by Diabase H-Series Configurizer
 ; Written by Diabase Engineering
-; Last Updated: February 01, 2022
+; Last Updated: March 02, 2022
 
 M118 S"Begin defaultparameters.g" L2
 
@@ -1245,5 +1245,20 @@ if !{exists(global.greenLedPin)}
     global greenLedPin = "3.out8"
 else
     set global.greenLedPin = "3.out8"
+
+if !{exists(global.tFreeComplete)}
+    global tFreeComplete = -1
+else
+    set global.tFreeComplete = -1
+
+if !{exists(global.tPreComplete)}
+    global tPreComplete = -1
+else
+    set global.tPreComplete = -1
+
+if !{exists(global.tPostComplete)}
+    global tPostComplete = -1
+else
+    set global.tPostComplete = -1
 
 M118 S"End defaultparameters.g" L2

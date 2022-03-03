@@ -4,9 +4,20 @@
 ; state.previousTool is now the tool being freed
 ; state.currentTool is still the tool being freed
 ; state.nextTool is the upcoming tool
-; Last Updated: January 20, 2022
+; Last Updated: March 02, 2022
 
-M118 S{"Debug: Begin tfree-universal.g"} L3
+M118 S{"Begin tfree-universal.g"} L3
+
+if global.tFreeComplete = 0
+    M118 S{"tfree-universal.g: tfree didn't finish last time. Resetting status flag and trying again."} L1
+set global.tFreeComplete = 0
+
+if global.tPreComplete = 0
+    M118 S{"tfree-universal.g: tpre didn't finish last time."} L1
+
+if global.tPostComplete = 0
+    M118 S{"tfree-universal.g: tpost didn't finish last time."} L1
+
 M453                            ; Switch to CNC mode
 M402 P0                         ; Retract Probe
 M574 Z2 S1 P{global.zSwitchPin} ; Configure Z endstop position at high end, it's a microswitch on pin defined in defaultparameters.g
@@ -47,4 +58,6 @@ if {global.machineModel} == "H5B"
         if {{state.nextTool} < 11}
             M42 P{global.dbarOutNum} S0                                                                                 ; Turn Drawbar Release Pressure Off (Fully clamp drawbar)
 
-M118 S{"Debug: End tfree-universal.g"} L3
+set global.tFreeComplete = 1
+
+M118 S{"End tfree-universal.g"} L3

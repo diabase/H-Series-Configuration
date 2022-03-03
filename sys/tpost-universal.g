@@ -4,9 +4,22 @@
 ; state.previousTool is the just-freed tool 
 ; state.currentTool is the upcoming tool
 ; state.nextTool is the upcoming tool
-; Last Updated: January 20, 2022
+; Last Updated: March 02, 2022
 
-M118 S{"Debug: Begin tpost-universal.g"} L3
+M118 S{"Begin tpost-universal.g"} L3
+
+if global.tFreeComplete = 0
+    M118 S{"tpost-universal.g: tfree didn't complete the last time. Aborting tpost-universal.g."} L1
+    abort
+
+if global.tPreComplete = 0
+    M118 S{"tpost-universal.g: tpre didn't finish the last time. Aborting tpost-universal.g."} L1
+    abort
+
+if global.tPostComplete = 0
+    M118 S{"tpost-universal.g: tpost didn't finish the last time. Resetting status flag and attempting it again."} L1
+set global.tPostComplete = 0
+
 
 if {tools[{state.nextTool}].spindle == -1}                                                                                                      ; If this tool has no spindles...
     if {#tools[{state.nextTool}].extruders == 0}                                                                                                    ; ... or extruders, we assume it's a probe
@@ -45,4 +58,6 @@ if state.previousTool != -1                                                     
 if {global.machineModel} == "H5B"
     M582 T{global.airPressureLowTrigger}                                                                                                            ; Check incoming air pressure
 
-M118 S{"Debug: End tpost-universal.g"} L3
+set global.tPostComplete = 1
+
+M118 S{"End tpost-universal.g"} L3
