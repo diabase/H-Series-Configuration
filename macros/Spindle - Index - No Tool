@@ -1,0 +1,2 @@
+M291 P"Index the spindle without a tool loaded?" R"indexspindle.g H0" S3
+M98 P"0:/sys/indexspindle.g" H0 S0
