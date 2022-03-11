@@ -7,6 +7,7 @@ M118 S{"Info: Begin manualdbarrelease.g"} L2
 
 if {global.machineModel} == "H5B"
     M42 P{global.spindleIndexOutNum} S1                                                                         ; Toggle Drawbar Release Pressure Low
+    G4 P1000                                                                                                    ; Dwell for 1000ms - Remove or reduce after testing
     M42 P{global.dbarOutNum} S1                                                                                 ; Turn Drawbar Release Pressure On
 
     ;if sensors.gpIn[{global.spindleIndexSense1InNum}].value == 0                                                ; spindleIndexSense1 value == 0 means we're still attempting to index, == 1 means we are indexed
