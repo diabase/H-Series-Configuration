@@ -1,10 +1,10 @@
 ; loadedtoolrecovery.g
 ; Check and handle the case of a tool unexpectedly in the spindle 
 ; Written by Diabase Engineering
-; Last Updated: January 03, 2022
+; Last Updated: March 09, 2022
 ; TODO: Dynamically identify spindle. Currently we assume spindle[0]. - RT 12/21/2021
 
-M118 S{"Debug: Begin loadedtoolrecovery.g"} L3
+M118 S{"Begin loadedtoolrecovery.g"} L3
 
 if {global.machineModel} == "H5B"
     M291 P"Is there a tool in the spindle?" R"Spindle Tool Check" S3                                                    ; Get user input
@@ -14,7 +14,10 @@ if {global.machineModel} == "H5B"
 
     M291 P"The machine will now attempt to index the spindle and release the tool. Select OK to proceed." R"Ready?" S3
     M98 P"indexspindle.g" H1 S0
-    M42 P{global.spindleIndexOutNum} S0                                                                                 ; Toggle Drawbar Release Pressure High
+    if state.gpOut[global.dbarOutNum].pwm == 1
+        M42 P{global.spindleIndexOutNum} S0                                                                                 ; Toggle Drawbar Release Pressure High
+    else
+        abort "Error: Drawbar clamping pressure not released. Contact Diabase Support."
 
     M291 P"Is the tool clear?" R"Tool clear?" S3
 
@@ -37,4 +40,4 @@ if {global.machineModel} == "H5B"
     M98 P"homeall.g"
     M291 P"Replace the tool in the tool changer and select OK to proceed." R"Tool replaced?" S3
 
-M118 S{"Debug: End loadedtoolrecovery.g"} L3
+M118 S{"End loadedtoolrecovery.g"} L3

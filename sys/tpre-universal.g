@@ -4,7 +4,7 @@
 ; state.previousTool is the just-freed tool 
 ; state.currentTool is -1
 ; state.nextTool is the upcoming tool
-; Last Updated: March 02, 2022
+; Last Updated: March 09, 2022
 
 M118 S{"Begin tpre-universal.g"} L3
 
@@ -84,7 +84,10 @@ elif {global.machineModel} == "H5B"
                 G1 U{{-tools[{state.nextTool}].offsets[3]}+180} F10000                                                      ; Rotate turret to point the spindle at the tool changer
                 M400
                 M98 P"lock_turret.g"                                                                                        ; Lock turret
-            M42 P{global.spindleIndexOutNum} S0                                                                             ; Toggle Drawbar Release Pressure High
+            if state.gpOut[global.dbarOutNum].pwm == 1
+                M42 P{global.spindleIndexOutNum} S0                                                                                 ; Toggle Drawbar Release Pressure High
+            else
+                abort "Error: Drawbar clamping pressure not released. Contact Diabase Support."
             G53 G1 Z{move.axes[2].max} F10000                                                                               ; Move Z to ZMax quickly
             G53 G1 Z{{move.axes[2].max}+{global.tCOvertravelGetTool}} H2 F3000                                              ; Move Z beyond ZMax ignoring endstops
             M400                                                                                                            ; Wait for all moves to finish
