@@ -14,7 +14,7 @@
 ;   - Automatically looping create-tool.g for variable-defined tools
 ; TODO: Revisit when spindles aren't all automatically created. - RT
 ; Written by Diabase Engineering
-; Last Updated: February 10, 2022
+; Last Updated: March 11, 2022
 
 M118 S{"Info: Begin tcreate-universal.g"} L2
 
@@ -215,13 +215,13 @@ if {global.machineModel} == "H5B"
     ; Drawbar Position Sensors
     if global.spindleIndexSense1InNum == -1
         set global.spindleIndexSense1InNum = #sensors.gpIn
-    M118 S{"Info: Creating sensors.gpIn[" ^ {global.spindleIndexSense1InNum} ^ "] on pin " ^ {global.spindleIndexSense1Pin} ^ " drawbar position sensor"} L2            ; Log informational event
+    M118 S{"Info: Creating sensors.gpIn[" ^ {global.spindleIndexSense1InNum} ^ "] on pin " ^ {global.spindleIndexSense1Pin} ^ " drawbar position sensor (No Tool Loaded)"} L2            ; Log informational event
     M950 J{global.spindleIndexSense1InNum} C{global.spindleIndexSense1Pin}                                                                                              ; Define input
     M118 S{"Info: Activating sensors.gpIn[" ^ {global.spindleIndexSense1InNum} ^ "] will not run a trigger"} L2                                                         ; Log informational event
     M118 S{"Info: Deactivating sensors.gpIn["^ {global.spindleIndexSense1InNum} ^ "] will not run a trigger"} L2                                                        ; Log informational event
     if global.spindleIndexSense2InNum == -1
         set global.spindleIndexSense2InNum = #sensors.gpIn
-    M118 S{"Info: Creating sensors.gpIn[" ^ {global.spindleIndexSense2InNum} ^ "] on pin " ^ {global.spindleIndexSense2Pin} ^ " drawbar position sensor"} L2            ; Log informational event
+    M118 S{"Info: Creating sensors.gpIn[" ^ {global.spindleIndexSense2InNum} ^ "] on pin " ^ {global.spindleIndexSense2Pin} ^ " drawbar position sensor (Tool Loaded)"} L2            ; Log informational event
     M950 J{global.spindleIndexSense2InNum} C{global.spindleIndexSense2Pin}                                                                                              ; Define input
     M118 S{"Info: Activating sensors.gpIn[" ^ {global.spindleIndexSense2InNum} ^ "] will not run a trigger"} L2                                                         ; Log informational event
     M118 S{"Info: Deactivating sensors.gpIn["^ {global.spindleIndexSense2InNum} ^ "] will not run a trigger"} L2                                                        ; Log informational event

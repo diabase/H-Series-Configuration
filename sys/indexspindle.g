@@ -15,8 +15,8 @@ if {global.machineModel} == "H5B"
     var blipSpindleSpeed = 1000
     var blipDuration = 200
 
-    if {param.H} == 0
-        while sensors.gpIn[{global.spindleIndexSense1InNum}].value == 1
+    if {param.H} == 0                                                                                                               ; We've been told there's no tool in the spindle, so use Spindex Sensor 1
+        while sensors.gpIn[{global.spindleIndexSense1InNum}].value == 0                                                             ; spindleIndexSense1 value == 0 means we're still attempting to index, == 1 means we are indexed
             if iterations > 0
                 if {{mod(iterations,5)} == 0}
                     M42 P{global.dbarOutNum} S0                                                                                     ; Turn Drawbar Release Pressure Off
@@ -41,8 +41,8 @@ if {global.machineModel} == "H5B"
                 M291 P{"Warning: Spindle blipped " ^ iterations ^ " times without success."} R"Warning" S3            ; Display a blocking warning with no timeout.
                 ; abort
 
-    if {param.H} == 1
-        while sensors.gpIn[{global.spindleIndexSense2InNum}].value == 1
+    if {param.H} == 1                                                                                                               ; We've been told there is a tool in the spindle, so use Spindex Sensor 2
+        while sensors.gpIn[{global.spindleIndexSense2InNum}].value == 0                                                             ; spindleIndexSense2 value == 0 means we're still attempting to index, == 1 means we are indexed
             if iterations > 0
                 if {{mod(iterations,5)} == 0}
                     M42 P{global.dbarOutNum} S0                                                                                     ; Turn Drawbar Release Pressure Off
