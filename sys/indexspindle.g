@@ -5,23 +5,23 @@
 ;    S: Spindle Number
 ;
 ; Possible Drawbar Clamping States:
-;     | dbar    | spindleIndex  || Drawbar Cylinder | Drawbar Cylinder   || Functional
-;     | Value   | Value         || Clamp Side       | Release Side       || Result
+;     | dbar    | spindleIndex  || Drawbar Cylinder | Drawbar Cylinder          || Functional
+;     | Value   | Value         || Clamp Side       | Release Side              || Result
 ;     ------------------------------------------------------------------------------------------------
-;     | 0       |  0            || High Pressure    | Vented             || Drawbar Fully Clamped
-;     | 0       |  1            || High Pressure    | Low Pressure       || Transitioning to/from Indexing
-;     | 1       |  0            || Vented           | High Pressure      || Drawbar Fully Released
-;     | 1       |  1            || Vented           | Low Pressure       || Currently Indexing
+;     | 0       |  0            || High Pressure    | Throttled Vent            || Drawbar Fully Clamped
+;     | 0       |  1            || High Pressure    | High Pressure             || Drawbar Held at Starting Position
+;     | 1       |  0            || Vented           | Low with Throttled Vent   || Currently Indexing
+;     | 1       |  1            || Vented           | High Pressure             || Drawbar Fully Released
 ;
 ; Written by Diabase Engineering
-; Last Updated: March 09, 2022
+; Last Updated: March 11, 2022
 
 M118 S{"Begin indexspindle.g with parameters H" ^ {param.H} ^ " and S" ^ {param.S} } L3
 
 if {global.machineModel} == "H5B"
-    M42 P{global.spindleIndexOutNum} S1                                                                             ; Toggle Drawbar Release Pressure to Low Pressure
-    G4 P200                                                                                                         ; Dwell 200ms
-    M42 P{global.dbarOutNum} S1                                                                                     ; Toggle Drawbar Clamping Pressure to Vent
+    ; M42 P{global.spindleIndexOutNum} S1                                                                             ; Toggle Drawbar Release Pressure to Low Pressure
+    ; G4 P200                                                                                                         ; Dwell 200ms
+    M42 P{global.dbarOutNum} S1                                                                                     ; Toggle Drawbar Clamping Pressure to Vent and Release Pressure to Low with Throttled Vent
     G4 P1000                                                                                                        ; Dwell 1000ms
     var blipSpindleSpeed = 1000
     var blipDuration = 200
@@ -31,15 +31,15 @@ if {global.machineModel} == "H5B"
             if iterations > 0
                 if {{mod(iterations,5)} == 0}                                                                                       ; Every fifth attempt...
                     M42 P{global.dbarOutNum} S0                                                                                     ; Toggle Drawbar Clamping Pressure to High Pressure
-                    M42 P{global.spindleIndexOutNum} S0                                                                             ; Toggle Drawbar Release Pressure to Primary Solenoid Control (global.dbarOutNum == 0 -> Vent, globaldbarOutNum == 1 -> High) 
+                    ; M42 P{global.spindleIndexOutNum} S0                                                                             ; Toggle Drawbar Release Pressure to Primary Solenoid Control (global.dbarOutNum == 0 -> Vent, globaldbarOutNum == 1 -> High) 
                     G4 P500                                                                                                         ; Dwell 100ms
                     M118 S{"indexspindle.g: Additional blip with drawbar fully clamped on attempt "^iterations ^ " at " ^ var.blipSpindleSpeed ^"RPM"} L3
-                    M3 S{var.blipSpindleSpeed} P{param.S}
-                    G4 P{var.blipDuration}
-                    M5
+                    M3 S{var.blipSpindleSpeed} P{param.S}                                                                           ; Blip spindle
+                    G4 P{var.blipDuration}                                                                                          ; Dwell for {var.blipDuration} ms
+                    M5                                                                                                              ; Stop Spindle
                     G4 P200                                                                                                         ; Dwell 200ms
-                    M42 P{global.spindleIndexOutNum} S1                                                                             ; Toggle Drawbar Release Pressure to Low Pressure
-                    G4 P200                                                                                                         ; Dwell 200ms
+                    ; M42 P{global.spindleIndexOutNum} S1                                                                             ; Toggle Drawbar Release Pressure to Low Pressure
+                    ; G4 P200                                                                                                         ; Dwell 200ms
                     M42 P{global.dbarOutNum} S1                                                                                     ; Toggle Drawbar Clamping Pressure to Vent
                     G4 P500                                                                                                         ; Dwell 500ms
             if iterations = 10
@@ -60,14 +60,15 @@ if {global.machineModel} == "H5B"
             if iterations > 0
                 if {{mod(iterations,5)} == 0}
                     M42 P{global.dbarOutNum} S0                                                                                     ; Toggle Drawbar Clamping Pressure to High Pressure
-                    M42 P{global.spindleIndexOutNum} S0                                                                             ; Toggle Drawbar Release Pressure to Primary Solenoid Control (global.dbarOutNum == 0 -> Vent, globaldbarOutNum == 1 -> High) 
+                    ; M42 P{global.spindleIndexOutNum} S0                                                                             ; Toggle Drawbar Release Pressure to Primary Solenoid Control (global.dbarOutNum == 0 -> Vent, globaldbarOutNum == 1 -> High) 
                     G4 P500                                                                                                         ; Dwell 100ms
                     M118 S{"indexspindle.g: Additional blip with drawbar fully clamped on attempt "^iterations ^ " at " ^ var.blipSpindleSpeed ^"RPM"} L3
-                    M3 S{var.blipSpindleSpeed} P{param.S}
-                    G4 P{var.blipDuration}
-                    M5
-                    M42 P{global.spindleIndexOutNum} S1                                                                             ; Toggle Drawbar Release Pressure to Low Pressure
+                    M3 S{var.blipSpindleSpeed} P{param.S}                                                                           ; Blip spindle
+                    G4 P{var.blipDuration}                                                                                          ; Dwell for {var.blipDuration} ms
+                    M5                                                                                                              ; Stop Spindle
                     G4 P200                                                                                                         ; Dwell 200ms
+                    ; M42 P{global.spindleIndexOutNum} S1                                                                             ; Toggle Drawbar Release Pressure to Low Pressure
+                    ; G4 P200                                                                                                         ; Dwell 200ms
                     M42 P{global.dbarOutNum} S1                                                                                     ; Toggle Drawbar Clamping Pressure to Vent
                     G4 P500                                                                                                         ; Dwell 500ms
             if iterations = 10
@@ -75,10 +76,10 @@ if {global.machineModel} == "H5B"
                 set var.blipDuration = 400
             if iterations < 20
                 M118 S{"indexspindle.g: Spindle blip attempt "^iterations ^ " at " ^ var.blipSpindleSpeed ^"RPM"} L3
-                M3 S{var.blipSpindleSpeed} P{param.S}
-                G4 P{var.blipDuration}
-                M5
-                G4 P200
+                M3 S{var.blipSpindleSpeed} P{param.S}                                                                           ; Blip spindle
+                G4 P{var.blipDuration}                                                                                          ; Dwell for {var.blipDuration} ms
+                M5                                                                                                              ; Stop Spindle
+                G4 P200                                                                                                         ; Dwell 200ms
             else
                 M291 P{"Warning: Spindle blipped " ^ iterations ^ " times without success."} R"Warning" S3            ; Display a blocking warning with no timeout.
                 ; abort

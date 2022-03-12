@@ -4,7 +4,7 @@
 ; state.previousTool is the just-freed tool 
 ; state.currentTool is -1
 ; state.nextTool is the upcoming tool
-; Last Updated: March 09, 2022
+; Last Updated: March 11, 2022
 
 M118 S{"Begin tpre-universal.g"} L3
 
@@ -73,7 +73,10 @@ elif {global.machineModel} == "H5B"
         if {{state.nextTool} >= 11}
             G90                                                                                                             ; Absolute Positioning
             G1 B{-tools[{state.nextTool}].offsets[6]} F30000                                                                ; Move tool changer to position for upcoming tool
-            if state.gpOut[{global.dbarOutNum}].pwm == 0                                                                    ; If drawbar release pressure is off
+            if state.gpOut[{global.dbarOutNum}].pwm == 0                                                                    ; If drawbar clamp pressure is high
+                var spindleNum = tools[state.nextTool].spindle
+                M98 P"indexspindle.g" H0 S{var.spindleNum}                                                                      ; Call indexspindle.g
+            elif state.gpOut[global.spindleIndexOutNum].pwm == 0                                                            ; Else if drawbar release pressure is low or throttled vent
                 var spindleNum = tools[state.nextTool].spindle
                 M98 P"indexspindle.g" H0 S{var.spindleNum}                                                                      ; Call indexspindle.g
 
@@ -85,7 +88,7 @@ elif {global.machineModel} == "H5B"
                 M400
                 M98 P"lock_turret.g"                                                                                        ; Lock turret
             if state.gpOut[global.dbarOutNum].pwm == 1
-                M42 P{global.spindleIndexOutNum} S0                                                                                 ; Toggle Drawbar Release Pressure High
+                M42 P{global.spindleIndexOutNum} S1                                                                                 ; Toggle Drawbar Release Pressure High
             else
                 abort "Error: Drawbar clamping pressure not released. Contact Diabase Support."
             G53 G1 Z{move.axes[2].max} F10000                                                                               ; Move Z to ZMax quickly
@@ -97,7 +100,8 @@ elif {global.machineModel} == "H5B"
                 abort
             M42 P{global.tCToolReleaseOutNum} S1                                                                            ; Extend the tool changer release piston
             G4 P500                                                                                                         ; Dwell for 500 ms
-            M42 P{global.dbarOutNum} S0                                                                                     ; Turn Drawbar Release Pressure Off (Fully clamp drawbar)
+            M42 P{global.dbarOutNum} S0                                                                                     ; Toggle Drawbar Clamping Pressure to High Pressure
+            M42 P{global.spindleIndexOutNum} S0                                                                             ; Toggle Drawbar Release Pressure to Throttled Vent
             
             ; Reduce z-axis maximum current for tool retrieval move in case tool changer fails to release
             M118 S{"Normal Max Z Motor Current is "^move.axes[2].current^ "mA. Reducing by 50%."} L3

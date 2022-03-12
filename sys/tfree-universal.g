@@ -4,7 +4,7 @@
 ; state.previousTool is now the tool being freed
 ; state.currentTool is still the tool being freed
 ; state.nextTool is the upcoming tool
-; Last Updated: March 09, 2022
+; Last Updated: March 11, 2022
 
 M118 S{"Begin tfree-universal.g"} L3
 
@@ -57,7 +57,7 @@ if {global.machineModel} == "H5B"
             M291 P{"Z High switch is not triggered. Z might have crashed. Z brake engaged. We will now e-stop."}  R"Not high enough." S2
             M98 P"estop.g"                                                                                                  ; Call estop.g
         if state.gpOut[global.dbarOutNum].pwm == 1
-            M42 P{global.spindleIndexOutNum} S0                                                                                 ; Toggle Drawbar Release Pressure High
+            M42 P{global.spindleIndexOutNum} S1                                                                                 ; Toggle Drawbar Release Pressure High
         else
             abort "Error: Drawbar clamping pressure not released. Contact Diabase Support."
         G4 P500                                                                                                         ; Dwell for 500 ms
@@ -77,10 +77,8 @@ if {global.machineModel} == "H5B"
         M400                                                                                                            ; Wait for any current moves to finish
         G53 G1 H1 Z{move.axes[var.zAxisIndex].machinePosition + 5} F1000                                                ; Attempt to move Z +5mm at 1000 mm/min, but halt when endstop triggered and set axis position to axis limit as defined by previous M208 or G1 H3 special move
         if {{state.nextTool} < 11}
-            if state.gpOut[global.spindleIndexOutNum].pwm == 0
-                M42 P{global.dbarOutNum} S0                                                                                     ; Toggle Drawbar Clamping Pressure to High Pressure
-            else
-                abort "Error: Drawbar release pressure held low. Contact Diabase Support."
+            M42 P{global.dbarOutNum} S0                                                                                     ; Toggle Drawbar Clamping Pressure to High Pressure
+            M42 P{global.spindleIndexOutNum} S0                                                                             ; Toggle Drawbar Release Pressure to Throttled Vent
 
 set global.tFreeComplete = 1
 
