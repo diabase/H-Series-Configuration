@@ -4,7 +4,7 @@
 ; state.previousTool is the just-freed tool 
 ; state.currentTool is -1
 ; state.nextTool is the upcoming tool
-; Last Updated: March 11, 2022
+; Last Updated: March 14, 2022
 
 M118 S{"Begin tpre-universal.g"} L3
 
@@ -101,6 +101,7 @@ elif {global.machineModel} == "H5B"
             M42 P{global.tCToolReleaseOutNum} S1                                                                            ; Extend the tool changer release piston
             G4 P500                                                                                                         ; Dwell for 500 ms
             M42 P{global.dbarOutNum} S0                                                                                     ; Toggle Drawbar Clamping Pressure to High Pressure
+            G4 P1000                                                                                                         ; Dwell for 1000 ms
             M42 P{global.spindleIndexOutNum} S0                                                                             ; Toggle Drawbar Release Pressure to Throttled Vent
             
             ; Reduce z-axis maximum current for tool retrieval move in case tool changer fails to release
