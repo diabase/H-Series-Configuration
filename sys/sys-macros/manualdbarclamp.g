@@ -17,6 +17,7 @@ M118 S{"Info: Begin manualdbarclamp.g"} L2
 
 if {global.machineModel} == "H5B"
     M42 P{global.dbarOutNum} S0             ; Toggle Drawbar Clamp Pressure High
+    G4 P1000                                ; Dwell for 1000 ms
     M42 P{global.spindleIndexOutNum} S0     ; Toggle Drawbar Release Pressure Throttled Vent
 
 M118 S{"Info: End manualdbarclamp.g"} L2
