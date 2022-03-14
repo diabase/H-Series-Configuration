@@ -14,7 +14,7 @@
 ;   - Automatically looping create-tool.g for variable-defined tools
 ; TODO: Revisit when spindles aren't all automatically created. - RT
 ; Written by Diabase Engineering
-; Last Updated: March 11, 2022
+; Last Updated: March 14, 2022
 
 M118 S{"Info: Begin tcreate-universal.g"} L2
 
@@ -95,10 +95,11 @@ if global.e5TempIndex == -1
 M98 P"create-tool.g" T5 Y{global.toolType5} S{global.e5TempPin} N{global.e5TempIndex} H{global.eHeat5Pin} R{global.e5HeatIndex} E{global.e5Drive} F{global.fA5Drive}
 
 ; Probe
-if {global.machineModel} == "H4" || {global.machineModel} == "H5A"
-    set global.zProbeToolNum = 10
-elif {global.machineModel} == "H5B"
-    set global.zProbeToolNum = 1
+if global.zProbeToolNum == -1
+    if {global.machineModel} == "H4" || {global.machineModel} == "H5A"
+        set global.zProbeToolNum = 10
+    elif {global.machineModel} == "H5B"
+        set global.zProbeToolNum = 1
 
 M98 P"create-tool.g" T{global.zProbeToolNum} Y"Probe"
 
