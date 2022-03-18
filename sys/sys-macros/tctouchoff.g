@@ -3,7 +3,7 @@
 ; Parameters:
 ;    I: Wait for user confirmation that the tool is in position for touchoff? (0 - Don't wait, 1 - Wait)
 ; Written by Diabase Engineering
-; Last Updated: February 17, 2022
+; Last Updated: March 16, 2022
 
 M118 S{"Debug: Begin tctouchoff.g"} L3
 
@@ -57,10 +57,10 @@ if {global.machineModel} == "H5B"
         if state.currentTool == global.zProbeToolNum
             M574 Z2 S1 P{global.zSwitchPin}                                                                             ; Configure Z endstop position at high end, it's an optical interrupt on pin defined in defaultparameters.g
             M558 K0                                                                                                     ; Read the current parameters for probe 0 into the event log
-            var existingProbeSpeed0 = sensors.probes[0].speeds[0]                                                       ; Save the current probe speed in a temporary variable
-            M118 S{"existingProbeSpeed0 set to "^var. existingProbeSpeed0} L3
-            var existingProbeSpeed1 = sensors.probes[0].speeds[1]                                                       ; Save the current probe speed in a temporary variable
-            M118 S{"existingProbeSpeed1 set to "^var. existingProbeSpeed1} L3
+            var existingProbeSpeed0 = {{sensors.probes[0].speeds[0]}*60}                                                ; Save the current probe speed in a temporary variable
+            M118 S{"existingProbeSpeed0 set to "^var.existingProbeSpeed0} L3
+            var existingProbeSpeed1 = {{sensors.probes[0].speeds[1]}*60}                                                ; Save the current probe speed in a temporary variable
+            M118 S{"existingProbeSpeed1 set to "^var.existingProbeSpeed1} L3
             var lastProbingOverTravel = -1                                                                              ; Initialize lastProbingOverTravel
             var thisProbingOverTravel = -1                                                                              ; Initialize thisProbingOverTravel
 
@@ -71,7 +71,9 @@ if {global.machineModel} == "H5B"
                 abort
 
             set global.keepProbeDeployed = 1                                                                            ; We don't want the probe to retract between probing attempts
+            M118 S{"Setting probe feed rate to 1000 for initial fast probe. All parameters for this probe should follow on the next line."} L3
             M558 K0 P8 C{global.zProbePin} H2 F1000 T10000                                                              ; Override default probe parameters for initial fast probe
+            M558 K0                                                                                                     ; Read the current parameters for probe 0 into the event log
             G38.2 Z{{move.axes[2].max}+40} K0                                                                           ; Attempt to probe straight up, above ZMax by 40 mm
             set var.thisProbingOverTravel = {{move.axes[2].machinePosition}-{move.axes[2].max}}                         ; Save distance traveled beyond ZMax to temporary variable
             set global.probeOverTravelTCTouchOff = var.thisProbingOverTravel                                            ; Save distance traveled beyond ZMax to global variable
@@ -82,8 +84,9 @@ if {global.machineModel} == "H5B"
             G90                                                                                                         ; Absolute positioning
             
             set var.lastProbingOverTravel = var.thisProbingOverTravel                                                   ; Move previous distance traveled into temporary variable for comparison
+            M118 S{"Setting probe feed rate to 150 for secondary slow probe. All parameters for this probe should follow on the next line."} L3
             M558 K0 P8 C{global.zProbePin} H2 F150 T10000                                                               ; Override default probe parameters for slow, accurate probe
-            
+            M558 K0
             G38.2 K0 Z{{move.axes[2].max}+40}                                                                           ; Attempt to probe straight up, above ZMax by 40 mm
             set var.thisProbingOverTravel = {{move.axes[2].machinePosition}-{move.axes[2].max}}                         ; Save distance traveled beyond ZMax to temporary variable
             set global.probeOverTravelTCTouchOff = var.thisProbingOverTravel                                            ; Save distance traveled beyond ZMax to global variable
@@ -91,14 +94,19 @@ if {global.machineModel} == "H5B"
             M118 S{"Debug: tctouchoff.g: Fine probe triggered at Z"^ {move.axes[2].machinePosition} ^". Probe overtravel saved as " ^ {global.probeOverTravelTCTouchOff}} L3
             M118 S{"Debug: tctouchoff.g: Variance between coarse and fine probe was " ^{{var.thisProbingOverTravel}-{var.lastProbingOverTravel}}} L3
             set global.keepProbeDeployed = 0                                                                            ; Allow the probe to retract again
+            M118 S{"existingProbeSpeed0 is currently "^var.existingProbeSpeed0} L3
+            M118 S{"existingProbeSpeed1 is currently "^var.existingProbeSpeed1} L3
+            M118 S{"Returning probe feedrate to saved values. All parameters for this probe should follow on the next line."} L3
             M558 K0 P8 C{global.zProbePin} H2 F{var.existingProbeSpeed0}:{var.existingProbeSpeed1} T10000 
             M558 K0                                                                                                     ; Read the current parameters for probe 0 into the event log
             M574 Z1 S2                                                                                                  ; Set Z endstop position to low end and configure as Z probe
 
         else
             M558 K2                                                                                                     ; Record the current parameters for probe 2 (tool changer touchoff plate)
-            var existingProbeSpeed0 = sensors.probes[2].speeds[0]                                                       ; Save the current probe speed in a temporary variable
-            var existingProbeSpeed1 = sensors.probes[2].speeds[1]                                                       ; Save the current probe speed in a temporary variable
+            var existingProbeSpeed0 = {{sensors.probes[2].speeds[0]}*60}                                                       ; Save the current probe speed in a temporary variable
+            M118 S{"existingProbeSpeed0 set to "^var.existingProbeSpeed0} L3
+            var existingProbeSpeed1 = {{sensors.probes[2].speeds[1]}*60}                                                       ; Save the current probe speed in a temporary variable
+            M118 S{"existingProbeSpeed1 set to "^var.existingProbeSpeed1} L3
             var lastProbingOverTravel = -1                                                                              ; Initialize lastProbingOverTravel
             var thisProbingOverTravel = -1                                                                              ; Initialize thisProbingOverTravel
             if {param.I} == 1
