@@ -24,6 +24,16 @@ M574 Z2 S1 P{global.zSwitchPin} ; Configure Z endstop position at high end, it's
 M5                              ; Turn off all spindles
 
 if {global.machineModel} == "H5B"
+    ; Temporarily disable movement compensation for tool changes
+    if move.compensation.type == "mesh"
+        set global.moveCompStatus = 1
+        set global.moveCompFile = move.compensation.file
+        G29 S0
+    elif move.compensation.type == "none"
+        set global.moveCompStatus = 0
+    else
+        M118 S{"tpre-universal.g: Unexpected move.compensation.type ("^move.compensation.type} L1
+
     if {{state.currentTool} >= 11}
         ; Find Z-Axis Index
         var zAxisIndex = -1
