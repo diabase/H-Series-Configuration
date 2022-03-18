@@ -10,7 +10,7 @@ M118 S{"Begin tpre-universal.g"} L3
 
 if global.tFreeComplete = 0
     M118 S{"tpre-universal.g: tfree didn't finish last time. Aborting tpre-universal.g"} L1
-    abort
+    abort "tpre-universal.g: tfree didn't finish last time. Aborting tpre-universal.g"
 
 if global.tPreComplete = 0
     M118 S{"tpre-universal.g: tpre didn't finish last time. Resetting status flag and trying again."} L1
@@ -101,7 +101,7 @@ elif {global.machineModel} == "H5B"
             M42 P{global.tCToolReleaseOutNum} S1                                                                            ; Extend the tool changer release piston
             G4 P500                                                                                                         ; Dwell for 500 ms
             M42 P{global.dbarOutNum} S0                                                                                     ; Toggle Drawbar Clamping Pressure to High Pressure
-            G4 P1000                                                                                                         ; Dwell for 1000 ms
+            G4 P1000                                                                                                         ; Dwell for 1000 ms to allow the release-side of the drawbar cylinder time to vent
             M42 P{global.spindleIndexOutNum} S0                                                                             ; Toggle Drawbar Release Pressure to Throttled Vent
             
             ; Reduce z-axis maximum current for tool retrieval move in case tool changer fails to release
