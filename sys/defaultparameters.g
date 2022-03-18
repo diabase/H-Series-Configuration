@@ -607,9 +607,9 @@ else
     set global.zProbePin = "io5.in"
 
 if !{exists(global.zProbeToolNum)}
-    global zProbeToolNum = 10
+    global zProbeToolNum = -1
 else
-    set global.zProbeToolNum = 10
+    set global.zProbeToolNum = -1
 
 if !{exists(global.touchOffPlatePin)}
     global touchOffPlatePin = "io7.in"
