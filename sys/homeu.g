@@ -4,7 +4,7 @@
 ; Last Updated: January 26, 2022
 ; TODO: Save current WCS, switch to G54 for homing, return to saved WCS
 
-M118 S{"Debug: Begin homeu.g"} L3
+M118 S{"Begin homeu.g"} L3
 
 if {global.machineModel} == "H5B"
         if sensors.gpIn[{global.airPressureInNum}].value == 0
@@ -65,4 +65,4 @@ while iterations < #tools
 T{global.zProbeToolNum} P0                ; Select Probe P0
 M401 P0                                   ; Deploy Probe
 
-M118 S{"Debug: End homeu.g"} L3
+M118 S{"End homeu.g"} L3

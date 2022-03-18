@@ -45,7 +45,7 @@ if {global.machineModel} == "H4" || {global.machineModel} == "H5A"
             M400 ; Wait for all moves to finish
 
         elif move.axes[2].machinePosition == {move.axes[2].max -40} ; If we're already at the safe z position for a tool change...
-            M118 S{"Debug: Already at safe z position for tool change."} L3     ; ... do nothing
+            M118 S{"tpre-universal.g: Already at safe z position for tool change."} L3     ; ... do nothing
         M400
         M98 P"unlock_turret.g" ; Call unlock_turret.g
         G90 ; Absolute Positioning
@@ -81,7 +81,7 @@ elif {global.machineModel} == "H5B"
                 M98 P"indexspindle.g" H0 S{var.spindleNum}                                                                      ; Call indexspindle.g
 
             if {abs({move.axes[3].machinePosition}-{{-tools[{state.nextTool}].offsets[3]}+180}) > 1.0}                       ; If the turret isn't already pointing the spindle within 1 degree of the tool changer...
-                M118 S{"Debug: Current turret position is " ^ move.axes[3].machinePosition ^ " and we need it to be " ^ {{-tools[{state.nextTool}].offsets[3]}+180}} L3
+                M118 S{"Current turret position is " ^ move.axes[3].machinePosition ^ " and we need it to be " ^ {{-tools[{state.nextTool}].offsets[3]}+180}} L3
                 M400
                 M98 P"unlock_turret.g"                                                                                      ; Call unlock_turret.g
                 G1 U{{-tools[{state.nextTool}].offsets[3]}+180} F10000                                                      ; Rotate turret to point the spindle at the tool changer
@@ -96,8 +96,8 @@ elif {global.machineModel} == "H5B"
             M400                                                                                                            ; Wait for all moves to finish
             if sensors.gpIn[{global.zHighInNum}].value == 0
                 M98 P"engagezbrake.g"
-                M291 P{"Z High switch is not triggered. Z might have crashed. Z brake engaged. We will now abort."}  R"Not high enough." S2
-                abort
+                ; M291 P{"Z High switch is not triggered. Z might have crashed. Z brake engaged. We will now abort."}  R"Not high enough." S2
+                abort "Z High switch is not triggered. Z might have crashed. Z brake engaged."
             M42 P{global.tCToolReleaseOutNum} S1                                                                            ; Extend the tool changer release piston
             G4 P500                                                                                                         ; Dwell for 500 ms
             M42 P{global.dbarOutNum} S0                                                                                     ; Toggle Drawbar Clamping Pressure to High Pressure

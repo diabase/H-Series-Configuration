@@ -3,7 +3,7 @@
 ; Written by Diabase Engineering
 ; Last Updated: January 26, 2022
 
-M118 S{"Debug: Begin homeall.g"} L3
+M118 S{"Begin homeall.g"} L3
 
 if {global.machineModel} == "H5B"
         if sensors.gpIn[{global.airPressureInNum}].value == 0
@@ -116,4 +116,4 @@ while iterations < #tools
 T{global.zProbeToolNum} P0                ; Select Probe P0
 M401 P0                                   ; Deploy Probe
 
-M118 S{"Debug: End homeall.g"} L3
+M118 S{"End homeall.g"} L3
