@@ -14,7 +14,7 @@
 ;   - Automatically looping create-tool.g for variable-defined tools
 ; TODO: Revisit when spindles aren't all automatically created. - RT
 ; Written by Diabase Engineering
-; Last Updated: March 14, 2022
+; Last Updated: March 18, 2022
 
 M118 S{"Info: Begin tcreate-universal.g"} L2
 
@@ -226,6 +226,12 @@ if {global.machineModel} == "H5B"
     M950 J{global.spindleIndexSense2InNum} C{global.spindleIndexSense2Pin}                                                                                              ; Define input
     M118 S{"Info: Activating sensors.gpIn[" ^ {global.spindleIndexSense2InNum} ^ "] will not run a trigger"} L2                                                         ; Log informational event
     M118 S{"Info: Deactivating sensors.gpIn["^ {global.spindleIndexSense2InNum} ^ "] will not run a trigger"} L2                                                        ; Log informational event
+    if global.dbarReleaseSenseInNum == -1
+        set global.dbarReleaseSenseInNum = #sensors.gpIn
+    M118 S{"Info: Creating sensors.gpIn[" ^ {global.dbarReleaseSenseInNum} ^ "] on pin " ^ {global.dbarReleaseSensePin} ^ " drawbar position sensor (Tool Released)"} L2    ; Log informational event
+    M950 J{global.dbarReleaseSenseInNum} C{global.dbarReleaseSensePin}                                                                                                      ; Define input
+    M118 S{"Info: Activating sensors.gpIn[" ^ {global.dbarReleaseSenseInNum} ^ "] will not run a trigger"} L2                                                               ; Log informational event
+    M118 S{"Info: Deactivating sensors.gpIn["^ {global.dbarReleaseSenseInNum} ^ "] will not run a trigger"} L2                                                              ; Log informational event
 
     ; Toolchanger Tool Release
     if global.tCToolReleaseOutNum == -1
