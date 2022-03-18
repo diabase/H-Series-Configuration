@@ -1271,4 +1271,29 @@ if !{exists(global.dbarReleaseSenseInNum)}
 else
     set global.dbarReleaseSenseInNum = -1
 
+if !{exists(global.spinTempNum)}
+    global spinTempNum = -1
+else
+    set global.spinTempNum = -1
+
+if !{exists(global.spinTemp)}
+    global spinTemp = -273.15
+else
+    set global.spinTemp = -273.15
+
+if !{exists(global.spinTempPin)}
+    global spinTempPin = "0.temp2"
+else
+    set global.spinTempPin = "0.temp2"
+
+if !{exists(global.spinTempTime)}
+    global spinTempTime = 0
+else
+    set global.spinTempTime = 0
+
+if !{exists(global.spinTempTimeInterval)}
+    global spinTempTimeInterval = 30
+else
+    set global.spinTempTimeInterval = 30
+
 M118 S"End defaultparameters.g" L2

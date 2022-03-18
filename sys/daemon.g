@@ -1,7 +1,7 @@
 ; daemon.g
 ; This macro runs in the background every 10 seconds
 ; Written by Diabase Engineering
-; Last Updated: January 14, 2022
+; Last Updated: March 18, 2022
 
 ; Log UMot Temperature every 30 seconds when machine not idle
 if {{global.uMotTempNum} != -1}
@@ -11,6 +11,15 @@ if {{global.uMotTempNum} != -1}
             set global.uMotTemp = sensors.analog[{global.uMotTempNum}].lastReading
             M118 S{"Info: UMot Temperature was "^{global.uMotTemp}^" at "^{global.uMotTempTime}} L2
             M118 S{global.uMotTemp} L2
+
+; Log Spindle Temperature every 30 seconds when spindle not stopped
+if {{global.spinTempNum} != -1}
+    if spindles[0].state != "stopped"
+        if {state.upTime >= {{global.spinTempTime} + {global.spinTempTimeInterval}}}}
+            set {global.spinTempTime} = state.upTime
+            set global.spinTemp = sensors.analog[{global.spinTempNum}].lastReading
+            M118 S{"Info: Spindle Temperature was "^{global.spinTemp}^" at "^{global.spinTempTime}} L2
+            M118 S{global.spinTemp} L2
 
 ; Set Status LED Color Depending on Homed State
 if {global.machineModel} == "H5B"

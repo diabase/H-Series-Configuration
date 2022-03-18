@@ -256,6 +256,12 @@ if {exists(global.uMotTempPin)}
     M118 S{"Info: Creating sensors.analog[" ^ {global.uMotTempNum} ^ "] on pin " ^ {global.uMotTempPin} ^ " for measuring U-axis motor temperature"} L2 ; Log informational event
     M308 S{global.uMotTempNum} P{global.uMotTempPin} Y"thermistor" T100000 B3950 C0 A"UMot Temp"
 
+if {exists(global.spinTempPin)}
+    if global.spinTempNum == -1
+        set global.spinTempNum = #sensors.analog
+    M118 S{"Info: Creating sensors.analog[" ^ {global.spinTempNum} ^ "] on pin " ^ {global.spinTempPin} ^ " for measuring spindle temperature"} L2 ; Log informational event
+    M308 S{global.spinTempNum} P{global.spinTempPin} Y"thermistor" T100000 B3950 C0 A"Spindle Temp"
+
 set global.tCreateLastRun = state.upTime
 
 M118 S{"Info: End tcreate-universal.g"} L2
