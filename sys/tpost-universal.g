@@ -4,7 +4,7 @@
 ; state.previousTool is the just-freed tool 
 ; state.currentTool is the upcoming tool
 ; state.nextTool is the upcoming tool
-; Last Updated: March 02, 2022
+; Last Updated: March 18, 2022
 
 M118 S{"Begin tpost-universal.g"} L3
 
@@ -57,6 +57,14 @@ if state.previousTool != -1                                                     
 
 if {global.machineModel} == "H5B"
     M582 T{global.airPressureLowTrigger}                                                                                                            ; Check incoming air pressure
+
+    ; Restore movement compensation active at beginning of tool change
+    if global.moveCompStatus == 1
+        G29 S1 P{global.moveCompFile}
+        set global.moveCompStatus = -1
+    elif global.moveCompStatus == 0
+        G29 S0
+        set global.moveCompStatus = -1
 
 set global.tPostComplete = 1
 

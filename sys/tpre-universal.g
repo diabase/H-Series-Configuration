@@ -55,6 +55,16 @@ if {global.machineModel} == "H4" || {global.machineModel} == "H5A"
         M98 P"lock_turret.g" ; Call lock_turret.g
 
 elif {global.machineModel} == "H5B"
+    ; Temporarily disable movement compensation for tool changes
+    if move.compensation.type == "mesh"
+        set global.moveCompStatus = 1
+        set global.moveCompFile = move.compensation.file
+        G29 S0
+    elif move.compensation.type == "none"
+        set global.moveCompStatus = 0
+    else
+        M118 S{"tpre-universal.g: Unexpected move.compensation.type ("^move.compensation.type} L1
+
     ; Only perform machine moves if we need to change the turret position
     if {move.axes[3].machinePosition != -tools[{state.nextTool}].offsets[3] || {state.nextTool} >= 11}
         M400                                                                    ; Wait for all moves to finish

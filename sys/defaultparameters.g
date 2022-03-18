@@ -1296,4 +1296,14 @@ if !{exists(global.spinTempTimeInterval)}
 else
     set global.spinTempTimeInterval = 30
 
+if !{exists(global.moveCompStatus)}
+    global moveCompStatus = -1
+else
+    set global.moveCompStatus = -1
+
+if !{exists(global.moveCompFile)}
+    global moveCompFile = "0:/sys/heightmap.csv"
+else
+    set global.moveCompFile = "0:/sys/heightmap.csv"
+
 M118 S"End defaultparameters.g" L2
