@@ -93,7 +93,7 @@ elif {global.machineModel} == "H5B"
             else
                 abort "Error: Drawbar clamping pressure not released. Contact Diabase Support."
             G53 G1 Z{move.axes[2].max} F10000                                                                               ; Move Z to ZMax quickly
-            G53 G1 Z{{move.axes[2].max}+{global.tCOvertravelGetTool}} H2 F3000                                              ; Move Z beyond ZMax ignoring endstops
+            G53 G1 Z{{move.axes[2].max}+{global.tCOvertravelPutTool}-0.5} H2 F3000                                          ; Move Z beyond ZMax ignoring endstops
             M400                                                                                                            ; Wait for all moves to finish
             if sensors.gpIn[{global.zHighInNum}].value == 0
                 M98 P"engagezbrake.g"

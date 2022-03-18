@@ -1196,11 +1196,6 @@ if !{exists(global.probeOverTravelTCTouchOff)}
 else
     set global.probeOverTravelTCTouchOff = -1
 
-if !{exists(global.tCOvertravelGetTool)}
-    global tCOvertravelGetTool = 31.5 ; The distance to move above ZMax when retrieving a tool from the tool changer.
-else
-    set global.tCOvertravelGetTool = 31.5
-
 if !{exists(global.tCOvertravelPutTool)}
     global tCOvertravelPutTool = 32 ; The distance to move above ZMax when returning a tool to the tool changer.
 else
