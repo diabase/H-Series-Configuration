@@ -63,7 +63,6 @@ if {global.machineModel} == "H5B"
         G29 S1 P{global.moveCompFile}
         set global.moveCompStatus = -1
     elif global.moveCompStatus == 0
-        G29 S0
         set global.moveCompStatus = -1
 
 set global.tPostComplete = 1
