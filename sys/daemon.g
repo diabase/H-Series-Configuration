@@ -15,10 +15,10 @@ if {{global.uMotTempNum} != -1}
 ; Log Spindle Temperature every 30 seconds when spindle not stopped
 if {{global.spinTempNum} != -1}
     if spindles[0].state != "stopped"
-        if {state.upTime >= {{global.spinTempTime} + {global.spinTempTimeInterval}}}}
-            set {global.spinTempTime} = state.upTime
+        if {state.upTime >= {{global.spinTempTime} + {global.spinTempTimeInterval}}}
+            set global.spinTempTime = state.upTime
             set global.spinTemp = sensors.analog[{global.spinTempNum}].lastReading
-            M118 S{"Info: Spindle Temperature was "^{global.spinTemp}^" at "^{global.spinTempTime}} L2
+            M118 S{"Info: Spindle Temperature was "^global.spinTemp^" at "^global.spinTempTime} L2
             M118 S{global.spinTemp} L2
 
 ; Set Status LED Color Depending on Homed State
