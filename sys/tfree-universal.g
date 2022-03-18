@@ -21,7 +21,11 @@ if global.tPostComplete = 0
 M453                            ; Switch to CNC mode
 M402 P0                         ; Retract Probe
 M574 Z2 S1 P{global.zSwitchPin} ; Configure Z endstop position at high end, it's a microswitch on pin defined in defaultparameters.g
-M5                              ; Turn off all spindles
+
+while iterations < #spindles
+    if spindles[iterations].state != "stopped"
+        M5 P{iterations}                ; Turn this spindle off
+        G4 P1000                        ; Dwell for 1000 ms to allow it time to stop
 
 if {global.machineModel} == "H5B"
     ; Temporarily disable movement compensation for tool changes
