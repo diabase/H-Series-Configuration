@@ -1,7 +1,7 @@
 ; homeall.g
 ; Called to home all axes
 ; Written by Diabase Engineering
-; Last Updated: January 26, 2022
+; Last Updated: March 18, 2022
 
 M118 S{"Begin homeall.g"} L3
 
@@ -78,14 +78,14 @@ if {global.machineModel} == "H5B"
     M98 P"unlock_turret.g" ; Call unlock_turret.g
     M915 U R0 ; Configure stall detection for U axis to take no action when a stall is detected
     G4 P100 ; Dwell for 100 ms
-    G1 H1 U5 F6000
-    G1 H1 U-10 F6000
-    G1 H1 U10 F6000
-    G1 H1 U-10 F6000
-    G1 H1 U10 F6000
-    G1 H1 U-5 F6000
-    M400
-    G4 P100 ; Dwell for 100 ms
+    ; G1 H1 U5 F6000
+    ; G1 H1 U-10 F6000
+    ; G1 H1 U10 F6000
+    ; G1 H1 U-10 F6000
+    ; G1 H1 U10 F6000
+    ; G1 H1 U-5 F6000
+    ; M400
+    ; G4 P100 ; Dwell for 100 ms
     G1 H1 U-380 F6000                   ; Attempt to move U -380mm at 6000 mm/min, but halt when endstop triggered and set axis position to axis limit as defined by previous M208 or G1 H3 special move
     G1 H2 U2 F6000                      ; Move U +2mm at 6000 mm/min, ignoring endstops and axis limits while moving
     G1 H1 U-4 F1000                     ; Attempt to move -4mm at 1000 mm/min, but halt when endstop triggered and set axis position to axis limit as defined by previous M208 or G1 H3 special move

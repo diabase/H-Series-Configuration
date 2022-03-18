@@ -4,7 +4,7 @@
 ; state.previousTool is the just-freed tool 
 ; state.currentTool is -1
 ; state.nextTool is the upcoming tool
-; Last Updated: March 14, 2022
+; Last Updated: March 18, 2022
 
 M118 S{"Begin tpre-universal.g"} L3
 
@@ -115,16 +115,16 @@ elif {global.machineModel} == "H5B"
             M400                                                                                                            ; Wait for any current moves to finish
         if global.dontRotate != 1
             M98 P"unlock_turret.g" ; Call unlock_turret.g
-            if {{state.nextTool} >= 11}
-                M118 S{"tpre-universal.g: state.nextTool >= 11, so performing u-axis jitter"} L3
-                G91                                                                                                             ; Relative Positioning
-                G0 U-2 F10000                                                                                                    ; Jitter turret to walk onto bearing
-                G0 U2  F10000                                                                                                    ; Jitter turret to walk onto bearing
-                G0 U-4 F10000                                                                                                    ; Jitter turret to walk onto bearing
-                G0 U4  F10000                                                                                                    ; Jitter turret to walk onto bearing
-                G0 U-6 F10000                                                                                                    ; Jitter turret to walk onto bearing
-                G0 U6  F10000                                                                                                    ; Jitter turret to walk onto bearing
-            G90                                                                                                             ; Absolute Positioning
+            ; if {{state.nextTool} >= 11}
+            ;    M118 S{"tpre-universal.g: state.nextTool >= 11, so performing u-axis jitter"} L3
+            ;     G91                                                                                                             ; Relative Positioning
+            ;     G0 U-2 F10000                                                                                                    ; Jitter turret to walk onto bearing
+            ;     G0 U2  F10000                                                                                                    ; Jitter turret to walk onto bearing
+            ;     G0 U-4 F10000                                                                                                    ; Jitter turret to walk onto bearing
+            ;     G0 U4  F10000                                                                                                    ; Jitter turret to walk onto bearing
+            ;     G0 U-6 F10000                                                                                                    ; Jitter turret to walk onto bearing
+            ;     G0 U6  F10000                                                                                                    ; Jitter turret to walk onto bearing
+            ; G90                                                                                                             ; Absolute Positioning
             if {{state.nextTool} >= 11}
                 M118 S{"tpre-universal.g: Moving to U position for next tool and ZMax"} L3
                 G53 G1 U{-tools[{state.nextTool}].offsets[3]} Z{move.axes[2].max} F10000                                        ; Rotate turret to active position for new tool and move up to ZMax
