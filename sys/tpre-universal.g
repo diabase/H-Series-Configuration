@@ -4,7 +4,7 @@
 ; state.previousTool is the just-freed tool 
 ; state.currentTool is -1
 ; state.nextTool is the upcoming tool
-; Last Updated: March 18, 2022
+; Last Updated: March 21, 2022
 
 M118 S{"Begin tpre-universal.g"} L3
 
@@ -97,7 +97,7 @@ elif {global.machineModel} == "H5B"
             M400                                                                                                            ; Wait for all moves to finish
             if sensors.gpIn[{global.zHighInNum}].value == 0
                 M98 P"engagezbrake.g"
-                ; M291 P{"Z High switch is not triggered. Z might have crashed. Z brake engaged. We will now abort."}  R"Not high enough." S2
+                M291 P{"Z High switch is not triggered. Z might have crashed. Z brake engaged. We will now abort."}  R"Not high enough." S2
                 abort "Z High switch is not triggered. Z might have crashed. Z brake engaged."
             M42 P{global.tCToolReleaseOutNum} S1                                                                            ; Extend the tool changer release piston
             G4 P500                                                                                                         ; Dwell for 500 ms
