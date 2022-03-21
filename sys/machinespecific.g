@@ -2,7 +2,7 @@
 ; Configuration parameters specific to this individual H-Series machine.
 ; Produced by Diabase H-Series Configurizer
 ; Written by Diabase Engineering
-; Last Updated: March 17, 2022
+; Last Updated: March 21, 2022
 
 M118 S{"Info: Begin machinespecific.g"} L2
 
@@ -12,7 +12,6 @@ if {exists(global.machineName)}
 set global.machineModel = "H5B"
 set global.uMin = -4.5                          ; On March 5, 2022, AR reverted this value to -4.5 to support this machine's probe being loaded in tool position 10
 set global.bMin = -214.5                        ; Set by AR on 3/15/2022
-set global.tCOvertravelGetTool = 34.5           ; Set by AR on 3/12/2022
 set global.tCOvertravelPutTool = 34.5           ; Set by AR on 3/12/2022
 set global.zProbeToolNum = 10                   ; On March 14, 2022, RT set this value to 10
 
