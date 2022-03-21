@@ -15,6 +15,7 @@
 ; TODO: Revisit when spindles aren't all automatically created. - RT
 ; Written by Diabase Engineering
 ; Last Updated: March 18, 2022
+; Customized for H5014 on March 14, 2022
 
 M118 S{"Info: Begin tcreate-universal.g"} L2
 
@@ -35,7 +36,8 @@ M950 F{global.layerFanNum} C{global.layerFanPin}   ; Layer cooling fans
 M106 P{global.layerFanNum} C"Layer Fans"           ; Enable manual control of layer cooling fans
 
 ; Tool 1
-if {global.machineModel} == "H4" || {global.machineModel} == "H5A"
+; if {global.machineModel} == "H4" || {global.machineModel} == "H5A" ; RT removed on 3/14/2022 for H5014 customization
+if global.machineName == "H5014" ; RT added on 3/14/2022 for H5014 customization
     if global.e1HeatIndex == -1
         set global.e1HeatIndex = #heat.heaters
     if global.e1TempIndex == -1
@@ -120,9 +122,11 @@ if {global.machineModel} == "H4" || {global.machineModel} == "H5A"
 elif {global.machineModel} == "H5B"
     M118 S{"Info: Configuring FFF Fans (fans[" ^ {global.fffFanNum} ^"]:) Thermostatic mode (50C) on tools.[3,4,5].heaters[0]"} L2
     if {boards[0].firmwareVersion == "3.3"}
-        M106 P{global.fffFanNum} H{tools[3].heaters[0]}:{tools[4].heaters[0]}:{tools[5].heaters[0]} T50 C"FFF Fans"                                                             ; thermostatic control of cooling fan on heaters for tools 3, 4, and 5. Turns on at 50C
+        ; M106 P{global.fffFanNum} H{tools[3].heaters[0]}:{tools[4].heaters[0]}:{tools[5].heaters[0]} T50 C"FFF Fans"                                                             ; thermostatic control of cooling fan on heaters for tools 3, 4, and 5. Turns on at 50C; RT removed on 3/17/2022 for H5014 customization
+        M106 P{global.fffFanNum} H{tools[1].heaters[0]}:{tools[3].heaters[0]}:{tools[4].heaters[0]}:{tools[5].heaters[0]} T50 C"FFF Fans"                                        ; thermostatic control of cooling fan on heaters for tools 1, 3, 4, and 5. Turns on at 50C; RT added on 3/17/2022 for H5014 customization
     elif {boards[0].firmwareVersion != "3.3"}
-        M106 P{global.fffFanNum} H{tools[3].heaters[0],tools[4].heaters[0],tools[5].heaters[0]} T50 C"FFF Fans"                                                                 ; thermostatic control of cooling fan on heaters for tools 3, 4, and 5. Turns on at 50C
+        ;M106 P{global.fffFanNum} H{tools[3].heaters[0],tools[4].heaters[0],tools[5].heaters[0]} T50 C"FFF Fans"                                                                 ; thermostatic control of cooling fan on heaters for tools 3, 4, and 5. Turns on at 50C; RT removed on 3/17/2022 for H5014 customization
+        M106 P{global.fffFanNum} H{tools[1].heaters[0],tools[3].heaters[0],tools[4].heaters[0],tools[5].heaters[0]} T50 C"FFF Fans"                                                                 ; thermostatic control of cooling fan on heaters for tools 1, 3, 4, and 5. Turns on at 50C; RT added on 3/17/2022 for H5014 customization
 
 ; Build Enclosure LEDs
 if global.bELedFanNum == -1

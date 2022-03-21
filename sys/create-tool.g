@@ -11,6 +11,7 @@
 ;   F: Variable name containing Filament Assist Drive Number / Spindle Air Pin
 ; Written by Diabase Engineering
 ; Last Updated: January 26, 2022
+; Customized for H5014 on March 14, 2022
 
 M118 S{"Info: Begin create-tool.g."} L2
 
@@ -22,7 +23,8 @@ if {global.machineModel} == "H4" || {global.machineModel} == "H5A"
 elif {global.machineModel} == "H5B"
     M118 S{"Info: Using H5B Tool Spacings"} L2
     if {{param.T} <= 5}
-        set var.newUOffset = {{param.T - 1} * -72}
+        ; set var.newUOffset = {{param.T - 1} * -72} ; RT removed on 3/14/2022 for H5014 customization
+        set var.newUOffset = {{{param.T - 1} * -72} - 36} ; RT added on 3/14/2022 for H5014 customization
     elif {{param.T} >= 11}
         set var.newUOffset = tools[{param.S}].offsets[3]          ; For tool changer tools, get the u-axis offset from its associated spindle
         if {{param.T} <= 17}
