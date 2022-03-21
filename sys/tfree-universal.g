@@ -84,7 +84,7 @@ if {global.machineModel} == "H5B"
                 if {{mod(iterations,10)} == 0}
                     if state.upTime > {var.upTimeReleasing + 2}
                         var releasedAfter = state.upTime - var.upTimeReleasing
-                        M291 P"{Tool not fully released after "^var.releasedAfter^" seconds. Keep waiting?"} R"Tool not fully released" S3  ; Alert the user that the tool hasn't released.
+                        M291 P{"Tool not fully released after "^var.releasedAfter^" seconds. Keep waiting?"} R"Tool not fully released" S3  ; Alert the user that the tool hasn't released.
         set var.msToRelease = state.msUpTime - var.msUpTimeReleasing
         set var.sToRelease = state.upTime - var.upTimeReleasing
         M118 S{"tfree-universal.g: Tool "^{state.currentTool}^" took "^var.sToRelease^"."^var.msToRelease^" seconds to release."} L3
