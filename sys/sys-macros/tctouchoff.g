@@ -3,7 +3,7 @@
 ; Parameters:
 ;    I: Wait for user confirmation that the tool is in position for touchoff? (0 - Don't wait, 1 - Wait)
 ; Written by Diabase Engineering
-; Last Updated: March 16, 2022
+; Last Updated: March 25, 2022
 
 M118 S{"Debug: Begin tctouchoff.g"} L3
 
@@ -43,10 +43,12 @@ if {global.machineModel} == "H5B"
                 abort
 
         var currentZWCSOffset = move.axes[2].workplaceOffsets[{move.workplaceNumber}]
+        var currentZOffset = tools[state.currentTool].offsets[2]
+        var currentOffsets = var.currentZOffset + var.currentZWCSOffset 
         if global.dontRotate != 1
             M98 P"unlock_turret.g"                                                                                      ; Unlock turret
             G90                                                                                                         ; Absolute positioning
-            G1 U180 B{tools[{state.currentTool}].offsets[6]} Z{{move.axes[2].max}-{var.currentZWCSOffset}-100} F30000   ; Point active tool at tool changer
+            G1 U180 B{tools[{state.currentTool}].offsets[6]} Z{{move.axes[2].max}+{var.currentOffsets}-100} F30000      ; Point active tool at tool changer
             M98 P"lock_turret.g"                                                                                        ; Lock turret
         else
             G90                                                                                                         ; Absolute positioning
