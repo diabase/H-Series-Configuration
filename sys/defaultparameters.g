@@ -2,7 +2,7 @@
 ; Default configuration parameters for H-Series machines
 ; Produced by Diabase H-Series Configurizer
 ; Written by Diabase Engineering
-; Last Updated: March 18, 2022
+; Last Updated: March 25, 2022
 
 M118 S"Begin defaultparameters.g" L2
 
@@ -1276,10 +1276,10 @@ if !{exists(global.spinTemp)}
 else
     set global.spinTemp = -273.15
 
-if !{exists(global.spinTempPin)}
-    global spinTempPin = "0.temp2"
-else
-    set global.spinTempPin = "0.temp2"
+; if !{exists(global.spinTempPin)}
+;     global spinTempPin = ""
+; else
+;     set global.spinTempPin = ""
 
 if !{exists(global.spinTempTime)}
     global spinTempTime = 0

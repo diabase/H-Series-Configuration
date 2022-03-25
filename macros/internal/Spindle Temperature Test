@@ -1,0 +1,2 @@
+M291 P"Run Spindle Temperature Test?" R"spindletemptest.g" S3
+M98 P"0:/sys/sys-macros/internal/spindletemptest.g"
