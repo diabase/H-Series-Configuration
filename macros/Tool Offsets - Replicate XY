@@ -1,0 +1,2 @@
+M291 P"Ready to replicate XY offsets??" R"Replicate Offsets?" S3
+M98 P"0:/sys/replicatexyoffsets.g"

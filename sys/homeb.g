@@ -1,14 +1,16 @@
 ; homeb.g
 ; Called to home tool changer
 ; Written by Diabase Engineering
-; Last Updated: January 10, 2022
+; Last Updated: March 21, 2022
 ; TODO: Remove bMin setting from global variable on line 10 - RT 3/18/2022
 ; TODO: Remove forced b-axis limits on line 23 - RT 3/18/2022
 
 M118 S{"Debug: Begin homeb.g"} L3
 
 M208 B{global.bMin} S1 
-M42 P{global.tCToolReleaseOutNum} S0    ; Ensure the tool changer release piston is retracted
+if state.gpOut[global.tCToolReleaseOutNum].pwm == 1
+    M42 P{global.tCToolReleaseOutNum} S0    ; Ensure the tool changer release piston is retracted
+    G4 P500                                 ; Dwell 500 ms to allow time for the piston to retract
 
 T-1 P0                                  ; Deselect the current tool, but don't run any of the tool changing files
 G91                                     ; Relative positioning

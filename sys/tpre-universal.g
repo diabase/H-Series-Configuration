@@ -4,7 +4,7 @@
 ; state.previousTool is the just-freed tool 
 ; state.currentTool is -1
 ; state.nextTool is the upcoming tool
-; Last Updated: March 18, 2022
+; Last Updated: March 22, 2022
 
 M118 S{"Begin tpre-universal.g"} L3
 
@@ -97,7 +97,7 @@ elif {global.machineModel} == "H5B"
             M400                                                                                                            ; Wait for all moves to finish
             if sensors.gpIn[{global.zHighInNum}].value == 0
                 M98 P"engagezbrake.g"
-                ; M291 P{"Z High switch is not triggered. Z might have crashed. Z brake engaged. We will now abort."}  R"Not high enough." S2
+                M291 P{"Z High switch is not triggered. Z might have crashed. Z brake engaged. We will now abort."}  R"Not high enough." S2
                 abort "Z High switch is not triggered. Z might have crashed. Z brake engaged."
             M42 P{global.tCToolReleaseOutNum} S1                                                                            ; Extend the tool changer release piston
             G4 P500                                                                                                         ; Dwell for 500 ms
@@ -125,11 +125,12 @@ elif {global.machineModel} == "H5B"
             ;     G0 U4  F10000                                                                                                    ; Jitter turret to walk onto bearing
             ;     G0 U-6 F10000                                                                                                    ; Jitter turret to walk onto bearing
             ;     G0 U6  F10000                                                                                                    ; Jitter turret to walk onto bearing
-            ; G90                                                                                                             ; Absolute Positioning
+            G90                                                                                                             ; Absolute Positioning
             if {{state.nextTool} >= 11}
                 M118 S{"tpre-universal.g: Moving to U position for next tool and ZMax"} L3
                 G53 G1 U{-tools[{state.nextTool}].offsets[3]} Z{move.axes[2].max} F10000                                        ; Rotate turret to active position for new tool and move up to ZMax
             else
+                M118 S{"Current U position is " ^ move.axes[3].machinePosition ^ ", but we want " ^ {-tools[{state.nextTool}].offsets[3]}} L3
                 M118 S{"tpre-universal.g: Moving to U position for next tool"} L3
                 G53 G1 U{-tools[{state.nextTool}].offsets[3]} F10000                                                            ; Rotate turret to active position for new tool
             G4 P20 ; Dwell for 20 ms

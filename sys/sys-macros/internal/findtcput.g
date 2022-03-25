@@ -1,7 +1,7 @@
 ; findtcput.g
 ; Used to find an appropriate value for global.tCOvertravelPutTool
 ; Written by Diabase Engineering
-; Last Updated: March 18, 2022
+; Last Updated: March 21, 2022
 
 M118 S{"Begin findtcput.g"} L3
 
@@ -11,7 +11,8 @@ M98 P"0:/sys/measurez.g"
 T2
 
 G54
-G29 S0
+if move.compensation.type == "mesh"
+    G29 S0
 M98 P"0:/sys/sys-macros/rotatetotc.g"
 M98 P"0:/sys/indexspindle.g" H0 S0                                                                      ; Call indexspindle.g
 
@@ -46,7 +47,7 @@ G53 G1 Z{{move.axes[2].max}+32} H2 F3000                                        
 
 while true
     set global.tCOvertravelPutTool = move.axes[2].machinePosition - move.axes[2].max
-    M291 P"This is "^ global.tCOvertravelPutTool ^". Move up another 0.5mm?" R"Check Spindle Clearance" S3
+    M291 P{"This is "^ global.tCOvertravelPutTool ^". Move up another 0.5mm?"} R"Check Spindle Clearance" S3
     G53 G1 Z{move.axes[2].machinePosition + 0.5} H2 F3000
     M400
 
