@@ -6,7 +6,7 @@
 G4 S2 ; Wait for 2 seconds to allow expansion boards time to boot
 
 ; Logging
-M929 P"eventlog.txt" S1 ; start logging to file eventlog.txt (S0 = stop logging, S1 = log level WARN, S2 = log level INFO, S3 = log level DEBUG)
+M929 P"eventlog.txt" S3 ; start logging to file eventlog.txt (S0 = stop logging, S1 = log level WARN, S2 = log level INFO, S3 = log level DEBUG)
 M118 S"Info: Begin config.g" L2
 
 ;Default Parameters
