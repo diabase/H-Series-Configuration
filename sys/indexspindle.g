@@ -37,13 +37,12 @@ if {global.machineModel} == "H5B"
                     G4 P200                                                                                                         ; Dwell 200ms
                     M42 P{global.dbarOutNum} S1                                                                                     ; Toggle Drawbar Clamping Pressure to Vent
                     G4 P500                                                                                                         ; Dwell 500ms
-            if iterations < 40
-                M118 S{"indexspindle.g: Spindle blip attempt "^iterations ^ " at " ^ var.blipSpindleSpeed ^"RPM"} L3
-                M3 S{var.blipSpindleSpeed} P{param.S}
-                G4 P{var.blipDuration}
-                M5
-                G4 P200
-            else
+            M118 S{"indexspindle.g: Spindle blip attempt "^iterations ^ " at " ^ var.blipSpindleSpeed ^"RPM"} L3
+            M3 S{var.blipSpindleSpeed} P{param.S}
+            G4 P{var.blipDuration}
+            M5
+            G4 P200
+            if iterations > 40
                 M291 P{"Warning: Spindle blipped " ^ iterations ^ " times without success."} R"Warning" S3                          ; Display a blocking warning with no timeout.
 
     if {param.H} == 1                                                                                                               ; We've been told there is a tool in the spindle, so use Spindex Sensor 2
@@ -59,14 +58,14 @@ if {global.machineModel} == "H5B"
                     G4 P200                                                                                                         ; Dwell 200ms
                     M42 P{global.dbarOutNum} S1                                                                                     ; Toggle Drawbar Clamping Pressure to Vent
                     G4 P500                                                                                                         ; Dwell 500ms
-            if iterations < 20
-                M118 S{"indexspindle.g: Spindle blip attempt "^iterations ^ " at " ^ var.blipSpindleSpeed ^"RPM"} L3
-                M3 S{var.blipSpindleSpeed} P{param.S}                                                                           ; Blip spindle
-                G4 P{var.blipDuration}                                                                                          ; Dwell for {var.blipDuration} ms
-                M5                                                                                                              ; Stop Spindle
-                G4 P200                                                                                                         ; Dwell 200ms
-            else
-                M291 P{"Warning: Spindle blipped " ^ iterations ^ " times without success."} R"Warning" S3            ; Display a blocking warning with no timeout.
+            M118 S{"indexspindle.g: Spindle blip attempt "^iterations ^ " at " ^ var.blipSpindleSpeed ^"RPM"} L3
+            M3 S{var.blipSpindleSpeed} P{param.S}                                                                           ; Blip spindle
+            G4 P{var.blipDuration}                                                                                          ; Dwell for {var.blipDuration} ms
+            M5                                                                                                              ; Stop Spindle
+            G4 P200                                                                                                         ; Dwell 200ms
+            if iterations > 40
+                M291 P{"Warning: Spindle blipped " ^ iterations ^ " times without success."} R"Warning" S3                          ; Display a blocking warning with no timeout.
+
     M400
 
 if {global.machineModel} == "H4" || {global.machineModel} == "H5A"
