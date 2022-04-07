@@ -27,7 +27,7 @@ if {global.machineModel} == "H5B"
     if {param.H} == 0                                                                                                               ; We've been told there's no tool in the spindle, so use Spindex Sensor 1
         while sensors.gpIn[{global.spindleIndexSense1InNum}].value == 0                                                             ; spindleIndexSense1 value == 0 means we're still attempting to index, == 1 means we are indexed
             if iterations > 0
-                if {{mod(iterations,10)} == 0}                                                                                       ; Every fifth attempt...
+                if {{mod(iterations,3)} == 0}                                                                                       ; Every third attempt...
                     M42 P{global.dbarOutNum} S0                                                                                     ; Toggle Drawbar Clamping Pressure to High Pressure
                     G4 P500                                                                                                         ; Dwell 100ms
                     M118 S{"indexspindle.g: Additional blip with drawbar fully clamped on attempt "^iterations ^ " at " ^ var.blipSpindleSpeed ^"RPM"} L3
@@ -49,7 +49,7 @@ if {global.machineModel} == "H5B"
     if {param.H} == 1                                                                                                               ; We've been told there is a tool in the spindle, so use Spindex Sensor 2
         while sensors.gpIn[{global.spindleIndexSense2InNum}].value == 0                                                             ; spindleIndexSense2 value == 0 means we're still attempting to index, == 1 means we are indexed
             if iterations > 0
-                if {{mod(iterations,5)} == 0}                                                                                       ; Every fifth attempt...
+                if {{mod(iterations,3)} == 0}                                                                                       ; Every third attempt...
                     M42 P{global.dbarOutNum} S0                                                                                     ; Toggle Drawbar Clamping Pressure to High Pressure
                     G4 P500                                                                                                         ; Dwell 100ms
                     M118 S{"indexspindle.g: Additional blip with drawbar fully clamped on attempt "^iterations ^ " at " ^ var.blipSpindleSpeed ^"RPM"} L3
