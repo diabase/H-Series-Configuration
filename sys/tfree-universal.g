@@ -4,7 +4,7 @@
 ; state.previousTool is now the tool being freed
 ; state.currentTool is still the tool being freed
 ; state.nextTool is the upcoming tool
-; Last Updated: March 18, 2022
+; Last Updated: April 07, 2022
 
 M118 S{"Begin tfree-universal.g"} L3
 
@@ -55,6 +55,9 @@ if {global.machineModel} == "H5B"
         M400
         var spindleNum = tools[state.previousTool].spindle
         M98 P"indexspindle.g" H1 S{var.spindleNum}                                                                      ; Call indexspindle.g
+        if global.indexSpindleComplete == 0
+            M118 S{"tfree-universal.g: indexspindle didn't exit successfully. Aborting."} L1
+            abort
         M42 P{global.tCToolReleaseOutNum} S1                                                                            ; Extend the tool changer release piston
         if global.dontRotate != 1                                                                                       ; If we're performing normal tool changes...
             M98 P"unlock_turret.g"                                                                                          ; Call unlock_turret.g

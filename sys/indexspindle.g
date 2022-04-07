@@ -14,9 +14,13 @@
 ;     | 1       |  1            || Vented           | High Pressure             || Drawbar Fully Released
 ;
 ; Written by Diabase Engineering
-; Last Updated: March 23, 2022
+; Last Updated: April 07, 2022
 
 M118 S{"Begin indexspindle.g with parameters H" ^ {param.H} ^ " and S" ^ {param.S} } L3
+
+if global.indexSpindleComplete == 0
+    M118 S{"indexspindle.g: indexspindle didn't finish the last time. Resetting status flag and attempting it again."} L1
+set global.indexSpindleComplete = 0
 
 if {global.machineModel} == "H5B"
     M42 P{global.dbarOutNum} S1                                                                                     ; Toggle Drawbar Clamping Pressure to Vent and Release Pressure to Low with Throttled Vent
@@ -70,5 +74,7 @@ if {global.machineModel} == "H5B"
 
 if {global.machineModel} == "H4" || {global.machineModel} == "H5A"
     M118 P0 S{"Error: This machine is not configured for spindle indexing."} L1
+
+set global.indexSpindleComplete = 1
 
 M118 S{"End indexspindle.g"} L3

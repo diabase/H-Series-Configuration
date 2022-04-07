@@ -1,7 +1,7 @@
 ; loadedtoolrecovery.g
 ; Check and handle the case of a tool unexpectedly in the spindle 
 ; Written by Diabase Engineering
-; Last Updated: March 11, 2022
+; Last Updated: April 07, 2022
 ; TODO: Dynamically identify spindle. Currently we assume spindle[0]. - RT 12/21/2021
 
 M118 S{"Begin loadedtoolrecovery.g"} L3
@@ -14,6 +14,9 @@ if {global.machineModel} == "H5B"
 
     M291 P"The machine will now attempt to index the spindle and release the tool. Select OK to proceed." R"Ready?" S3
     M98 P"indexspindle.g" H1 S0
+    if global.indexSpindleComplete == 0
+        M118 S{"loadedtoolrecovery.g: indexspindle didn't exit successfully. Aborting."} L1
+        abort
     if state.gpOut[global.dbarOutNum].pwm == 1
         M42 P{global.spindleIndexOutNum} S1                                                                                 ; Toggle Drawbar Release Pressure High
     else
