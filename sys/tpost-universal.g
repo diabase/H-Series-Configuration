@@ -8,15 +8,15 @@
 
 M118 S{"Begin tpost-universal.g"} L3
 
-if global.tFreeComplete = 0
+if global.tFreeComplete == 0
     M118 S{"tpost-universal.g: tfree didn't complete the last time. Aborting tpost-universal.g."} L1
     abort
 
-if global.tPreComplete = 0
+if global.tPreComplete == 0
     M118 S{"tpost-universal.g: tpre didn't finish the last time. Aborting tpost-universal.g."} L1
     abort
 
-if global.tPostComplete = 0
+if global.tPostComplete == 0
     M118 S{"tpost-universal.g: tpost didn't finish the last time. Resetting status flag and attempting it again."} L1
 set global.tPostComplete = 0
 

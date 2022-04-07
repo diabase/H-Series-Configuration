@@ -8,15 +8,15 @@
 
 M118 S{"Begin tpre-universal.g"} L3
 
-if global.tFreeComplete = 0
+if global.tFreeComplete == 0
     M118 S{"tpre-universal.g: tfree didn't finish last time. Aborting tpre-universal.g"} L1
     abort "tpre-universal.g: tfree didn't finish last time. Aborting tpre-universal.g"
 
-if global.tPreComplete = 0
+if global.tPreComplete == 0
     M118 S{"tpre-universal.g: tpre didn't finish last time. Resetting status flag and trying again."} L1
 set global.tPreComplete = 0
 
-if global.tPostComplete = 0
+if global.tPostComplete == 0
     M118 S{"tpre-universal.g: tpost didn't finish last time."} L1
 
 M118 S{"tpre-universal.g: Changing from tool " ^ {state.previousTool} ^ " to tool " ^ {state.nextTool}} L3
