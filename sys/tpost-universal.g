@@ -4,7 +4,7 @@
 ; state.previousTool is the just-freed tool 
 ; state.currentTool is the upcoming tool
 ; state.nextTool is the upcoming tool
-; Last Updated: March 18, 2022
+; Last Updated: April 08, 2022
 
 M118 S{"Begin tpost-universal.g"} L3
 
@@ -60,6 +60,7 @@ if {global.machineModel} == "H5B"
 
     ; Restore movement compensation active at beginning of tool change
     if global.moveCompStatus == 1
+        M118 S{"tpost-universal.g: Re-enabling mesh compensation."} L1
         G29 S1 P{global.moveCompFile}
         set global.moveCompStatus = -1
     elif global.moveCompStatus == 0
