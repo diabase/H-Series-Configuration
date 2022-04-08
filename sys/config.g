@@ -170,4 +170,7 @@ if {global.machineModel} == "H5B"
             M291 P"Warning: Incoming air pressure low. Resolve before continuing." R"Warning" S3            ; Display a blocking warning with no timeout.
 
 set global.configLastRun = state.upTime
+
+M98 P"0:/sys/sys-macros/loadedtoolrecovery.g"
+
 M118 S"Info: End config.g" L2
