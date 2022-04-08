@@ -1,10 +1,10 @@
-; testindexing-notool.g
+; testindexing.g
 ; Used to test spindle indexing
 ; Parameters:
 ;    H: Has Tool (H0 - No tool, H1 - Tool Loaded)
 ;    S: Spindle Number
 ; Written by Diabase Engineering
-; Last Updated: March 18, 2022
+; Last Updated: April 07, 2022
 
 M118 S{"Begin testindexing.g"} L3
 
@@ -23,6 +23,9 @@ elif param.H == 1
 
 while true
     M98 P"0:/sys/indexspindle.g" H{param.H} S{param.S}
+    if global.indexSpindleComplete == 0
+        M118 S{"testindexing.g: indexspindle didn't exit successfully. Aborting."} L1
+        abort
     G4 P100
     M98 P"0:/sys/sys-macros/manualdbarclamp.g"
     G4 P200

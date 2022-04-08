@@ -16,7 +16,6 @@ if {global.machineModel} == "H5B"
             G4 P500
             M5
             G4 P200
-            ;G4 P1000
             while iterations < {var.totalTools}
                 if state.currentTool != {var.toolsLowerBound+iterations}
                     T{var.toolsLowerBound+iterations}
@@ -24,12 +23,10 @@ if {global.machineModel} == "H5B"
                     G4 P500
                     M5
                     G4 P200
-                    ;G4 P1000
                     T{state.previousTool}
                     M3 S1000 P0
                     G4 P500
                     M5
                     G4 P200
-                    ;G4 P1000
 
 M118 S{"Debug: End  checkalltoolpairs.g"} L3

@@ -2,7 +2,7 @@
 ; Default configuration parameters for H-Series machines
 ; Produced by Diabase H-Series Configurizer
 ; Written by Diabase Engineering
-; Last Updated: March 25, 2022
+; Last Updated: April 07, 2022
 
 M118 S"Begin defaultparameters.g" L2
 
@@ -1255,6 +1255,11 @@ if !{exists(global.tPostComplete)}
     global tPostComplete = -1
 else
     set global.tPostComplete = -1
+
+if !{exists(global.indexSpindleComplete)}
+    global indexSpindleComplete = -1
+else
+    set global.indexSpindleComplete = -1
 
 if !{exists(global.dbarReleaseSensePin)}
     global dbarReleaseSensePin = "!3.io1.in"

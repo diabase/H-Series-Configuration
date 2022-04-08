@@ -4,19 +4,19 @@
 ; state.previousTool is the just-freed tool 
 ; state.currentTool is -1
 ; state.nextTool is the upcoming tool
-; Last Updated: March 22, 2022
+; Last Updated: April 07, 2022
 
 M118 S{"Begin tpre-universal.g"} L3
 
-if global.tFreeComplete = 0
+if global.tFreeComplete == 0
     M118 S{"tpre-universal.g: tfree didn't finish last time. Aborting tpre-universal.g"} L1
     abort "tpre-universal.g: tfree didn't finish last time. Aborting tpre-universal.g"
 
-if global.tPreComplete = 0
+if global.tPreComplete == 0
     M118 S{"tpre-universal.g: tpre didn't finish last time. Resetting status flag and trying again."} L1
 set global.tPreComplete = 0
 
-if global.tPostComplete = 0
+if global.tPostComplete == 0
     M118 S{"tpre-universal.g: tpost didn't finish last time."} L1
 
 M118 S{"tpre-universal.g: Changing from tool " ^ {state.previousTool} ^ " to tool " ^ {state.nextTool}} L3
@@ -77,9 +77,15 @@ elif {global.machineModel} == "H5B"
             if state.gpOut[{global.dbarOutNum}].pwm == 0                                                                    ; If drawbar clamp pressure is high
                 var spindleNum = tools[state.nextTool].spindle
                 M98 P"indexspindle.g" H0 S{var.spindleNum}                                                                      ; Call indexspindle.g
+                if global.indexSpindleComplete == 0
+                    M118 S{"tpre-universal.g: indexspindle didn't exit successfully. Aborting."} L1
+                    abort
             elif state.gpOut[global.spindleIndexOutNum].pwm == 0                                                            ; Else if drawbar release pressure is low or throttled vent
                 var spindleNum = tools[state.nextTool].spindle
                 M98 P"indexspindle.g" H0 S{var.spindleNum}                                                                      ; Call indexspindle.g
+                if global.indexSpindleComplete == 0
+                    M118 S{"tpre-universal.g: indexspindle didn't exit successfully. Aborting."} L1
+                    abort
 
             if {abs({move.axes[3].machinePosition}-{{-tools[{state.nextTool}].offsets[3]}+180}) > 1.0}                       ; If the turret isn't already pointing the spindle within 1 degree of the tool changer...
                 M118 S{"Current turret position is " ^ move.axes[3].machinePosition ^ " and we need it to be " ^ {{-tools[{state.nextTool}].offsets[3]}+180}} L3

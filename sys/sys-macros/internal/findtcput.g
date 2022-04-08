@@ -1,7 +1,7 @@
 ; findtcput.g
 ; Used to find an appropriate value for global.tCOvertravelPutTool
 ; Written by Diabase Engineering
-; Last Updated: March 21, 2022
+; Last Updated: April 07, 2022
 
 M118 S{"Begin findtcput.g"} L3
 
@@ -15,6 +15,9 @@ if move.compensation.type == "mesh"
     G29 S0
 M98 P"0:/sys/sys-macros/rotatetotc.g"
 M98 P"0:/sys/indexspindle.g" H0 S0                                                                      ; Call indexspindle.g
+if global.indexSpindleComplete == 0
+    M118 S{"findtcput.g: indexspindle didn't exit successfully. Aborting."} L1
+    abort
 
 ; Fully release drawbar 
 if state.gpOut[global.dbarOutNum].pwm == 1
@@ -32,8 +35,10 @@ G4 P1000                                                                        
 M42 P{global.spindleIndexOutNum} S0                                                                             ; Toggle Drawbar Release Pressure to Throttled Vent
 G4 P500                                                                                                         ; Dwell for 1000 ms to allow the release-side of the drawbar cylinder time to vent
 
-
 M98 P"0:/sys/indexspindle.g" H1 S0                                                                          ; Call indexspindle.g
+if global.indexSpindleComplete == 0
+    M118 S{"findtcput.g: indexspindle didn't exit successfully. Aborting."} L1
+    abort
 
 ; Fully release drawbar 
 if state.gpOut[global.dbarOutNum].pwm == 1
