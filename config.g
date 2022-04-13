@@ -41,7 +41,7 @@ M84 S5 ; Allow all motors to drop hold current to idle after 5 seconds
 ; Endstops
 M574 X1 S1 P"xstop" ; Configure X endstop position at low end, it's a microswitch on pin "xstop"
 M574 Y1 S1 P"ystop" ; Configure Y endstop position at low end, it's a microswitch on pin "ystop"
-M574 Z2 S1 P"zstop" ; Configure Z endstop position at high end, it's a microswitch on pin "zstop"
+M574 Z2 S1 P"!zstop" ; Configure Z endstop position at high end, it's a microswitch on pin "zstop"
 M574 U1 S1 P"e0stop" ; Configure U endstop position at low end, it's a microswitch on pin "e0stop"
 M574 V0 S1 P"e1stop" ; Configure V endstop position at no end, it's a microswitch on pin "e1stop"
 M574 A1 S1 P"duex.e2stop" ; Configure A endstop position at low end, it's a microswitch on pin "duex.e2stop"

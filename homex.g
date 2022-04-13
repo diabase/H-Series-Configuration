@@ -3,7 +3,7 @@
 
 ; Ensure appropriate axis endstops are used
 M574 X1 S1 P"xstop" ; Configure X endstop position at low end, it's a microswitch on pin "xstop"
-M574 Z2 S1 P"zstop" ; Configure Z endstop position at high end, it's a microswitch on pin "zstop"
+M574 Z2 S1 P"!zstop" ; Configure Z endstop position at high end, it's a microswitch on pin "zstop"
 
 G91 ; Relative Positioning
 

@@ -2,7 +2,7 @@
 ; Called to home only the Z axis
 
 ; Ensure appropriate axis endstops are used
-M574 Z2 S1 P"zstop" ; Configure Z endstop position at high end, it's a microswitch on pin "zstop"
+M574 Z2 S1 P"!zstop" ; Configure Z endstop position at high end, it's a microswitch on pin "zstop"
 
 G91 ; Relative Positioning
 M400 ; Wait for all moves to finish
