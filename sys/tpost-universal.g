@@ -4,7 +4,7 @@
 ; state.previousTool is the just-freed tool 
 ; state.currentTool is the upcoming tool
 ; state.nextTool is the upcoming tool
-; Last Updated: April 08, 2022
+; Last Updated: April 15, 2022
 
 M118 S{"Begin tpost-universal.g"} L3
 
@@ -47,13 +47,7 @@ if state.previousTool != -1                                                     
     G90                                                                                                                                             ; Set to Absolute Positioning
     M118 S{"tpost-universal.g: Moving to X and Y coordinates stored in restore point 2"} L3                                                         ; Log a message to the debug channel
     G1 R2 X0 Y0 F10000                                                                                                                              ; Return to X and Y coordinates stored in restore point 2 at a speed of 10000 mm/min
-    var currentZWCSOffset = move.axes[2].workplaceOffsets[{move.workplaceNumber}]
-    if state.restorePoints[2].coords[2] + 2 <= {move.axes[2].max + global.maxOffset + var.currentZWCSOffset}                                        ; If we have enough room between the restore point and ZMax...
-        M118 S{"tpost-universal.g: Moving to 2mm above Z coordinate stored in restore point 2"} L3                                                      ; ... log a message to the debug channel and ...
-        G1 R2 Z2                                                                                                                                        ; ... return to 2mm above Z coordinate stored in restore point 2
-    else                                                                                                                                            ; If we don't have enough room between the restore point and ZMax...
-        M118 S{"tpost-universal.g: G53 move to ZMax (Z"^{move.axes[2].max}^")"} L3                                                                      ; ... log a message to the debug channel and ...
-        G53 G1 Z{move.axes[2].max} F10000                                                                                                               ; ... Move Z to the axis limit at 10000 mm/min
+    M118 S{"tpost-universal.g: Finished move to X and Y coordinates stored in restore point 2"} L3                                                         ; Log a message to the debug channel
 
 if {global.machineModel} == "H5B"
     M582 T{global.airPressureLowTrigger}                                                                                                            ; Check incoming air pressure
