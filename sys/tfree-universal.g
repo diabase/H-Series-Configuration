@@ -36,7 +36,7 @@ if {global.machineModel} == "H5B"
         M118 S{"tfree-universal.g: Saving move.compensation.file to global.moveCompFile"} L1
         set global.moveCompFile = ""^move.compensation.file
         M118 S{"tfree-universal.g: global.moveCompFile  is " ^ global.moveCompFile} L1
-        M118 S{"tfree-universal.g: Disabling movement compoensation for tool change"} L1
+        M118 S{"tfree-universal.g: Disabling movement compensation for tool change"} L1
         G29 S2
     elif move.compensation.type == "none"
         set global.moveCompStatus = 0
