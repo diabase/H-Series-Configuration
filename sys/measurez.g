@@ -1,9 +1,17 @@
 ; measurez.g
 ; Called to probe the bed and set Z0 to the bed surface and then set Z-axis maximum to the carefully measured location of the upper Z-axis endstop relative to the bed surface.
 ; Written by Diabase Engineering
-; Last Updated: February 25, 2022
+; Last Updated: April 18, 2022
 
-M118 S{"Debug: Begin measurez.g"} L3
+M118 S{"Begin measurez.g"} L3
+
+var zAxisIndex = -1
+while iterations < #move.axes
+    if move.axes[iterations].letter == "Z"
+        set var.zAxisIndex = iterations
+        break
+
+M118 S{"measurez.g: Z-axis limits are currently "^move.axes[var.zAxisIndex].min^":"^move.axes[var.zAxisIndex].max} L3
 
 if {global.machineModel} == "H5B"
         if sensors.gpIn[{global.airPressureInNum}].value == 0
@@ -35,6 +43,8 @@ M400                                                                            
 
 M500                                                                                    ; Save current parameters to config-override.g
 
+M118 S{"measurez.g: Z-axis limits are now "^move.axes[var.zAxisIndex].min^":"^move.axes[var.zAxisIndex].max} L3
+
 G90                                                                                     ; Absolute Positioning
 if move.axes[2].machinePosition > move.axes[2].max                                      ; If we're now above the new Z-axis limit...
     G1 H2 Z{move.axes[2].max} F200                                                      ; ...move to it at 200 mm/min while ignoring endstops and limits.
@@ -43,4 +53,4 @@ G1 Z{move.axes[2].max + global.maxOffset} F10000                                
 
 M574 Z1 S2                                                                              ; Set Z endstop position to low end and configure as Z probe
 
-M118 S{"Debug: End measurez.g"} L3
+M118 S{"End measurez.g"} L3
