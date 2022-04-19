@@ -1,7 +1,7 @@
 ; tprime-universal.g
 ; Universal priming macro
 ; Written by Diabase Engineering
-; Last Updated: October 29, 2021
+; Last Updated: April 15, 2022
 
 M118 S{"Debug: Begin tprime-universal.g"} L3
 
@@ -11,8 +11,6 @@ if state.currentTool = -1
 elif #tools[{state.currentTool}].extruders == 0 ; If this tool has no extruders...
     abort "Tool "^state.currentTool^" ("^tools[{state.currentTool}].name^") is not an extruder and cannot be primed. Priming cycle aborted."
 
-G60 S0 ; Save current position to slot 0
-
 G91 ; Relative Positioning
 if move.axes[2].machinePosition + 40 <= move.axes[2].max ; If we have enough room for a normal tool change Z-hop, do it.
     G1 Z40 F6000 ; Move Z +40mm at 6000 mm/min
@@ -21,6 +19,8 @@ elif move.axes[2].machinePosition + 40 > move.axes[2].max ; If we don't have eno
     M400 ; Wait for all moves to finish
     G1 Z40 F6000 H3 ; Attempt to move Z +40mm at 6000 mm/min, but halt if endstop triggered and set axis limit current position, overriding value set by previous M208 or G1 H3 special move
     M400 ; Wait for all moves to finish
+
+G60 S0 ; Save current position to slot 0
 
 G90 ; Set to Absolute Positioning
 G1 Y85 F6000 ; Move Y to 85 mm at 6000 mm/min

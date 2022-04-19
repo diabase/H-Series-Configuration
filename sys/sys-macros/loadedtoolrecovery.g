@@ -7,7 +7,7 @@
 M118 S{"Begin loadedtoolrecovery.g"} L3
 
 if {global.machineModel} == "H5B"
-    M291 P"Is there a tool in the spindle?" R"Spindle Tool Check" S3                                                    ; Get user input
+    M291 P"Is there a tool in the spindle?" R"Spindle Check" S3                                                    ; Get user input
 
     M291 P"Place the cup directly under the arm." R"Place Cup" S3
     ; What if the arm is too low to accomplish this? - RT 12/21/2021

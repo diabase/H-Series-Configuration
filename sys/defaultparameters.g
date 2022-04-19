@@ -1306,4 +1306,9 @@ if !{exists(global.moveCompFile)}
 else
     set global.moveCompFile = "0:/sys/heightmap.csv"
 
+if !{exists(global.daemonLastRun)}
+    global daemonLastRun = -1
+else
+    set global.daemonLastRun = -1
+
 M118 S"End defaultparameters.g" L2

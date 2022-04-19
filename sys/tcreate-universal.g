@@ -14,7 +14,7 @@
 ;   - Automatically looping create-tool.g for variable-defined tools
 ; TODO: Revisit when spindles aren't all automatically created. - RT
 ; Written by Diabase Engineering
-; Last Updated: March 18, 2022
+; Last Updated: April 19, 2022
 ; Customized for H5014 on March 14, 2022
 
 M118 S{"Info: Begin tcreate-universal.g"} L2
@@ -177,7 +177,7 @@ M950 J{global.extruderCrashDetectInNum} C{global.extruderCrashDetectPin}        
 M118 S{"Info: Activating sensors.gpIn["^ {global.extruderCrashDetectInNum} ^ "] will run trigger" ^ {global.cDOnTrigger} ^ ".g"} L2                                 ; Log informational event
 M581 P{global.extruderCrashDetectInNum} T{global.cDOnTrigger} S1 R0                                                                                                 ; Extruder crash detect behavior
 M118 S{"Info: Deactivating sensors.gpIn[" ^ {global.extruderCrashDetectInNum} ^ "] will be ignored"} L2                                                             ; Log informational event
-M669 S100 T0.1                                                                                                                                                      ; Split movements into smaller bits - this is necessary for the machine to be able to pause if a crash is detected
+M669 S100 T0.001                                                                                                                                                    ; Split movements into smaller bits - this is necessary for the machine to be able to pause if a crash is detected
 
 ; Monitor Compressed Air Pressure
 if global.airPressureInNum == -1

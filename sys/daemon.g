@@ -37,3 +37,5 @@ if {global.machineModel} == "H5B"
             if state.gpOut[{global.greenLedOutNum}].pwm != 1
                 M42 P{global.greenLedOutNum} S1
             break
+
+set global.daemonLastRun = state.upTime
