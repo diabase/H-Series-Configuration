@@ -71,7 +71,11 @@ if {global.machineModel} == "H5B"
             G1 U180 F8900                                                                                                   ; Rotate turret to tool changer
             M400                                                                                                            ; Wait for all moves to finish
             M98 P"lock_turret.g"                                                                                            ; Lock turret
-        G53 G1 Z{{move.axes[var.zAxisIndex].max}+{global.tCOvertravelPutTool}} H2 F3000                                              ; Move Z beyond ZMax ignoring endstops
+        ; G53 G1 Z{{move.axes[var.zAxisIndex].max}+{global.tCOvertravelPutTool}} H2 F3000                                              ; Move Z beyond ZMax ignoring endstops
+        G53 G1 Z{{move.axes[var.zAxisIndex].max}+{global.tCOvertravelPutTool}-23} H2 F3000                                              ; Move Z beyond ZMax ignoring endstops
+        M291 P"Can we safely close the tool changer jaws?" R"Crash Check" S3
+        M42 P{global.tCToolReleaseOutNum} S0                                                                            ; Retract the tool changer release piston, securing tool in tool changer
+        G4 P500                                                                                                         ; Dwell for 500 ms
         M400                                                                                                            ; Wait for all moves to finish
         G4 P100                                                                                                         ; Dwell for 100 ms
         if sensors.gpIn[global.zHighInNum].value == 0
@@ -97,6 +101,10 @@ if {global.machineModel} == "H5B"
         set var.sToRelease = state.upTime - var.upTimeReleasing
         M118 S{"tfree-universal.g: Tool "^{state.currentTool}^" took "^var.sToRelease^"."^var.msToRelease^" seconds to release."} L3
         G4 P500                                                                                                         ; Dwell for 500 ms
+        M42 P{global.tCToolReleaseOutNum} S1                                                                            ; Extend the tool changer release piston
+        G4 P500                                                                                                         ; Dwell for 500 ms
+        G53 G1 Z{{move.axes[var.zAxisIndex].max}+{global.tCOvertravelPutTool}} H2 F3000                              ; Move Z beyond ZMax ignoring endstops
+        M400                                                                                                            ; Wait for all moves to finish
         M42 P{global.tCToolReleaseOutNum} S0                                                                            ; Retract the tool changer release piston, securing tool in tool changer
         G4 P500                                                                                                         ; Dwell for 500 ms
         G53 G1 Z{move.axes[var.zAxisIndex].max - 1} H2 F10000                                                               ; Move Z to 1mm below the axis limit at 10000 mm/min ignoring endstops
