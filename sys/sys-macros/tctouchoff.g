@@ -3,9 +3,9 @@
 ; Parameters:
 ;    I: Wait for user confirmation that the tool is in position for touchoff? (0 - Don't wait, 1 - Wait)
 ; Written by Diabase Engineering
-; Last Updated: March 25, 2022
+; Last Updated: April 20, 2022
 
-M118 S{"Debug: Begin tctouchoff.g"} L3
+M118 S{"Begin tctouchoff.g"} L3
 
 if {global.machineModel} == "H5B"
     if sensors.gpIn[{global.airPressureInNum}].value == 0
@@ -13,10 +13,6 @@ if {global.machineModel} == "H5B"
         abort
 
     if state.currentTool == 2
-        M291 P{"The tool changer touchoff plate can only be used with the probe or a tool changer tool."} R"Invalid Tool" S2
-        abort
-
-    elif state.currentTool == 2
         M291 P{"The tool changer touchoff plate can only be used with the probe or a tool changer tool."} R"Invalid Tool" S2
         abort
 
@@ -37,22 +33,31 @@ if {global.machineModel} == "H5B"
         abort
 
     else
+        var zAxisIndex = -1
+        while iterations < #move.axes
+            if move.axes[iterations].letter == "Z"
+                set var.zAxisIndex = iterations
+                break
+
+        var uAxisIndex = -1
+        while iterations < #move.axes
+            if move.axes[iterations].letter == "U"
+                set var.uAxisIndex = iterations
+                break
+
         if state.currentTool != global.zProbeToolNum
             if {global.probeOverTravelTCTouchOff} = -1
                 M291 P{"Tool changer touch off position not yet probed. Try again with probe."} R"Probe First" S2
                 abort
 
-        var currentZWCSOffset = move.axes[2].workplaceOffsets[{move.workplaceNumber}]
-        var currentZOffset = tools[state.currentTool].offsets[2]
-        var currentOffsets = var.currentZOffset + var.currentZWCSOffset 
         if global.dontRotate != 1
             M98 P"unlock_turret.g"                                                                                      ; Unlock turret
             G90                                                                                                         ; Absolute positioning
-            G1 U180 B{tools[{state.currentTool}].offsets[6]} Z{{move.axes[2].max}+{var.currentOffsets}-100} F30000      ; Point active tool at tool changer
+            G53 G1 U{180 - tools[{state.currentTool}].offsets[var.uAxisIndex]} B0 Z{move.axes[var.zAxisIndex].max - 100} F30000      ; Point active tool at tool changer
             M98 P"lock_turret.g"                                                                                        ; Lock turret
         else
             G90                                                                                                         ; Absolute positioning
-            G53 H2 G1 Z{move.axes[2].max - 100} F10000                                                                  ; Move Z to 100mm below ZMax quickly
+            G53 H2 G1 Z{move.axes[var.zAxisIndex].max - 100} F10000                                                                  ; Move Z to 100mm below ZMax quickly
             G1 B{tools[{state.currentTool}].offsets[6]} F30000                                                          ; Move tool changer to touchoff plate position
         M400                                                                                                        ; Wait for current moves to finish
 
@@ -60,9 +65,9 @@ if {global.machineModel} == "H5B"
             M574 Z2 S1 P{global.zSwitchPin}                                                                             ; Configure Z endstop position at high end, it's an optical interrupt on pin defined in defaultparameters.g
             M558 K0                                                                                                     ; Read the current parameters for probe 0 into the event log
             var existingProbeSpeed0 = {{sensors.probes[0].speeds[0]}*60}                                                ; Save the current probe speed in a temporary variable
-            M118 S{"existingProbeSpeed0 set to "^var.existingProbeSpeed0} L3
+            M118 S{"tctouchoff.g: existingProbeSpeed0 set to "^var.existingProbeSpeed0} L3
             var existingProbeSpeed1 = {{sensors.probes[0].speeds[1]}*60}                                                ; Save the current probe speed in a temporary variable
-            M118 S{"existingProbeSpeed1 set to "^var.existingProbeSpeed1} L3
+            M118 S{"tctouchoff.g: existingProbeSpeed1 set to "^var.existingProbeSpeed1} L3
             var lastProbingOverTravel = -1                                                                              ; Initialize lastProbingOverTravel
             var thisProbingOverTravel = -1                                                                              ; Initialize thisProbingOverTravel
 
@@ -73,35 +78,35 @@ if {global.machineModel} == "H5B"
                 abort
 
             set global.keepProbeDeployed = 1                                                                            ; We don't want the probe to retract between probing attempts
-            M118 S{"Setting probe feed rate to 1000 for initial fast probe."} L3
-            M118 S{"All parameters for this probe should follow on the next line."} L3
+            M118 S{"tctouchoff.g: Setting probe feed rate to 1000 for initial fast probe."} L3
+            M118 S{"tctouchoff.g: All parameters for this probe should follow on the next line."} L3
             M558 K0 P8 C{global.zProbePin} H2 F1000 T10000                                                              ; Override default probe parameters for initial fast probe
             M558 K0                                                                                                     ; Read the current parameters for probe 0 into the event log
-            G38.2 Z{{move.axes[2].max}+40} K0                                                                           ; Attempt to probe straight up, above ZMax by 40 mm
-            set var.thisProbingOverTravel = {{move.axes[2].machinePosition}-{move.axes[2].max}}                         ; Save distance traveled beyond ZMax to temporary variable
+            G38.2 Z{{move.axes[var.zAxisIndex].max}+40} K0                                                                           ; Attempt to probe straight up, above ZMax by 40 mm
+            set var.thisProbingOverTravel = {{move.axes[var.zAxisIndex].machinePosition}-{move.axes[var.zAxisIndex].max}}                         ; Save distance traveled beyond ZMax to temporary variable
             set global.probeOverTravelTCTouchOff = var.thisProbingOverTravel                                            ; Save distance traveled beyond ZMax to global variable
-            M118 S{"Debug: tctouchoff.g: Coarse probe triggered at Z"^ {move.axes[2].machinePosition} ^". Probe overtravel saved as " ^ {global.probeOverTravelTCTouchOff}} L3
+            M118 S{"tctouchoff.g: Coarse probe triggered at Z"^ {move.axes[var.zAxisIndex].machinePosition} ^". Probe overtravel saved as " ^ {global.probeOverTravelTCTouchOff}} L3
 
             G91                                                                                                         ; Relative positioning
             G1 H2 Z-2 F10000                                                                                            ; Move down in Z quickly to prepare for second, slower, probing attempt
             G90                                                                                                         ; Absolute positioning
             
             set var.lastProbingOverTravel = var.thisProbingOverTravel                                                   ; Move previous distance traveled into temporary variable for comparison
-            M118 S{"Setting probe feed rate to 150 for secondary slow probe."} L3
-            M118 S{"All parameters for this probe should follow on the next line."} L3
+            M118 S{"tctouchoff.g Setting probe feed rate to 150 for secondary slow probe."} L3
+            M118 S{"tctouchoff.g All parameters for this probe should follow on the next line."} L3
             M558 K0 P8 C{global.zProbePin} H2 F150 T10000                                                               ; Override default probe parameters for slow, accurate probe
             M558 K0
-            G38.2 K0 Z{{move.axes[2].max}+40}                                                                           ; Attempt to probe straight up, above ZMax by 40 mm
-            set var.thisProbingOverTravel = {{move.axes[2].machinePosition}-{move.axes[2].max}}                         ; Save distance traveled beyond ZMax to temporary variable
+            G38.2 K0 Z{{move.axes[var.zAxisIndex].max}+40}                                                                           ; Attempt to probe straight up, above ZMax by 40 mm
+            set var.thisProbingOverTravel = {{move.axes[var.zAxisIndex].machinePosition}-{move.axes[var.zAxisIndex].max}}                         ; Save distance traveled beyond ZMax to temporary variable
             set global.probeOverTravelTCTouchOff = var.thisProbingOverTravel                                            ; Save distance traveled beyond ZMax to global variable
             
-            M118 S{"Debug: tctouchoff.g: Fine probe triggered at Z"^ {move.axes[2].machinePosition} ^". Probe overtravel saved as " ^ {global.probeOverTravelTCTouchOff}} L3
-            M118 S{"Debug: tctouchoff.g: Variance between coarse and fine probe was " ^{{var.thisProbingOverTravel}-{var.lastProbingOverTravel}}} L3
+            M118 S{"tctouchoff.g: Fine probe triggered at Z"^ {move.axes[var.zAxisIndex].machinePosition} ^". Probe overtravel saved as " ^ {global.probeOverTravelTCTouchOff}} L3
+            M118 S{"tctouchoff.g: Variance between coarse and fine probe was " ^{{var.thisProbingOverTravel}-{var.lastProbingOverTravel}}} L3
             set global.keepProbeDeployed = 0                                                                            ; Allow the probe to retract again
-            M118 S{"existingProbeSpeed0 is currently "^var.existingProbeSpeed0} L3
-            M118 S{"existingProbeSpeed1 is currently "^var.existingProbeSpeed1} L3
-            M118 S{"Returning probe feedrate to saved values."} L3
-            M118 S{"All parameters for this probe should follow on the next line."} L3
+            M118 S{"tctouchoff.g: existingProbeSpeed0 is currently "^var.existingProbeSpeed0} L3
+            M118 S{"tctouchoff.g: existingProbeSpeed1 is currently "^var.existingProbeSpeed1} L3
+            M118 S{"tctouchoff.g: Returning probe feedrate to saved values."} L3
+            M118 S{"tctouchoff.g: All parameters for this probe should follow on the next line."} L3
             M558 K0 P8 C{global.zProbePin} H2 F{var.existingProbeSpeed0}:{var.existingProbeSpeed1} T10000 
             M558 K0                                                                                                     ; Read the current parameters for probe 0 into the event log
             M574 Z1 S2                                                                                                  ; Set Z endstop position to low end and configure as Z probe
@@ -109,9 +114,9 @@ if {global.machineModel} == "H5B"
         else
             M558 K2                                                                                                     ; Record the current parameters for probe 2 (tool changer touchoff plate)
             var existingProbeSpeed0 = {{sensors.probes[2].speeds[0]}*60}                                                       ; Save the current probe speed in a temporary variable
-            M118 S{"existingProbeSpeed0 set to "^var.existingProbeSpeed0} L3
+            M118 S{"tctouchoff.g: existingProbeSpeed0 set to "^var.existingProbeSpeed0} L3
             var existingProbeSpeed1 = {{sensors.probes[2].speeds[1]}*60}                                                       ; Save the current probe speed in a temporary variable
-            M118 S{"existingProbeSpeed1 set to "^var.existingProbeSpeed1} L3
+            M118 S{"tctouchoff.g: existingProbeSpeed1 set to "^var.existingProbeSpeed1} L3
             var lastProbingOverTravel = -1                                                                              ; Initialize lastProbingOverTravel
             var thisProbingOverTravel = -1                                                                              ; Initialize thisProbingOverTravel
             if {param.I} == 1
@@ -121,12 +126,12 @@ if {global.machineModel} == "H5B"
                 abort
             set global.keepProbeDeployed = 1                                                                            ; We don't want the probe to retract between probing attempts
             M558 K2 P8 C{global.tCTouchOffPin} I0 F1000 T10000                                                          ; Override default probe parameters for initial fast probe
-            G38.2 Z{{move.axes[2].max}+27} K2                                                                           ; Attempt to probe straight up, above ZMax by 27 mm
-            set var.thisProbingOverTravel = {{move.axes[2].machinePosition}-{move.axes[2].max}}                         ; Save distance traveled beyond ZMax to temporary variable
+            G38.2 Z{{move.axes[var.zAxisIndex].max}+27} K2                                                                           ; Attempt to probe straight up, above ZMax by 27 mm
+            set var.thisProbingOverTravel = {{move.axes[var.zAxisIndex].machinePosition}-{move.axes[var.zAxisIndex].max}}                         ; Save distance traveled beyond ZMax to temporary variable
             G10 L1 P{state.currentTool} Z{{var.thisProbingOverTravel}-{global.probeOverTravelTCTouchOff}}
             M500 P10
             M98 P"maxoffset.g"
-            M118 S{"Debug: tctouchoff.g: Coarse tool touch off triggered at Z"^ {move.axes[2].machinePosition} ^". Z offset saved as " ^ {tools[{state.currentTool}].offsets[2]}} L3
+            M118 S{"tctouchoff.g: Coarse tool touch off triggered at Z"^ {move.axes[var.zAxisIndex].machinePosition} ^". Z offset saved as " ^ {tools[{state.currentTool}].offsets[var.zAxisIndex]}} L3
             
             G91                                                                                                         ; Relative positioning
             G1 H2 Z-2 F10000                                                                                             ; Move down in Z quickly to prepare for second, slower, probing attempt
@@ -135,23 +140,22 @@ if {global.machineModel} == "H5B"
             set var.lastProbingOverTravel = var.thisProbingOverTravel                                                   ; Move previous distance traveled into temporary variable for comparison
             M558 K2 P8 C{global.tCTouchOffPin} I0 F200 T10000                                                               ; Override default probe parameters for slow, accurate probe
             ; M291 P"Ready for second probe attempt?" R"Crash Check" S3
-            G38.2 K2 Z{{move.axes[2].max}+27}                                                                           ; Attempt to probe straight up, above ZMax by 27 mm
-            set var.thisProbingOverTravel = {{move.axes[2].machinePosition}-{move.axes[2].max}}                         ; Save distance traveled beyond ZMax to temporary variable
+            G38.2 K2 Z{{move.axes[var.zAxisIndex].max}+27}                                                                           ; Attempt to probe straight up, above ZMax by 27 mm
+            set var.thisProbingOverTravel = {{move.axes[var.zAxisIndex].machinePosition}-{move.axes[var.zAxisIndex].max}}                         ; Save distance traveled beyond ZMax to temporary variable
             G10 L1 P{state.currentTool} Z{{var.thisProbingOverTravel}-{global.probeOverTravelTCTouchOff}}
             M500 P10
             M98 P"maxoffset.g"
-            M118 S{"Debug: tctouchoff.g: Fine tool touch off triggered at Z"^ {move.axes[2].machinePosition} ^". Z offset saved as " ^ {tools[{state.currentTool}].offsets[2]}} L3
-            M118 S{"Debug: tctouchoff.g: Variance between coarse and fine touch off was " ^{{var.thisProbingOverTravel}-{var.lastProbingOverTravel}}} L3
+            M118 S{"tctouchoff.g: Fine tool touch off triggered at Z"^ {move.axes[var.zAxisIndex].machinePosition} ^". Z offset saved as " ^ {tools[{state.currentTool}].offsets[var.zAxisIndex]}} L3
+            M118 S{"tctouchoff.g: Variance between coarse and fine touch off was " ^{{var.thisProbingOverTravel}-{var.lastProbingOverTravel}}} L3
             set global.keepProbeDeployed = 0                                                                            ; Allow the probe to retract again
             M558 K2 P8 C{global.tCTouchOffPin} I0 F{var.existingProbeSpeed0}:{var.existingProbeSpeed1} T10000
             M558 K2                                                                                                     ; Read the current parameters for probe 0 into the event log
 
-        G53 H2 G1 Z{move.axes[2].max + global.maxOffset - 5} F10000                                                     ; Move machine position to 5mm below ZMax, ignoring endstops, at 10000 mm/min
+        G53 H2 G1 Z{move.axes[var.zAxisIndex].max + global.maxOffset - 5} F10000                                                     ; Move machine position to 5mm below ZMax, ignoring endstops, at 10000 mm/min
         M400                                                                                                            ; Wait for current moves to finish
         if global.dontRotate != 1
             M98 P"unlock_turret.g"                                                                                      ; Unlock turret
-            M118 S{"Debug: tpost-universal.g: Moving to U0 and Z= ZMax + global.maxOffset - currentZWCSOffset"} L3
-            G1 U0 Z{move.axes[2].max + global.maxOffset - var.currentZWCSOffset} F10000                                  ; Point current tool to active position
+            G53 G1 U{0 - tools[{state.currentTool}].offsets[var.uAxisIndex]} Z{move.axes[var.zAxisIndex].max} F30000        ; Point active tool at tool changer
             M98 P"lock_turret.g"                                                                                        ; Lock turret
 
-M118 S{"Debug: End tctouchoff.g"} L3
+M118 S{"End tctouchoff.g"} L3
