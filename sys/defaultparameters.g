@@ -1311,4 +1311,9 @@ if !{exists(global.daemonLastRun)}
 else
     set global.daemonLastRun = -1
 
+if !{exists(global.colletNutHeight)}
+    global colletNutHeight = 22
+else
+    set global.colletNutHeight = 22
+
 M118 S"End defaultparameters.g" L2

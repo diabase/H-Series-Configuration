@@ -4,7 +4,7 @@
 ; state.previousTool is now the tool being freed
 ; state.currentTool is still the tool being freed
 ; state.nextTool is the upcoming tool
-; Last Updated: April 20, 2022
+; Last Updated: April 21, 2022
 
 M118 S{"Begin tfree-universal.g"} L3
 
@@ -28,7 +28,6 @@ while iterations < #spindles
         G4 P1000                        ; Dwell for 1000 ms to allow it time to stop
 
 if {global.machineModel} == "H5B"
-    var colletNutHeight = 23
     ; Temporarily disable movement compensation for tool changes
     if move.compensation.type == "mesh"
         M118 S{"tfree-universal.g: Move compensation type is mesh"} L1
@@ -72,7 +71,7 @@ if {global.machineModel} == "H5B"
             G1 U180 F8900                                                                                                   ; Rotate turret to tool changer
             M400                                                                                                            ; Wait for all moves to finish
             M98 P"lock_turret.g"                                                                                            ; Lock turret
-        G53 G1 Z{{move.axes[var.zAxisIndex].max}+{global.tCOvertravelPutTool} - var.colletNutHeight} H2 F3000           ; Move Z to just below tool changer jaws
+        G53 G1 Z{{move.axes[var.zAxisIndex].max}+{global.tCOvertravelPutTool} - global.colletNutHeight} H2 F3000           ; Move Z to just below tool changer jaws
         M400                                                                                                            ; Wait for all moves to finish
         M42 P{global.tCToolReleaseOutNum} S0                                                                            ; Close tool changer jaws
         G4 P500                                                                                                         ; Dwell for 500 ms (jaws closing)
