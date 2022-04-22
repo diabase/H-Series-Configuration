@@ -1,7 +1,7 @@
 ; verify_vise_position.g
 ; Used to verify stock position for first milling job
 ; Written by Diabase Engineering
-; Last Updated: April 21, 2022
+; Last Updated: April 22, 2022
 
 M118 S{"Begin verify_vise_position.g"} L1
 
@@ -30,6 +30,12 @@ while iterations < #move.axes
     if move.axes[iterations].letter == "Z"
         set var.zAxisIndex = iterations
         break
+
+; Disable movement compensation
+if move.compensation.type == "mesh"
+    M118 S{"verify_vise_position.g: Move compensation type is mesh"} L1
+    M118 S{"verify_vise_position.g: Disabling movement compensation"} L1
+    G29 S2
 
 ; Confirm with User and Home All
 M291 P"This job will assist you in confirming the stock position for the milling verification job." R"milling-verification.g" S2
