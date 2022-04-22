@@ -4,7 +4,7 @@
 ; state.previousTool is now the tool being freed
 ; state.currentTool is still the tool being freed
 ; state.nextTool is the upcoming tool
-; Last Updated: April 21, 2022
+; Last Updated: April 22, 2022
 
 M118 S{"Begin tfree-universal.g"} L3
 
@@ -30,13 +30,13 @@ while iterations < #spindles
 if {global.machineModel} == "H5B"
     ; Temporarily disable movement compensation for tool changes
     if move.compensation.type == "mesh"
-        M118 S{"tfree-universal.g: Move compensation type is mesh"} L1
-        M118 S{"tfree-universal.g: Setting global.moveCompStatus to 1"} L1
+        M118 S{"tfree-universal.g: Move compensation type is mesh"} L3
+        M118 S{"tfree-universal.g: Setting global.moveCompStatus to 1"} L3
         set global.moveCompStatus = 1
-        M118 S{"tfree-universal.g: Saving move.compensation.file to global.moveCompFile"} L1
+        M118 S{"tfree-universal.g: Saving move.compensation.file to global.moveCompFile"} L3
         set global.moveCompFile = ""^move.compensation.file
-        M118 S{"tfree-universal.g: global.moveCompFile  is " ^ global.moveCompFile} L1
-        M118 S{"tfree-universal.g: Disabling movement compensation for tool change"} L1
+        M118 S{"tfree-universal.g: global.moveCompFile  is " ^ global.moveCompFile} L3
+        M118 S{"tfree-universal.g: Disabling movement compensation for tool change"} L3
         G29 S2
     elif move.compensation.type == "none"
         set global.moveCompStatus = 0
