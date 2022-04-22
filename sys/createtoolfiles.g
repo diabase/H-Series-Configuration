@@ -224,15 +224,6 @@ elif {param.T} == 24
         M28 "0:/sys/tfree24.g"
         M98 P"tfree-universal.g"
         M29
-elif {param.T} == 25
-    M38 "0:/sys/tfree25.g"
-    if result == 0
-        M118 S{"Found existing 0:/sys/tfree25.g"} L3
-    else
-        M118 S{"Creating 0:/sys/tfree1.g"} L3
-        M28 "0:/sys/tfree25.g"
-        M98 P"tfree-universal.g"
-        M29
 
 if {param.T} == 1
     M38 "0:/sys/tpre1.g"
@@ -450,15 +441,6 @@ elif {param.T} == 24
         M28 "0:/sys/tpre24.g"
         M98 P"tpre-universal.g"
         M29
-elif {param.T} == 25
-    M38 "0:/sys/tpre25.g"
-    if result == 0
-        M118 S{"Found existing 0:/sys/tpre25.g"} L3
-    else
-        M118 S{"Creating 0:/sys/tpre1.g"} L3
-        M28 "0:/sys/tpre25.g"
-        M98 P"tpre-universal.g"
-        M29
 
 if {param.T} == 1
     M38 "0:/sys/tpost1.g"
@@ -674,15 +656,6 @@ elif {param.T} == 24
     else
         M118 S{"Creating 0:/sys/tpost1.g"} L3
         M28 "0:/sys/tpost24.g"
-        M98 P"tpost-universal.g"
-        M29
-elif {param.T} == 25
-    M38 "0:/sys/tpost25.g"
-    if result == 0
-        M118 S{"Found existing 0:/sys/tpost25.g"} L3
-    else
-        M118 S{"Creating 0:/sys/tpost1.g"} L3
-        M28 "0:/sys/tpost25.g"
         M98 P"tpost-universal.g"
         M29
 
