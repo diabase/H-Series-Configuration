@@ -1,9 +1,9 @@
-; RELEASE_Z_BLOCK.g
+; release_z_block.g
 ; Lower the arm by 10mm to free the block used for shipping
 ; Written by Diabase Engineering
 ; Last Updated: November 05, 2021
 
-M118 S{"Debug: Begin RELEASE_Z_BLOCK.g"} L3
+M118 S{"Begin release_z_block.g"} L1
 
 ; Ensure appropriate axis endstops are used
 M574 Z2 S1 P{global.ZSwitchPin}                             ; Configure Z endstop position at high end, pin defined in defaultparameters.g
@@ -18,4 +18,4 @@ G1 H1 Z-10 F1000                                            ; Attempt to move Z 
 M98 P"engagezbrake.g" H1                                    ; Disengage Z brake
 M18 Z-10                                                    ; Disable Z motor
 
-M118 S{"Debug: End RELEASE_Z_BLOCK.g"} L3
+M118 S{"End release_z_block.g"} L1
