@@ -81,8 +81,7 @@ if {global.machineModel} == "H5B"
             M98 P"0:/sys/sys-macros/allprobeparameters.g"
             M118 S{"tctouchoff.g: Setting probe feed rate to 1000 for initial fast probe."} L3
             M118 S{"tctouchoff.g: All parameters for this probe should follow on the next line."} L3
-            M558 K0 P8 C{global.zProbePin} H2 F1000 T10000                                                              ; Override default probe parameters for initial fast probe
-            G31 K0 Z0
+            M558 K0 F1000                                                               ; Override default probe parameters for initial fast probe
             M98 P"0:/sys/sys-macros/allprobeparameters.g"
             G38.2 Z{{move.axes[var.zAxisIndex].max}+40} K0                                                                           ; Attempt to probe straight up, above ZMax by 40 mm
             set var.thisProbingOverTravel = {{move.axes[var.zAxisIndex].machinePosition}-{move.axes[var.zAxisIndex].max}}                         ; Save distance traveled beyond ZMax to temporary variable
@@ -96,8 +95,7 @@ if {global.machineModel} == "H5B"
             set var.lastProbingOverTravel = var.thisProbingOverTravel                                                   ; Move previous distance traveled into temporary variable for comparison
             M118 S{"tctouchoff.g Setting probe feed rate to 150 for secondary slow probe."} L3
             M118 S{"tctouchoff.g All parameters for this probe should follow on the next line."} L3
-            M558 K0 P8 C{global.zProbePin} H2 F150 T10000                                                               ; Override default probe parameters for slow, accurate probe
-            G31 K0 Z0
+            M558 K0 F150                                                                ; Override default probe parameters for slow, accurate probe
             M98 P"0:/sys/sys-macros/allprobeparameters.g"
             G38.2 K0 Z{{move.axes[var.zAxisIndex].max}+40}                                                                           ; Attempt to probe straight up, above ZMax by 40 mm
             set var.thisProbingOverTravel = {{move.axes[var.zAxisIndex].machinePosition}-{move.axes[var.zAxisIndex].max}}                         ; Save distance traveled beyond ZMax to temporary variable
@@ -110,8 +108,7 @@ if {global.machineModel} == "H5B"
             M118 S{"tctouchoff.g: existingProbeSpeed1 is currently "^var.existingProbeSpeed1} L3
             M118 S{"tctouchoff.g: Returning probe feedrate to saved values."} L3
             M118 S{"tctouchoff.g: All parameters for this probe should follow on the next line."} L3
-            M558 K0 P8 C{global.zProbePin} H2 F{var.existingProbeSpeed0}:{var.existingProbeSpeed1} T10000 
-            G31 K0 Z0
+            M558 K0 F{var.existingProbeSpeed0}:{var.existingProbeSpeed1}
             M98 P"0:/sys/sys-macros/allprobeparameters.g"
             M574 Z1 S2                                                                                                  ; Set Z endstop position to low end and configure as Z probe
 
@@ -131,7 +128,7 @@ if {global.machineModel} == "H5B"
             set global.keepProbeDeployed = 1                                                                            ; We don't want the probe to retract between probing attempts
             M118 S{"tctouchoff.g: Setting TC touchoff plate feed rate to 1000 for initial fast touch off."} L3
             M118 S{"tctouchoff.g: All parameters for this probe should follow on the next line."} L3
-            M558 K2 P8 C{global.tCTouchOffPin} I0 F1000 T10000                                                          ; Override default probe parameters for initial fast probe
+            M558 K2 F1000                                                           ; Override default probe parameters for initial fast probe
             M98 P"0:/sys/sys-macros/allprobeparameters.g"
             G38.2 Z{{move.axes[var.zAxisIndex].max}+27} K2                                                                           ; Attempt to probe straight up, above ZMax by 27 mm
             set var.thisProbingOverTravel = {{move.axes[var.zAxisIndex].machinePosition}-{move.axes[var.zAxisIndex].max}}                         ; Save distance traveled beyond ZMax to temporary variable
@@ -147,7 +144,7 @@ if {global.machineModel} == "H5B"
             set var.lastProbingOverTravel = var.thisProbingOverTravel                                                   ; Move previous distance traveled into temporary variable for comparison
             M118 S{"tctouchoff.g Setting TC touchoff plate feed rate to 150 for secondary slow touch off."} L3
             M118 S{"tctouchoff.g All parameters for this probe should follow on the next line."} L3
-            M558 K2 P8 C{global.tCTouchOffPin} I0 F200 T10000                                                               ; Override default probe parameters for slow, accurate probe
+            M558 K2 F200                                                               ; Override default probe parameters for slow, accurate probe
             M98 P"0:/sys/sys-macros/allprobeparameters.g"
             ; M291 P"Ready for second probe attempt?" R"Crash Check" S3
             G38.2 K2 Z{{move.axes[var.zAxisIndex].max}+27}                                                                           ; Attempt to probe straight up, above ZMax by 27 mm
@@ -160,7 +157,7 @@ if {global.machineModel} == "H5B"
             set global.keepProbeDeployed = 0                                                                            ; Allow the probe to retract again
             M118 S{"tctouchoff.g: Returning TC touchoff plate feed rate to original values."} L3
             M118 S{"tctouchoff.g: All parameters for this probe should follow on the next line."} L3
-            M558 K2 P8 C{global.tCTouchOffPin} I0 F{var.existingProbeSpeed0}:{var.existingProbeSpeed1} T10000
+            M558 K2 F{var.existingProbeSpeed0}:{var.existingProbeSpeed1}
             M98 P"0:/sys/sys-macros/allprobeparameters.g"
 
         G53 H2 G1 Z{move.axes[var.zAxisIndex].max + global.maxOffset - 5} F10000                                                     ; Move machine position to 5mm below ZMax, ignoring endstops, at 10000 mm/min
