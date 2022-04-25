@@ -1,7 +1,7 @@
 ; config.g
 ; H5A Configuration File
 ; Written by Diabase Engineering
-; Last Updated: March 18, 2022
+; Last Updated: April 25, 2022
 
 G4 S2 ; Wait for 2 seconds to allow expansion boards time to boot
 
@@ -143,11 +143,11 @@ if {global.machineModel} == "H5B"
     M574 B1 S1 P{global.bSwitchPin}
 
 ; Probes
-M558 K0 P8 C{global.zProbePin} H2 F150 T10000 ; Set Z probe type for Probe 0 (Tool 10). 2mm dive height, 150mm/min probing speed, and 10000 mm/min travel speed between probe points
+M558 K0 P8 C{global.zProbePin} H2 F150 T10000           ; Set Z probe type for Probe 0 (Turret Probe). 2mm dive height, 150mm/min probing speed, and 10000 mm/min travel speed between probe points
+G31 K0 Z0                                               ; Set Probe 0 trigger height to 0mm
 M558 K1 P8 C{global.touchOffPlatePin} I0 F200 T10000 ; Set Z probe type for Probe 1 (touchoff plate). It's on the pin designated in machinespecific.g, 200mm/min probing speed, and 10000 mm/min travel speed between probe points
 if {global.machineModel} == "H5B"
     M558 K2 P8 C{global.tCTouchOffPin} I0 F200 T10000 ; Set Z probe type for Probe 2 (Tool Changer Touch Off). It's on the pin designated in machinespecific.g, 200mm/min probing speed, and 10000 mm/min travel speed between probe points
-G31 Z0; Set Z probe trigger height to 0mm
 
 ; Tools
 M98 P"heatedbed.g" ; Configure heated bed
