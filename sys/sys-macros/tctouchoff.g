@@ -160,10 +160,8 @@ if {global.machineModel} == "H5B"
                 M98 P"0:/sys/sys-macros/allprobeparameters.g"
             G38.2 Z{{move.axes[var.zAxisIndex].max}+27} K2                                                                           ; Attempt to probe straight up, above ZMax by 27 mm
             set var.thisProbingOverTravel = {{move.axes[var.zAxisIndex].machinePosition}-{move.axes[var.zAxisIndex].max}}                         ; Save distance traveled beyond ZMax to temporary variable
-            G10 L1 P{state.currentTool} Z{{var.thisProbingOverTravel}-{global.probeOverTravelTCTouchOff}}
-            M500 P10
             M98 P"maxoffset.g"
-            M118 S{"tctouchoff.g: Coarse tool touch off triggered at Z"^ {move.axes[var.zAxisIndex].machinePosition} ^". Z offset saved as " ^ {tools[{state.currentTool}].offsets[var.zAxisIndex]}} L3
+            M118 S{"tctouchoff.g: Coarse tool touch off triggered at Z"^ {move.axes[var.zAxisIndex].machinePosition}} L3
             
             G91                                                                                                         ; Relative positioning
             G1 H2 Z-2 F10000                                                                                             ; Move down in Z quickly to prepare for second, slower, probing attempt
