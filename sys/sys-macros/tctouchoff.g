@@ -10,7 +10,7 @@ M118 S{"Begin tctouchoff.g"} L3
 var logProbeParams = 0
 
 if {global.machineModel} == "H5B"
-    if sensors.gpIn[{global.airPressureInNum}].value == 0
+    if sensors.gpIn[global.airPressureInNum].value == 0
         M291 P"Warning: Incoming air pressure low. Resolve before continuing." R"Warning" S2                        ; Display a blocking warning with no timeout.
         abort
 
@@ -61,7 +61,7 @@ if {global.machineModel} == "H5B"
         if global.dontRotate != 1
             M98 P"unlock_turret.g"                                                                                      ; Unlock turret
             G90                                                                                                         ; Absolute positioning
-            G53 G1 U{180 - tools[{state.currentTool}].offsets[var.uAxisIndex]} B0 Z{move.axes[var.zAxisIndex].max - 100} F30000      ; Point active tool at tool changer
+            G53 G1 U{180 - tools[state.currentTool].offsets[var.uAxisIndex]} B0 Z{move.axes[var.zAxisIndex].max - 100} F30000      ; Point active tool at tool changer
             M98 P"lock_turret.g"                                                                                        ; Lock turret
         else
             G90                                                                                                         ; Absolute positioning
@@ -178,7 +178,7 @@ if {global.machineModel} == "H5B"
             G10 L1 P{state.currentTool} Z{{var.thisProbingOverTravel}-{global.probeOverTravelTCTouchOff}}
             M500 P10
             M98 P"maxoffset.g"
-            M118 S{"tctouchoff.g: Fine tool touch off triggered at Z"^ {move.axes[var.zAxisIndex].machinePosition} ^". Z offset saved as " ^ {tools[{state.currentTool}].offsets[var.zAxisIndex]}} L3
+            M118 S{"tctouchoff.g: Fine tool touch off triggered at Z"^ {move.axes[var.zAxisIndex].machinePosition} ^". Z offset saved as " ^ {tools[state.currentTool].offsets[var.zAxisIndex]}} L3
             M118 S{"tctouchoff.g: Variance between coarse and fine touch off was " ^{{var.thisProbingOverTravel}-{var.lastProbingOverTravel}}} L3
             M118 S{"tctouchoff.g: Variance between starting and final Z offset was " ^ {tools[state.currentTool].offsets[var.zAxisIndex] - var.startingZOffset}} L3
             M291 P{"Tool offset changed by "^ {tools[state.currentTool].offsets[var.zAxisIndex] - var.startingZOffset} ^ "mm"} R{"T" ^ state.currentTool ^" Offset"} S1 T20
@@ -192,7 +192,7 @@ if {global.machineModel} == "H5B"
         M400                                                                                                            ; Wait for current moves to finish
         if global.dontRotate != 1
             M98 P"unlock_turret.g"                                                                                      ; Unlock turret
-            G53 G1 U{0 - tools[{state.currentTool}].offsets[var.uAxisIndex]} Z{move.axes[var.zAxisIndex].max} F30000        ; Point active tool at tool changer
+            G53 G1 U{0 - tools[state.currentTool].offsets[var.uAxisIndex]} Z{move.axes[var.zAxisIndex].max} F30000        ; Point active tool at tool changer
             M98 P"lock_turret.g"                                                                                        ; Lock turret
 
 M118 S{"End tctouchoff.g"} L3
