@@ -87,6 +87,7 @@ if {global.machineModel} == "H5B"
 
             if {param.I} == 1
                 M291 P{"Arm will move up. Is the probe directly below the tool changer touchoff plate?"} R"Crash Check" S3
+            M98 P"minihomez.g"
             if sensors.probes[0].value[0] == 1000
                 M291 P{"Error: Probe already triggered. Check probe and try again."} R"Probe Already Triggered" S2
                 abort
