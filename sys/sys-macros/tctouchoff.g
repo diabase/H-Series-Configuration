@@ -3,7 +3,7 @@
 ; Parameters:
 ;    I: Wait for user confirmation that the tool is in position for touchoff? (0 - Don't wait, 1 - Wait)
 ; Written by Diabase Engineering
-; Last Updated: April 25, 2022
+; Last Updated: April 26, 2022
 
 M118 S{"Begin tctouchoff.g"} L3
 
@@ -47,6 +47,12 @@ if {global.machineModel} == "H5B"
                 set var.uAxisIndex = iterations
                 break
 
+        var bAxisIndex = -1
+        while iterations < #move.axes
+            if move.axes[iterations].letter == "B"
+                set var.bAxisIndex = iterations
+                break
+
         if state.currentTool != global.zProbeToolNum
             if {global.probeOverTravelTCTouchOff} = -1
                 M291 P{"Tool changer touch off position not yet probed. Try again with probe."} R"Probe First" S2
@@ -60,7 +66,7 @@ if {global.machineModel} == "H5B"
         else
             G90                                                                                                         ; Absolute positioning
             G53 H2 G1 Z{move.axes[var.zAxisIndex].max - 100} F10000                                                                  ; Move Z to 100mm below ZMax quickly
-            G1 B{tools[{state.currentTool}].offsets[6]} F30000                                                          ; Move tool changer to touchoff plate position
+            G1 B{tools[state.currentTool].offsets[var.bAxisIndex]} F30000                                                          ; Move tool changer to touchoff plate position
         M400                                                                                                        ; Wait for current moves to finish
 
         ; Probe
