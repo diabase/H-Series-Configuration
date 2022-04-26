@@ -64,10 +64,13 @@ if {global.machineModel} == "H5B"
         if state.currentTool == global.zProbeToolNum
             M574 Z2 S1 P{global.zSwitchPin}                                                                             ; Configure Z endstop position at high end, it's an optical interrupt on pin defined in defaultparameters.g
             M98 P"0:/sys/sys-macros/allprobeparameters.g"
-            var existingProbeSpeed0 = {{sensors.probes[0].speeds[0]}*60}                                                ; Save the current probe speed in a temporary variable
-            M118 S{"tctouchoff.g: existingProbeSpeed0 set to "^var.existingProbeSpeed0} L3
-            var existingProbeSpeed1 = {{sensors.probes[0].speeds[1]}*60}                                                ; Save the current probe speed in a temporary variable
-            M118 S{"tctouchoff.g: existingProbeSpeed1 set to "^var.existingProbeSpeed1} L3
+            var existingProbeSpeed0 = sensors.probes[0].speeds[0]                                                       ; Save the current probe speed in a temporary variable
+            var existingProbeSpeed1 = sensors.probes[0].speeds[1]                                                       ; Save the current probe speed in a temporary variable
+            if {boards[0].firmwareVersion == "3.3"}
+                set var.existingProbeSpeed0 = {var.existingProbeSpeed0*60}
+                set var.existingProbeSpeed1 = {var.existingProbeSpeed1*60}
+            M118 S{"tctouchoff.g: var.existingProbeSpeed0 set to "^var.existingProbeSpeed0} L3
+            M118 S{"tctouchoff.g: var.existingProbeSpeed1 set to "^var.existingProbeSpeed1} L3
             var lastProbingOverTravel = -1                                                                              ; Initialize lastProbingOverTravel
             var thisProbingOverTravel = -1                                                                              ; Initialize thisProbingOverTravel
 
@@ -114,10 +117,13 @@ if {global.machineModel} == "H5B"
 
         else
             M98 P"0:/sys/sys-macros/allprobeparameters.g"
-            var existingProbeSpeed0 = {{sensors.probes[2].speeds[0]}*60}                                                       ; Save the current probe speed in a temporary variable
-            M118 S{"tctouchoff.g: existingProbeSpeed0 set to "^var.existingProbeSpeed0} L3
-            var existingProbeSpeed1 = {{sensors.probes[2].speeds[1]}*60}                                                       ; Save the current probe speed in a temporary variable
-            M118 S{"tctouchoff.g: existingProbeSpeed1 set to "^var.existingProbeSpeed1} L3
+            var existingProbeSpeed0 = sensors.probes[2].speeds[0]                                                             ; Save the current probe speed in a temporary variable
+            var existingProbeSpeed1 = sensors.probes[2].speeds[1]                                                             ; Save the current probe speed in a temporary variable
+            if {boards[0].firmwareVersion == "3.3"}
+                set var.existingProbeSpeed0 = {var.existingProbeSpeed0 * 60}
+                set var.existingProbeSpeed1 = {var.existingProbeSpeed1 * 60}
+            M118 S{"tctouchoff.g: var.existingProbeSpeed0 set to "^var.existingProbeSpeed0} L3
+            M118 S{"tctouchoff.g: var.existingProbeSpeed1 set to "^var.existingProbeSpeed1} L3
             var lastProbingOverTravel = -1                                                                              ; Initialize lastProbingOverTravel
             var thisProbingOverTravel = -1                                                                              ; Initialize thisProbingOverTravel
             if {param.I} == 1
