@@ -17,7 +17,7 @@ M98 p"homew.g" ; Call homew.g
 
 G91 ; Relative Positioning
 M400 ; Wait for all moves to finish
-M913 Z50; Reduce Z-axis motor current to 50%
+;M913 Z50; Reduce Z-axis motor current to 50%
 G1 H1 Z40 F6000 ; Move Z +40mm at 6000 mm/min
 M400 ; Wait for all moves to finish
 M913 Z100 ; Restore Z-axis motor current to 100%
