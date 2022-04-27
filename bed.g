@@ -3,7 +3,8 @@ T10 ; Select Tool 10 (Probe)
 M561 ; Set Identity Transform (Clears any existing bed-plane fitting)
 
 G90 ; Set to Absolute Positioning
-G1 X0 Y-45 Z3 F8000 ; Move to X=0, Y=-45, and Z=3 at 8000 mm/min
+G1 X0 Y-45 Z15 F8000 ; Move to X=0, Y=-45, and Z=15 at 8000 mm/min
+G1 Z3 F500 ; Move slowly to probing position
 G30 ; Probe the bed at the current XY position. When the probe is triggered, set the Z coordinate to the probe trigger height.
 
 ;Use with Flat Print Bed
