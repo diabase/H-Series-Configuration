@@ -768,6 +768,7 @@ G1 Y-15.505 F300.
 G1 X5.385
 G1 Y-15.823
 G0 Z32.
+G53 G0 X0 Y0 Z{move.axes[2].max}
 M5
 M106 S0
 
