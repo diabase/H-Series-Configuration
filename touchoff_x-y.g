@@ -1,7 +1,5 @@
 M291 P"Bed will now move. Is tool  inside cup?" R"Crash Check" S3
 
-G10 P{state.currentTool} X0 Y0
-
 M561
 
 M574 X1 Y1 S2 ; configured to use Touchoff plate (Probe P1 below)
@@ -46,6 +44,3 @@ G38.2 X{move.axes[0].userPosition - 6} P1 ; Ajust the - n amount to the travel l
 ; var global.diameterDifference = {global.xHoleDiameter - global.yHoleDiameter}
 G53 G0 X{move.axes[0].machinePosition + ((state.restorePoints[4].coords[0] - move.axes[0].machinePosition) / 2.0)} F300; Move to very good X-value of hole center
 M558 K1 F200
-
-M574 X1 S1 P"xstop"
-M574 Y1 S1 P"ystop"

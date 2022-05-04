@@ -33,14 +33,14 @@ G1 E20 F6000
 G1 E8 F200
 M400
 G1 W20 F15000
-G1 E-12 F6000
+G1 E-20 F6000
 G4 P20
 
 ; Move nozzle so that it faces the pliers
-G1 U83.6 F9900
+G1 U84.4 F9900
 
 ; Turn on vacuum
-;M106 P7 S1
+M106 P7 S1
 
 ; Perform cleaning cycle
 M98 P"clean.g"
@@ -59,7 +59,7 @@ M98 P"lock_turret.g"
 M98 P"postclean.g"
 
 ;turn off vacuum
-;M106 P7 S0
+M106 P7 S0
 
 ; Go back to the saved coordinates
 G1 R1 Y0 F30000
