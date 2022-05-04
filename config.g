@@ -2,12 +2,13 @@
 ; H4 Configuration File
 ; Written by Diabase Engineering
 ; Last Updated: February 22, 2021
+; Customized for H4046 (machine name and UMin) - May 4, 2022
 
 ; Logging
 ; M929 P"eventlog.txt" S3 ; start logging to file eventlog.txt (S0 = stop logging, S1 = log level WARN, S2 = log level INFO, S3 = log level DEBUG)
 
 ; Network
-M550 P"HXXXX" ; Set machine name
+M550 P"H4046" ; Set machine name
 M552 S1 ; Enable network
 
 ; General preferences
@@ -28,7 +29,7 @@ M569 P9 S0 ; Set motor driver direction. Motor driver number 9 goes backwards (S
 
 ; Drive settings
 M584 X0 Y1 Z2 U3 V8 W7 E6:6:6:9 A4 C5 ; Set driver mapping, E drive is multiplexed. Hide the extra axes
-M208 X-208 Y-90 Z-10 U-9.2 V-100 W0 A-365 C-1000 S1 ; Set axis minima
+M208 X-208 Y-90 Z-10 U-9.6 V-100 W0 A-365 C-1000 S1 ; Set axis minima
 M208 X208 Y90 Z210 U360 V200 W35 A365 C10000 S0 ; Set axis maxima
 M350 X16 Y16 Z16 U16 V16 W16 A16 C16 E16:16:16:16 I1 ; Configure microstepping with interpolation
 M92 X320 Y320 Z640 U322.31 V1600 W800 A53.33 C53.33 E96:96:96:96 ; Set steps per mm
