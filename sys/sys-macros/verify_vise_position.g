@@ -9,9 +9,9 @@ var fixedJawXOffset = 0
 var fixedJawYOffset = 36
 var fixedJawZOffset = 3.27
 var maxJawVariance = 0.1
-var stockXOffset = -0.790
-var stockYOffset = 2.170
-var stockZOffset = 16.789
+var stockXOffset = -1.299
+var stockYOffset = 2.150
+var stockZOffset = 16.982
 var maxStockVariance = 0.5
 
 ; Find Axis Indicies
