@@ -5,13 +5,13 @@
 
 M118 S{"Begin measure_vise_position.g"} L1
 
-var fixedJawXOffset = 0
-var fixedJawYOffset = 36
-var fixedJawZOffset = 3.27
+var fixedJawXOffset = 0.096
+var fixedJawYOffset = 33.683
+var fixedJawZOffset = 3.330
 var maxJawVariance = 0.1
-var stockXOffset = -1.299
-var stockYOffset = 2.150
-var stockZOffset = 16.982
+var stockXOffset = -1.332
+var stockYOffset = 1.392
+var stockZOffset = 17.114
 var maxStockVariance = 0.5
 
 ; Find Axis Indicies
@@ -75,7 +75,7 @@ if result != 0
 M400
 var zVariance = {move.axes[var.zAxisIndex].userPosition - var.fixedJawZOffset}
 M118 S{"measure_vise_position.g: Probed z-axis vise variance is " ^ var.zVariance} L1
-M118 S{"measure_vise_position.g: Expected vise Z offset of "^{" ^ var.fixedJawZOffset ^" and measured "^ {var.zVariance + var.fixedJawZOffset} L1
+M118 S{"measure_vise_position.g: Expected vise Z offset of " ^ var.fixedJawZOffset ^ " and measured "^ {var.zVariance + var.fixedJawZOffset}} L1
 if {abs(var.zVariance)} > var.maxJawVariance
     M291 P{"Warning: Z-axis vise variance ("^var.zVariance^") is greater than "^ var.maxJawVariance} R"Z Variance Error" S3
 
@@ -98,7 +98,7 @@ if result != 0
 M400
 var xVariance = {{move.axes[var.xAxisIndex].userPosition+1} - var.fixedJawXOffset}
 M118 S{"measure_vise_position.g: Probed x-axis vise variance is " ^ var.xVariance} L1
-M118 S{"measure_vise_position.g: Expected a vise X offset of "^{" ^ var.fixedJawXOffset ^" and measured "^ {var.xVariance + var.fixedJawXOffset} L1
+M118 S{"measure_vise_position.g: Expected a vise X offset of " ^ var.fixedJawXOffset ^" and measured "^ {var.xVariance + var.fixedJawXOffset}} L1
 if {abs(var.xVariance)} > var.maxJawVariance
     M291 P{"Warning: X-axis vise variance ("^var.xVariance^") is greater than "^ var.maxJawVariance} R"X Variance Error" S3
 
@@ -121,10 +121,9 @@ if result != 0
 M400
 var yVariance = {{move.axes[var.yAxisIndex].userPosition - 1} - var.fixedJawYOffset}
 M118 S{"measure_vise_position.g: Probed y-axis vise variance is " ^ var.yVariance} L1
-M118 S{"measure_vise_position.g: Expected a vise Y offset of "^{" ^ var.fixedJawYOffset ^" and measured "^ {var.yVariance + var.fixedJawYOffset} L1
+M118 S{"measure_vise_position.g: Expected a vise Y offset of " ^ var.fixedJawYOffset ^" and measured "^ {var.yVariance + var.fixedJawYOffset}} L1
 if {abs(var.yVariance)} > var.maxJawVariance
     M291 P{"Warning: Y-axis vise variance ("^var.yVariance^") is greater than "^ var.maxJawVariance} R"Y Variance Error" S3
-    abort
 
 G1 Y{var.fixedJawYOffset + 6} F10000
 G1 Z{var.fixedJawZOffset + 50} F10000
@@ -146,7 +145,7 @@ if result != 0
 M400
 set var.zVariance = {move.axes[var.zAxisIndex].userPosition - var.stockZOffset}
 M118 S{"measure_vise_position.g: Probed z-axis stock variance is " ^ var.zVariance} L1
-M118 S{"measure_vise_position.g: Expected a stock Z offset of "^{" ^ var.stockZOffset ^" and measured "^ {var.zVariance + var.stockZOffset} L1
+M118 S{"measure_vise_position.g: Expected a stock Z offset of " ^ var.stockZOffset ^" and measured "^ {var.zVariance + var.stockZOffset}} L1
 if {abs(var.zVariance)} > var.maxStockVariance
     M291 P{"Warning: Z-axis stock variance ("^var.zVariance^") is greater than "^ var.maxStockVariance} R"Z Variance Error" S3
 
@@ -167,7 +166,7 @@ if result != 0
 M400
 set var.xVariance = {{move.axes[var.xAxisIndex].userPosition+1} - var.stockXOffset}
 M118 S{"measure_vise_position.g: Probed x-axis stock variance is " ^ var.xVariance} L1
-M118 S{"measure_vise_position.g: Expected a stock X offset of "^{" ^ var.stockXOffset ^" and measured "^ {var.xVariance + var.stockXOffset} L1
+M118 S{"measure_vise_position.g: Expected a stock X offset of " ^ var.stockXOffset ^" and measured "^ {var.xVariance + var.stockXOffset}} L1
 if {abs(var.xVariance)} > var.maxStockVariance
     M291 P{"Warning: X-axis stock variance ("^var.xVariance^") is greater than "^ var.maxStockVariance} R"X Variance Error" S3
 
@@ -188,7 +187,7 @@ if result != 0
 M400
 set var.yVariance = {{move.axes[var.yAxisIndex].userPosition - 1} - var.stockYOffset}
 M118 S{"measure_vise_position.g: Probed y-axis stock variance is " ^ var.yVariance} L1
-M118 S{"measure_vise_position.g: Expected a stock Y offset of "^{" ^ var.stockYOffset ^" and measured "^ {var.yVariance + var.stockYOffset} L1
+M118 S{"measure_vise_position.g: Expected a stock Y offset of " ^ var.stockYOffset ^" and measured "^ {var.yVariance + var.stockYOffset}} L1
 if {abs(var.yVariance)} > var.maxJawVariance
     M291 P{"Warning: Y-axis stock variance ("^var.yVariance^") is greater than "^ var.maxStockVariance} R"Y Variance Error" S3
 
@@ -197,4 +196,4 @@ G1 X0 Y0 F10000
 
 M400
 
-M118 S{"End milling-verification.g"} L1
+M118 S{"End measure_vise_position.g"} L1

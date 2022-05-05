@@ -1,17 +1,17 @@
 ; verify_vise_position.g
 ; Used to verify stock position for first milling job
 ; Written by Diabase Engineering
-; Last Updated: April 22, 2022
+; Last Updated: May 05, 2022
 
 M118 S{"Begin verify_vise_position.g"} L1
 
-var fixedJawXOffset = 0
-var fixedJawYOffset = 36
-var fixedJawZOffset = 3.27
+var fixedJawXOffset = 0.096
+var fixedJawYOffset = 33.683
+var fixedJawZOffset = 3.330
 var maxJawVariance = 0.1
-var stockXOffset = -1.299
-var stockYOffset = 2.150
-var stockZOffset = 16.982
+var stockXOffset = -1.332
+var stockYOffset = 1.392
+var stockZOffset = 17.114
 var maxStockVariance = 0.5
 
 ; Find Axis Indicies
@@ -198,4 +198,4 @@ G1 X0 Y0 F10000
 M400
 M291 P{"The vise and stock are positioned correctly! You're ready to begin the milling job."} R"Success!" S3
 
-M118 S{"End milling-verification.g"} L1
+M118 S{"End verify_vise_position.g"} L1

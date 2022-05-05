@@ -1,0 +1,2 @@
+M291 P"Do you want to find the vise and stock locations for verify_vise_position.g?" R"measure_vise_position.g" S3
+M98 P"0:/sys/sys-macros/internal/measure_vise_position.g"
