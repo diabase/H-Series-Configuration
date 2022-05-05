@@ -2,7 +2,7 @@
 ; Default configuration parameters for H-Series machines
 ; Produced by Diabase H-Series Configurizer
 ; Written by Diabase Engineering
-; Last Updated: April 22, 2022
+; Last Updated: May 05, 2022
 
 M118 S"Begin defaultparameters.g" L2
 
@@ -1310,5 +1310,10 @@ if !{exists(global.colletNutHeight)}
     global colletNutHeight = 22
 else
     set global.colletNutHeight = 22
+
+if !{exists(global.t2TCTOOffset)}
+    global t2TCTOOffset = 0
+else
+    set global.t2TCTOOffset = 0
 
 M118 S"End defaultparameters.g" L2

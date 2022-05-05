@@ -3,7 +3,7 @@
 ; Parameters:
 ;    I: Wait for user confirmation that the tool is in position for touchoff? (0 - Don't wait, 1 - Wait)
 ; Written by Diabase Engineering
-; Last Updated: April 26, 2022
+; Last Updated: May 05, 2022
 
 M118 S{"Begin tctouchoff.g"} L3
 
@@ -175,7 +175,8 @@ if {global.machineModel} == "H5B"
             ; M291 P"Ready for second probe attempt?" R"Crash Check" S3
             G38.2 K2 Z{{move.axes[var.zAxisIndex].max}+27}                                                                           ; Attempt to probe straight up, above ZMax by 27 mm
             set var.thisProbingOverTravel = {{move.axes[var.zAxisIndex].machinePosition}-{move.axes[var.zAxisIndex].max}}                         ; Save distance traveled beyond ZMax to temporary variable
-            G10 L1 P{state.currentTool} Z{{var.thisProbingOverTravel}-{global.probeOverTravelTCTouchOff}}
+            var tCTOToolOffset = {var.thisProbingOverTravel-global.probeOverTravelTCTouchOff}
+            G10 L1 P{state.currentTool} Z{{var.tCTOToolOffset}+{global.t2TCTOOffset}}
             M500 P10
             M98 P"maxoffset.g"
             M118 S{"tctouchoff.g: Fine tool touch off triggered at Z"^ {move.axes[var.zAxisIndex].machinePosition} ^". Z offset saved as " ^ {tools[state.currentTool].offsets[var.zAxisIndex]}} L3
