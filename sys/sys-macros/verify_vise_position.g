@@ -150,7 +150,7 @@ if {abs(var.zVariance)} > var.maxStockVariance
     M291 P{"The measured z-axis stock variance ("^var.zVariance^") is greater than expected. Stop and contact Diabase Support."} R"Z Variance Error" S3
     abort
 
-; Probe Vise X
+; Probe Stock X
 G1 Z{var.stockZOffset + 20} F10000
 G1 X{var.stockXOffset - 10} F10000
 G1 Z{var.stockZOffset - 2} F10000
@@ -171,7 +171,7 @@ if {abs(var.xVariance)} > var.maxStockVariance
     M291 P{"The measured x-axis stock variance ("^var.xVariance^") is greater than expected. Stop and contact Diabase Support."} R"X Variance Error" S3
     abort
 
-; Probe Vise Y
+; Probe Stock Y
 G1 X{var.stockXOffset - 5} F10000
 G1 Y{var.stockYOffset + 5} F10000
 G1 X2 F10000
