@@ -5,13 +5,13 @@
 
 M118 S{"Begin measure_vise_position.g"} L1
 
+var fixedJawZOffset = 3.330
 var fixedJawXOffset = 0.096
 var fixedJawYOffset = 33.683
-var fixedJawZOffset = 3.330
 var maxJawVariance = 0.1
+var stockZOffset = 17.114
 var stockXOffset = -1.332
 var stockYOffset = 1.392
-var stockZOffset = 17.114
 var maxStockVariance = 0.5
 
 ; Find Axis Indicies
@@ -128,6 +128,8 @@ if {abs(var.yVariance)} > var.maxJawVariance
 G1 Y{var.fixedJawYOffset + 6} F10000
 G1 Z{var.fixedJawZOffset + 50} F10000
 
+M291 P{"Vise offsets are Z" ^{var.zVariance + var.fixedJawZOffset} ^ ", X" ^ {var.xVariance + var.fixedJawXOffset} ^ ", and Y" ^ {var.yVariance + var.fixedJawYOffset} } R"Vise Offsets" S2
+
 ; Probe Stock
 
 ; Probe Stock Z
@@ -195,5 +197,7 @@ G1 Z{var.stockZOffset + 100} F10000
 G1 X0 Y0 F10000
 
 M400
+
+M291 P{"Stock offsets are Z" ^ {var.zVariance + var.stockZOffset} ^ ", X" ^ {var.xVariance + var.stockXOffset} ^ ", and Y" ^ {var.yVariance + var.stockYOffset} } R"Stock Offsets" S2
 
 M118 S{"End measure_vise_position.g"} L1

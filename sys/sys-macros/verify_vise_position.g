@@ -5,13 +5,13 @@
 
 M118 S{"Begin verify_vise_position.g"} L1
 
+var fixedJawZOffset = 3.330
 var fixedJawXOffset = 0.096
 var fixedJawYOffset = 33.683
-var fixedJawZOffset = 3.330
 var maxJawVariance = 0.1
+var stockZOffset = 17.114
 var stockXOffset = -1.332
 var stockYOffset = 1.392
-var stockZOffset = 17.114
 var maxStockVariance = 0.5
 
 ; Find Axis Indicies
