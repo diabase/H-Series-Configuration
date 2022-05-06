@@ -1,7 +1,7 @@
 ; pause.g
 ; Called when a job is paused.
 ; Written by Diabase Engineering
-; Last Updated: February 10, 2022
+; Last Updated: April 22, 2022
 
 M118 S{"Debug: Begin pause.g"} L3
 
@@ -29,5 +29,7 @@ if heat.heaters[{global.bedHeaterNum}] != null                      ; If we have
     if {heat.heaters[{global.bedHeaterNum}].current != -273.15}     ; ... and it's connected... 
         if {heat.heaters[{global.bedHeaterNum}].state != "fault"}   ; ... and it's not in a fault state...
             M144 S0                                                 ; Set bed to standby
+
+M106 S0                                                         ; Stop fans or spindle air associated with this tool
 
 M118 S{"Debug: End pause.g"} L3

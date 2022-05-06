@@ -10,7 +10,7 @@
 ;   E: Variable name containing Extruder Drive Number / Spindle Direction Pin
 ;   F: Variable name containing Filament Assist Drive Number / Spindle Air Pin
 ; Written by Diabase Engineering
-; Last Updated: January 26, 2022
+; Last Updated: April 22, 2022
 ; Customized for H5014 on March 14, 2022
 
 M118 S{"Info: Begin create-tool.g."} L2
@@ -69,9 +69,9 @@ if {{param.Y == "Extruder"} || {param.Y == "HT Extruder"}}
     M307 H{param.R} R2.429 C140.000:140.000 D5.50 S1.00 V0.0 B0 I0
     M118 S{"Info: Creating Nozzle "^param.T^": Creating actual tool"} L2
     if {boards[0].firmwareVersion == "3.3"}
-        M563 P{param.T} D{var.extruderIndex}:{var.fAIndex} H{param.R} L-1 S{"Nozzle "^{param.T}}                    ; Create a new tool using the extruder and assist drive parameters, no filament mapping, and call it "Nozzle #"
+        M563 P{param.T} D{var.extruderIndex}:{var.fAIndex} F{global.layerFanNum} H{param.R} L-1 S{"Nozzle "^{param.T}}                    ; Create a new tool using the extruder and assist drive parameters, no filament mapping, and call it "Nozzle #"
     elif {boards[0].firmwareVersion != "3.3"}
-        M563 P{param.T} D{var.extruderIndex,var.fAIndex} H{param.R} L-1 S{"Nozzle "^{param.T}}                      ; Create a new tool using the extruder and assist drive parameters, no filament mapping, and call it "Nozzle #"
+        M563 P{param.T} D{var.extruderIndex,var.fAIndex} F{global.layerFanNum} H{param.R} L-1 S{"Nozzle "^{param.T}}                      ; Create a new tool using the extruder and assist drive parameters, no filament mapping, and call it "Nozzle #"
     M118 S{"Info: Creating Nozzle "^param.T^": Setting extruder/FA ratio"} L2
     M567 P{param.T} E1:1                                                                                            ; Drive this new tool with a 1:1 ratio between the extruder and filament assist
     M118 S{"Info: Setting initial tool offsets"} L2

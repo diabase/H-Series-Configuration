@@ -4,7 +4,7 @@
 ; state.previousTool is now the tool being freed
 ; state.currentTool is still the tool being freed
 ; state.nextTool is the upcoming tool
-; Last Updated: April 19, 2022
+; Last Updated: April 22, 2022
 
 M118 S{"Begin tfree-universal.g"} L3
 
@@ -30,13 +30,13 @@ while iterations < #spindles
 if {global.machineModel} == "H5B"
     ; Temporarily disable movement compensation for tool changes
     if move.compensation.type == "mesh"
-        M118 S{"tfree-universal.g: Move compensation type is mesh"} L1
-        M118 S{"tfree-universal.g: Setting global.moveCompStatus to 1"} L1
+        M118 S{"tfree-universal.g: Move compensation type is mesh"} L3
+        M118 S{"tfree-universal.g: Setting global.moveCompStatus to 1"} L3
         set global.moveCompStatus = 1
-        M118 S{"tfree-universal.g: Saving move.compensation.file to global.moveCompFile"} L1
+        M118 S{"tfree-universal.g: Saving move.compensation.file to global.moveCompFile"} L3
         set global.moveCompFile = ""^move.compensation.file
-        M118 S{"tfree-universal.g: global.moveCompFile  is " ^ global.moveCompFile} L1
-        M118 S{"tfree-universal.g: Disabling movement compensation for tool change"} L1
+        M118 S{"tfree-universal.g: global.moveCompFile  is " ^ global.moveCompFile} L3
+        M118 S{"tfree-universal.g: Disabling movement compensation for tool change"} L3
         G29 S2
     elif move.compensation.type == "none"
         set global.moveCompStatus = 0
@@ -63,7 +63,7 @@ if {global.machineModel} == "H5B"
         if global.indexSpindleComplete == 0
             M118 S{"tfree-universal.g: indexspindle didn't exit successfully. Aborting."} L1
             abort
-        M42 P{global.tCToolReleaseOutNum} S1                                                                            ; Extend the tool changer release piston
+        M42 P{global.tCToolReleaseOutNum} S1                                                                            ; Open tool changer jaws
         if global.dontRotate != 1                                                                                       ; If we're performing normal tool changes...
             M98 P"unlock_turret.g"                                                                                          ; Call unlock_turret.g
             G1 U90 F8900                                                                                                    ; Rotate turret to tool changer
@@ -71,13 +71,12 @@ if {global.machineModel} == "H5B"
             G1 U180 F8900                                                                                                   ; Rotate turret to tool changer
             M400                                                                                                            ; Wait for all moves to finish
             M98 P"lock_turret.g"                                                                                            ; Lock turret
-        G53 G1 Z{{move.axes[var.zAxisIndex].max}+{global.tCOvertravelPutTool}} H2 F3000                                              ; Move Z beyond ZMax ignoring endstops
+        G53 G1 Z{{move.axes[var.zAxisIndex].max}+{global.tCOvertravelPutTool} - global.colletNutHeight} H2 F3000           ; Move Z to just below tool changer jaws
         M400                                                                                                            ; Wait for all moves to finish
-        G4 P100                                                                                                         ; Dwell for 100 ms
-        if sensors.gpIn[global.zHighInNum].value == 0
-            M98 P"engagezbrake.g"
-            M291 P{"Z High switch is not triggered. Z might have crashed. Z brake engaged. We will now e-stop."}  R"Not high enough." S2
-            M98 P"estop.g"                                                                                                  ; Call estop.g
+        M42 P{global.tCToolReleaseOutNum} S0                                                                            ; Close tool changer jaws
+        G4 P500                                                                                                         ; Dwell for 500 ms (jaws closing)
+
+        ; Fully Release Drawbar
         if state.gpOut[global.dbarOutNum].pwm == 1
             M42 P{global.spindleIndexOutNum} S1                                                                                 ; Toggle Drawbar Release Pressure High
         else
@@ -96,9 +95,20 @@ if {global.machineModel} == "H5B"
         set var.msToRelease = state.msUpTime - var.msUpTimeReleasing
         set var.sToRelease = state.upTime - var.upTimeReleasing
         M118 S{"tfree-universal.g: Tool "^{state.currentTool}^" took "^var.sToRelease^"."^var.msToRelease^" seconds to release."} L3
-        G4 P500                                                                                                         ; Dwell for 500 ms
-        M42 P{global.tCToolReleaseOutNum} S0                                                                            ; Retract the tool changer release piston, securing tool in tool changer
-        G4 P500                                                                                                         ; Dwell for 500 ms
+        G4 P500                                                                                                         ; Dwell for 500 ms (tool holder settling after release)
+
+        ; Store tool in tool changer
+        M42 P{global.tCToolReleaseOutNum} S1                                                                            ; Open tool changer jaws
+        G4 P500                                                                                                         ; Dwell for 500 ms (jaws opening)
+        G53 G1 Z{{move.axes[var.zAxisIndex].max}+{global.tCOvertravelPutTool}} H2 F3000                              ; Move Z beyond ZMax ignoring endstops
+        if sensors.gpIn[global.zHighInNum].value == 0
+            M98 P"engagezbrake.g"
+            M291 P{"Z High switch is not triggered. Z might have crashed. Z brake engaged. We will now e-stop."}  R"Not high enough." S2
+            M98 P"estop.g"                                                                                                  ; Call estop.g
+            M112                                                                                                        ; Emergency stop
+        M400                                                                                                            ; Wait for all moves to finish
+        M42 P{global.tCToolReleaseOutNum} S0                                                                            ; Close tool changer jaws
+        G4 P500                                                                                                         ; Dwell for 500 ms (jaws closing)
         G53 G1 Z{move.axes[var.zAxisIndex].max - 1} H2 F10000                                                               ; Move Z to 1mm below the axis limit at 10000 mm/min ignoring endstops
         
         while sensors.endstops[var.zAxisIndex].triggered == true
@@ -110,6 +120,7 @@ if {global.machineModel} == "H5B"
                     M98 P"engagezbrake.g"
                     M291 P{"Z end stop still triggered after " ^ iterations ^ "mm additional movement. Tool might not have released. Z brake engaged. We will now e-stop."}  R"Tool not released." S2
                     M98 P"estop.g"                                                                                                  ; Call estop.g
+                    M112                                                                                                        ; Emergency stop
         M400                                                                                                            ; Wait for any current moves to finish
         G53 G1 H1 Z{move.axes[var.zAxisIndex].machinePosition + 5} F1000                                                ; Attempt to move Z +5mm at 1000 mm/min, but halt when endstop triggered and set axis position to axis limit as defined by previous M208 or G1 H3 special move
         if {{state.nextTool} < 11}

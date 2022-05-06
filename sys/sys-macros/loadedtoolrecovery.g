@@ -1,7 +1,7 @@
 ; loadedtoolrecovery.g
 ; Check and handle the case of a tool unexpectedly in the spindle 
 ; Written by Diabase Engineering
-; Last Updated: April 07, 2022
+; Last Updated: April 21, 2022
 ; TODO: Dynamically identify spindle. Currently we assume spindle[0]. - RT 12/21/2021
 
 M118 S{"Begin loadedtoolrecovery.g"} L3
@@ -9,7 +9,7 @@ M118 S{"Begin loadedtoolrecovery.g"} L3
 if {global.machineModel} == "H5B"
     M291 P"Is there a tool in the spindle?" R"Spindle Check" S3                                                    ; Get user input
 
-    M291 P"Place the cup directly under the arm." R"Place Cup" S3
+    M291 P"Place tool recovery catch directly under the spindle." R"Place Catch" S3
     ; What if the arm is too low to accomplish this? - RT 12/21/2021
 
     M291 P"The machine will now attempt to index the spindle and release the tool. Select OK to proceed." R"Ready?" S3

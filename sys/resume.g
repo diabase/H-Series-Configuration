@@ -1,9 +1,9 @@
 ; resume.g
 ; Called when a paused job is resumed
 ; Written by Diabase Engineering
-; Last Updated: December 15, 2021
+; Last Updated: April 22, 2022
 
-M118 S{"Debug: Begin resume.g"} L3
+M118 S{"Begin resume.g"} L3
 
 if {global.machineModel} == "H5B"
         if sensors.gpIn[{global.airPressureInNum}].value == 0
@@ -11,6 +11,8 @@ if {global.machineModel} == "H5B"
             abort
 
 T{state.restorePoints[1].toolNumber} ; Select the tool that was active when the job was paused.
+
+M106 R1 ; Restart fans or spindle air associated with this tool if they were running when job was paused.
 
 if state.machineMode == "FFF" ; If we're in FFF mode...
     if heat.heaters[{global.bedHeaterNum}] != null ; ...and we have defined a bed heater...
@@ -55,4 +57,4 @@ if state.machineMode == "FFF"
 
 M400 ; Wait for current moves to finish
 
-M118 S{"Debug: End resume.g"} L3
+M118 S{"End resume.g"} L3
