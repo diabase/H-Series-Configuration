@@ -1,17 +1,14 @@
 ; verify_vise_position.g
 ; Used to verify stock position for first milling job
 ; Written by Diabase Engineering
-; Last Updated: May 05, 2022
+; Last Updated: May 09, 2022
+; Customized for H5014: May 09, 2022
 
 M118 S{"Begin verify_vise_position.g"} L1
 
-var fixedJawZOffset = 3.330
-var fixedJawXOffset = 0.096
-var fixedJawYOffset = 33.683
-var maxJawVariance = 0.1
-var stockZOffset = 17.114
-var stockXOffset = -1.332
-var stockYOffset = 1.392
+var stockZOffset = 16.919
+var stockXOffset = -1.391
+var stockYOffset = 2.072
 var maxStockVariance = 0.5
 
 ; Find Axis Indicies
@@ -42,94 +39,19 @@ M291 P{"This job will assist you in confirming the stock position for the millin
 M291 P{"Are you ready to home all axes?"} R"Home All" S3
 M98 P"homeall.g"
 
-; Manually Confirm Rough Vise Position
+; Manually Confirm Rough Stock Position
 M291 P{"Tool 24 will now be retrieved from the tool changer."} R"T24" S3
 T24
 G56
-M291 P{"The tip of the filament will now move to the back left corner of the vise jaw."} R"T24" S3
-G1 X{var.fixedJawXOffset} Y{var.fixedJawYOffset} Z{var.fixedJawZOffset} F10000
+M291 P{"The tip of the filament will now move to the back left corner of the stock in the vise."} R"T24" S3
+G1 X{var.stockXOffset} Y{var.stockYOffset} Z{var.stockZOffset} F10000
 
 M400
-M291 P{"When pulled straight, is the tip of the filament within 5mm of the corner of the vise jaw?"} R"Filament at Corner?" S3
-
-; Probe Vise
-M291 P{"The machine will now probe the vise corner. Please keep clear of the build enclosure."} R"Probe vise?" S3
-
-; Probe Vise Z
-G1 Z{var.fixedJawZOffset + 50} F10000
-T{global.zProbeToolNum}
-G1 X{var.fixedJawXOffset + 10} Y{var.fixedJawYOffset - 10} F10000
-G1 Z{var.fixedJawZOffset + 10} F10000
-
-M400
-; M291 P"Is the probe tip over the vise?" R"Crash Check" S3
-; M291 P"Ready to probe straight down?" R"Crash Check" S3
-if sensors.probes[0].value[0] == 1000
-    M291 P{"Error: Probe already triggered. Check probe and try again."} R"Probe Already Triggered" S2
-    abort
-G38.2 Z{move.axes[var.zAxisIndex].userPosition - 20}
-if result != 0
-    M291 P{"There was an error while probing. Check probe and try again."} R"Probing Error" S3
-    abort
-
-M400
-var zVariance = {move.axes[var.zAxisIndex].userPosition - var.fixedJawZOffset}
-M118 S{"verify_vise_position.g: Probed z-axis vise variance is " ^ var.zVariance} L1
-if {abs(var.zVariance)} > var.maxJawVariance
-    M291 P{"The measured z-axis vise variance ("^var.zVariance^") is greater than expected. Stop and contact Diabase Support."} R"Z Variance Error" S3
-    abort
-
-; Probe Vise X
-G1 Z{var.fixedJawZOffset + 20} F10000
-G1 X{var.fixedJawXOffset - 10} F10000
-G1 Z{var.fixedJawZOffset - 5} F10000
-
-M400
-; M291 P"Is the probe tip left of the vise?" R"Crash Check" S3
-; M291 P"Ready to probe to the right?" R"Crash Check" S3
-if sensors.probes[0].value[0] == 1000
-    M291 P{"Error: Probe already triggered. Check probe and try again."} R"Probe Already Triggered" S2
-    abort
-G38.2 X{move.axes[var.xAxisIndex].userPosition + 20}
-if result != 0
-    M291 P{"There was an error while probing. Check probe and try again."} R"Probing Error" S3
-    abort
-
-M400
-var xVariance = {{move.axes[var.xAxisIndex].userPosition+1} - var.fixedJawXOffset}
-M118 S{"verify_vise_position.g: Probed x-axis vise variance is " ^ var.xVariance} L1
-if {abs(var.xVariance)} > var.maxJawVariance
-    M291 P{"The measured x-axis vise variance ("^var.xVariance^") is greater than expected. Stop and contact Diabase Support."} R"X Variance Error" S3
-    abort
-
-; Probe Vise Y
-G1 X{var.fixedJawXOffset - 5} F10000
-G1 Y{var.fixedJawYOffset + 6} F10000
-G1 X{var.fixedJawXOffset + 10} F10000
-
-M400
-; M291 P"Is the probe tip behind the vise?" R"Crash Check" S3
-; M291 P"Ready to probe toward the front?" R"Crash Check" S3
-if sensors.probes[0].value[0] == 1000
-    M291 P{"Error: Probe already triggered. Check probe and try again."} R"Probe Already Triggered" S2
-    abort
-G38.2 Y{move.axes[var.yAxisIndex].userPosition - 8}
-if result != 0
-    M291 P{"There was an error while probing. Check probe and try again."} R"Probing Error" S3
-    abort
-
-M400
-var yVariance = {{move.axes[var.yAxisIndex].userPosition - 1} - var.fixedJawYOffset}
-M118 S{"verify_vise_position.g: Probed y-axis vise variance is " ^ var.yVariance} L1
-if {abs(var.yVariance)} > var.maxJawVariance
-    M291 P{"The measured y-axis vise variance ("^var.yVariance^") is greater than expected. Stop and contact Diabase Support."} R"Y Variance Error" S3
-    abort
-
-G1 Y{var.fixedJawYOffset + 6} F10000
-G1 Z{var.fixedJawZOffset + 50} F10000
+M291 P{"When pulled straight, is the tip of the filament within 5mm of the corner of the stock?"} R"Filament at Corner?" S3
 
 ; Probe Stock
 M291 P{"The machine will now probe the stock in the vise. Please keep clear of the build enclosure."} R"Probe stock?" S3
+T{global.zProbeToolNum}
 
 ; Probe Stock Z
 G1 X2 Y-2 F10000
@@ -144,7 +66,7 @@ if result != 0
     abort
 
 M400
-set var.zVariance = {move.axes[var.zAxisIndex].userPosition - var.stockZOffset}
+var zVariance = {move.axes[var.zAxisIndex].userPosition - var.stockZOffset}
 M118 S{"verify_vise_position.g: Probed z-axis stock variance is " ^ var.zVariance} L1
 if {abs(var.zVariance)} > var.maxStockVariance
     M291 P{"The measured z-axis stock variance ("^var.zVariance^") is greater than expected. Stop and contact Diabase Support."} R"Z Variance Error" S3
@@ -165,7 +87,7 @@ if result != 0
     abort
 
 M400
-set var.xVariance = {{move.axes[var.xAxisIndex].userPosition+1} - var.stockXOffset}
+var xVariance = {{move.axes[var.xAxisIndex].userPosition+1} - var.stockXOffset}
 M118 S{"verify_vise_position.g: Probed x-axis stock variance is " ^ var.xVariance} L1
 if {abs(var.xVariance)} > var.maxStockVariance
     M291 P{"The measured x-axis stock variance ("^var.xVariance^") is greater than expected. Stop and contact Diabase Support."} R"X Variance Error" S3
@@ -186,9 +108,9 @@ if result != 0
     abort
 
 M400
-set var.yVariance = {{move.axes[var.yAxisIndex].userPosition - 1} - var.stockYOffset}
+var yVariance = {{move.axes[var.yAxisIndex].userPosition - 1} - var.stockYOffset}
 M118 S{"verify_vise_position.g: Probed y-axis stock variance is " ^ var.yVariance} L1
-if {abs(var.yVariance)} > var.maxJawVariance
+if {abs(var.yVariance)} > var.maxStockVariance
     M291 P{"The measured y-axis stock variance ("^var.yVariance^") is greater than expected. Stop and contact Diabase Support."} R"Y Variance Error" S3
     abort
 
@@ -196,6 +118,6 @@ G1 Z{var.stockZOffset + 100} F10000
 G1 X0 Y0 F10000
 
 M400
-M291 P{"The vise and stock are positioned correctly! You're ready to begin the milling job."} R"Success!" S3
+M291 P{"The stock is positioned correctly! You're ready to begin the milling job."} R"Success!" S3
 
 M118 S{"End verify_vise_position.g"} L1
