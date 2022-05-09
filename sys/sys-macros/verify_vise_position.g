@@ -1,7 +1,7 @@
 ; verify_vise_position.g
 ; Used to verify stock position for first milling job
 ; Written by Diabase Engineering
-; Last Updated: May 05, 2022
+; Last Updated: May 09, 2022
 
 M118 S{"Begin verify_vise_position.g"} L1
 
@@ -188,7 +188,7 @@ if result != 0
 M400
 set var.yVariance = {{move.axes[var.yAxisIndex].userPosition - 1} - var.stockYOffset}
 M118 S{"verify_vise_position.g: Probed y-axis stock variance is " ^ var.yVariance} L1
-if {abs(var.yVariance)} > var.maxJawVariance
+if {abs(var.yVariance)} > var.maxStockVariance
     M291 P{"The measured y-axis stock variance ("^var.yVariance^") is greater than expected. Stop and contact Diabase Support."} R"Y Variance Error" S3
     abort
 

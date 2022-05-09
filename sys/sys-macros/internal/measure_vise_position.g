@@ -1,7 +1,7 @@
 ; measure_vise_position.g
 ; Used to populate values for verify_vise_position.g
 ; Written by Diabase Engineering
-; Last Updated: May 05, 2022
+; Last Updated: May 09, 2022
 
 M118 S{"Begin measure_vise_position.g"} L1
 
@@ -190,7 +190,7 @@ M400
 set var.yVariance = {{move.axes[var.yAxisIndex].userPosition - 1} - var.stockYOffset}
 M118 S{"measure_vise_position.g: Probed y-axis stock variance is " ^ var.yVariance} L1
 M118 S{"measure_vise_position.g: Expected a stock Y offset of " ^ var.stockYOffset ^" and measured "^ {var.yVariance + var.stockYOffset}} L1
-if {abs(var.yVariance)} > var.maxJawVariance
+if {abs(var.yVariance)} > var.maxStockVariance
     M291 P{"Warning: Y-axis stock variance ("^var.yVariance^") is greater than "^ var.maxStockVariance} R"Y Variance Error" S3
 
 G1 Z{var.stockZOffset + 100} F10000
