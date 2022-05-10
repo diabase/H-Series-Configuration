@@ -29,6 +29,8 @@ set global.eHeat3Pin = "1.out0"                 ; Set by RT on 3/17/2022
 set global.e3Drive = 1.0                      ; Set by RT on 3/17/2022
 set global.fA3Drive = 3.0                     ; Set by RT on 3/17/2022
 
+set global.t2TCTOOffset = 0.125
+
 set global.machineSpecificLastRun = state.upTime
 
 M118 S{"Info: End machinespecific.g"} L2
