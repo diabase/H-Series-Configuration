@@ -2,7 +2,7 @@
 ; Default configuration parameters for H-Series machines
 ; Produced by Diabase H-Series Configurizer
 ; Written by Diabase Engineering
-; Last Updated: May 05, 2022
+; Last Updated: May 17, 2022
 
 M118 S"Begin defaultparameters.g" L2
 
@@ -12,9 +12,9 @@ else
     set global.machineName = "H5XXX"
 
 if !{exists(global.machineModel)}
-    global machineModel = "H5A" ; Machine model number
+    global machineModel = "H5B" ; Machine model number
 else
-    set global.machineModel = "H5A"
+    set global.machineModel = "H5B"
 
 if !{exists(global.xMin)}
     global xMin = -208
@@ -47,9 +47,9 @@ else
     set global.zMax = 410
 
 if !{exists(global.uMin)}
-    global uMin = -10 ; Physical u-axis position when USwitchPin triggers.
+    global uMin = -40.5 ; Physical u-axis position when USwitchPin triggers.
 else
-    set global.uMin = -10
+    set global.uMin = -40.5
 
 if !{exists(global.uMax)}
     global uMax = 360
@@ -87,14 +87,14 @@ else
     set global.aMax = 365
 
 if !{exists(global.bMin)}
-    global bMin = -216
+    global bMin = -213
 else
-    set global.bMin = -216
+    set global.bMin = -213
 
 if !{exists(global.bMax)}
-    global bMax = 216
+    global bMax = 213
 else
-    set global.bMax = 216
+    set global.bMax = 213
 
 if !{exists(global.cMin)}
     global cMin = -1000
@@ -1192,9 +1192,9 @@ else
     set global.probeOverTravelTCTouchOff = -1
 
 if !{exists(global.tCOvertravelPutTool)}
-    global tCOvertravelPutTool = 32 ; The distance to move above ZMax when returning a tool to the tool changer.
+    global tCOvertravelPutTool = 35.5 ; The distance to move above ZMax when returning a tool to the tool changer.
 else
-    set global.tCOvertravelPutTool = 32
+    set global.tCOvertravelPutTool = 35.5
 
 if !{exists(global.keepProbeDeployed)}
     global keepProbeDeployed = 0 ; A status flag to prevent unwanted probe retraction
@@ -1315,5 +1315,15 @@ if !{exists(global.t2TCTOOffset)}
     global t2TCTOOffset = 0
 else
     set global.t2TCTOOffset = 0
+
+if !{exists(global.pauseLastRun)}
+    global pauseLastRun = -1
+else
+    set global.pauseLastRun = -1
+
+if !{exists(global.uptimeForHeatersOff)}
+    global uptimeForHeatersOff = -1
+else
+    set global.uptimeForHeatersOff = -1
 
 M118 S"End defaultparameters.g" L2
