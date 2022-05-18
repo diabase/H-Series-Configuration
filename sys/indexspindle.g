@@ -19,7 +19,7 @@
 M118 S{"Begin indexspindle.g with parameters H" ^ {param.H} ^ " and S" ^ {param.S} } L3
 
 if global.indexSpindleComplete == 0
-    M118 S{"indexspindle.g: indexspindle didn't finish the last time. Resetting status flag and attempting it again."} L1
+    M118 S{"indexspindle.g: indexspindle didn't finish the last time. Resetting status flag and trying again."} L1
 set global.indexSpindleComplete = 0
 
 if {global.machineModel} == "H5B"
