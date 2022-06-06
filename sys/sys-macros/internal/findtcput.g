@@ -1,7 +1,7 @@
 ; findtcput.g
 ; Used to find an appropriate value for global.tCOvertravelPutTool
 ; Written by Diabase Engineering
-; Last Updated: April 07, 2022
+; Last Updated: June 06, 2022
 
 M118 S{"Begin findtcput.g"} L3
 
@@ -13,7 +13,9 @@ T2
 G54
 if move.compensation.type == "mesh"
     G29 S0
+M98 P"0:/sys/sys-macros/manualdbarclamp.g"
 M98 P"0:/sys/sys-macros/rotatetotc.g"
+G4 P1000
 M98 P"0:/sys/indexspindle.g" H0 S0                                                                      ; Call indexspindle.g
 if global.indexSpindleComplete == 0
     M118 S{"findtcput.g: indexspindle didn't exit successfully. Aborting."} L1
@@ -26,6 +28,7 @@ else
     abort "Error: Drawbar clamping pressure not released. Contact Diabase Support."
 
 G1 B{-tools[17].offsets[6]} F30000                                                                              ; Move tool changer to the position for tool 17
+M400
 M42 P{global.tCToolReleaseOutNum} S1                                                                            ; Open the jaws on the tool changer
 M291 P"Place a tool holder in the spindle. Continue when ready." R"Insert Tool Holder" S3
 
