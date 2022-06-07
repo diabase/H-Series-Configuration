@@ -1,9 +1,9 @@
-; checkbswitchposition.g
+; checkbswitchtriggerposition.g
 ; Used to adjust the b-axis endstop location
 ; Written by Diabase Engineering
 ; Last Updated: June 06, 2022
 
-M118 S{"Begin checkbswitchposition.g"} L3
+M118 S{"Begin checkbswitchtriggerposition.g"} L3
 
 M291 P"This macro will home all then move b to the location of its limit switch. Ready?" R"Crash Check" S3  ; Warn the user about the imminent probing move.
 
@@ -27,4 +27,4 @@ G90                                     ; Absolute positioning
 M291 P"Does the B axis need to move farther to access tool 24?" R"Check T24 Position" S3
 M291 P"Move the B limit switch to the right and check again." R"Move B Switch" S2
 
-M118 S{"End checkbswitchposition.g"} L3
+M118 S{"End checkbswitchtriggerposition.g"} L3
