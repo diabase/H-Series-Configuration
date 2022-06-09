@@ -1,7 +1,7 @@
 ; config.g
 ; H5A Configuration File
 ; Written by Diabase Engineering
-; Last Updated: April 25, 2022
+; Last Updated: June 09, 2022
 
 G4 S2 ; Wait for 2 seconds to allow expansion boards time to boot
 
@@ -124,8 +124,8 @@ elif {global.machineModel} == "H5B"
     M350 X16 Y16 Z16 U16 W16 A16 B16 C16 E16 I1 ; Configure microstepping with interpolation - high lead cleaning station motor
     M92 X320 Y320 Z320 U230.22 W400 A53.33 B80 C53.33 E96 ; Set steps per mm
     M566 X300 Y300 Z500 U120 W200 A1000 B400 C1000 E1200 ; Set maximum instantaneous speed changes (mm/min)
-    M203 X10000 Y10000 Z7000 U8000 W13000 A20000 B30000 C20000 E6000 ; Set maximum speeds (mm/min)
-    M201 X600 Y600 Z1000 U600 W5000 A600 B2000 C600 E250 ; Set accelerations (mm/s^2)
+    M203 X10000 Y10000 Z5000 U8000 W13000 A20000 B30000 C20000 E6000 ; Set maximum speeds (mm/min)
+    M201 X600 Y600 Z750 U600 W5000 A600 B2000 C600 E250 ; Set accelerations (mm/s^2)
     M906 X1800 Y2100 Z3000 U1750 W1000 A1600 B1500 C1600 E1500:1500:1500:1000:1000:1000 I70 ; Set motor currents (mA) and motor idle factor percent
 
 M84 S5 ; Allow all motors to drop hold current to idle after 5 seconds
