@@ -14,7 +14,7 @@
 ;     | 1       |  1            || Vented           | High Pressure             || Drawbar Fully Released
 ;
 ; Written by Diabase Engineering
-; Last Updated: April 07, 2022
+; Last Updated: June 10, 2022
 
 M118 S{"Begin indexspindle.g with parameters H" ^ {param.H} ^ " and S" ^ {param.S} } L3
 
@@ -25,7 +25,7 @@ set global.indexSpindleComplete = 0
 if {global.machineModel} == "H5B"
     M42 P{global.dbarOutNum} S1                                                                                     ; Toggle Drawbar Clamping Pressure to Vent and Release Pressure to Low with Throttled Vent
     G4 P1000                                                                                                        ; Dwell 1000ms
-    var blipSpindleSpeed = 600
+    var blipSpindleSpeed = 1000
     var blipDuration = 175
 
     if {param.H} == 0                                                                                                               ; We've been told there's no tool in the spindle, so use Spindex Sensor 1
