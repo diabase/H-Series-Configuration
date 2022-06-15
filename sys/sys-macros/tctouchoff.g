@@ -3,7 +3,7 @@
 ; Parameters:
 ;    I: Wait for user confirmation that the tool is in position for touchoff? (0 - Don't wait, 1 - Wait)
 ; Written by Diabase Engineering
-; Last Updated: May 05, 2022
+; Last Updated: June 15, 2022
 
 M118 S{"Begin tctouchoff.g"} L3
 
@@ -164,7 +164,9 @@ if {global.machineModel} == "H5B"
             M118 S{"tctouchoff.g: Coarse tool touch off triggered at Z"^ {move.axes[var.zAxisIndex].machinePosition}} L3
             
             G91                                                                                                         ; Relative positioning
-            G1 H2 Z-2 F10000                                                                                             ; Move down in Z quickly to prepare for second, slower, probing attempt
+            G1 H2 Z-2 F10000                                                                                            ; Move down in Z quickly to prepare for second, slower, probing attempt
+            M400                                                                                                        ; Wait for current moves to finish
+            G4 P500                                                                                                     ; Dwell for 500ms
             G90                                                                                                         ; Absolute positioning
 
             set var.lastProbingOverTravel = var.thisProbingOverTravel                                                   ; Move previous distance traveled into temporary variable for comparison
