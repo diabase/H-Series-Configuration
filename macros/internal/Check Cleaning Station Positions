@@ -1,0 +1,2 @@
+M291 P"Do you want to check the cleaning station positions?" S3
+M98 P"0:/sys/sys-macros/internal/checkcleaningstationpositions.g"
