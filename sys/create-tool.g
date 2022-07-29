@@ -10,7 +10,7 @@
 ;   E: Variable name containing Extruder Drive Number / Spindle Direction Pin
 ;   F: Variable name containing Filament Assist Drive Number / Spindle Air Pin
 ; Written by Diabase Engineering
-; Last Updated: April 22, 2022
+; Last Updated: July 29, 2022
 
 M118 S{"Info: Begin create-tool.g."} L2
 
@@ -85,7 +85,10 @@ if param.Y == "Spindle"
     elif {global.machineModel} == "H5B"
         M950 R{param.S} C{param.H}^"+nil+"^{param.E} L16000 Q10000                                                      ; Define a new spindle with inbound parameters and 16000 RPM achieved at full PWM using a 10kHz PWM frequency
     M563 P{param.T} F{param.N} R{param.S} S{"Spindle "^{param.T}}                                                   ; Create a new tool with the newly created fan and spindle and call it "Spindle #"
-    G10 P{param.T} X6 Y7.5 Z-2                                                                                      ; Set initial tool offsets to default values for a spindle
+    if {global.machineModel} == "H4" || {global.machineModel} == "H5A"
+        G10 P{param.T} X6 Y7.5 Z-2                                                                                        ; Set initial tool offsets to default values for a spindle
+    elif {global.machineModel} == "H5B"
+        G10 P{param.T} X0 Y0 Z-2                                                                                        ; Set initial tool offsets to default values for a spindle
     M453                                                                                                            ; CNC Mode
     M3 P{param.S} S0 ; Ensure new spindle is off
 
